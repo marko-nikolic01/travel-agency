@@ -23,5 +23,38 @@ namespace TravelAgency.View
         {
             InitializeComponent();
         }
+
+        private void AddKeyPointClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(KeyPointsText.Text))
+            {
+                return;
+            }
+            ListKeyPoints.Items.Add(KeyPointsText.Text);
+            KeyPointsText.Clear();
+            KeyPointsText.Focus();
+        }
+
+        private void AddDateTimeClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(DateTimeText.Text))
+            {
+                return;
+            }
+            ListDateTimes.Items.Add(DateTimeText.Text);
+            DateTimeText.Clear();
+            DateTimeText.Focus();
+        }
+
+        private void AddImagesClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ImageText.Text))
+            {
+                return;
+            }
+            ListImages.Items.Add(ImageText.Text);
+            ImageText.Clear();
+            ImageText.Focus();
+        }
     }
 }
