@@ -22,6 +22,20 @@ namespace TravelAgency.View
         public GuideMain()
         {
             InitializeComponent();
+            DataContext = this;
+        }
+
+        private void SignOutClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
+        }
+
+        private void NewTourClick(object sender, RoutedEventArgs e)
+        {
+            CreateTour createTour = new CreateTour();
+            createTour.Show();
         }
     }
 }
