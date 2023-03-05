@@ -39,19 +39,19 @@
         <Label Grid.Row="1" Grid.Column="4" Content="Date and time:" FontSize="15"></Label>
         <Label Grid.Row="5" Grid.Column="4" Content="Duration:" FontSize="15"></Label>
         <Label Grid.Row="6" Grid.Column="4" Content="Images:" FontSize="15"></Label>
-        <Button Grid.Column="5" Grid.Row="11" HorizontalAlignment="Right" Margin="5" Width="80" Content="Create" FontSize="15"></Button>
-        <TextBox Grid.Row="1" Grid.Column="2" Margin="5"></TextBox>
+        <Button Grid.Column="5" Grid.Row="11" HorizontalAlignment="Right" Margin="5" Width="80" Content="Create" FontSize="15" Click="CreateClick"></Button>
+        <TextBox Grid.Row="1" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Name}"></TextBox>
         <TextBox Grid.Row="2" Grid.Column="2" Margin="5"></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="5" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
-        <TextBox Grid.Row="5" Grid.Column="2" Margin="5"></TextBox>
-        <TextBox Grid.Row="6" Grid.Column="2" Margin="5"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=NewTour.Description}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Language}"></TextBox>
+        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Name="MaxGuestsText"></TextBox>
         <TextBox Grid.Row="7" Grid.Column="2" Margin="5" Name="KeyPointsText"></TextBox>
         <Button Grid.Row="7" Grid.Column="3" Margin="5" Content="Add" Width="30" Click="AddKeyPointClick"></Button>
         <ListBox Grid.Row="8" Grid.Column="2" Grid.RowSpan="3" Margin="5" Name="ListKeyPoints"></ListBox>
         <TextBox Grid.Row="1" Grid.Column="5" Margin="5" Name="DateTimeText"></TextBox>
         <Button Grid.Row="1" Grid.Column="6" Margin="5" Content="Add" Width="30" Click="AddDateTimeClick"></Button>
         <ListBox Grid.Row="2" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListDateTimes"></ListBox>
-        <TextBox Grid.Row="5" Grid.Column="5" Margin="5"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="5" Margin="5" Name="DurationText"></TextBox>
         <TextBox Grid.Row="6" Grid.Column="5" Margin="5" Name="ImageText"></TextBox>
         <Button Grid.Row="6" Grid.Column="6" Margin="5" Content="Add" Width="30" Click="AddImagesClick"></Button>
         <ListBox Grid.Row="7" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListImages"></ListBox>

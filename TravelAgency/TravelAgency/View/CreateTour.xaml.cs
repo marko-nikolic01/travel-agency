@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelAgency.Model;
+using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
@@ -19,9 +21,14 @@ namespace TravelAgency.View
     /// </summary>
     public partial class CreateTour : Window
     {
-        public CreateTour()
+        public TourRepository TourRepository { get; set; }
+        public Tour NewTour { get; set; }
+        public CreateTour(TourRepository tourRepository)
         {
             InitializeComponent();
+            DataContext = this;
+            NewTour = new Tour();
+            TourRepository = tourRepository;  
         }
 
         private void AddKeyPointClick(object sender, RoutedEventArgs e)
@@ -55,6 +62,17 @@ namespace TravelAgency.View
             ListImages.Items.Add(ImageText.Text);
             ImageText.Clear();
             ImageText.Focus();
+        }
+
+        private void CreateClick(object sender, RoutedEventArgs e)
+        {
+            int result = 0;
+            int.TryParse(MaxGuestsText.Text, out result);
+            NewTour.MaxGuestNumber = result;
+            int.TryParse(DurationText.Text, out result);
+            NewTour.Duration = result;
+            TourRepository.SaveTours(NewTour);
+            Close();
         }
     }
 }
