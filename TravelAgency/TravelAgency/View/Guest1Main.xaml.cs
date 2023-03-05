@@ -22,6 +22,20 @@ namespace TravelAgency.View
         public Guest1Main()
         {
             InitializeComponent();
+            this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
+            this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
         }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelSearch(object sender, RoutedEventArgs e)
+        {
+            //source = accomodations;
+        }
+
+        
     }
 }

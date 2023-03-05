@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="Guest1Main" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="GuestMain" Height="768" Width="1366"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Grid HorizontalAlignment="Left" DockPanel.Dock="Left" Width="175" Background="Gray">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.38*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Width="125" Height="175" BorderThickness="1" BorderBrush="Black">
+                <Image Height="175" Width="125"></Image>
+            </Border>
+            <Label Grid.Row="1" Grid.Column="0">Name:</Label>
+            <Label HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">Imenko Prezimenic</Label>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 20" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="60" Height="30">Sign out</Button>
+        </Grid>
+        <TabControl DockPanel.Dock="Right" VerticalAlignment="Stretch" Background="LightGray">
+            <TabItem Header="Gost 1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.25*"></RowDefinition>
+                        <RowDefinition Height="0.25*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="DarkGray" ></Border>
+                    <Label Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center">Name:</Label>
+                    <Label Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center">Country:</Label>
+                    <Label Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center">City:</Label>
+                    <Label Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center">Type:</Label>
+                    <Label Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center">Guests:</Label>
+                    <Label Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center">Days:</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
+                    <ComboBox Grid.Row="3" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center" SelectedIndex="0">
+                        <ComboBoxItem Background="Gray">Not Specified</ComboBoxItem>
+                        <ComboBoxItem Background="Gray">Appartment</ComboBoxItem>
+                        <ComboBoxItem Background="Gray">House</ComboBoxItem>
+                        <ComboBoxItem Background="Gray">Hut</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox Grid.Row="4" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox Grid.Row="5" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
+                    <Button Click="Search" Grid.Row="6" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Search</Button>
+                    <Button Click="CancelSearch" Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Cancel Search</Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Gost 2">
+
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
 </Window>
