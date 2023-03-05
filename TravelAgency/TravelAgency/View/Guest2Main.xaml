@@ -6,34 +6,29 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
         Title="Guest2Main" Height="450" Width="800">
-    <TabControl>
-        <TabItem Header="Gost1"></TabItem>
-        <TabItem Header="Gost2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center">Lokacija</Label>
-                    <TextBox Margin="10" Grid.Row="1" Grid.Column="0"></TextBox>
-                    <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">Duzina</Label>
-                    <TextBox Margin="10" Grid.Row="1" Grid.Column="1"></TextBox>
-                    <Button Grid.Column="2" Margin="0 10 0 0">Trazi</Button>
-                </Grid>
-                <DataGrid Grid.Row="1" ItemsSource="{Binding Tours}">
-                </DataGrid>
-            </Grid>
-        </TabItem>
-    </TabControl>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center">Lokacija</Label>
+            <TextBox Margin="10" Grid.Row="1" Grid.Column="0" x:Name="tbLocation"></TextBox>
+            <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">Duzina</Label>
+            <TextBox Margin="10" Grid.Row="1" Grid.Column="1" x:Name="tbDuration"></TextBox>
+            <Button Grid.Column="2" Margin="0 10 0 0" Click="Button_Click">Trazi</Button>
+        </Grid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Tours}" Name="ToursDataGrid">
+        </DataGrid>
+    </Grid>
 </Window>
