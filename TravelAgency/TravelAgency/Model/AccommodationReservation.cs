@@ -11,20 +11,23 @@ namespace TravelAgency.Model
     {
         public int Id { get; set; }
         public int AccomodationId { get; set; }
-        public DateOnly ReservationDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
 
         public AccommodationReservation()
         {
             Id = -1;
             AccomodationId = -1;
-            ReservationDate = new DateOnly();
+            StartDate = new DateOnly();
+            EndDate = new DateOnly();
         }
 
-        public AccommodationReservation(int id, int accommodationId, DateOnly reservationDate)
+        public AccommodationReservation(int id, int accommodationId, DateOnly reservationStartDate, DateOnly reservationEndDate)
         {
             Id = id;
             AccomodationId = accommodationId;
-            ReservationDate = reservationDate;
+            StartDate = reservationStartDate;
+            EndDate = reservationEndDate;
         }
 
         public string[] ToCSV()

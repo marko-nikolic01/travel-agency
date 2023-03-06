@@ -8,6 +8,7 @@ using TravelAgency.Serializer;
 namespace TravelAgency.Model
 {
     public enum AccommodationType { APARTMENT, HOUSE, HUT }
+
     public class Accommodation : ISerializable
     {
         public int Id { get; set; }
@@ -19,7 +20,9 @@ namespace TravelAgency.Model
         public int DaysToCancel { get; set; }
 
         public Location Location { get; set; }
-        List<string> Images { get; set; }
+        public List<string> Images { get; set; }
+        public List<AccommodationReservation> Reservations { get; set; }
+        public List<AccommodationCancellation> Cancellations { get; set; }
 
         public Accommodation()
         {
@@ -51,12 +54,28 @@ namespace TravelAgency.Model
 
         public string[] ToCSV()
         {
-            throw new NotImplementedException();
+            string[] csvValues =
+            {
+                Id.ToString(),
+                Name, 
+                LocationId.ToString(),
+                Type.ToString(),
+                MaxGuests.ToString(),
+                MinDays.ToString(),
+                DaysToCancel.ToString()
+            };
+            return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
-            throw new NotImplementedException();
+            Id = int.Parse(values[0]);
+            Name = int.Parse(values[1]);
+            LocationId = int.Parse(values[2]);
+            Type = int.Parse(values[3]);
+            MaxGuests = int.Parse(values[4]);
+            MinDays = int.Parse(values[5]);
+            DaysToCancel = int.Parse(values[6]);
         }
     }
 }
