@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace TravelAgency.View
 {
@@ -26,16 +27,17 @@ namespace TravelAgency.View
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
         }
 
-        private void Search(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CancelSearch(object sender, RoutedEventArgs e)
-        {
-            //source = accomodations;
-        }
-
         
+
+        private void LoadDateTime(object sender, RoutedEventArgs e)
+        {
+            DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
+            {
+                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss");
+            }, this.Dispatcher);
+            timer.Start();
+        }
+
+
     }
 }

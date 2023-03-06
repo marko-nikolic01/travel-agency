@@ -8,9 +8,14 @@
         Title="GuestMain" Height="768" Width="1366"
         WindowStartupLocation="CenterScreen">
     <DockPanel>
-        <Grid HorizontalAlignment="Left" DockPanel.Dock="Left" Width="175" Background="Gray">
+        <StatusBar x:Name="statusBar" DockPanel.Dock="Bottom" Background="White" BorderBrush="DarkGray" BorderThickness="0 1 0 0">
+            <StatusBarItem Content="Travel Agency"></StatusBarItem>
+            <StatusBarItem x:Name="statusBarDateTime" Loaded="LoadDateTime" HorizontalAlignment="Right"></StatusBarItem>
+        </StatusBar>
+        <Grid HorizontalAlignment="Left" DockPanel.Dock="Left" Width="175" Background="LightGray">
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
@@ -18,59 +23,64 @@
                 <ColumnDefinition Width="0.38*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Width="125" Height="175" BorderThickness="1" BorderBrush="Black">
-                <Image Height="175" Width="125"></Image>
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="DarkGray" BorderThickness="0 1 0 0"></Border>
+            <Border VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="125" Height="175" BorderThickness="2" BorderBrush="Black">
+                <Image Height="175" Width="125" Stretch="Fill" Source="../Resources/Images/ProfilePicture.jpg"></Image>
             </Border>
-            <Label Grid.Row="1" Grid.Column="0">Name:</Label>
-            <Label HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">Imenko Prezimenic</Label>
-            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 20" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="60" Height="30">Sign out</Button>
+            <Label Grid.Row="2" Grid.Column="0">Name:</Label>
+            <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1">Imenko Prezimenic</Label>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 20" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="60" Height="30">Sign out</Button>
         </Grid>
-        <TabControl DockPanel.Dock="Right" VerticalAlignment="Stretch" Background="LightGray">
-            <TabItem Header="Gost 1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.5*"></RowDefinition>
-                        <RowDefinition Height="0.25*"></RowDefinition>
-                        <RowDefinition Height="0.25*"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="10"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="DarkGray" ></Border>
-                    <Label Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center">Name:</Label>
-                    <Label Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center">Country:</Label>
-                    <Label Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center">City:</Label>
-                    <Label Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center">Type:</Label>
-                    <Label Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center">Guests:</Label>
-                    <Label Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center">Days:</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
-                    <TextBox Grid.Row="2" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
-                    <ComboBox Grid.Row="3" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center" SelectedIndex="0">
-                        <ComboBoxItem Background="Gray">Not Specified</ComboBoxItem>
-                        <ComboBoxItem Background="Gray">Appartment</ComboBoxItem>
-                        <ComboBoxItem Background="Gray">House</ComboBoxItem>
-                        <ComboBoxItem Background="Gray">Hut</ComboBoxItem>
-                    </ComboBox>
-                    <TextBox Grid.Row="4" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
-                    <TextBox Grid.Row="5" Grid.Column="1" Height="30" Background="Gray" VerticalContentAlignment="Center"></TextBox>
-                    <Button Click="Search" Grid.Row="6" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Search</Button>
-                    <Button Click="CancelSearch" Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Cancel Search</Button>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Gost 2">
-
-            </TabItem>
-
-        </TabControl>
+        <Label Height="30" DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="LightGray" BorderBrush="DarkGray" BorderThickness="0 1 0 1">ACCOMMODATIONS</Label>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.13*"></ColumnDefinition>
+                <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.RowSpan="9" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1 0 1 0" BorderBrush="DarkGray" ></Border>
+            <Label Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center">Name:</Label>
+            <Label Grid.Row="1" Grid.Column="0" VerticalContentAlignment="Center">Country:</Label>
+            <Label Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center">City:</Label>
+            <Label Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center">Type:</Label>
+            <Label Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center">Guest Number:</Label>
+            <Label Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center">Number Of Days:</Label>
+            <TextBox Name="nameTextBox" Grid.Row="0" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+            <TextBox Name="countryTextBox" Grid.Row="1" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+            <TextBox Name="cityTextBox" Grid.Row="2" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+            <ComboBox Name="typeComboBox" Grid.Row="3" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center" SelectedIndex="0">
+                <ComboBoxItem Background="LightGray">Not Specified</ComboBoxItem>
+                <ComboBoxItem Background="LightGray">Appartment</ComboBoxItem>
+                <ComboBoxItem Background="LightGray">House</ComboBoxItem>
+                <ComboBoxItem Background="LightGray">Hut</ComboBoxItem>
+            </ComboBox>
+            <TextBox Name="guestNumberTextBox" Grid.Row="4" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+            <TextBox Name="dayNumberTextBox" Grid.Row="5" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+            <Button Click="Search" Grid.Row="6" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Search</Button>
+            <Button Click="CancelSearch" Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Cancel Search</Button>
+            <DataGrid Grid.Row="0" Grid.RowSpan="9" Grid.Column="3" CanUserResizeColumns="False" AlternationCount="2" AlternatingRowBackground="LightGray"
+                      ItemsSource="{Binding Source=accommodations}" SelectedItem="{Binding Path=selectedAccommodation, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path=Name}"/>
+                    <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Location.Country}"/>
+                    <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Location.City}"/>
+                    <DataGridTextColumn Width="*" Header="Type" Binding="{Binding Path=Type}"/>
+                    <DataGridTextColumn Width="*" Header="Max. Guests" Binding="{Binding Path=MaxGuests}"/>
+                    <DataGridTextColumn Width="*" Header="Min. Days" Binding="{Binding Path=MinDays}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </DockPanel>
 </Window>
