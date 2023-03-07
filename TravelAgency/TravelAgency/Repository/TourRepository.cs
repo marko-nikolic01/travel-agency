@@ -32,6 +32,7 @@ namespace TravelAgency.Repository
             return tours[tours.Count - 1].Id +1;
         }
 
+
         public List<Tour> GetTours()
         {
             return tours;

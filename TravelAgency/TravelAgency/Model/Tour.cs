@@ -48,7 +48,8 @@ namespace TravelAgency.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, Description, Language, MaxGuestNumber.ToString(), Duration.ToString() };
+            string[] csvValues = { Id.ToString(), Name, Description, Language, MaxGuestNumber.ToString(), Duration.ToString(), 
+                Location.City, Location.Country, String.Join(",", Images.ToArray()) };
             return csvValues;
         }
 
@@ -60,6 +61,9 @@ namespace TravelAgency.Model
             Language = values[3];
             MaxGuestNumber = int.Parse(values[4]);
             Duration = int.Parse(values[5]);
+            Location.City = values[6];
+            Location.Country = values[7];
+            Images = values[8].Split(",").ToList();
         }
     }
 }

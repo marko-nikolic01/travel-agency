@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Observer;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
@@ -71,6 +73,17 @@ namespace TravelAgency.View
             NewTour.MaxGuestNumber = result;
             int.TryParse(DurationText.Text, out result);
             NewTour.Duration = result;
+            String[] location = LocationText.Text.Split(',');
+            NewTour.Location.City = location[0];
+            NewTour.Location.Country = location[1];
+            foreach(String keyPoint in ListKeyPoints.Items)
+            {
+                NewTour.KeyPoints.Add(keyPoint);
+            }
+            foreach (String image in ListImages.Items)
+            {
+                NewTour.Images.Add(image);
+            }
             TourRepository.SaveTours(NewTour);
             Close();
         }
