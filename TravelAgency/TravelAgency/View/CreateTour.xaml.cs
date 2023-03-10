@@ -30,7 +30,9 @@ namespace TravelAgency.View
         public Tour NewTour { get; set; }
         public Location Location { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
-        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository)
+        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public KeyPointRepository KeyPointRepository { get; set; }
+        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointeRepository)
         {
             InitializeComponent();
             DataContext = this;
@@ -39,6 +41,8 @@ namespace TravelAgency.View
             TourRepository = tourRepository;
             LocationRepository = locationRepository;
             PhotoRepository = photoRepository;
+            TourOccurrenceRepository = tourOccurrenceRepository;
+            KeyPointRepository = keyPointeRepository;
             DateCalendar.DisplayDateStart = DateTime.Today;
             //sa stackoverflow
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
@@ -92,16 +96,6 @@ namespace TravelAgency.View
             NewTour.MaxGuestNumber = result;
             int.TryParse(DurationText.Text, out result);
             NewTour.Duration = result;
-            foreach(String keyPoint in ListKeyPoints.Items)
-            {
-                //NewTour.KeyPoints.Add(keyPoint);
-            }
-            
-            foreach(String dateTime in ListDateTimes.Items)
-            {
-                DateTime dt = DateTime.ParseExact(dateTime, "dd-MM-yyyy hh:mm", CultureInfo.InvariantCulture);
-                //NewTour.DateTimes.Add(dt);
-            }
             TourRepository.SaveTours(NewTour);
             foreach (String link in ListPhotos.Items)
             {
@@ -110,6 +104,23 @@ namespace TravelAgency.View
                 photo.Link = link;
                 NewTour.Photos.Add(photo);
                 PhotoRepository.SavePhotos(photo);
+            }
+            foreach (String dateTimeItem in ListDateTimes.Items)
+            {
+                DateTime dateTime = DateTime.ParseExact(dateTimeItem, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
+                TourOccurrence tourOccurrence = new TourOccurrence();
+                tourOccurrence.TourId = NewTour.Id;
+                tourOccurrence.Tour = NewTour;
+                tourOccurrence.DateTime = dateTime;
+                TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence);
+                foreach (String keyPointItem in ListKeyPoints.Items)
+                {
+                    KeyPoint keyPoint = new KeyPoint();
+                    keyPoint.TourOccurrenceId = tourOccurrence.Id;
+                    keyPoint.Name = keyPointItem;
+                    tourOccurrence.KeyPoints.Add(keyPoint);
+                    KeyPointRepository.SaveKeyPoints(keyPoint);
+                }
             }
             Close();
         }

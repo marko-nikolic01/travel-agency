@@ -25,10 +25,12 @@ namespace TravelAgency.View
     /// </summary>
     public partial class GuideMain : Window, IObserver, INotifyPropertyChanged
     {
-        public ObservableCollection<Tour> Tours { get; set; }
+        public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourRepository TourRepository { get; set; }
         public LocationRepository LocationRepository { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
+        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public KeyPointRepository KeyPointRepository { get; set; }
         public GuideMain()
         {
             InitializeComponent();
@@ -36,10 +38,38 @@ namespace TravelAgency.View
             TourRepository = new TourRepository();
             LocationRepository = new LocationRepository();
             PhotoRepository = new PhotoRepository();
+            TourOccurrenceRepository = new TourOccurrenceRepository();
+            KeyPointRepository = new KeyPointRepository();
             LinkingTourLocation();
             LinkingTourImages();
-            Tours = new ObservableCollection<Tour>(TourRepository.GetTours());
-            TourRepository.Subscribe(this);
+            LinkingTourOccurrences();
+            LinkingKeyPoints();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            TourOccurrenceRepository.Subscribe(this);
+        }
+
+        private void LinkingKeyPoints()
+        {
+            foreach(KeyPoint keyPoint in KeyPointRepository.GetKeyPoints())
+            {
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(tO => tO.Id == keyPoint.TourOccurrenceId);
+                if (tourOccurrence != null)
+                {
+                    tourOccurrence.KeyPoints.Add(keyPoint);
+                }
+            }
+        }
+
+        private void LinkingTourOccurrences()
+        {
+            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            {
+                Tour tour = TourRepository.GetTours().Find(t => t.Id == tourOccurrence.TourId);
+                if (tour != null)
+                {
+                    tourOccurrence.Tour = tour;
+                }
+            }
         }
 
         private void LinkingTourImages()
@@ -81,16 +111,16 @@ namespace TravelAgency.View
 
         private void NewTourClick(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository);
+            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository);
             createTour.Show();
         }
 
         public void Update()
         {
-            Tours.Clear();
-            foreach(Tour tour in TourRepository.GetTours())
+            TourOccurrences.Clear();
+            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
             {
-                Tours.Add(tour);
+                TourOccurrences.Add(tourOccurrence);
             }
         }
     }
