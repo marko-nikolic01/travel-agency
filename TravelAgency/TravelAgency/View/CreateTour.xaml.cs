@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,13 +26,23 @@ namespace TravelAgency.View
     public partial class CreateTour : Window
     {
         public TourRepository TourRepository { get; set; }
+        public LocationRepository LocationRepository { get; set; }
         public Tour NewTour { get; set; }
+        public Location Location { get; set; }
         public CreateTour(TourRepository tourRepository)
         {
             InitializeComponent();
             DataContext = this;
             NewTour = new Tour();
-            TourRepository = tourRepository;  
+            Location = new Location();
+            TourRepository = tourRepository;
+            LocationRepository = new LocationRepository();
+            DateCalendar.DisplayDateStart = DateTime.Today;
+            //DatePickerText = new DateTime();
+            //sa stackoverflow
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
         }
 
         private void AddKeyPointClick(object sender, RoutedEventArgs e)
@@ -46,13 +58,13 @@ namespace TravelAgency.View
 
         private void AddDateTimeClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(DateTimeText.Text))
+            if (string.IsNullOrEmpty(DateCalendar.Text) || string.IsNullOrEmpty(TimeText.Text))
             {
                 return;
             }
-            ListDateTimes.Items.Add(DateTimeText.Text);
-            DateTimeText.Clear();
-            DateTimeText.Focus();
+            ListDateTimes.Items.Add(DateCalendar.Text + " " + TimeText.Text);
+            TimeText.Clear();
+            DateCalendar.Focus();
         }
 
         private void AddImagesClick(object sender, RoutedEventArgs e)
@@ -68,24 +80,33 @@ namespace TravelAgency.View
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
+            string[] cityCountry = Location.FullName.Split(',');
+            Location.City = cityCountry[0];
+            Location.Country = cityCountry[1];
+            LocationRepository.SaveLocation(Location);
+            NewTour.LocationId = Location.Id;
+            NewTour.Location = Location;
             int result = 0;
             int.TryParse(MaxGuestsText.Text, out result);
             NewTour.MaxGuestNumber = result;
             int.TryParse(DurationText.Text, out result);
             NewTour.Duration = result;
-            String[] location = LocationText.Text.Split(',');
-            NewTour.Location.City = location[0];
-            NewTour.Location.Country = location[1];
             foreach(String keyPoint in ListKeyPoints.Items)
             {
-                NewTour.KeyPoints.Add(keyPoint);
+                //NewTour.KeyPoints.Add(keyPoint);
             }
             foreach (String image in ListImages.Items)
             {
                 NewTour.Images.Add(image);
             }
+            foreach(String dateTime in ListDateTimes.Items)
+            {
+                DateTime dt = DateTime.ParseExact(dateTime, "dd-MM-yyyy hh:mm", CultureInfo.InvariantCulture);
+                //NewTour.DateTimes.Add(dt);
+            }
             TourRepository.SaveTours(NewTour);
             Close();
         }
+
     }
 }

@@ -31,7 +31,7 @@
         <Label Content="Welcome tour guide" FontSize="15" Grid.ColumnSpan="2"></Label>
         <Button Grid.Column="1" Grid.Row="3" Height="40" Content="Enter new tour" Click="NewTourClick"></Button>
         <Label Content="Todays tours" FontSize="20" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="5" ItemsSource="{Binding Path=Tours}">
+        <DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="5" IsReadOnly="True" ItemsSource="{Binding Path=Tours}">
             
         </DataGrid>
         <Button Grid.Column="9" Grid.Row="5" Content="Sign out" Height="40" Margin="10" Click="SignOutClick"></Button>

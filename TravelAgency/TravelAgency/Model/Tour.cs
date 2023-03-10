@@ -15,13 +15,12 @@ namespace TravelAgency.Model
         public String Language { get; set; }
         public int MaxGuestNumber { get; set; }
         public int Duration { get; set; }
+        public int LocationId { get; set; }
         public Location Location { get; set; }
-        public List<String> KeyPoints { get; set; }
-        public List<DateTime> DateTimes { get; set; }
         public List<String> Images { get; set; }
 
         public Tour(int id, string name, string description, string language, int maxGuestNumber, 
-            int duration, Location location, List<string> keyPoints, List<DateTime> dateTimes, List<string> images)
+            int duration, int locationId, List<string> keyPoints, List<DateTime> dateTimes, List<string> images)
         {
             Id = id;
             Name = name;
@@ -29,9 +28,7 @@ namespace TravelAgency.Model
             Language = language;
             MaxGuestNumber = maxGuestNumber;
             Duration = duration;
-            Location = location;
-            KeyPoints = keyPoints;
-            DateTimes = dateTimes;
+            LocationId = locationId;
             Images = images;
         }
 
@@ -41,15 +38,13 @@ namespace TravelAgency.Model
             Description = "";
             Language = "";
             Location = new Location();
-            KeyPoints = new List<string>();
-            DateTimes = new List<DateTime>();
             Images = new List<string>();
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), Name, Description, Language, MaxGuestNumber.ToString(), Duration.ToString(), 
-                Location.City, Location.Country, String.Join(",", Images.ToArray()) };
+                LocationId.ToString() };
             return csvValues;
         }
 
@@ -61,9 +56,7 @@ namespace TravelAgency.Model
             Language = values[3];
             MaxGuestNumber = int.Parse(values[4]);
             Duration = int.Parse(values[5]);
-            Location.City = values[6];
-            Location.Country = values[7];
-            Images = values[8].Split(",").ToList();
+            LocationId = int.Parse(values[6]);
         }
     }
 }
