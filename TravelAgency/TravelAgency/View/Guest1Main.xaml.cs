@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
 {
@@ -38,6 +39,14 @@ namespace TravelAgency.View
             timer.Start();
         }
 
+        private void NumberUpDownValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var upDown = (sender as IntegerUpDown);
+            if (upDown.Value == 0)
+            {
+                upDown.Text = "";
+            }
 
+        }
     }
 }
