@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -15,19 +16,19 @@ using System.Windows.Shapes;
 namespace TravelAgency.View
 {
     /// <summary>
-    /// Interaction logic for OwnerMain.xaml
+    /// Interaction logic for CreateAccommodation.xaml
     /// </summary>
-    public partial class OwnerMain : Window
+    public partial class CreateAccommodation : Window
     {
-        public OwnerMain()
+        public CreateAccommodation()
         {
             InitializeComponent();
         }
 
-        private void ShowOwnerMain_Click(object sender, RoutedEventArgs e)
+        private void AddImage_Click(object sender, RoutedEventArgs e)
         {
-            CreateAccommodation createAccommodation = new CreateAccommodation();
-            createAccommodation.Show();
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ShowDialog();
         }
     }
 }

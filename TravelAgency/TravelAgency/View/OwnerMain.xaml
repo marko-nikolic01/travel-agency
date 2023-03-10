@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="OwnerMain" Height="450" Width="800">
-    <Grid>
+        Title="Prikaz smeštaja" Height="450" Width="800">
+    <DockPanel LastChildFill="False">
         
-    </Grid>
+        <Menu DockPanel.Dock="Top" Height="20">
+            <MenuItem Header="_File" Height="20"></MenuItem>
+            <MenuItem Header="_Edit" Height="20"></MenuItem>
+        </Menu>
+        
+        <ToolBar DockPanel.Dock="Top" Height="Auto">
+            <Button Content="Dodaj smeštaj" Click="ShowOwnerMain_Click"/>
+            <Button Content="Profil" Click="ShowOwnerMain_Click"/>
+        </ToolBar>
+
+        <DataGrid DockPanel.Dock="Top" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Naziv" Width="1.5*"/>
+                <DataGridTextColumn Header="Tip" Width="1.5*"/>
+                <DataGridTextColumn Header="Maksimalan broj gostiju" Width="1.5*"/>
+                <DataGridTextColumn Header="Ocena" Width="2*"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </DockPanel>
 </Window>
