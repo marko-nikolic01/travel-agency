@@ -29,16 +29,17 @@ namespace TravelAgency.View
         public LocationRepository LocationRepository { get; set; }
         public Tour NewTour { get; set; }
         public Location Location { get; set; }
-        public CreateTour(TourRepository tourRepository)
+        public PhotoRepository PhotoRepository { get; set; }
+        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository)
         {
             InitializeComponent();
             DataContext = this;
             NewTour = new Tour();
             Location = new Location();
             TourRepository = tourRepository;
-            LocationRepository = new LocationRepository();
+            LocationRepository = locationRepository;
+            PhotoRepository = photoRepository;
             DateCalendar.DisplayDateStart = DateTime.Today;
-            //DatePickerText = new DateTime();
             //sa stackoverflow
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
@@ -73,7 +74,7 @@ namespace TravelAgency.View
             {
                 return;
             }
-            ListImages.Items.Add(ImageText.Text);
+            ListPhotos.Items.Add(ImageText.Text);
             ImageText.Clear();
             ImageText.Focus();
         }
@@ -95,16 +96,21 @@ namespace TravelAgency.View
             {
                 //NewTour.KeyPoints.Add(keyPoint);
             }
-            foreach (String image in ListImages.Items)
-            {
-                NewTour.Images.Add(image);
-            }
+            
             foreach(String dateTime in ListDateTimes.Items)
             {
                 DateTime dt = DateTime.ParseExact(dateTime, "dd-MM-yyyy hh:mm", CultureInfo.InvariantCulture);
                 //NewTour.DateTimes.Add(dt);
             }
             TourRepository.SaveTours(NewTour);
+            foreach (String link in ListPhotos.Items)
+            {
+                Photo photo = new Photo();
+                photo.TourId = NewTour.Id;
+                photo.Link = link;
+                NewTour.Photos.Add(photo);
+                PhotoRepository.SavePhotos(photo);
+            }
             Close();
         }
 

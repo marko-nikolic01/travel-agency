@@ -17,10 +17,10 @@ namespace TravelAgency.Model
         public int Duration { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; }
-        public List<String> Images { get; set; }
+        public List<Photo> Photos { get; set; }
 
         public Tour(int id, string name, string description, string language, int maxGuestNumber, 
-            int duration, int locationId, List<string> keyPoints, List<DateTime> dateTimes, List<string> images)
+            int duration, int locationId, List<string> keyPoints, List<DateTime> dateTimes, List<Photo> photos)
         {
             Id = id;
             Name = name;
@@ -29,7 +29,7 @@ namespace TravelAgency.Model
             MaxGuestNumber = maxGuestNumber;
             Duration = duration;
             LocationId = locationId;
-            Images = images;
+            Photos = photos;
         }
 
         public Tour()
@@ -38,7 +38,7 @@ namespace TravelAgency.Model
             Description = "";
             Language = "";
             Location = new Location();
-            Images = new List<string>();
+            Photos = new List<Photo>();
         }
 
         public string[] ToCSV()

@@ -57,7 +57,7 @@
         <TextBox Grid.Row="5" Grid.Column="5" Margin="5" Name="DurationText"></TextBox>
         <TextBox Grid.Row="6" Grid.Column="5" Margin="5" Name="ImageText"></TextBox>
         <Button Grid.Row="6" Grid.Column="6" Margin="5" Content="Add" Width="30" Click="AddImagesClick"></Button>
-        <ListBox Grid.Row="7" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListImages"></ListBox>
+        <ListBox Grid.Row="7" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListPhotos"></ListBox>
         
         
     </Grid>

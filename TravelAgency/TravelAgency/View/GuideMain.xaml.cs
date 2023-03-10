@@ -27,13 +27,43 @@ namespace TravelAgency.View
     {
         public ObservableCollection<Tour> Tours { get; set; }
         public TourRepository TourRepository { get; set; }
+        public LocationRepository LocationRepository { get; set; }
+        public PhotoRepository PhotoRepository { get; set; }
         public GuideMain()
         {
             InitializeComponent();
             DataContext = this;
             TourRepository = new TourRepository();
+            LocationRepository = new LocationRepository();
+            PhotoRepository = new PhotoRepository();
+            LinkingTourLocation();
+            LinkingTourImages();
             Tours = new ObservableCollection<Tour>(TourRepository.GetTours());
             TourRepository.Subscribe(this);
+        }
+
+        private void LinkingTourImages()
+        {
+            foreach(Photo photo in PhotoRepository.GetPhotos())
+            {
+                Tour tour = TourRepository.GetTours().Find(t => t.Id == photo.TourId);
+                if(tour != null)
+                {
+                    tour.Photos.Add(photo);
+                }
+            }
+        }
+
+        private void LinkingTourLocation()
+        {
+            foreach(var tour in TourRepository.GetTours())
+            {
+                Location location = LocationRepository.GetLocations().Find(l => l.Id == tour.Id);
+                if(location != null)
+                {
+                    tour.Location = location;
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -51,7 +81,7 @@ namespace TravelAgency.View
 
         private void NewTourClick(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(TourRepository);
+            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository);
             createTour.Show();
         }
 
