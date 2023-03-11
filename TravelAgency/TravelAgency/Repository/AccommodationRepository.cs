@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Linq;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
@@ -17,10 +18,29 @@ namespace TravelAgency.Repository
 
         private List<Accommodation> _accommodations;
 
-        public AccommodationRepository()
+        public AccommodationRepository(LocationRepository locationRepository, ImageRepository imageRepository)
         {
             _serializer = new Serializer<Accommodation>();
             _accommodations = _serializer.FromCSV(FilePath);
+
+            foreach (Accommodation accommodation in _accommodations)
+            {
+                foreach (Location location in locationRepository.GetAll())
+                {
+                    if (accommodation.LocationId == location.Id)
+                    {
+                        accommodation.Location = location;
+                    }
+                }
+
+                foreach (Image image in imageRepository.GetAll())
+                {
+                    if (accommodation.Id == image.ObjectId)
+                    {
+                        accommodation.Images.Add(image);
+                    }
+                }
+            }
         }
 
         public int NextId()
@@ -40,6 +60,11 @@ namespace TravelAgency.Repository
             _accommodations.Add(accommodation);
             _serializer.ToCSV(FilePath, _accommodations);
             return accommodation;
+        }
+
+        public List<Accommodation> GetByUser(User user)
+        {
+            return _accommodations.FindAll(c => c.OwnerId == user.Id);
         }
     }
 }
