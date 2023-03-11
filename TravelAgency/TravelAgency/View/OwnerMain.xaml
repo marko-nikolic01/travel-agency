@@ -7,23 +7,29 @@
         mc:Ignorable="d"
         Title="Prikaz smeštaja" Height="450" Width="800">
     <DockPanel LastChildFill="False">
-        
+
         <Menu DockPanel.Dock="Top" Height="20">
             <MenuItem Header="_File" Height="20"></MenuItem>
             <MenuItem Header="_Edit" Height="20"></MenuItem>
         </Menu>
-        
+
         <ToolBar DockPanel.Dock="Top" Height="Auto">
-            <Button Content="Dodaj smeštaj" Click="ShowOwnerMain_Click"/>
-            <Button Content="Profil" Click="ShowOwnerMain_Click"/>
+            <Button Content="Dodaj smeštaj" Click="ShowCreateAccommodation_Click"/>
+            <Button Content="Oceni korisnika" Click="ShowCreateAccommodation_Click"/>
         </ToolBar>
 
-        <DataGrid DockPanel.Dock="Top" AutoGenerateColumns="False">
+        <DataGrid DockPanel.Dock="Top"
+                  ItemsSource="{Binding Accommodations}"
+                  SelectedItem="{Binding Path=SelectedAccommodation}"
+                  IsReadOnly="True" SelectionMode="Single"
+                  AutoGenerateColumns="False" HeadersVisibility="Column">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Naziv" Width="1.5*"/>
-                <DataGridTextColumn Header="Tip" Width="1.5*"/>
-                <DataGridTextColumn Header="Maksimalan broj gostiju" Width="1.5*"/>
-                <DataGridTextColumn Header="Ocena" Width="2*"/>
+                <DataGridTextColumn Header="Naziv" Width="1.5*" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Tip" Width="1.5*" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Maksimalan broj gostiju" Width="1.5*" Binding="{Binding MaxGuests}"/>
+                <DataGridTextColumn Header="Minimalan broj dana" Width="2*" Binding="{Binding MinDays}"/>
+                <DataGridTextColumn Header="Mesto" Width="2*" Binding="{Binding Location.City}"/>
+                <DataGridTextColumn Header="Država" Width="2*" Binding="{Binding Location.Country}"/>
             </DataGrid.Columns>
 
         </DataGrid>

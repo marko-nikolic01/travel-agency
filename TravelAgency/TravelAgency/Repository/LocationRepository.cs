@@ -29,17 +29,19 @@ namespace TravelAgency.Repository
             }
             return locations[locations.Count - 1].Id + 1;
         }
-
-
+        
         public List<Location> GetLocations()
         {
             return locations;
         }
-        public void SaveLocation(Location location)
+
+        public Location SaveLocation(Location location)
         {
             location.Id = GetNewId();
             locations.Add(location);
             _serializer.ToCSV(FilePath, locations);
+
+            return location;
         }
     }
 }
