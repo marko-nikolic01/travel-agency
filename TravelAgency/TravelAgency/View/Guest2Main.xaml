@@ -17,18 +17,36 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center">Lokacija</Label>
-            <TextBox Margin="10" Grid.Row="1" Grid.Column="0" x:Name="tbLocation"></TextBox>
-            <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">Duzina</Label>
-            <TextBox Margin="10" Grid.Row="1" Grid.Column="1" x:Name="tbDuration"></TextBox>
-            <Button Grid.Column="2" Margin="0 10 0 0" Click="Button_Click">Trazi</Button>
+            <Label Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center">Country</Label>
+            <TextBox Margin="10 15" Grid.Row="1" Grid.Column="0" x:Name="tbCountry"></TextBox>
+            <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">City</Label>
+            <TextBox Margin="10 15" Grid.Row="1" Grid.Column="1" x:Name="tbCity"></TextBox>
+            <Label Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Center">Duration</Label>
+            <TextBox Margin="10 15" Grid.Row="1" Grid.Column="2" x:Name="tbDuration"></TextBox>
+            <Label Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Center">Language</Label>
+            <TextBox Margin="10 15" Grid.Row="1" Grid.Column="3" x:Name="tbLanguage"></TextBox>
+            <Label Grid.Row="0" Grid.Column="4" HorizontalContentAlignment="Center">Number of guests</Label>
+            <TextBox Margin="10 15" Grid.Row="1" Grid.Column="4" x:Name="tbNumOfGuests"></TextBox>
+            <Button Grid.Column="5" Grid.Row="1" Margin="10" Click="Button_Click">Search</Button>
         </Grid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Tours}" Name="ToursDataGrid">
+        <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False" Name="ToursDataGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
+                <DataGridTextColumn Header="City" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Date and time" Binding="{Binding DateTime}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Duration (hours)" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Max guest number" Binding="{Binding Tour.MaxGuestNumber}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Current guest number" Binding="{Binding Guests.Count}"></DataGridTextColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>

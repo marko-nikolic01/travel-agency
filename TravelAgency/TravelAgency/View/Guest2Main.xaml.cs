@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
@@ -21,38 +22,84 @@ namespace TravelAgency.View
     /// </summary>
     public partial class Guest2Main : Window
     {
-        public static ObservableCollection<TuraTest> Tours { get; set; }
-        List<TuraTest> toursList;
+        public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
+        List<TourOccurrence> toursList;
+        public TourRepository TourRepository { get; set; }
+        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public LocationRepository LocationRepository { get; set; }
+
         public Guest2Main()
         {
             InitializeComponent();
             DataContext = this;
-
-            Tours = new ObservableCollection<TuraTest>
-            {
-                new TuraTest("bg", 20),
-                new TuraTest("ns", 20)
-            };
-            toursList = Tours.ToList();
+            TourRepository = new TourRepository();
+            LocationRepository = new LocationRepository();
+            TourOccurrenceRepository = new TourOccurrenceRepository();
+            LinkingTourLocation();
+            LinkingTourOccurrences();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            toursList = TourOccurrences.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            bool tbLocEmpty = true, tbDurEmpty = true;
-            if(tbLocation.Text != "" || tbDuration.Text != "")
+            bool tbCityEmpty = true, tbDurEmpty = true, tbCountryEmpty = true, tbLanguageEmpty = true, tbNumOfGuestsEmpty = true;
+            if(tbCity.Text != "" || tbCountry.Text != "" || tbLanguage.Text != "" || tbDuration.Text != "" || tbNumOfGuests.Text != "")
             {
-                if(tbLocation.Text != "")
-                    tbLocEmpty= false;
+                if(tbCity.Text != "")
+                    tbCityEmpty= false;
+                if (tbCountry.Text != "")
+                    tbCountryEmpty = false;
                 if (tbDuration.Text != "")
                     tbDurEmpty = false;
-                //proverava da li tekst iz textbox zadovaljava kriterijum ili ako je prazan textbox onda svakako zadovoljava kriterijum
-                var filteredList = toursList.Where(x => (x.Location.ToLower().Contains(tbLocation.Text) || tbLocEmpty) &&
-                                                        (x.Duration.ToString().Contains(tbDuration.Text) || tbDurEmpty));
+                if (tbLanguage.Text != "")
+                    tbLanguageEmpty = false;
+                if (tbNumOfGuests.Text != "")
+                    tbNumOfGuestsEmpty = false;
+                
+                var filteredList = FilterList(tbCityEmpty, tbDurEmpty, tbCountryEmpty, tbLanguageEmpty, tbNumOfGuestsEmpty);
                 ToursDataGrid.ItemsSource = filteredList;
             }
             else
             {
-                ToursDataGrid.ItemsSource = Tours;
+                ToursDataGrid.ItemsSource = TourOccurrences;
+            }
+        }
+        //proverava da li tekst iz textbox zadovaljava kriterijum ili ako je prazan textbox onda svakako zadovoljava kriterijum
+        private IEnumerable<TourOccurrence> FilterList(bool tbCityEmpty, bool tbDurEmpty, bool tbCountryEmpty, bool tbLanguageEmpty, bool tbNumOfGuestsEmpty)
+        {
+            int numOfGuests;
+            if (!tbNumOfGuestsEmpty)
+                numOfGuests = int.Parse(tbNumOfGuests.Text);
+            else
+                numOfGuests = 0;
+            return toursList.Where(x => (x.Tour.Location.City.ToLower().Contains(tbCity.Text) || tbCityEmpty) &&
+                                                        (x.Tour.Location.Country.ToLower().Contains(tbCountry.Text) || tbCountryEmpty) &&
+                                                        (x.Tour.Language.ToLower().Contains(tbLanguage.Text) || tbLanguageEmpty) &&
+                                                        (x.Tour.Duration.ToString().Contains(tbDuration.Text) || tbDurEmpty) &&
+                                                        ((x.Tour.MaxGuestNumber - x.Guests.Count) >= numOfGuests));
+        }
+
+        private void LinkingTourLocation()
+        {
+            foreach (var tour in TourRepository.GetTours())
+            {
+                Location location = LocationRepository.GetLocations().Find(l => l.Id == tour.Id);
+                if (location != null)
+                {
+                    tour.Location = location;
+                }
+            }
+        }
+        private void LinkingTourOccurrences()
+        {
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            {
+                Tour tour = TourRepository.GetTours().Find(t => t.Id == tourOccurrence.TourId);
+                if (tour != null)
+                {
+                    tourOccurrence.Tour = tour;
+                }
             }
         }
     }

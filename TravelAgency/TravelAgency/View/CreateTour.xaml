@@ -1,0 +1,64 @@
+﻿<Window x:Class="TravelAgency.View.CreateTour"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="CreateTour" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Grid.Column="1" Content="Name:" FontSize="15"></Label>
+        <Label Grid.Row="2" Grid.Column="1" Content="Location:" FontSize="15"></Label>
+        <Label Grid.Row="3" Grid.Column="1" Content="Description:" FontSize="15"></Label>
+        <Label Grid.Row="5" Grid.Column="1" Content="Language:" FontSize="15"></Label>
+        <Label Grid.Row="6" Grid.Column="1" Content="Max number of guests:" FontSize="15"></Label>
+        <Label Grid.Row="7" Grid.Column="1" Content="Key points:" FontSize="15"></Label>
+        <Label Grid.Row="1" Grid.Column="4" Content="Date and time:" FontSize="15"></Label>
+        <Label Grid.Row="5" Grid.Column="4" Content="Duration:" FontSize="15"></Label>
+        <Label Grid.Row="6" Grid.Column="4" Content="Images:" FontSize="15"></Label>
+        <Button Grid.Column="5" Grid.Row="11" HorizontalAlignment="Right" Margin="5" Width="80" Content="Create" FontSize="15" Click="CreateClick"></Button>
+        <TextBox Grid.Row="1" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Name}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="2" Margin="5" Text="{Binding Path=Location.FullName}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=NewTour.Description}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Language}"></TextBox>
+        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Name="MaxGuestsText"></TextBox>
+        <TextBox Grid.Row="7" Grid.Column="2" Margin="5" Name="KeyPointsText"></TextBox>
+        <Button Grid.Row="7" Grid.Column="3" Margin="5" Content="Add" Width="30" Click="AddKeyPointClick"></Button>
+        <ListBox Grid.Row="8" Grid.Column="2" Grid.RowSpan="3" Margin="5" Name="ListKeyPoints"></ListBox>
+        <DatePicker Grid.Row="1" Grid.Column="5" Name="DateCalendar" Margin="5"></DatePicker>
+        <TextBox Grid.Row="1" Grid.Column="6" Margin="5" Name="TimeText"></TextBox>
+        <Button Grid.Row="1" Grid.Column="7" Margin="5" Content="Add" Width="30" Click="AddDateTimeClick"></Button>
+        <ListBox Grid.Row="2" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListDateTimes"></ListBox>
+        <TextBox Grid.Row="5" Grid.Column="5" Margin="5" Name="DurationText"></TextBox>
+        <TextBox Grid.Row="6" Grid.Column="5" Margin="5" Name="ImageText"></TextBox>
+        <Button Grid.Row="6" Grid.Column="6" Margin="5" Content="Add" Width="30" Click="AddImagesClick"></Button>
+        <ListBox Grid.Row="7" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListPhotos"></ListBox>
+        
+        
+    </Grid>
+</Window>

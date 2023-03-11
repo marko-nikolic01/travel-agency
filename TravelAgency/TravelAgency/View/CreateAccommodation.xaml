@@ -1,0 +1,82 @@
+﻿<Window x:Class="TravelAgency.View.CreateAccommodation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Dodaj smeštaj" SizeToContent="Height" Width="400">
+    <StackPanel>
+        <Grid Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Naziv" Grid.Row="0" Grid.Column="0"/>
+            <Label Content="Grad" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Država" Grid.Row="2" Grid.Column="0"/>
+            <Label Content="Tip smeštaja" Grid.Row="3" Grid.Column="0"/>
+            <Label Content="Maksimalan broj gostiju" Grid.Row="4" Grid.Column="0"/>
+            <Label Content="Minimalan broj dana za rezervaciju" Grid.Row="5" Grid.Column="0"/>
+            <Label Content="Rok otkazivanja rezervacije (broj dana)" Grid.Row="6" Grid.Column="0"/>
+            <Label Content="Fotografije smeštaja" Grid.Row="7" Grid.Column="0"/>
+
+            <TextBox x:Name="AccommodationNameTextBox" Grid.Row="0" Grid.Column="1"/>
+            <TextBox x:Name="LocationCityTextBox" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="LocationCountryTextBox" Grid.Row="2" Grid.Column="1"/>
+            <StackPanel Grid.Row="3" Grid.Column="1">
+                <RadioButton x:Name="ApartmentRadioButton" Content="Apartman" GroupName="AccomodationType" IsChecked="True"/>
+                <RadioButton x:Name="HouseRadioButton" Content="Kuća" GroupName="AccomodationType"/>
+                <RadioButton x:Name="HutRadioButton" Content="Koliba" GroupName="AccomodationType"/>
+            </StackPanel>
+
+            <xctk:IntegerUpDown x:Name="MaxGuestsIntegerUpDown" Grid.Row="4" Grid.Column="1" Value="1" Minimum="0" Increment="1"/>
+            <xctk:IntegerUpDown x:Name="MinDaysIntegerUpDown" Grid.Row="5" Grid.Column="1" Value="1"/>
+            <xctk:IntegerUpDown x:Name="DaysToCancelIntegerUpDown" Grid.Row="6" Grid.Column="1" Value="1"/>
+
+            <Grid Grid.Row="7" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Content="Dodaj" Grid.Row="1" Grid.Column="0" Click="AddImage_Click"/>
+                <Button Content="Ukloni" Grid.Row="1" Grid.Column="1"/>
+
+                <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                          ItemsSource="{Binding Images}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Registruj" Click="RegisterAccommodation_Click"/>
+            <Button Grid.Column="1" Content="Otkaži" Click="Button_Click"/>
+        </Grid>
+    </StackPanel>
+</Window>

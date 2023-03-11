@@ -7,6 +7,47 @@
         mc:Ignorable="d"
         Title="GuideMain" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Welcome tour guide" FontSize="15" Grid.ColumnSpan="2"></Label>
+        <Button Grid.Column="1" Grid.Row="3" Height="40" Content="Enter new tour" Click="NewTourClick"></Button>
+        <Label Content="Todays tours" FontSize="20" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="5" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Location">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="Tour.Location.City"/>
+                            <Binding Path="Tour.Location.Country"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Name"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Tour.Language}" Header="Language"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Column="9" Grid.Row="5" Content="Sign out" Height="40" Margin="10" Click="SignOutClick"></Button>
+        <Button Grid.Column="6" Height="40" Content="Start the tour" Margin="5"></Button>
+        <Button Grid.Column="7" Height="40" Content="Stop the tour" Margin="5"></Button>
     </Grid>
 </Window>
