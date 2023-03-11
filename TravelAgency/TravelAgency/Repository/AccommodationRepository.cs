@@ -25,7 +25,7 @@ namespace TravelAgency.Repository
 
             foreach (Accommodation accommodation in _accommodations)
             {
-                foreach (Location location in locationRepository.GetAll())
+                foreach (Location location in locationRepository.GetLocations())
                 {
                     if (accommodation.LocationId == location.Id)
                     {

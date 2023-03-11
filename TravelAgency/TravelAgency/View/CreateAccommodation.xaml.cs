@@ -96,7 +96,7 @@ namespace TravelAgency.View
             NewAccommodation.MinDays = (int)MinDaysIntegerUpDown.Value;
             NewAccommodation.DaysToCancel = (int)DaysToCancelIntegerUpDown.Value;
 
-            Location savedLocation = _LocationRepository.Save(NewLocation);
+            Location savedLocation = _LocationRepository.SaveLocation(NewLocation);
 
             NewAccommodation.LocationId = savedLocation.Id;
             NewAccommodation.Location = savedLocation;

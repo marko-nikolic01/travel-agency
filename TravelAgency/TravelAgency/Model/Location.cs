@@ -43,23 +43,5 @@ namespace TravelAgency.Model
             City = values[1];
             Country = values[2];
         }
-
-        public string[] ToCSV()
-        {
-            string[] csvValues =
-            {
-                Id.ToString(),
-                Country,
-                City
-            };
-            return csvValues;
-        }
-
-        public void FromCSV(string[] values)
-        {
-            Id = int.Parse(values[0]);
-            Country = values[1];
-            City = values[2];
-        }
     }
 }
