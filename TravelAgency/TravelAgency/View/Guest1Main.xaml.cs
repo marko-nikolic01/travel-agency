@@ -107,11 +107,62 @@ namespace TravelAgency.View
 
         private void Search(object sender, RoutedEventArgs e)
         {
+            var filtered = Accommodations.Where(accommodation => accommodation.Name != "");
 
+            if (nameTextBox.Text != "")
+            {
+                filtered = filtered.Where(accommodation => accommodation.Name.ToLower().Contains(nameTextBox.Text.ToLower()));
+            }
+
+            if (countryComboBox.SelectedIndex != 0)
+            {
+                filtered = filtered.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryComboBox.Text.ToLower()));
+            }
+
+            if (cityComboBox.SelectedIndex != 0)
+            {
+                filtered = filtered.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityComboBox.Text.ToLower()));
+            }
+
+            switch (typeComboBox.SelectedIndex)
+            {
+                case 1:
+                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT);
+                    break;
+                case 2:
+                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.HOUSE);
+                    break;
+                case 3:
+                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.HUT);
+                    break;
+            }
+
+            if (guestNumberUpDown.Value != 0)
+            {
+                filtered = filtered.Where(accommodation => guestNumberUpDown.Value <= accommodation.MaxGuests);
+            }
+
+            if (dayNumberUpDown.Value != 0)
+            {
+                filtered = filtered.Where(accommodation => dayNumberUpDown.Value >= accommodation.MinDays);
+            }
+
+            accommodationsDataGrid.ItemsSource = filtered;
         }
 
         private void CancelSearch(object sender, RoutedEventArgs e)
         {
+            accommodationsDataGrid.ItemsSource = Accommodations;
+            nameTextBox.Text = "";
+            countryComboBox.SelectedItem = 0;
+            SelectedCountry = Cities[0];
+            countryComboBox.Text = Cities[0];
+            cityComboBox.SelectedItem = 0;
+            SelectedCity = Cities[0];
+            cityComboBox.Text = Cities[0];
+            typeComboBox.SelectedIndex = 0;
+            guestNumberUpDown.Value = 0;
+            dayNumberUpDown.Value = 0;
 
         }
     }
