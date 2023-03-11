@@ -66,5 +66,10 @@ namespace TravelAgency.Repository
         {
             return _accommodations.FindAll(c => c.OwnerId == user.Id);
         }
+
+        public List<Accommodation> GetAll()
+        {
+            return _accommodations;
+        }
     }
 }
