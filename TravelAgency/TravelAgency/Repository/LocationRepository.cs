@@ -43,5 +43,64 @@ namespace TravelAgency.Repository
 
             return location;
         }
+
+        public List<string> GetAllCountries()
+        {
+            List<string> countries = new List<string>();
+
+            foreach (Location location in locations)
+            {
+                if (!countries.Contains(location.Country))
+                {
+                    countries.Add(location.Country);
+                }
+            }
+
+            return countries;
+        }
+
+        public List<string> GetAllCities()
+        {
+            List<string> cities = new List<string>();
+
+            foreach (Location location in locations)
+            {
+                cities.Add(location.City);
+            }
+
+            return cities;
+        }
+
+        public List<string> GetCitiesByCountry(string country)
+        {
+            List<string> cities = new List<string>();
+
+            if (country == "Not Specified")
+            {
+                return GetAllCities();
+            }
+
+            foreach (Location location in locations)
+            {
+                if (location.Country == country)
+                {
+                    cities.Add(location.City);
+                }
+            }
+
+            return cities;
+        }
+
+        public Location GetByID(int id)
+        {
+            foreach (Location location in locations)
+            {
+                if (location.Id == id)
+                {
+                    return location;
+                }
+            }
+            return null;
+        }
     }
 }
