@@ -28,8 +28,6 @@ namespace TravelAgency.View
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
         }
 
-        
-
         private void LoadDateTime(object sender, RoutedEventArgs e)
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
@@ -46,6 +44,31 @@ namespace TravelAgency.View
             {
                 upDown.Text = "";
             }
+
+        }
+
+        private void SignOut(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ComboBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CountrySelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelSearch(object sender, RoutedEventArgs e)
+        {
 
         }
     }
