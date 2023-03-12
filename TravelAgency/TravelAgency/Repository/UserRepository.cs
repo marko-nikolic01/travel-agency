@@ -28,5 +28,20 @@ namespace TravelAgency.Repository
             _users = _serializer.FromCSV(FilePath);
             return _users.FirstOrDefault(u => u.Username == username);
         }
+
+        public List<User> GetAllGuests1()
+        {
+            List<User> guests1 = new List<User>();
+
+            foreach (User user in _users)
+            {
+                if (user.Role == Roles.Guest1) 
+                {
+                    guests1.Add(user);
+                }
+            }
+
+            return guests1;
+        }
     }
 }
