@@ -24,6 +24,8 @@ namespace TravelAgency.View
     /// </summary>
     public partial class Guest1Main : Window
     {
+        public User Guest { get; set; }
+
         public AccommodationRepository accommodationRepository;
         public LocationRepository locationRepository;
         public ImageRepository imageRepository;
@@ -35,14 +37,15 @@ namespace TravelAgency.View
         public string SelectedCountry { get; set; }
         public string SelectedCity { get; set; }
 
-        public Guest1Main()
+        public Guest1Main(User guest)
         {
             InitializeComponent();
             this.DataContext = this;
             this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
-            
+            Guest = guest;
+
             locationRepository = new LocationRepository();
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository(locationRepository, imageRepository);
@@ -102,6 +105,8 @@ namespace TravelAgency.View
 
         private void SignOut(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             Close();
         }
 

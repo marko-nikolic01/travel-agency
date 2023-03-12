@@ -29,7 +29,7 @@
                 <Image Height="175" Width="125" Stretch="Fill" Source="../Resources/Images/ProfilePicture.jpg"></Image>
             </Border>
             <Label Grid.Row="2" Grid.Column="0">Name:</Label>
-            <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1">Imenko Prezimenic</Label>
+            <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Content="{Binding Guest.Username}"></Label>
             <Button Click="SignOut" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 20" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="60" Height="30">Sign out</Button>
         </Grid>
         <Label Height="30" DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="LightGray" BorderBrush="DarkGray" BorderThickness="0 1 0 1">ACCOMMODATIONS</Label>
