@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,6 +24,9 @@ namespace TravelAgency.View
     public partial class TourReservation : Window, INotifyPropertyChanged
     {
         public TourOccurrence TourOccurrence { get; set; }
+        //jel i ovo treba sa malom crtom ispred?
+        private ObservableCollection<TourOccurrence> tourOccurrences;
+        bool validInput;
         private string _imageUrl;
         private string _numberOfGuestsInput;
         private string _spotsLeft;
@@ -71,7 +75,7 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourReservation(TourOccurrence tourOccurrence)
+        public TourReservation(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tO)
         {
             InitializeComponent();
             DataContext = this;
@@ -81,6 +85,9 @@ namespace TravelAgency.View
             images = TourOccurrence.Tour.Photos;
             ImageUrl = images[i].Link;
             SpotsLeft = "";
+            tourOccurrences = tO;
+            //validInput = false;
+            AddGuestsButton.IsEnabled = false;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -92,15 +99,18 @@ namespace TravelAgency.View
                 if (spotsLeft < 0)
                 {
                     SpotsLeft = "There is not enough space on tour for that number of guests";
+                    AddGuestsButton.IsEnabled = false;
                 }
                 else
                 {
                     SpotsLeft = spotsLeft.ToString();
+                    AddGuestsButton.IsEnabled = true;
                 }
             }
             else
             {
                 SpotsLeft = "Wrong input";
+                AddGuestsButton.IsEnabled = false;
             }
         }
 
@@ -115,6 +125,28 @@ namespace TravelAgency.View
                 i = 0;
             }
             ImageUrl = images[i].Link;
+        }
+
+        private void AlternativeToursClick(object sender, RoutedEventArgs e)
+        {
+            AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location);
+            alternativeTours.Show();
+        }
+       
+        private void AddGuestsClick(object sender, RoutedEventArgs e)
+        {
+            if (AddGuestsButton.IsEnabled)
+            {
+                int input;
+                input = int.Parse(NumberOfGuestsInput);
+                TourGuests tourGuests = new TourGuests(input);
+                tourGuests.Show();
+            }
+        }
+
+        private void CancelClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

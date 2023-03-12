@@ -12,11 +12,15 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0">
+            <StackPanel Grid.Column="0" Grid.Row="0">
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Name:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Country:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">City:</Label>
@@ -27,7 +31,7 @@
                 <Label HorizontalAlignment="Right" Margin="20 30 0 0">Number of guests:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Number of free spots left:</Label>
             </StackPanel>
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1" Grid.Row="0">
                 <Label Margin="20 10 0 0" Content="{Binding Path=TourOccurrence.Tour.Name}"></Label>
                 <Label Margin="20 10 0 0" Content="{Binding Path=TourOccurrence.Tour.Location.Country}"></Label>
                 <Label Margin="20 10 0 0" Content="{Binding Path=TourOccurrence.Tour.Location.City}"></Label>
@@ -38,13 +42,14 @@
                 <TextBox Margin="20 30 0 0" Width="80" TextChanged="TextBox_TextChanged" Text="{Binding NumberOfGuestsInput, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Label Margin="20 10 0 0" Content="{Binding Path=SpotsLeft}"></Label>
             </StackPanel>
+            <Button Grid.Row="1" Grid.Column="1" Margin="10" Click="AlternativeToursClick">Show Alternative Tours</Button>
         </Grid>
         <StackPanel Grid.Column="1">
             <Image Source="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="200" Margin="10"></Image>
             <Button Width="100" Margin="10" Click="ChangeImage">Next image</Button>
             <StackPanel Orientation="Horizontal" Height="97">
-                <Button Content="Submit" Height="50" Width="100" VerticalAlignment="Bottom"/>
-                <Button Content="Cancel" Height="50" Width="100" Margin="20 0" VerticalAlignment="Bottom"/>
+                <Button Content="Add Guests" Height="50" Width="100" VerticalAlignment="Bottom" Click="AddGuestsClick" x:Name="AddGuestsButton"/>
+                <Button Content="Cancel" Height="50" Width="100" Margin="20 0" VerticalAlignment="Bottom" Click="CancelClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>

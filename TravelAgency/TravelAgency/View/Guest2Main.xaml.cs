@@ -47,8 +47,16 @@ namespace TravelAgency.View
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-            TourReservation tourReservation = new TourReservation(SelectedTourOccurrence);
-            tourReservation.Show();
+            if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
+            {
+                AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location);
+                alternativeTours.Show();
+            }
+            else
+            {
+                TourReservation tourReservation = new TourReservation(SelectedTourOccurrence, TourOccurrences);
+                tourReservation.Show();
+            }
         }
 
         private void SearchClick(object sender, RoutedEventArgs e)
