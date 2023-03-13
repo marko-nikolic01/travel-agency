@@ -23,7 +23,9 @@ namespace TravelAgency.View
     {
         public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
-        public AlternativeTours(ObservableCollection<TourOccurrence> AllTourOccurrences, int id, Location location)
+        public string tourLocation { get; set; }
+        private TourReservationWindow reservationWindow;
+        public AlternativeTours(ObservableCollection<TourOccurrence> AllTourOccurrences, int id, Location location, TourReservationWindow reservationWindow=null)
         {
             InitializeComponent();
             DataContext = this;
@@ -38,12 +40,26 @@ namespace TravelAgency.View
                     }
                 }
             }
+            this.reservationWindow = reservationWindow;
+            tourLocation = "TOURS IN " + location.City.ToUpper() + ", " + location.Country.ToUpper();
         }
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-            TourReservation tourReservation = new TourReservation(SelectedTourOccurrence, Guest2Main.TourOccurrences);
-            tourReservation.Show();
+            if (SelectedTourOccurrence == null)
+            {
+                MessageBox.Show("You must choose a tour.");
+            }
+            else
+            {
+                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, Guest2Main.TourOccurrences);
+                tourReservation.Show();
+                Close();
+                if (reservationWindow != null)
+                {
+                    reservationWindow.Close();
+                }
+            }
         }
 
         private void CancelClick(object sender, RoutedEventArgs e)

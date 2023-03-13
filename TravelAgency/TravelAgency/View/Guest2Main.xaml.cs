@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Observer;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
@@ -20,15 +21,17 @@ namespace TravelAgency.View
     /// <summary>
     /// Interaction logic for Guest2Main.xaml
     /// </summary>
-    public partial class Guest2Main : Window
+    public partial class Guest2Main : Window, IObserver
     {
         public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         private List<TourOccurrence> toursList;
         public TourRepository TourRepository { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public static TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public static TourReservationRepository TourReservationRepository { get; set; }
         public LocationRepository LocationRepository { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
+        public UserRepository UserRepository { get; set; }
 
         public Guest2Main()
         {
@@ -38,23 +41,31 @@ namespace TravelAgency.View
             LocationRepository = new LocationRepository();
             PhotoRepository = new PhotoRepository();
             TourOccurrenceRepository = new TourOccurrenceRepository();
+            TourReservationRepository = new TourReservationRepository();
+            UserRepository = new UserRepository();
             LinkingTourLocation();
             LinkingTourOccurrences();
             LinkingTourImages();
+            LinkingTourGuests();
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
         }
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-            if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
+            if(SelectedTourOccurrence == null)
+            {
+                MessageBox.Show("You must choose a tour.");
+            }
+            else if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
             {
                 AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location);
                 alternativeTours.Show();
             }
             else
             {
-                TourReservation tourReservation = new TourReservation(SelectedTourOccurrence, TourOccurrences);
+                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences);
                 tourReservation.Show();
             }
         }
@@ -121,6 +132,17 @@ namespace TravelAgency.View
             }
         }
 
+        private void LinkingTourGuests()
+        {
+            List<User> guests;
+           foreach (TourReservation tourReservation in TourReservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                User guest = UserRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
+                tourOccurrence.Guests.Add(guest);
+            }
+        }
+
         private void LinkingTourImages()
         {
             foreach (Photo photo in PhotoRepository.GetPhotos())
@@ -130,6 +152,15 @@ namespace TravelAgency.View
                 {
                     tour.Photos.Add(photo);
                 }
+            }
+        }
+
+        public void Update()
+        {
+            TourOccurrences.Clear();
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            {
+                TourOccurrences.Add(tourOccurrence);
             }
         }
     }

@@ -18,6 +18,10 @@
             <ListBox Margin="10" Name="GuestList">
             </ListBox>
             <Button Margin="5" Content="Remove Guest" Width="90" Click="RemoveGuestClick"></Button>
+            <StackPanel Margin="0 50" Height="100" Orientation="Horizontal">
+                <Button Width="120" Height="40" Margin="10" Click="SubmitClick" x:Name="SubmitButton">Submit Reservation</Button>
+                <Button Width="120" Height="40" Margin="10" Click="CancelClick">Cancel</Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
