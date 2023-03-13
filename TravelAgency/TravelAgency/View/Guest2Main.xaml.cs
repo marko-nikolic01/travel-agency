@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Observer;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
@@ -20,13 +21,17 @@ namespace TravelAgency.View
     /// <summary>
     /// Interaction logic for Guest2Main.xaml
     /// </summary>
-    public partial class Guest2Main : Window
+    public partial class Guest2Main : Window, IObserver
     {
         public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
-        List<TourOccurrence> toursList;
+        public TourOccurrence SelectedTourOccurrence { get; set; }
+        private List<TourOccurrence> toursList;
         public TourRepository TourRepository { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public static TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public static TourReservationRepository TourReservationRepository { get; set; }
         public LocationRepository LocationRepository { get; set; }
+        public PhotoRepository PhotoRepository { get; set; }
+        public UserRepository UserRepository { get; set; }
 
         public Guest2Main()
         {
@@ -34,14 +39,38 @@ namespace TravelAgency.View
             DataContext = this;
             TourRepository = new TourRepository();
             LocationRepository = new LocationRepository();
+            PhotoRepository = new PhotoRepository();
             TourOccurrenceRepository = new TourOccurrenceRepository();
+            TourReservationRepository = new TourReservationRepository();
+            UserRepository = new UserRepository();
             LinkingTourLocation();
             LinkingTourOccurrences();
+            LinkingTourImages();
+            LinkingTourGuests();
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ReserveClick(object sender, RoutedEventArgs e)
+        {
+            if(SelectedTourOccurrence == null)
+            {
+                MessageBox.Show("You must choose a tour.");
+            }
+            else if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
+            {
+                AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location);
+                alternativeTours.Show();
+            }
+            else
+            {
+                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences);
+                tourReservation.Show();
+            }
+        }
+
+        private void SearchClick(object sender, RoutedEventArgs e)
         {
             bool tbCityEmpty = true, tbDurEmpty = true, tbCountryEmpty = true, tbLanguageEmpty = true, tbNumOfGuestsEmpty = true;
             if(tbCity.Text != "" || tbCountry.Text != "" || tbLanguage.Text != "" || tbDuration.Text != "" || tbNumOfGuests.Text != "")
@@ -100,6 +129,38 @@ namespace TravelAgency.View
                 {
                     tourOccurrence.Tour = tour;
                 }
+            }
+        }
+
+        private void LinkingTourGuests()
+        {
+            List<User> guests;
+           foreach (TourReservation tourReservation in TourReservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                User guest = UserRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
+                tourOccurrence.Guests.Add(guest);
+            }
+        }
+
+        private void LinkingTourImages()
+        {
+            foreach (Photo photo in PhotoRepository.GetPhotos())
+            {
+                Tour tour = TourRepository.GetTours().Find(t => t.Id == photo.TourId);
+                if (tour != null)
+                {
+                    tour.Photos.Add(photo);
+                }
+            }
+        }
+
+        public void Update()
+        {
+            TourOccurrences.Clear();
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            {
+                TourOccurrences.Add(tourOccurrence);
             }
         }
     }

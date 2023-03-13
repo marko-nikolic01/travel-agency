@@ -15,7 +15,7 @@ namespace TravelAgency.Model
         public Tour Tour { get; set; }
         public DateTime DateTime { get; set; }
         public List<KeyPoint> KeyPoints { get; set; }
-        public List<Guest> Guests { get; set; }
+        public List<User> Guests { get; set; }
 
         public TourOccurrence(int id, int tourId, Tour tour, DateTime dateTime, List<KeyPoint> keyPoints)
         {
@@ -29,7 +29,7 @@ namespace TravelAgency.Model
         public TourOccurrence()
         {
             KeyPoints = new List<KeyPoint>();
-            Guests = new List<Guest>();
+            Guests = new List<User>();
         }
 
         public string[] ToCSV()
