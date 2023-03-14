@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -59,6 +60,14 @@ namespace TravelAgency.View
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
+            foreach (TourOccurrence tourOccurrence in TourOccurrences)
+            {
+                if (tourOccurrence.CurrentState == CurrentState.Ended)
+                {
+                    tourOccurrence.ToShadow = 1;
+                    tourOccurrence.ToDisplay = 0;
+                }
+            }
         }
 
         private void LinkingTourGuests()
@@ -147,15 +156,30 @@ namespace TravelAgency.View
             }
         }
 
-        private void StopClick(object sender, RoutedEventArgs e)
-        {
-            Guests.Clear();
-            StartedTourKeyPoints.Clear();
-        }
-
         private void StartClick(object sender, RoutedEventArgs e)
         {
+            if(SelectedTourOccurrence == null)
+            {
+                MessageBox.Show("You have to select the tour you would like to start first!");
+                return;
+            }
+            Start.IsEnabled = false;
+            Stop.IsEnabled = true;
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            foreach (TourOccurrence tourOccurrence in TourOccurrences)
+            {
+                if (tourOccurrence == SelectedTourOccurrence)
+                {
+                    tourOccurrence.CurrentState = CurrentState.Started;
+                    tourOccurrence.KeyPoints[0].IsChecked = true;
+                    continue;
+                }
+                tourOccurrence.ToDisplay = 0;
+                tourOccurrence.ToShadow = 1;
+            }
+
             StartedTourKeyPoints.Clear();
+            StartedTourKeyPoints.Add(new KeyPoint(-1, "NOT PRESENT", new List<Guest>(), SelectedTourOccurrence.Id));
             foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
             {
                 StartedTourKeyPoints.Add(keyPoint);
@@ -165,12 +189,50 @@ namespace TravelAgency.View
             {
                 Guests.Add(user);
             }
-            
+            ComboColumn.ItemsSource = StartedTourKeyPoints;
+        }
+
+        private void StopClick(object sender, RoutedEventArgs e)
+        {
+            EndTour();
         }
 
         private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //MessageBox.Show(ChosenGuest.Username + ChosenKeyPointId.ToString());
+            MessageBox.Show(ChosenGuest.Username + ChosenKeyPointId.ToString());
+        }
+
+        private void RowButtonClick(object sender, RoutedEventArgs e)
+        {
+            SelectedKeyPoint.IsChecked = true;
+            if (SelectedTourOccurrence.KeyPoints[SelectedTourOccurrence.KeyPoints.Count - 1].Id == SelectedKeyPoint.Id)
+            {
+                EndTour();
+            }
+        }
+
+        private void EndTour()
+        {
+            Start.IsEnabled = true;
+            Stop.IsEnabled = false;
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            foreach (TourOccurrence tourOccurrence in TourOccurrences)
+            {
+                if (tourOccurrence.CurrentState == CurrentState.Started)
+                {
+                    tourOccurrence.CurrentState = CurrentState.Ended;
+                    tourOccurrence.ToShadow = 1;
+                    tourOccurrence.ToDisplay = 0;
+                }
+                if (tourOccurrence.CurrentState != CurrentState.Ended)
+                {
+                    tourOccurrence.ToShadow = 0;
+                    tourOccurrence.ToDisplay = 1;
+                }
+            }
+            Guests.Clear();
+            StartedTourKeyPoints.Clear();
+            MessageBox.Show("Tour ended!");
         }
     }
 }
