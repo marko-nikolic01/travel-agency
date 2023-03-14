@@ -33,7 +33,7 @@ namespace TravelAgency.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, Role.ToString() };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString() };
             return csvValues;
         }
 
