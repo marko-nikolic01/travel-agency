@@ -37,10 +37,31 @@ namespace TravelAgency.Repository
         {
             return tourOccurrences;
         }
-        public void SaveTourOccurrences(TourOccurrence tourOccurrence)
+        public List<TourOccurrence> GetTodaysTourOccurrences(User activeGuide)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence tourOccurrence in tourOccurrences)
+            {
+                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id)
+                {
+                    result.Add(tourOccurrence);
+                }
+            }
+            return result;
+        }
+        public void SaveTourOccurrences(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = GetNewId();
+            tourOccurrence.GuideId = activeGuide.Id;
             tourOccurrences.Add(tourOccurrence);
+            _serializer.ToCSV(FilePath, tourOccurrences);
+            NotifyObservers();
+        }
+
+        public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
+        {
+            TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
+            oldTourOccurrence.CurrentState = tourOccurrence.CurrentState;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
         }
@@ -62,5 +83,6 @@ namespace TravelAgency.Repository
                 observer.Update();
             }
         }
+
     }
 }

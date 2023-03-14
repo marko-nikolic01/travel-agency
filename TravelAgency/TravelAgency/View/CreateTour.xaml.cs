@@ -32,10 +32,12 @@ namespace TravelAgency.View
         public PhotoRepository PhotoRepository { get; set; }
         public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
         public KeyPointRepository KeyPointRepository { get; set; }
-        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointeRepository)
+        public User ActiveGuide { get; set; }
+        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointeRepository, User activeGuide)
         {
             InitializeComponent();
             DataContext = this;
+            ActiveGuide = activeGuide;
             NewTour = new Tour();
             Location = new Location();
             TourRepository = tourRepository;
@@ -112,7 +114,7 @@ namespace TravelAgency.View
                 tourOccurrence.TourId = NewTour.Id;
                 tourOccurrence.Tour = NewTour;
                 tourOccurrence.DateTime = dateTime;
-                TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence);
+                TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence, ActiveGuide);
                 foreach (String keyPointItem in ListKeyPoints.Items)
                 {
                     KeyPoint keyPoint = new KeyPoint();

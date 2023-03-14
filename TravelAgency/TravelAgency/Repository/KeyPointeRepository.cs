@@ -38,5 +38,12 @@ namespace TravelAgency.Repository
             keyPoints.Add(keyPoint);
             _serializer.ToCSV(FilePath, keyPoints);
         }
+        public void UpdateKeyPoint(KeyPoint keyPoint)
+        {
+            KeyPoint oldKeyPoint = keyPoints.Find(k => k.Id == keyPoint.Id);
+            oldKeyPoint.IsChecked = keyPoint.IsChecked;
+            _serializer.ToCSV(FilePath, keyPoints);
+        }
+
     }
 }
