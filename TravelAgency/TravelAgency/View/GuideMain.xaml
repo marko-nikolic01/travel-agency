@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="GuideMain" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="GuideMain" Height="750" Width="430">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -14,7 +15,10 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -24,17 +28,14 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="20"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Welcome tour guide" FontSize="15" Grid.ColumnSpan="2"></Label>
-        <Button Grid.Column="1" Grid.Row="3" Height="40" Content="Enter new tour" Click="NewTourClick"></Button>
-        <Label Content="Todays tours" FontSize="20" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" Grid.ColumnSpan="5" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False">
+        <Button Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Height="40" Content="Enter new tour" Margin="5" Click="NewTourClick"></Button>
+        <Label Content="Todays tours" FontSize="15" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <DataGrid x:Name="spoljasna" Margin="15,0,15,10" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="7" IsReadOnly="True"
+                  ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Location">
+                <DataGridTextColumn  Header="Location" Width="*">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0}, {1}">
                             <Binding Path="Tour.Location.City"/>
@@ -42,12 +43,43 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Name"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Tour.Language}" Header="Language"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Tour.Language}" Header="Language" ></DataGridTextColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid x:Name="ugnjezdena" CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding KeyPoints}" SelectedItem="{Binding Path= DataContext.SelectedKeyPoint, RelativeSource={RelativeSource AncestorType=Window}}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn></DataGridCheckBoxColumn>
+                            <DataGridTextColumn Binding="{Binding Path=Name}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        <Button Grid.Column="9" Grid.Row="0" Content="Sign out" Height="30" Margin="5" Click="SignOutClick"></Button>
+        <Button x:Name="Start" Click="StartClick" Grid.Column="4" Grid.Row="1" Height="40" Content="Start" Margin="5"></Button>
+        <Button x:Name="Stop" Click="StopClick" Grid.Column="5" Grid.Row="1" Height="40" Content="Stop" Margin="5"></Button>
+        <Label Content="Guests at active tour" FontSize="15" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Margin="15,0,15,10" Grid.Row="6" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="7">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="*"></DataGridTextColumn>
+                <!-- Idea for the DataGridComboBoxColumn taken from StackOverflow-->
+                <DataGridComboBoxColumn DisplayMemberPath="Name" SelectedValueBinding="{Binding Path=DataContext.ChosenKeyPointId, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                        SelectedValuePath="Id" Width="*">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Path=StartedTourKeyPoints, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Path=StartedTourKeyPoints, RelativeSource={RelativeSource AncestorType=Window}}"></Setter>
+                            <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Column="9" Grid.Row="5" Content="Sign out" Height="40" Margin="10" Click="SignOutClick"></Button>
-        <Button Grid.Column="6" Height="40" Content="Start the tour" Margin="5"></Button>
-        <Button Grid.Column="7" Height="40" Content="Stop the tour" Margin="5"></Button>
     </Grid>
 </Window>

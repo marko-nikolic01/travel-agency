@@ -31,6 +31,14 @@ namespace TravelAgency.View
         public PhotoRepository PhotoRepository { get; set; }
         public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
         public KeyPointRepository KeyPointRepository { get; set; }
+        public UserRepository UserRepository { get; set; }
+        public static TourReservationRepository TourReservationRepository { get; set; } 
+        public ObservableCollection<User> Guests { get; set; }
+        public ObservableCollection<KeyPoint> StartedTourKeyPoints { get; set; }
+        public TourOccurrence SelectedTourOccurrence { get; set; }
+        public KeyPoint SelectedKeyPoint { get; set; }
+        public int ChosenKeyPointId { get; set; }
+        public User ChosenGuest { get; set; }
         public GuideMain()
         {
             InitializeComponent();
@@ -40,12 +48,27 @@ namespace TravelAgency.View
             PhotoRepository = new PhotoRepository();
             TourOccurrenceRepository = new TourOccurrenceRepository();
             KeyPointRepository = new KeyPointRepository();
+            TourReservationRepository = new TourReservationRepository();
+            UserRepository = new UserRepository();
             LinkingTourLocation();
-            LinkingTourImages();
+            LinkingTourPhotos();
             LinkingTourOccurrences();
             LinkingKeyPoints();
+            LinkingTourGuests();
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            Guests = new ObservableCollection<User>();
+            StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
+        }
+
+        private void LinkingTourGuests()
+        {
+            foreach (TourReservation tourReservation in TourReservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                User guest = UserRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
+                tourOccurrence.Guests.Add(guest);
+            }
         }
 
         private void LinkingKeyPoints()
@@ -72,7 +95,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingTourImages()
+        private void LinkingTourPhotos()
         {
             foreach(Photo photo in PhotoRepository.GetPhotos())
             {
@@ -122,6 +145,32 @@ namespace TravelAgency.View
             {
                 TourOccurrences.Add(tourOccurrence);
             }
+        }
+
+        private void StopClick(object sender, RoutedEventArgs e)
+        {
+            Guests.Clear();
+            StartedTourKeyPoints.Clear();
+        }
+
+        private void StartClick(object sender, RoutedEventArgs e)
+        {
+            StartedTourKeyPoints.Clear();
+            foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
+            {
+                StartedTourKeyPoints.Add(keyPoint);
+            }
+            Guests.Clear();
+            foreach(User user in SelectedTourOccurrence.Guests)
+            {
+                Guests.Add(user);
+            }
+            
+        }
+
+        private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show(ChosenGuest.Username + ChosenKeyPointId.ToString());
         }
     }
 }
