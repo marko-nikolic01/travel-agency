@@ -28,6 +28,7 @@ namespace TravelAgency.View
 
         public User LoggedInUser { get; set; }
 
+        private readonly UserRepository _UserRepository;
         private readonly AccommodationRepository _AccommodationRepository;
         private readonly LocationRepository _LocationRepository;
         private readonly ImageRepository _ImageRepository;

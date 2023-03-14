@@ -24,10 +24,11 @@ namespace TravelAgency.View
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
 
-        public Accommodation SelectedAccommodation { get; set; }
+        public Accommodation? SelectedAccommodation { get; set; }
 
         public User LoggedInUser { get; set; }
 
+        private readonly UserRepository userRepository;
         private readonly AccommodationRepository accommodationRepository;
         private readonly LocationRepository locationRepository;
         private readonly ImageRepository imageRepository;
@@ -36,10 +37,14 @@ namespace TravelAgency.View
         {
             InitializeComponent();
             DataContext = this;
+
             LoggedInUser = user;
+
+            userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new ImageRepository();
-            accommodationRepository = new AccommodationRepository(locationRepository, imageRepository);
+            accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
+
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
         }
 
