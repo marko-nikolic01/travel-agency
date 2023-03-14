@@ -37,6 +37,18 @@ namespace TravelAgency.Repository
         {
             return tourOccurrences;
         }
+        public List<TourOccurrence> GetTodaysTourOccurrences()
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence tourOccurrence in tourOccurrences)
+            {
+                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date))
+                {
+                    result.Add(tourOccurrence);
+                }
+            }
+            return result;
+        }
         public void SaveTourOccurrences(TourOccurrence tourOccurrence)
         {
             tourOccurrence.Id = GetNewId();

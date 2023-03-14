@@ -4,9 +4,9 @@
 4|2|ns|True
 5|2|petrovaradin|True
 6|2|karlovci|True
-7|3|center|False
-8|3|museum|False
-9|3|river Begej|False
+7|3|center|True
+8|3|museum|True
+9|3|river Begej|True
 10|4|Zentrum|False
 11|4|Belgrad am Wasser|False
 12|4|Nikola Tesla Museum|False
@@ -21,3 +21,12 @@
 21|6|Knez Mihailova Strasse|False
 22|7|df|False
 23|7|vd|False
+24|8|psf|False
+25|8|vdssc|False
+26|8|sccs|False
+27|9|dcvd|True
+28|9|vddvdvd|True
+29|9|vdvd|True
+30|10|css|False
+31|10|html|False
+32|10|javascript|False

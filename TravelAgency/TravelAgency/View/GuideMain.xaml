@@ -15,6 +15,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
@@ -94,8 +95,8 @@
         <Button x:Name="SignOutButton" Grid.Column="9" Grid.Row="0" Content="Sign out" Height="30" Margin="5" Click="SignOutClick"></Button>
         <Button x:Name="StartButton" Click="StartButtonClick" Grid.Column="4" Grid.Row="1" Height="40" Content="Start" Margin="5"></Button>
         <Button x:Name="StopButton" IsEnabled="False" Click="StopButtonClick" Grid.Column="5" Grid.Row="1" Height="40" Content="Stop" Margin="5"></Button>
-        <Label Content="Guests at active tour" FontSize="15" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <DataGrid CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Margin="15,0,15,10" Grid.Row="6" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
+        <Label Content="Guests at active tour" FontSize="15" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <DataGrid CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Margin="15,0,15,10" Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="*"></DataGridTextColumn>
                 <!-- Idea for the DataGridComboBoxColumn taken from StackOverflow-->

@@ -14,7 +14,7 @@ namespace TravelAgency.Model
         public int Id { get; set; }
         public int TourOccurrenceId { get; set; }
         public string Name { get; set; }
-        public List<Guest> Guests { get; set; }
+        public List<User> Guests { get; set; }
 
         private bool isChecked;
         public bool IsChecked
@@ -36,7 +36,7 @@ namespace TravelAgency.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public KeyPoint(int id, string name,  List<Guest> guests, int tourOccurrenceId)
+        public KeyPoint(int id, string name,  List<User> guests, int tourOccurrenceId)
         {
             Id = id;
             Name = name;
@@ -47,7 +47,7 @@ namespace TravelAgency.Model
         public KeyPoint()
         {
             Name = "";
-            Guests = new List<Guest>();
+            Guests = new List<User>();
         }
 
         public string[] ToCSV()
