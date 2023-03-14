@@ -29,7 +29,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Height="40" Content="Enter new tour" Margin="5" Click="NewTourClick"></Button>
+        <Button x:Name="NewTourButton" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Height="40" Content="Enter new tour" Margin="5" Click="NewTourClick"></Button>
         <Label Content="Todays tours" FontSize="15" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Margin="15,0,15,10" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
                   ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
@@ -91,9 +91,9 @@
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
-        <Button Grid.Column="9" Grid.Row="0" Content="Sign out" Height="30" Margin="5" Click="SignOutClick"></Button>
-        <Button x:Name="Start" Click="StartClick" Grid.Column="4" Grid.Row="1" Height="40" Content="Start" Margin="5"></Button>
-        <Button x:Name="Stop" IsEnabled="False" Click="StopClick" Grid.Column="5" Grid.Row="1" Height="40" Content="Stop" Margin="5"></Button>
+        <Button x:Name="SignOutButton" Grid.Column="9" Grid.Row="0" Content="Sign out" Height="30" Margin="5" Click="SignOutClick"></Button>
+        <Button x:Name="StartButton" Click="StartButtonClick" Grid.Column="4" Grid.Row="1" Height="40" Content="Start" Margin="5"></Button>
+        <Button x:Name="StopButton" IsEnabled="False" Click="StopButtonClick" Grid.Column="5" Grid.Row="1" Height="40" Content="Stop" Margin="5"></Button>
         <Label Content="Guests at active tour" FontSize="15" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
         <DataGrid CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Margin="15,0,15,10" Grid.Row="6" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
             <DataGrid.Columns>

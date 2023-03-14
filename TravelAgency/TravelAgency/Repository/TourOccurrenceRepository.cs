@@ -45,6 +45,14 @@ namespace TravelAgency.Repository
             NotifyObservers();
         }
 
+        public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
+        {
+            TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
+            oldTourOccurrence.CurrentState = tourOccurrence.CurrentState;
+            _serializer.ToCSV(FilePath, tourOccurrences);
+            NotifyObservers();
+        }
+
         public void Subscribe(IObserver observer)
         {
             observers.Add(observer);

@@ -15,8 +15,8 @@ namespace TravelAgency.Model
         public int TourOccurrenceId { get; set; }
         public string Name { get; set; }
         public List<Guest> Guests { get; set; }
-        private bool isChecked;
 
+        private bool isChecked;
         public bool IsChecked
         {
             get => isChecked;
@@ -61,6 +61,7 @@ namespace TravelAgency.Model
             Id = int.Parse(values[0]);
             TourOccurrenceId = int.Parse(values[1]);
             Name = values[2];
+            IsChecked = bool.Parse(values[3]);
         }
     }
 }

@@ -51,11 +51,11 @@ namespace TravelAgency.View
             KeyPointRepository = new KeyPointRepository();
             TourReservationRepository = new TourReservationRepository();
             UserRepository = new UserRepository();
-            LinkingTourLocation();
-            LinkingTourPhotos();
-            LinkingTourOccurrences();
-            LinkingKeyPoints();
-            LinkingTourGuests();
+            LinkTourLocation();
+            LinkTourPhotos();
+            LinkTourOccurrences();
+            LinkKeyPoints();
+            LinkTourGuests();
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
@@ -70,7 +70,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingTourGuests()
+        private void LinkTourGuests()
         {
             foreach (TourReservation tourReservation in TourReservationRepository.GetTourReservations())
             {
@@ -80,7 +80,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingKeyPoints()
+        private void LinkKeyPoints()
         {
             foreach(KeyPoint keyPoint in KeyPointRepository.GetKeyPoints())
             {
@@ -92,7 +92,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingTourOccurrences()
+        private void LinkTourOccurrences()
         {
             foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
             {
@@ -104,7 +104,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingTourPhotos()
+        private void LinkTourPhotos()
         {
             foreach(Photo photo in PhotoRepository.GetPhotos())
             {
@@ -116,7 +116,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void LinkingTourLocation()
+        private void LinkTourLocation()
         {
             foreach(var tour in TourRepository.GetTours())
             {
@@ -156,15 +156,22 @@ namespace TravelAgency.View
             }
         }
 
-        private void StartClick(object sender, RoutedEventArgs e)
+        private void StartButtonClick(object sender, RoutedEventArgs e)
         {
             if(SelectedTourOccurrence == null)
             {
                 MessageBox.Show("You have to select the tour you would like to start first!");
                 return;
             }
-            Start.IsEnabled = false;
-            Stop.IsEnabled = true;
+            if(SelectedTourOccurrence.Guests.Count == 0)
+            {
+                MessageBox.Show("No guests have reserved this tour, therefore it can't be started!");
+                return;
+            }
+            StartButton.IsEnabled = false;
+            StopButton.IsEnabled = true;
+            NewTourButton.IsEnabled = false;
+            SignOutButton.IsEnabled = false;
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
@@ -192,7 +199,7 @@ namespace TravelAgency.View
             ComboColumn.ItemsSource = StartedTourKeyPoints;
         }
 
-        private void StopClick(object sender, RoutedEventArgs e)
+        private void StopButtonClick(object sender, RoutedEventArgs e)
         {
             EndTour();
         }
@@ -213,8 +220,10 @@ namespace TravelAgency.View
 
         private void EndTour()
         {
-            Start.IsEnabled = true;
-            Stop.IsEnabled = false;
+            StartButton.IsEnabled = true;
+            StopButton.IsEnabled = false;
+            NewTourButton.IsEnabled = true;
+            SignOutButton.IsEnabled = true;
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
@@ -232,6 +241,11 @@ namespace TravelAgency.View
             }
             Guests.Clear();
             StartedTourKeyPoints.Clear();
+            foreach(KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
+            {
+                KeyPointRepository.UpdateKeyPoint(keyPoint);
+            }
+            TourOccurrenceRepository.UpdateTourOccurrence(SelectedTourOccurrence);
             MessageBox.Show("Tour ended!");
         }
     }
