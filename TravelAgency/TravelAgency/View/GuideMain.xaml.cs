@@ -42,10 +42,12 @@ namespace TravelAgency.View
         public int ChosenKeyPointId { get; set; }
         public User? ChosenGuest { get; set; }
         public Dictionary<User, int> UserKeyPointIdPairs { get; set; }
-        public GuideMain()
+        public User ActiveGuide { get; set; }
+        public GuideMain(User user)
         {
             InitializeComponent();
             DataContext = this;
+            ActiveGuide = user;
             TourRepository = new TourRepository();
             LocationRepository = new LocationRepository();
             PhotoRepository = new PhotoRepository();
@@ -60,7 +62,7 @@ namespace TravelAgency.View
             LinkKeyPoints();
             LinkTourGuests();
             LinkKeyPointGuests();
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodaysTourOccurrences());
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodaysTourOccurrences(ActiveGuide));
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
@@ -156,14 +158,14 @@ namespace TravelAgency.View
 
         private void NewTourClick(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository);
+            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository, ActiveGuide);
             createTour.Show();
         }
 
         public void Update()
         {
             TourOccurrences.Clear();
-            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTodaysTourOccurrences())
+            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTodaysTourOccurrences(ActiveGuide))
             {
                 TourOccurrences.Add(tourOccurrence);
             }
