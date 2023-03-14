@@ -31,11 +31,11 @@ namespace TravelAgency.Repository
                     }
                 }
 
-                foreach (User guest in userRepository.GetAllGuests1())
+                foreach (User user in userRepository.GetUsers())
                 {
-                    if (accommodationReservation.GuestId == guest.Id)
+                    if (accommodationReservation.GuestId == user.Id)
                     {
-                        accommodationReservation.Guest = guest;
+                        accommodationReservation.Guest = user;
                     }
                 }
             }

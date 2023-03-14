@@ -11,23 +11,40 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelAgency.Model;
+using TravelAgency.Model.DTO;
 
 namespace TravelAgency.View
 {
     /// <summary>
-    /// Interaction logic for CreateAccommodationReservation.xaml
+    /// Interaction logic for AccommodationReservationWindow.xaml
     /// </summary>
-    public partial class CreateAccommodationReservation : Window
+    public partial class AccommodationReservationWindow : Window
     {
+        User Guest { get; set; }
+        Accommodation Accommodation { get; set; }
+
         public List<string> ImageSources { get; set; }
         public int currentImageNumber;
-        public CreateAccommodationReservation()
+        public AccommodationReservationWindow(User guest, Accommodation accommodation)
         {
             InitializeComponent();
             this.DataContext = this;
             this.Height = 700;
             this.Width = 1000;
-            
+
+            Guest = guest;
+            Accommodation = accommodation;
+
+            NameLabel.Content = "Name: " + Accommodation.Name;
+            LocationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
+            TypeLabel.Content = "Type: " + Accommodation.Type;
+            MaxGuestsLabel.Content = "Max. guests: " + Accommodation.MaxGuests;
+            MinDaysLabel.Content = "Min. days: " + Accommodation.MinDays;
+            DaysToCancelLabel.Content = "Days to cancel: " + Accommodation.DaysToCancel;
+            OwnerLabel.Content = "Owner: " + Accommodation.Owner.Username;
+
+
             //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             string img1 = "https://optimise2.assets-servd.host/maniacal-finch/production/animals/amur-tiger-01-01.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1658935145&s=1b96c26544a1ee414f976c17b18f2811";
             string img2 = "..\\Resources\\Images\\ProfilePicture.jpg";

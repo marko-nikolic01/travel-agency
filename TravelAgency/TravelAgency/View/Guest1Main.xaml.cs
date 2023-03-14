@@ -26,6 +26,7 @@ namespace TravelAgency.View
     {
         public User Guest { get; set; }
 
+        public UserRepository userRepository;
         public AccommodationRepository accommodationRepository;
         public LocationRepository locationRepository;
         public ImageRepository imageRepository;
@@ -46,14 +47,15 @@ namespace TravelAgency.View
 
             Guest = guest;
 
+            userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new ImageRepository();
-            accommodationRepository = new AccommodationRepository(locationRepository, imageRepository);
+            accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
 
             Countries = locationRepository.GetAllCountries();
-            Countries.Insert(0, "Not Specified");
+            Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
         }
 
@@ -81,7 +83,7 @@ namespace TravelAgency.View
             if (SelectedCountry != "")
             {
                 Cities = locationRepository.GetCitiesByCountry(SelectedCountry);
-                Cities.Insert(0, "Not Specified");
+                Cities.Insert(0, "Not specified");
                 cityComboBox.ItemsSource = Cities;
                 cityComboBox.SelectedItem = 0;
                 SelectedCity = Cities[0];
@@ -169,6 +171,20 @@ namespace TravelAgency.View
             guestNumberUpDown.Value = 0;
             dayNumberUpDown.Value = 0;
 
+        }
+
+        private void MakeReservation(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation != null)
+            {
+                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation);
+                accommodationReservationWindow.Show();
+            }
+            else 
+            {
+                string message = "You didn't select an accommodation!";
+                System.Windows.MessageBox.Show(message);
+            }
         }
     }
 }

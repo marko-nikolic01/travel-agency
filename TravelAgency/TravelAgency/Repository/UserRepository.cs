@@ -50,20 +50,5 @@ namespace TravelAgency.Repository
             _users.Add(user);
             _serializer.ToCSV(FilePath, _users);
         }
-
-        public List<User> GetAllGuests1()
-        {
-            List<User> guests1 = new List<User>();
-
-            foreach (User user in _users)
-            {
-                if (user.Role == Roles.Guest1) 
-                {
-                    guests1.Add(user);
-                }
-            }
-
-            return guests1;
-        }
     }
 }
