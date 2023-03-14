@@ -95,9 +95,9 @@ namespace TravelAgency.Model
             OwnerId = -1;
             LocationId = -1;
             Type = AccommodationType.APARTMENT;
-            MaxGuests = -1;
-            MinDays = -1;
-            DaysToCancel = -1;
+            MaxGuests = 1;
+            MinDays = 1;
+            DaysToCancel = 0;
 
             Images = new List<Image>();
         }
