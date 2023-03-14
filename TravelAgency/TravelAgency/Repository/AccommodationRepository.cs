@@ -18,18 +18,27 @@ namespace TravelAgency.Repository
 
         private List<Accommodation> _accommodations;
 
-        public AccommodationRepository(LocationRepository locationRepository, ImageRepository imageRepository)
+        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, ImageRepository imageRepository)
         {
             _serializer = new Serializer<Accommodation>();
             _accommodations = _serializer.FromCSV(FilePath);
 
             foreach (Accommodation accommodation in _accommodations)
             {
+                foreach (User user in userRepository.GetUsers())
+                {
+                    if (accommodation.OwnerId == user.Id)
+                    {
+                        accommodation.Owner = user;
+                        break;
+                    }
+                }
                 foreach (Location location in locationRepository.GetLocations())
                 {
                     if (accommodation.LocationId == location.Id)
                     {
                         accommodation.Location = location;
+                        break;
                     }
                 }
 

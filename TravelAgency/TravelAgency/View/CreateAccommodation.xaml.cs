@@ -31,8 +31,9 @@ namespace TravelAgency.View
         private readonly AccommodationRepository _AccommodationRepository;
         private readonly LocationRepository _LocationRepository;
         private readonly ImageRepository _ImageRepository;
-
-        private Accommodation NewAccommodation;
+        
+        public Accommodation NewAccommodation { get; set; }
+        public Location NewLocation { get; set; }
 
         public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, ImageRepository imageRepository)
         {
@@ -42,8 +43,9 @@ namespace TravelAgency.View
             _LocationRepository = locationRepository;
             _AccommodationRepository = accommodationRepository;
             _ImageRepository = imageRepository;
-            NewAccommodation = new();
-            NewAccommodation.Id = _AccommodationRepository.NextId();
+            NewAccommodation = new() { Id = _AccommodationRepository.NextId(), OwnerId = LoggedInUser.Id, Owner = LoggedInUser};
+            NewLocation = new();
+
             Images = new ObservableCollection<string>();
         }
 
@@ -59,9 +61,7 @@ namespace TravelAgency.View
             {
                 var imagePath = ofd.FileName;
 
-                Image NewImage = new();
-                NewImage.ObjectId = NewAccommodation.Id;
-                NewImage.Path = imagePath;
+                Image NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
 
                 NewAccommodation.Images.Add(NewImage);
 
@@ -71,14 +71,6 @@ namespace TravelAgency.View
 
         private void RegisterAccommodation_Click(object sender, RoutedEventArgs e)
         {
-            NewAccommodation.Name = AccommodationNameTextBox.Text;
-            NewAccommodation.OwnerId = LoggedInUser.Id;
-            NewAccommodation.Owner = LoggedInUser;
-
-            Location NewLocation = new();
-            NewLocation.City = LocationCityTextBox.Text;
-            NewLocation.Country = LocationCountryTextBox.Text;
-
             if (ApartmentRadioButton.IsChecked == true)
             {
                 NewAccommodation.Type = AccommodationType.APARTMENT;
@@ -91,10 +83,6 @@ namespace TravelAgency.View
             {
                 NewAccommodation.Type = AccommodationType.HUT;
             }
-
-            NewAccommodation.MaxGuests = (int)MaxGuestsIntegerUpDown.Value;
-            NewAccommodation.MinDays = (int)MinDaysIntegerUpDown.Value;
-            NewAccommodation.DaysToCancel = (int)DaysToCancelIntegerUpDown.Value;
 
             Location savedLocation = _LocationRepository.SaveLocation(NewLocation);
 
