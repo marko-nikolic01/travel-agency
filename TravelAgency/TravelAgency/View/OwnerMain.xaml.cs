@@ -24,7 +24,7 @@ namespace TravelAgency.View
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
 
-        public Accommodation SelectedAccomodation { get; set; }
+        public Accommodation SelectedAccommodation { get; set; }
 
         public User LoggedInUser { get; set; }
 

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Dodaj smeštaj" SizeToContent="Height" Width="400">
+        Title="Dodaj smeštaj" SizeToContent="Height" Width="400" WindowStartupLocation="CenterScreen">
     <StackPanel>
-        <Grid Height="Auto">
+        <Grid x:Name="AccommodationFormGrid" Height="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -35,18 +35,18 @@
             <Label Content="Rok otkazivanja rezervacije (broj dana)" Grid.Row="6" Grid.Column="0"/>
             <Label Content="Fotografije smeštaja" Grid.Row="7" Grid.Column="0"/>
 
-            <TextBox x:Name="AccommodationNameTextBox" Grid.Row="0" Grid.Column="1"/>
-            <TextBox x:Name="LocationCityTextBox" Grid.Row="1" Grid.Column="1"/>
-            <TextBox x:Name="LocationCountryTextBox" Grid.Row="2" Grid.Column="1"/>
+            <TextBox x:Name="AccommodationNameTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Path=NewAccommodation.Name}"/>
+            <TextBox x:Name="LocationCityTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Path=NewLocation.City}"/>
+            <TextBox x:Name="LocationCountryTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Path=NewLocation.Country}"/>
             <StackPanel Grid.Row="3" Grid.Column="1">
                 <RadioButton x:Name="ApartmentRadioButton" Content="Apartman" GroupName="AccomodationType" IsChecked="True"/>
                 <RadioButton x:Name="HouseRadioButton" Content="Kuća" GroupName="AccomodationType"/>
                 <RadioButton x:Name="HutRadioButton" Content="Koliba" GroupName="AccomodationType"/>
             </StackPanel>
 
-            <xctk:IntegerUpDown x:Name="MaxGuestsIntegerUpDown" Grid.Row="4" Grid.Column="1" Value="1" Minimum="0" Increment="1"/>
-            <xctk:IntegerUpDown x:Name="MinDaysIntegerUpDown" Grid.Row="5" Grid.Column="1" Value="1"/>
-            <xctk:IntegerUpDown x:Name="DaysToCancelIntegerUpDown" Grid.Row="6" Grid.Column="1" Value="1"/>
+            <xctk:IntegerUpDown x:Name="MaxGuestsIntegerUpDown" Grid.Row="4" Grid.Column="1" Value="{Binding Path=NewAccommodation.MaxGuests}" Minimum="0" Increment="1"/>
+            <xctk:IntegerUpDown x:Name="MinDaysIntegerUpDown" Grid.Row="5" Grid.Column="1" Value="{Binding Path=NewAccommodation.MinDays}" Minimum="0"/>
+            <xctk:IntegerUpDown x:Name="DaysToCancelIntegerUpDown" Grid.Row="6" Grid.Column="1" Value="{Binding Path=NewAccommodation.DaysToCancel}" Minimum="0"/>
 
             <Grid Grid.Row="7" Grid.Column="1">
                 <Grid.ColumnDefinitions>

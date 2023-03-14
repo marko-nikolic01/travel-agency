@@ -21,7 +21,7 @@ namespace TravelAgency.Repository
             locations = _serializer.FromCSV(FilePath);
         }
 
-        private int GetNewId()
+        public int NextId()
         {
             if (locations.Count == 0)
             {
@@ -37,7 +37,7 @@ namespace TravelAgency.Repository
 
         public Location SaveLocation(Location location)
         {
-            location.Id = GetNewId();
+            location.Id = NextId();
             locations.Add(location);
             _serializer.ToCSV(FilePath, locations);
 
