@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Model.DTO;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
@@ -32,6 +33,7 @@ namespace TravelAgency.View
         private readonly AccommodationRepository accommodationRepository;
         private readonly LocationRepository locationRepository;
         private readonly ImageRepository imageRepository;
+        private readonly AccommodationReservationRepository accommodationReservationRepository;
 
         public OwnerMain(User user)
         {
@@ -44,14 +46,15 @@ namespace TravelAgency.View
             locationRepository = new LocationRepository();
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
+            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
         }
 
         private void ShowCreateAccommodation_Click(object sender, RoutedEventArgs e)
         {
-            CreateAccommodation createAccommodation = new CreateAccommodation(LoggedInUser, accommodationRepository, locationRepository, imageRepository);
-            createAccommodation.ShowDialog();
+            AccommodationGuestRatingWindow accommodationGuestRatingWindow = new AccommodationGuestRatingWindow(LoggedInUser, accommodationReservationRepository);
+            accommodationGuestRatingWindow.ShowDialog();
         }
     }
 }

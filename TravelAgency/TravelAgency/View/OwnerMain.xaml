@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
         Title="Prikaz smeštaja" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <DockPanel LastChildFill="False">
+    <DockPanel>
 
         <Menu DockPanel.Dock="Top" Height="20">
             <MenuItem Header="_File" Height="20"></MenuItem>

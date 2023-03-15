@@ -1,0 +1,92 @@
+﻿<Window x:Class="TravelAgency.View.AccommodationGuestRatingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="Ocenite gosta" Width="500" SizeToContent="Height" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="RatingSlider" TargetType="Slider">
+            <Setter Property="Minimum" Value="1"/>
+            <Setter Property="Maximum" Value="5"/>
+            <Setter Property="IsSnapToTickEnabled" Value="True"/>
+            <Setter Property="TickFrequency" Value="1"/>
+        </Style>
+    </Window.Resources>
+    
+    <DockPanel>
+
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Neocenjeni gosti">
+
+                <StackPanel>
+
+                    <DataGrid AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              HeadersVisibility="Column"
+                              ItemsSource="{Binding UnratedReservations}"
+                              SelectedItem="{Binding SelectedUnratedReservation}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Korisničko ime gosta" Binding="{Binding Guest.Username}" Width="*"/>
+                            <DataGridTextColumn Header="Datum početka rezervacije" Binding="{Binding StartDate}" Width="*"/>
+                            <DataGridTextColumn Header="Datum završetka rezervacije" Binding="{Binding EndDate}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Čistoća"/>
+                            <Label Grid.Row="1" Grid.Column="0" Content="Poštovanje pravila"/>
+                            <Label Grid.Row="2" Grid.Column="0" Content="Komentar"/>
+
+                            <Slider x:Name="CleanlinessSlider" Grid.Row="0" Grid.Column="1" Style="{StaticResource RatingSlider}" Value="{Binding Path=NewAccommodationGuestRating.Cleanliness}"/>
+                            <Slider x:Name="RuleComplianceSlider" Grid.Row="1" Grid.Column="1" Style="{StaticResource RatingSlider}" Value="{Binding Path=NewAccommodationGuestRating.RuleCompliance}"/>
+                            <TextBox x:Name="CommentTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Path=NewAccommodationGuestRating.Comment}"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Row="0" Grid.Column="0" Content="Dodaj ocenu" Click="CreateRating_Click"/>
+                            <Button Grid.Row="0" Grid.Column="1" Content="Izađi" Click="Cancel_Click"/>
+                        </Grid>
+                    </Grid>
+                    
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="Ocenjeni gosti">
+
+            </TabItem>
+        </TabControl>
+
+    </DockPanel>
+</Window>

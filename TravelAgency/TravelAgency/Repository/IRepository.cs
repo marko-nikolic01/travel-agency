@@ -8,13 +8,15 @@ namespace TravelAgency.Repository
 {
     public interface IRepository<T>
     {
-        List<T> GetAll();
+        IEnumerable<T> GetAll();
 
         T GetById(int id);
 
         int NextId();
 
         T Save(T entity);
+
+        void SaveAll(IEnumerable<T> entities);
 
         void DeleteById(int id);
 
