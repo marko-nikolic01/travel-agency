@@ -82,7 +82,7 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Guest2)
                     {
-                        Guest2Main guest2Main = new Guest2Main();
+                        Guest2Main guest2Main = new Guest2Main(user);
                         guest2Main.Show();
                     }
                     Close();

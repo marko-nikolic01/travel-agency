@@ -27,9 +27,9 @@
 27|9|dcvd|True
 28|9|vddvdvd|True
 29|9|vdvd|True
-30|10|css|False
-31|10|html|False
-32|10|javascript|False
+30|10|css|True
+31|10|html|True
+32|10|javascript|True
 33|11|dvv|True
 34|11|vddvd|True
 35|12|dppd|False
