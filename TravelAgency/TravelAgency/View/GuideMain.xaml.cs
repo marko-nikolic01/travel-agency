@@ -81,7 +81,7 @@ namespace TravelAgency.View
         {
             foreach(TourOccurrenceAttendance tourOccurrenceAttendance in TourOccurrenceAttendanceRepository.GetTourOccurrenceAttendances())
             {
-                KeyPoint keyPoint = KeyPointRepository.GetKeyPoints().Find(k => k.Id == tourOccurrenceAttendance.UserId);
+                KeyPoint keyPoint = KeyPointRepository.GetKeyPoints().Find(k => k.Id == tourOccurrenceAttendance.GuestId);
                 User guest = UserRepository.GetUsers().Find(u => u.Id == tourOccurrenceAttendance.KeyPointId);
                 if(keyPoint != null && guest != null)
                 {

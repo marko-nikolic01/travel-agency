@@ -41,5 +41,12 @@ namespace TravelAgency.Repository
             tourOccurrenceAttendances.Add(tourOccurrenceAttendance);
             _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
         }
+
+        public void UpdateTourOccurrenceAttendaces(TourOccurrenceAttendance tourOccurrenceAttendance)
+        {
+            TourOccurrenceAttendance oldTourOccurrenceAttendance = tourOccurrenceAttendances.Find(t => t.Id == tourOccurrenceAttendance.Id);
+            oldTourOccurrenceAttendance.ResponseStatus = tourOccurrenceAttendance.ResponseStatus;
+            _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
+        }
     }
 }

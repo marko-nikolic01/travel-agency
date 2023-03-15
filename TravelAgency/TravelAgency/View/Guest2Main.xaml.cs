@@ -32,17 +32,21 @@ namespace TravelAgency.View
         public LocationRepository LocationRepository { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
         public UserRepository UserRepository { get; set; }
+        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository {get; set; }
+        public User ActiveGuest { get; set; }
 
-        public Guest2Main()
+        public Guest2Main(User user)
         {
             InitializeComponent();
             DataContext = this;
+            ActiveGuest = user;
             TourRepository = new TourRepository();
             LocationRepository = new LocationRepository();
             PhotoRepository = new PhotoRepository();
             TourOccurrenceRepository = new TourOccurrenceRepository();
             TourReservationRepository = new TourReservationRepository();
             UserRepository = new UserRepository();
+            TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
             LinkingTourLocation();
             LinkingTourOccurrences();
             LinkingTourImages();
@@ -50,6 +54,26 @@ namespace TravelAgency.View
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
             TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
+            AllertIfSelectd(ActiveGuest);
+        }
+
+        private void AllertIfSelectd(User activeGuest)
+        {
+            foreach(TourOccurrenceAttendance tourOccurrenceAttendance in TourOccurrenceAttendanceRepository.GetTourOccurrenceAttendances())
+            {
+                if(tourOccurrenceAttendance.GuestId == activeGuest.Id && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.NotAnsweredYet)
+                {
+                    if(MessageBox.Show("You have just been selected as present on the tour! Do you confirm?", "Notification", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                    {
+                        tourOccurrenceAttendance.ResponseStatus = ResponseStatus.Accepted;
+                    }
+                    else
+                    {
+                        tourOccurrenceAttendance.ResponseStatus = ResponseStatus.Declined;
+                    }
+                    TourOccurrenceAttendanceRepository.UpdateTourOccurrenceAttendaces(tourOccurrenceAttendance);
+                }
+            }
         }
 
         private void ReserveClick(object sender, RoutedEventArgs e)
