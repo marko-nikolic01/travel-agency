@@ -27,19 +27,51 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="NameLabel" Grid.Row="1" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Name:</Label>
-            <Label Name="LocationLabel" Grid.Row="2" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Location:</Label>
-            <Label Name="TypeLabel" Grid.Row="3" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Type:</Label>
-            <Label Name="MaxGuestsLabel" Grid.Row="4" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Max. Guests:</Label>
-            <Label Name="MinDaysLabel" Grid.Row="5" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Min. Days:</Label>
-            <Label Name="DaysToCancelLabel" Grid.Row="6" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Days To Cancel:</Label>
-            <Label Name="OwnerLabel" Grid.Row="7" Grid.Column="0" FontSize="24" VerticalAlignment="Center">Owner:</Label>
+            <Label Name="nameLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Name:</Label>
+            <Label Name="locationLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Location:</Label>
+            <Label Name="typeLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Type:</Label>
+            <Label Name="maxGuestsLabel" Grid.Row="4" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Max. Guests:</Label>
+            <Label Name="minDaysLabel" Grid.Row="5" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Min. Days:</Label>
+            <Label Name="daysToCancelLabel" Grid.Row="6" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days To Cancel:</Label>
+            <Label Name="ownerLabel" Grid.Row="7" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Owner:</Label>
             <Border Margin="10, 10, 10, 0" Grid.Row="1" Grid.RowSpan="6" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="2, 2, 2, 1" BorderBrush="Black" Background="DarkGray">
-                <Image Name="AccommodationImage" Source="../Resources/Images/ProfilePicture.jpg"></Image>
+                <Image Name="accommodationImage" Source="../Resources/Images/ProfilePicture.jpg"></Image>
             </Border>
-            <Button Name="PreviousImageButton" Grid.Row="7" Grid.Column="2" Margin="10, 0, 0, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="24" Click="ShowPreviousImage">Previous</Button>
-            <Button Name="NextImageButton" Grid.Row="7" Grid.Column="3" Margin="0, 0, 10, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="24" Click="ShowNextImage">Next</Button>
+            <Button Name="previousImageButton" Grid.Row="7" Grid.Column="2" Margin="10, 0, 0, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="20" Click="ShowPreviousImage">Previous</Button>
+            <Button Name="nextImageButton" Grid.Row="7" Grid.Column="3" Margin="0, 0, 10, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="20" Click="ShowNextImage">Next</Button>
             <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0, 0, 0, 1" BorderBrush="DarkGray"></Border>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Top" Height="350">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Grid.RowSpan="6" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="DarkGray"></Border>
+            <Label Name="daysLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days:</Label>
+            <Label Name="startDateLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Start date:</Label>
+            <Label Name="endDateLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">End Date:</Label>
+            <xctk:IntegerUpDown Name="daysNumberUpDown" Grid.Row="1" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></xctk:IntegerUpDown>
+            <DatePicker Name="startDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></DatePicker>
+            <DatePicker Name="endDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></DatePicker>
+            <Button Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
+            <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Pick a date span:"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center">Guests:</Label>
+            <xctk:IntegerUpDown Name="uestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray"></xctk:IntegerUpDown>
+            <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" FontSize="20">Make a reservation</Button>
         </Grid>
     </DockPanel>
 </Window>

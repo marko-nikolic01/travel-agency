@@ -24,7 +24,7 @@ namespace TravelAgency.View
         User Guest { get; set; }
         Accommodation Accommodation { get; set; }
 
-        public List<string> ImageSources { get; set; }
+        public List<BitmapImage> ImageSources { get; set; }
         public int currentImageNumber;
         public AccommodationReservationWindow(User guest, Accommodation accommodation)
         {
@@ -36,13 +36,13 @@ namespace TravelAgency.View
             Guest = guest;
             Accommodation = accommodation;
 
-            NameLabel.Content = "Name: " + Accommodation.Name;
-            LocationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
-            TypeLabel.Content = "Type: " + Accommodation.Type;
-            MaxGuestsLabel.Content = "Max. guests: " + Accommodation.MaxGuests;
-            MinDaysLabel.Content = "Min. days: " + Accommodation.MinDays;
-            DaysToCancelLabel.Content = "Days to cancel: " + Accommodation.DaysToCancel;
-            OwnerLabel.Content = "Owner: " + Accommodation.Owner.Username;
+            nameLabel.Content = "Name: " + Accommodation.Name;
+            locationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
+            typeLabel.Content = "Type: " + Accommodation.Type;
+            maxGuestsLabel.Content = "Max. guests: " + Accommodation.MaxGuests;
+            minDaysLabel.Content = "Min. days: " + Accommodation.MinDays;
+            daysToCancelLabel.Content = "Days to cancel: " + Accommodation.DaysToCancel;
+            ownerLabel.Content = "Owner: " + Accommodation.Owner.Username;
 
 
             //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -50,14 +50,22 @@ namespace TravelAgency.View
             string img2 = "..\\Resources\\Images\\ProfilePicture.jpg";
             string img3 = "https://www.sfzoo.org/wp-content/uploads/2021/03/AfricanLionJasiri_resize2019.jpg";
 
-            ImageSources = new List<string>();
-            ImageSources.Add(img1);
-            ImageSources.Add(img2);
-            ImageSources.Add(img3);
+            ImageSources = new List<BitmapImage>();
+
+            Uri uri1 = new Uri(img1, UriKind.RelativeOrAbsolute);
+            Uri uri2 = new Uri(img2, UriKind.RelativeOrAbsolute);
+            Uri uri3 = new Uri(img3, UriKind.RelativeOrAbsolute);
+
+            BitmapImage bmi1 = new BitmapImage(uri1);
+            BitmapImage bmi2 = new BitmapImage(uri2);
+            BitmapImage bmi3 = new BitmapImage(uri3);
+
+            ImageSources.Add(bmi1);
+            ImageSources.Add(bmi2);
+            ImageSources.Add(bmi3);
 
             currentImageNumber = 0;
-            Uri uri = new Uri(ImageSources[currentImageNumber]);
-            AccommodationImage.Source = new BitmapImage(uri);
+            accommodationImage.Source = ImageSources[0];
             
 
             //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,13 +78,11 @@ namespace TravelAgency.View
             if (currentImageNumber == -1)
             {
                 currentImageNumber = ImageSources.Count() - 1;
-                Uri uri = new Uri(ImageSources[currentImageNumber], UriKind.RelativeOrAbsolute);
-                AccommodationImage.Source = new BitmapImage(uri);
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
             else
             {
-                Uri uri = new Uri(ImageSources[currentImageNumber], UriKind.RelativeOrAbsolute);
-                AccommodationImage.Source = new BitmapImage(uri);
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
         }
 
@@ -87,14 +93,17 @@ namespace TravelAgency.View
             if (currentImageNumber == ImageSources.Count())
             {
                 currentImageNumber = 0;
-                Uri uri = new Uri(ImageSources[currentImageNumber], UriKind.RelativeOrAbsolute);
-                AccommodationImage.Source = new BitmapImage(uri);
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
             else
             {
-                Uri uri = new Uri(ImageSources[currentImageNumber], UriKind.RelativeOrAbsolute);
-                AccommodationImage.Source = new BitmapImage(uri);
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
+        }
+
+        private void FindAvailableDates(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
