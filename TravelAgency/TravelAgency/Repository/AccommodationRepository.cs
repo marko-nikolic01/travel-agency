@@ -54,7 +54,6 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            _accommodations = _serializer.FromCSV(FilePath);
             if (_accommodations.Count < 1)
             {
                 return 1;
@@ -65,7 +64,6 @@ namespace TravelAgency.Repository
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();
-            _accommodations = _serializer.FromCSV(FilePath);
             _accommodations.Add(accommodation);
             _serializer.ToCSV(FilePath, _accommodations);
             return accommodation;

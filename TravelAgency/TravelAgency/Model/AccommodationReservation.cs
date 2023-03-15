@@ -15,6 +15,7 @@ namespace TravelAgency.Model
         public Accommodation Accommodation { get; set; }
         public int GuestId { get; set; }
         public User Guest { get; set; }
+        public int NumberOfGuests { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
 
@@ -24,15 +25,17 @@ namespace TravelAgency.Model
             Id = -1;
             AccomodationId = -1;
             GuestId = -1;
+            NumberOfGuests = -1;
             StartDate = new DateOnly();
             EndDate = new DateOnly();
         }
 
-        public AccommodationReservation(int id, int accommodationId, int guestId, DateOnly startDate, DateOnly endDate)
+        public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateOnly startDate, DateOnly endDate)
         {
             Id = id;
             AccomodationId = accommodationId;
             GuestId = guestId;
+            NumberOfGuests = numberOfGuests;
             StartDate = startDate;
             EndDate = endDate;
         }
@@ -44,6 +47,7 @@ namespace TravelAgency.Model
                 Id.ToString(),
                 AccomodationId.ToString(),
                 GuestId.ToString(),
+                NumberOfGuests.ToString(),
                 StartDate.ToString(),
                 EndDate.ToString()
             };
@@ -55,8 +59,9 @@ namespace TravelAgency.Model
             Id = Convert.ToInt32(values[0]);
             AccomodationId = Convert.ToInt32(values[1]);
             GuestId = Convert.ToInt32(values[2]);
-            StartDate = DateOnly.Parse(values[3]);
-            EndDate = DateOnly.Parse(values[4]);
+            NumberOfGuests = Convert.ToInt32(values[3]);
+            StartDate = DateOnly.Parse(values[4]);
+            EndDate = DateOnly.Parse(values[5]);
         }
     }
 }

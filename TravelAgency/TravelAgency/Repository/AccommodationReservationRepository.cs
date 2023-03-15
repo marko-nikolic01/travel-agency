@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
 
@@ -56,7 +57,7 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
-        public List<AccommodationReservation> GetAll()
+        public IEnumerable<AccommodationReservation> GetAll()
         {
             return _accommodationReservations;
         }
@@ -90,6 +91,28 @@ namespace TravelAgency.Repository
             _accommodationReservations.Add(accommodationReservation);
             _serializer.ToCSV(FilePath, _accommodationReservations);
             return accommodationReservation;
+        }
+
+        public void SaveAll(IEnumerable<AccommodationReservation> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AccommodationReservation> GetUnrated(IEnumerable<AccommodationGuestRating> ratings)
+        {
+            List<AccommodationReservation> unrated = new List<AccommodationReservation>(_accommodationReservations);
+            foreach (var accommodationReservation in _accommodationReservations)
+            {
+                foreach (var rating in ratings)
+                {
+                    if (accommodationReservation.Id == rating.AccommodationReservationId)
+                    {
+                        unrated.Remove(accommodationReservation);
+                    }
+                }
+            }
+
+            return unrated;
         }
     }
 }
