@@ -6,10 +6,19 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="GuestMain" Height="700" Width="1000"
+        Title="GuestMain" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock FontSize="8" Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <DockPanel>
-        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Background="LightGray" Height="350">
+        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Background="LightGray" Height="300">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
@@ -41,7 +50,7 @@
             <Button Name="nextImageButton" Grid.Row="7" Grid.Column="3" Margin="0, 0, 10, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="20" Click="ShowNextImage">Next</Button>
             <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0, 0, 0, 1" BorderBrush="DarkGray"></Border>
         </Grid>
-        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Top" Height="350">
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Top" Height="300">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
@@ -54,23 +63,33 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Grid.RowSpan="6" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="DarkGray"></Border>
             <Label Name="daysLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days:</Label>
             <Label Name="startDateLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Start date:</Label>
             <Label Name="endDateLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">End Date:</Label>
-            <xctk:IntegerUpDown Name="daysNumberUpDown" Grid.Row="1" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></xctk:IntegerUpDown>
-            <DatePicker Name="startDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></DatePicker>
-            <DatePicker Name="endDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"></DatePicker>
-            <Button Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
-            <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 10">
+            <xctk:IntegerUpDown Name="daysNumberUpDown" Grid.Row="1" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        Text="{Binding Path=DayNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" ValueChanged="DayNumberSelectionChanged"></xctk:IntegerUpDown>
+            <DatePicker Name="startDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        LostFocus="DateLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                        SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></DatePicker>
+            <DatePicker Name="endDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        LostFocus="DateLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                        SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></DatePicker>
+            <Button Click="FindAvailableDates" Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
+            <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 30" ItemsSource="{Binding AvailableDateSpans}"
+                        SelectedItem="{Binding Path=SelectedDateSpan, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Pick a date span:"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center">Guests:</Label>
-            <xctk:IntegerUpDown Name="uestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Name="uestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray"
+                        Text="{Binding Path=Reservation.NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
             <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" FontSize="20">Make a reservation</Button>
         </Grid>
     </DockPanel>
