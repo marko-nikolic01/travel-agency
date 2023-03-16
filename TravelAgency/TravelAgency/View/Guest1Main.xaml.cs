@@ -30,6 +30,7 @@ namespace TravelAgency.View
         public AccommodationRepository accommodationRepository;
         public LocationRepository locationRepository;
         public ImageRepository imageRepository;
+        public AccommodationReservationRepository accommodationReservationRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -51,6 +52,7 @@ namespace TravelAgency.View
             locationRepository = new LocationRepository();
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
+            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
 
@@ -177,7 +179,7 @@ namespace TravelAgency.View
         {
             if (SelectedAccommodation != null)
             {
-                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation);
+                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation, accommodationReservationRepository);
                 accommodationReservationWindow.Show();
             }
             else 

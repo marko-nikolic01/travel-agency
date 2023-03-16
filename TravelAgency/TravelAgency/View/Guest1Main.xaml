@@ -97,6 +97,9 @@
             <DataGrid Grid.Row="0" Grid.RowSpan="8" Grid.Column="3" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                       AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="accommodationsDataGrid"
                       IsReadOnly="True" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding Path=SelectedAccommodation, Mode=TwoWay}">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path=Name}"/>
                     <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Location.Country}"/>
