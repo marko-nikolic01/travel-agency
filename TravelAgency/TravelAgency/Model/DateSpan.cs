@@ -58,6 +58,11 @@ namespace TravelAgency.Model
             EndDate = endDate;
         }
 
+        public int CountDays()
+        {
+            return EndDate.DayNumber - StartDate.DayNumber + 1;
+        }
+
         
     }
 }

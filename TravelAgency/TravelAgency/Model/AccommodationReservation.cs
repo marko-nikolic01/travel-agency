@@ -137,6 +137,10 @@ namespace TravelAgency.Model
                     {
                         return "* Select a date span";
                     }
+                    else if (DateSpan.CountDays() < Accommodation.MinDays)
+                    {
+                        return "* Date span is too short";
+                    }
                 }
 
                 return null;

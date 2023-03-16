@@ -67,22 +67,27 @@
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Grid.RowSpan="6" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="DarkGray"></Border>
             <Label Name="daysLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days:</Label>
-            <Label Name="startDateLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Start date:</Label>
-            <Label Name="endDateLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">End Date:</Label>
+            <Label Name="firstDateLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">First date:</Label>
+            <Label Name="lastDateLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Last Date:</Label>
             <xctk:IntegerUpDown Name="daysNumberUpDown" Grid.Row="1" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
-                        Text="{Binding Path=DayNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" ValueChanged="DayNumberSelectionChanged"></xctk:IntegerUpDown>
-            <DatePicker Name="startDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
-                        LostFocus="DateLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                        SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></DatePicker>
-            <DatePicker Name="endDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
-                        LostFocus="DateLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                        SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></DatePicker>
+                        Value="{Binding Path=DayNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Minimum="{Binding Accommodation.MinDays}" ValueChanged="DayNumberSelectionChanged"></xctk:IntegerUpDown>
+            <DatePicker Name="firstDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        LostFocus="DatePickerLostFocus"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        SelectedDate="{Binding FirstDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=dd/MM/yyyy}"
+                        Text="{Binding Path=FirstDate, StringFormat=dd/MM/yyyy}"></DatePicker>
+            <DatePicker Name="lastDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        LostFocus="DatePickerLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        SelectedDate="{Binding LastDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=dd/MM/yyyy}"
+                        Text="{Binding Path=FirstDate, StringFormat=dd/MM/yyyy}"></DatePicker>
             <Button Click="FindAvailableDates" Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
             <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 30" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                         AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" ItemsSource="{Binding AvailableDateSpans, UpdateSourceTrigger=PropertyChanged}"
                         Name="dateSpansDataGrid" SelectedItem="{Binding Path=Reservation.DateSpan, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsReadOnly="True">
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsReadOnly="True" Visibility="Hidden">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Pick a date span:" Width="*">
                         <DataGridTextColumn.Binding>
@@ -94,11 +99,12 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center">Guests:</Label>
-            <xctk:IntegerUpDown Name="uestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray"
-                        Text="{Binding Path=Reservation.NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
-            <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" FontSize="20">Make a reservation</Button>
+            <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center" Visibility="Hidden">Guests:</Label>
+            <xctk:IntegerUpDown Name="guestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray" 
+                        Value="{Binding Path=Reservation.NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Visibility="Hidden" Minimum="1" Maximum="{Binding Accommodation.MaxGuests}"></xctk:IntegerUpDown>
+            <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" 
+                    FontSize="20" Visibility="Hidden" Click="MakeReservation">Make a reservation</Button>
         </Grid>
     </DockPanel>
 </Window>

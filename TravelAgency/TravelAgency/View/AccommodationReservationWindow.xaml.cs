@@ -17,6 +17,7 @@ using TravelAgency.Model.DTO;
 using System.ComponentModel;
 using TravelAgency.Repository;
 using System.Collections.ObjectModel;
+using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
 {
@@ -30,8 +31,8 @@ namespace TravelAgency.View
         public AccommodationReservationRepository accommodationReservationRepository;
         public AccommodationReservation Reservation { get; set; }
         private int _dayNumber;
-        private DateTime _startDate;
-        private DateTime _endDate;
+        private DateTime _firstDate;
+        private DateTime _lastDate;
         public ObservableCollection<DateSpan> AvailableDateSpans { get; set; }
         public DateSpan SelectedDateSpan { get; set; }
         public List<BitmapImage> ImageSources { get; set; }
@@ -50,28 +51,28 @@ namespace TravelAgency.View
             }
         }
 
-        public DateTime StartDate
+        public DateTime FirstDate
         {
-            get => _startDate;
+            get => _firstDate;
             set
             {
-                if (value != _startDate)
+                if (value != _firstDate)
                 {
-                    _startDate = value;
-                    OnPropertyChanged("StartDate");
+                    _firstDate = value;
+                    OnPropertyChanged("FirstDate");
                 }
             }
         }
 
-        public DateTime EndDate
+        public DateTime LastDate
         {
-            get => _endDate;
+            get => _lastDate;
             set
             {
-                if (value != _endDate)
+                if (value != _lastDate)
                 {
-                    _endDate = value;
-                    OnPropertyChanged("EndDate");
+                    _lastDate = value;
+                    OnPropertyChanged("LastDate");
                 }
             }
         }
@@ -94,14 +95,16 @@ namespace TravelAgency.View
 
             this.accommodationReservationRepository = accommodationReservationRepository;
 
-            StartDate = new DateTime();
-            EndDate = new DateTime();
+            FirstDate = DateTime.Now.Date;
+            LastDate = DateTime.Now.Date;
             AvailableDateSpans = new ObservableCollection<DateSpan>();
 
             Guest = guest;
             Accommodation = accommodation;
             Reservation = new AccommodationReservation(Accommodation.Id, Accommodation, Guest.Id, Guest);
 
+            DayNumber = Accommodation.MinDays;
+            
             nameLabel.Content = "Name: " + Accommodation.Name;
             locationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
             typeLabel.Content = "Type: " + Accommodation.Type;
@@ -109,6 +112,10 @@ namespace TravelAgency.View
             minDaysLabel.Content = "Min. days: " + Accommodation.MinDays;
             daysToCancelLabel.Content = "Days to cancel: " + Accommodation.DaysToCancel;
             ownerLabel.Content = "Owner: " + Accommodation.Owner.Username;
+            firstDatePicker.DisplayDateStart = DateTime.Today;
+            lastDatePicker.DisplayDateStart = DateTime.Today;
+
+
 
 
 
@@ -173,20 +180,28 @@ namespace TravelAgency.View
             if (this.IsValid)
             {
                 accommodationReservationRepository.SetReservationLength(DayNumber);
-                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateSpan(StartDate, EndDate, Accommodation.Id));
+                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateSpan(FirstDate, LastDate, Accommodation.Id));
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 if (AvailableDateSpans.Count == 0)
                 {
-                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(StartDate, EndDate, Accommodation.Id));
+                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(FirstDate, LastDate, Accommodation.Id));
                     dateSpansDataGrid.ItemsSource = AvailableDateSpans;
                 }
+
+                Reservation.DateSpan = null;
+                Reservation.NumberOfGuests = 1;
+
+                dateSpansDataGrid.Visibility = Visibility.Visible;
+                guestsLabel.Visibility = Visibility.Visible;
+                guestsNumberUpDown.Visibility = Visibility.Visible;
+                guestsNumberUpDown.Value = 1;
+                makeReservationButton.Visibility = Visibility.Visible;
             }
             else 
             {
-                MessageBox.Show("Date span wasn't properly specified!");
+                System.Windows.MessageBox.Show("Date span wasn't properly specified!");
             }
-            MessageBox.Show("ok");
         }
 
         public string Error => null;
@@ -210,38 +225,37 @@ namespace TravelAgency.View
                         return "* Number of guests is smaller than allowed";
                     }
                 }
-                else if (columnName == "StartDate")
+                else if (columnName == "FirstDate")
                 {
-                    bool isFutureDate = StartDate.CompareTo(DateTime.Now) > 0;
+                    bool isFutureDate = FirstDate.CompareTo(DateTime.Now) > 0;
                     
                     if (!isFutureDate)
                     {
-                        return "* Start date must be a future date";
+                        return "* First date must be a future date";
                     }
 
-                    double dateSpanLength = (EndDate - StartDate).TotalDays + 1;
+                    double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
                     if (dateSpanLength < 0)
                     {
-                        return "*Start date can't be after end date";
+                        return "*First date can't be after end date";
                     }
                     else if (dateSpanLength < DayNumber)
                     {
-                         return "*Date span can't be shorter thanspecified\nnumber of days";
+                         return "*Date span can't be shorter than specified\nnumber of days";
                     }
 
                 }
-                else if (columnName == "EndDate")
+                else if (columnName == "LastDate")
                 {
-                    bool isFutureDate = EndDate.CompareTo(DateTime.Now) > 0;
+                    bool isFutureDate = LastDate.CompareTo(DateTime.Now) > 0;
                     if (!isFutureDate)
                     {
-                        return "* End date must be a future date";
+                        return "* Last date must be a future date";
                     }
 
-                    double dateSpanLength = (EndDate - StartDate).TotalDays + 1;
+                    double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
                     if (dateSpanLength < 0)
                     {
-                        return "*End date can't be before start date";
                     }
                     else if(dateSpanLength < DayNumber)
                     {
@@ -253,7 +267,7 @@ namespace TravelAgency.View
             }
         }
 
-        private readonly string[] _validatedProperties = { "DayNumber", "StartDate", "EndDate" };
+        private readonly string[] _validatedProperties = { "DayNumber", "FirstDate", "LastDate" };
 
         public bool IsValid
         {
@@ -269,21 +283,34 @@ namespace TravelAgency.View
             }
         }
 
-        private void DayNumberSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+
+        private void DatePickerLostFocus(object sender, RoutedEventArgs e)
         {
-            StartDate = StartDate.AddDays(1);
-            StartDate = StartDate.AddDays(-1);
-            EndDate = EndDate.AddDays(1);
-            EndDate = EndDate.AddDays(-1);
+            FirstDate = FirstDate.AddDays(1);
+            FirstDate = FirstDate.AddDays(-1);
+            LastDate = LastDate.AddDays(1);
+            LastDate = LastDate.AddDays(-1);
         }
 
-
-        private void DateLostFocus(object sender, RoutedEventArgs e)
+        private void DayNumberSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            StartDate = StartDate.AddDays(1);
-            StartDate = StartDate.AddDays(-1);
-            EndDate = EndDate.AddDays(1);
-            EndDate = EndDate.AddDays(-1);
+            FirstDate = FirstDate.AddDays(1);
+            FirstDate = FirstDate.AddDays(-1);
+            LastDate = LastDate.AddDays(1);
+            LastDate = LastDate.AddDays(-1);
+        }
+
+        private void MakeReservation(object sender, RoutedEventArgs e)
+        {
+            if (Reservation.IsValid)
+            {
+                accommodationReservationRepository.Save(Reservation);
+                Close();
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Reservation wasn't properly specified!");
+            }
         }
     }
 }
