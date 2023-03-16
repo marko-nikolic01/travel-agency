@@ -22,8 +22,7 @@ namespace TravelAgency.Model
         public int GuestId { get; set; }
         public User Guest { get; set; }
         private int _numberOfGuests;
-        private DateOnly _startDate;
-        private DateOnly _endDate;
+        private DateSpan _dateSpan;
 
 
         public int NumberOfGuests
@@ -34,33 +33,20 @@ namespace TravelAgency.Model
                 if (value != _numberOfGuests)
                 {
                     _numberOfGuests = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged("NumberOfGuests");
                 }
             }
         }
 
-        public DateOnly StartDate
+        public DateSpan DateSpan
         {
-            get => _startDate;
+            get => _dateSpan;
             set
             {
-                if (value != _startDate)
+                if (value != _dateSpan)
                 {
-                    _startDate = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public DateOnly EndDate
-        {
-            get => _endDate;
-            set
-            {
-                if (value != _endDate)
-                {
-                    _endDate = value;
-                    OnPropertyChanged();
+                    _dateSpan = value;
+                    OnPropertyChanged("DateSpan");
                 }
             }
         }
@@ -78,18 +64,16 @@ namespace TravelAgency.Model
             AccomodationId = -1;
             GuestId = -1;
             NumberOfGuests = -1;
-            StartDate = new DateOnly();
-            EndDate = new DateOnly();
+            DateSpan = new DateSpan();
         }
 
-        public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateOnly startDate, DateOnly endDate)
+        public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateSpan dateSpan)
         {
             Id = id;
             AccomodationId = accommodationId;
             GuestId = guestId;
             NumberOfGuests = numberOfGuests;
-            StartDate = startDate;
-            EndDate = endDate;
+            DateSpan = dateSpan;
         }
 
         public AccommodationReservation(int accommodationId, Accommodation accommodation, int guestId, User guest)
@@ -110,8 +94,8 @@ namespace TravelAgency.Model
                 AccomodationId.ToString(),
                 GuestId.ToString(),
                 NumberOfGuests.ToString(),
-                StartDate.ToString(),
-                EndDate.ToString()
+                DateSpan.StartDate.ToString(),
+                DateSpan.EndDate.ToString()
             };
             return csvValues;
         }
@@ -122,8 +106,8 @@ namespace TravelAgency.Model
             AccomodationId = Convert.ToInt32(values[1]);
             GuestId = Convert.ToInt32(values[2]);
             NumberOfGuests = Convert.ToInt32(values[3]);
-            StartDate = DateOnly.Parse(values[4]);
-            EndDate = DateOnly.Parse(values[5]);
+            DateSpan.StartDate = DateOnly.Parse(values[4]);
+            DateSpan.EndDate = DateOnly.Parse(values[5]);
         }
 
         public string Error => null;
@@ -147,18 +131,11 @@ namespace TravelAgency.Model
                         return "* Number of guests is bigger than allowed";
                     }
                 }
-                else if (columnName == "StartDate")
+                if (columnName == "DateSpan")
                 {
-                    if (StartDate == null)
+                    if (DateSpan == null)
                     {
-                        return "* Start date is required";
-                    }
-                }
-                else if (columnName == "EndDate")
-                {
-                    if (EndDate == null)
-                    {
-                        return "* End date is required";
+                        return "* Select a date span";
                     }
                 }
 
@@ -166,7 +143,7 @@ namespace TravelAgency.Model
             }
         }
 
-        private readonly string[] _validatedProperties = { "NumberOfGuests", "StartDate", "EndDate"};
+        private readonly string[] _validatedProperties = { "NumberOfGuests", "DateSpan"};
 
         public bool IsValid
         {

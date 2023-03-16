@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Model.DTO;
 using System.ComponentModel;
+using TravelAgency.Repository;
+using System.Collections.ObjectModel;
 
 namespace TravelAgency.View
 {
@@ -25,13 +27,16 @@ namespace TravelAgency.View
     {
         public User Guest { get; set; }
         public Accommodation Accommodation { get; set; }
+        public AccommodationReservationRepository accommodationReservationRepository;
         public AccommodationReservation Reservation { get; set; }
         private int _dayNumber;
         private DateTime _startDate;
         private DateTime _endDate;
+        public ObservableCollection<DateSpan> AvailableDateSpans { get; set; }
+        public DateSpan SelectedDateSpan { get; set; }
         public List<BitmapImage> ImageSources { get; set; }
         public int currentImageNumber;
-
+        
         public int DayNumber
         {
             get => _dayNumber;
@@ -78,15 +83,20 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AccommodationReservationWindow(User guest, Accommodation accommodation)
+        public AccommodationReservationWindow(User guest, Accommodation accommodation, AccommodationReservationRepository accommodationReservationRepository)
         {
-            StartDate = new DateTime();
-            EndDate = new DateTime();
+            
 
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
             this.Width = 1000;
+
+            this.accommodationReservationRepository = accommodationReservationRepository;
+
+            StartDate = new DateTime();
+            EndDate = new DateTime();
+            AvailableDateSpans = new ObservableCollection<DateSpan>();
 
             Guest = guest;
             Accommodation = accommodation;
@@ -162,12 +172,21 @@ namespace TravelAgency.View
         {
             if (this.IsValid)
             {
+                accommodationReservationRepository.SetReservationLength(DayNumber);
+                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateSpan(StartDate, EndDate, Accommodation.Id));
+                dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
+                if (AvailableDateSpans.Count == 0)
+                {
+                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(StartDate, EndDate, Accommodation.Id));
+                    dateSpansDataGrid.ItemsSource = AvailableDateSpans;
+                }
             }
             else 
             {
                 MessageBox.Show("Date span wasn't properly specified!");
             }
+            MessageBox.Show("ok");
         }
 
         public string Error => null;
