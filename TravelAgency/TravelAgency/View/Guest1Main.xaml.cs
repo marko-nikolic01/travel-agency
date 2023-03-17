@@ -29,7 +29,7 @@ namespace TravelAgency.View
         public UserRepository userRepository;
         public AccommodationRepository accommodationRepository;
         public LocationRepository locationRepository;
-        public ImageRepository imageRepository;
+        public AccommodationPhotoRepository imageRepository;
         public AccommodationReservationRepository accommodationReservationRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -50,7 +50,7 @@ namespace TravelAgency.View
 
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
-            imageRepository = new ImageRepository();
+            imageRepository = new AccommodationPhotoRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
 

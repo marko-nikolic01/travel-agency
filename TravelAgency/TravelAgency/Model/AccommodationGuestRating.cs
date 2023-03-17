@@ -10,7 +10,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Model
 {
-    public class AccommodationGuestRating : ISerializable, INotifyPropertyChanged
+    public class AccommodationGuestRating : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
         public int AccommodationReservationId { get; set; }
@@ -27,15 +27,54 @@ namespace TravelAgency.Model
                 }
             }
         }
-        private int _ruleCompliance;
-        public int RuleCompliance
+        private int _compliance;
+        public int Compliance
         {
-            get => _ruleCompliance;
+            get => _compliance;
             set
             {
-                if (_ruleCompliance != value)
+                if (_compliance != value)
                 {
-                    _ruleCompliance = value;
+                    _compliance = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private int _noisiness;
+        public int Noisiness
+        {
+            get => _noisiness;
+            set
+            {
+                if (_noisiness != value)
+                {
+                    _noisiness = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private int _friendliness;
+        public int Friendliness
+        {
+            get => _friendliness;
+            set
+            {
+                if (_friendliness != value)
+                {
+                    _friendliness = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private int _responsivenes;
+        public int Responsivenes
+        {
+            get => _responsivenes;
+            set
+            {
+                if (_responsivenes != value)
+                {
+                    _responsivenes = value;
                     OnPropertyChanged();
                 }
             }
@@ -53,22 +92,29 @@ namespace TravelAgency.Model
                 }
             }
         }
+        public AccommodationReservation? AccommodationReservation { get; set; }
 
         public AccommodationGuestRating()
         {
             Id = -1;
             AccommodationReservationId = -1;
-            RuleCompliance = 1;
+            Compliance = 1;
             Cleanliness = 1;
+            Noisiness = 1;
+            Friendliness = 1;
+            Responsivenes = 1;
             Comment = "";
         }
 
-        public AccommodationGuestRating(int id, int ownerId, int accommodationReservationId, int cleanliness, int ruleCompliance, string comment)
+        public AccommodationGuestRating(int id, int accommodationReservationId, int cleanliness, int compliance, int noisiness, int friendliness, int responsivenes, string comment)
         {
             Id = id;
             AccommodationReservationId = accommodationReservationId;
             Cleanliness = cleanliness;
-            RuleCompliance = ruleCompliance;
+            Compliance = compliance;
+            Noisiness = noisiness;
+            Friendliness = friendliness;
+            Responsivenes = responsivenes;
             Comment = comment;
         }
 
@@ -79,7 +125,10 @@ namespace TravelAgency.Model
                 Id.ToString(),
                 AccommodationReservationId.ToString(),
                 Cleanliness.ToString(),
-                RuleCompliance.ToString(),
+                Compliance.ToString(),
+                Noisiness.ToString(),
+                Friendliness.ToString(),
+                Responsivenes.ToString(),
                 Comment
             };
             return csvValues;
@@ -90,14 +139,79 @@ namespace TravelAgency.Model
             Id = Convert.ToInt32(values[0]);
             AccommodationReservationId = Convert.ToInt32(values[1]);
             Cleanliness = Convert.ToInt32(values[2]);
-            RuleCompliance = Convert.ToInt32(values[3]);
-            Comment = values[4];
+            Compliance = Convert.ToInt32(values[3]);
+            Noisiness = Convert.ToInt32(values[4]);
+            Friendliness = Convert.ToInt32(values[5]);
+            Responsivenes = Convert.ToInt32(values[6]);
+            Comment = values[7];
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Cleanliness")
+                {
+                    if (Cleanliness < 1 || Cleanliness > 5)
+                    {
+                        return "Ocena za čistoću mora imati vrednost od 1 do 5";
+                    }
+                }
+                else if (columnName == "Compliance")
+                {
+                    if (Compliance < 1 || Compliance > 5)
+                    {
+                        return "Ocena za poštovanje pravila mora imati vrednost od 1 do 5";
+                    }
+                }
+                else if (columnName == "Noisiness")
+                {
+                    if (Noisiness < 1 || Noisiness > 5)
+                    {
+                        return "Ocena za poštovanje pravila mora imati vrednost od 1 do 5";
+                    }
+                }
+                else if (columnName == "Friendliness")
+                {
+                    if (Friendliness < 1 || Friendliness > 5)
+                    {
+                        return "Ocena za ljubaznost mora imati vrednost od 1 do 5";
+                    }
+                }
+                else if (columnName == "Responsivenes")
+                {
+                    if (Responsivenes < 1 || Responsivenes > 5)
+                    {
+                        return "Ocena za odzivnost mora imati vrednost od 1 do 5";
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        private readonly string[] _validatedProperties = { "Cleanliness", "Compliance", "Noisiness", "Friendliness", "Responsivenes" };
+
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in _validatedProperties)
+                {
+                    if (this[property] != null)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }

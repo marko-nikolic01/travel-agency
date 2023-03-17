@@ -12,7 +12,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace TravelAgency.Model
 {
     public enum AccommodationType { APARTMENT, HOUSE, HUT }
-    public class Accommodation : ISerializable, INotifyPropertyChanged
+    public class Accommodation : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
         private string _name;
@@ -86,7 +86,7 @@ namespace TravelAgency.Model
 
         public User? Owner { get; set; }
         public Location? Location { get; set; }
-        public List<Image> Images { get; set; }
+        public List<AccommodationPhoto> Images { get; set; }
 
         public Accommodation()
         {
@@ -99,7 +99,7 @@ namespace TravelAgency.Model
             MinDays = 1;
             DaysToCancel = 0;
 
-            Images = new List<Image>();
+            Images = new List<AccommodationPhoto>();
         }
 
         public Accommodation(int id, string name, int ownerId, int locationId, AccommodationType type, int maxGuests, int minDays, int daysToCancel)
@@ -113,7 +113,7 @@ namespace TravelAgency.Model
             MinDays = minDays;
             DaysToCancel = daysToCancel;
 
-            Images = new List<Image>();
+            Images = new List<AccommodationPhoto>();
         }
 
         public string[] ToCSV()
@@ -145,9 +145,65 @@ namespace TravelAgency.Model
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Name")
+                {
+                    if (Name == "")
+                    {
+                        return "Naziv mora biti popunjen";
+                    }
+                }
+                else if (columnName == "MaxGuests")
+                {
+                    if (MaxGuests < 1)
+                    {
+                        return "Maksimalan broj gostiju mora biti veći od 0";
+                    }
+                }
+                else if (columnName == "MinDays")
+                {
+                    if (MinDays< 1)
+                    {
+                        return "Minimalan broj dana mora biti veći od 0";
+                    }
+                }
+                else if (columnName == "DaysToCancel")
+                {
+                    if (DaysToCancel < 1)
+                    {
+                        return "Broj dana za otkazivanje mora biti veći od 0";
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        private readonly string[] _validatedProperties = { "Name", "MaxGuests", "MinDays", "DaysToCancel" };
+
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in _validatedProperties)
+                {
+                    if (this[property] != null)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }

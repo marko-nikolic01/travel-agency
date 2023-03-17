@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
         Title="Prikaz smeštaja" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <DockPanel>
+    <DockPanel LastChildFill="False">
 
         <Menu DockPanel.Dock="Top" Height="20">
             <MenuItem Header="_File" Height="20"></MenuItem>
@@ -15,7 +15,7 @@
 
         <ToolBar DockPanel.Dock="Top" Height="Auto">
             <Button Content="Dodaj smeštaj" Click="ShowCreateAccommodation_Click"/>
-            <Button Content="Oceni korisnika" Click="ShowCreateAccommodation_Click"/>
+            <Button Content="Oceni goste" Click="ShowAccommodationGuestRatingWindow_Click"/>
         </ToolBar>
 
         <DataGrid DockPanel.Dock="Top"

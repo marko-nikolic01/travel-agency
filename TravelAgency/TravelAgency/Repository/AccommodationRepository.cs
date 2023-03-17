@@ -18,7 +18,7 @@ namespace TravelAgency.Repository
 
         private List<Accommodation> _accommodations;
 
-        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, ImageRepository imageRepository)
+        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository)
         {
             _serializer = new Serializer<Accommodation>();
             _accommodations = _serializer.FromCSV(FilePath);
@@ -42,7 +42,7 @@ namespace TravelAgency.Repository
                     }
                 }
 
-                foreach (Image image in imageRepository.GetAll())
+                foreach (AccommodationPhoto image in imageRepository.GetAll())
                 {
                     if (accommodation.Id == image.ObjectId)
                     {
