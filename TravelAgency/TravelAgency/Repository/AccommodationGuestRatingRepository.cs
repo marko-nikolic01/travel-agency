@@ -14,10 +14,21 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationGuestRating> _serializer;
         private List<AccommodationGuestRating> _accommodationGuestRatings;
 
-        public AccommodationGuestRatingRepository()
+        public AccommodationGuestRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
         {
             _serializer = new Serializer<AccommodationGuestRating>();
             _accommodationGuestRatings = _serializer.FromCSV(FilePath);
+
+            foreach (var accommodationGuestRating in _accommodationGuestRatings)
+            {
+                foreach (var accommodationReservation in accommodationReservations)
+                {
+                    if (accommodationGuestRating.AccommodationReservationId == accommodationReservation.Id)
+                    {
+                        accommodationGuestRating.AccommodationReservation = accommodationReservation;
+                    }
+                }
+            }
         }
 
         public void Delete(AccommodationGuestRating entity)

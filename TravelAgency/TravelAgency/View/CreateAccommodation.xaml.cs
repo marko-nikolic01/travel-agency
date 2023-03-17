@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using System.Collections.ObjectModel;
-using Image = TravelAgency.Model.Image;
+using AccommodationPhoto = TravelAgency.Model.AccommodationPhoto;
 
 namespace TravelAgency.View
 {
@@ -30,12 +30,12 @@ namespace TravelAgency.View
 
         private readonly AccommodationRepository _AccommodationRepository;
         private readonly LocationRepository _LocationRepository;
-        private readonly ImageRepository _ImageRepository;
+        private readonly AccommodationPhotoRepository _ImageRepository;
         
         public Accommodation NewAccommodation { get; set; }
         public Location NewLocation { get; set; }
 
-        public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, ImageRepository imageRepository)
+        public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository)
         {
             InitializeComponent();
             DataContext = this;
@@ -61,7 +61,7 @@ namespace TravelAgency.View
             {
                 var imagePath = ofd.FileName;
 
-                Image NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
+                AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
 
                 NewAccommodation.Images.Add(NewImage);
 

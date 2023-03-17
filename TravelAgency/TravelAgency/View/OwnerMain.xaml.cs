@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
-using TravelAgency.Model.DTO;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
@@ -32,8 +31,9 @@ namespace TravelAgency.View
         private readonly UserRepository userRepository;
         private readonly AccommodationRepository accommodationRepository;
         private readonly LocationRepository locationRepository;
-        private readonly ImageRepository imageRepository;
+        private readonly AccommodationPhotoRepository imageRepository;
         private readonly AccommodationReservationRepository accommodationReservationRepository;
+        private readonly AccommodationGuestRatingRepository accommodationGuestRatingRepository;
 
         public OwnerMain(User user)
         {
@@ -44,17 +44,29 @@ namespace TravelAgency.View
 
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
-            imageRepository = new ImageRepository();
+            imageRepository = new AccommodationPhotoRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
+            accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
         }
 
         private void ShowCreateAccommodation_Click(object sender, RoutedEventArgs e)
         {
+            CreateAccommodation createAccommodation = new CreateAccommodation(LoggedInUser, accommodationRepository, locationRepository, imageRepository);
+            createAccommodation.ShowDialog();
+        }
+
+        private void ShowAccommodationGuestRatingWindow_Click(object sender, RoutedEventArgs e)
+        {
             AccommodationGuestRatingWindow accommodationGuestRatingWindow = new AccommodationGuestRatingWindow(LoggedInUser, accommodationReservationRepository);
             accommodationGuestRatingWindow.ShowDialog();
+        }
+
+        private void NorifyOwnerForUnratedGuests()
+        {
+            var unratedGuests = accommodationReservationRepository.GetUnrated(accommodationGuestRatingRepository.GetAll());
         }
     }
 }
