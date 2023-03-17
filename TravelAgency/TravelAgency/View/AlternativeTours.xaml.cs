@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
 
 namespace TravelAgency.View
@@ -25,14 +13,15 @@ namespace TravelAgency.View
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public string tourLocation { get; set; }
         private TourReservationWindow reservationWindow;
-        public AlternativeTours(ObservableCollection<TourOccurrence> AllTourOccurrences, int id, Location location, TourReservationWindow reservationWindow=null)
+        private User activeGuest;
+        public AlternativeTours(ObservableCollection<TourOccurrence> AllTourOccurrences, int id, Location location, User user, TourReservationWindow reservationWindow=null)
         {
             InitializeComponent();
             DataContext = this;
             TourOccurrences = new ObservableCollection<TourOccurrence>();
             foreach(TourOccurrence tour in AllTourOccurrences) 
             {
-                if(tour.Id != id)
+                if(tour.Id != id && tour.Guests.Count != tour.Tour.MaxGuestNumber)
                 {
                     if(tour.Tour.Location.Id == location.Id)
                     {
@@ -41,6 +30,11 @@ namespace TravelAgency.View
                 }
             }
             this.reservationWindow = reservationWindow;
+            activeGuest = user;
+            if( reservationWindow == null ) 
+            {
+                altToursLabel.Content = "The selected tour has no more free spots, you can try others";
+            }
             tourLocation = "TOURS IN " + location.City.ToUpper() + ", " + location.Country.ToUpper();
         }
 
@@ -52,7 +46,7 @@ namespace TravelAgency.View
             }
             else
             {
-                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, Guest2Main.TourOccurrences);
+                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, Guest2Main.TourOccurrences, activeGuest);
                 tourReservation.Show();
                 Close();
                 if (reservationWindow != null)

@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 
@@ -26,15 +15,18 @@ namespace TravelAgency.View
         private TourReservationRepository tourReservationRepository;
         private TourOccurrence TourOccurrence;
         private TourReservationWindow reservationsWindow;
-        public TourGuests(int guests, TourOccurrence tourOccurrence, TourReservationWindow reservationsWindow)
+        private User activeGuest;
+        public TourGuests(int guests, TourOccurrence tourOccurrence, TourReservationWindow reservationsWindow, User user)
         {
             numberOfGuests = guests;
             InitializeComponent();
             userRepository = new UserRepository();
             tourReservationRepository = new TourReservationRepository();
             TourOccurrence = tourOccurrence;
-            SubmitButton.IsEnabled = false;
             this.reservationsWindow = reservationsWindow;
+            activeGuest = user;
+            GuestList.Items.Add(activeGuest.Username);
+            CheckGuestNumber();
         }
 
         private void AddGuestClick(object sender, RoutedEventArgs e)
@@ -63,11 +55,12 @@ namespace TravelAgency.View
         }
         private void RemoveGuestClick(object sender, RoutedEventArgs e)
         {
-            if(GuestList.SelectedItem !=null)
+            if(GuestList.SelectedItem != null && GuestList.SelectedIndex != 0)
             {
                 GuestList.Items.RemoveAt(GuestList.SelectedIndex);
+                AddButton.IsEnabled = true;
+                SubmitButton.IsEnabled = false;
             }
-            isListBoxFull();
         }
 
         private void SubmitClick(object sender, RoutedEventArgs e)
@@ -77,18 +70,37 @@ namespace TravelAgency.View
             User user;
             for(int i = 0; i<numberOfGuests; i++)
             {
-                user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2);
+                user = GetUserByName(i);
+                if (user == null)
+                {
+                    user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2);
+                    userRepository.SaveUser(user);
+                }
                 users.Add(user);
-                userRepository.SaveUser(user);
                 tourReservation = new TourReservation(TourOccurrence.Id, user.Id);
                 tourReservationRepository.SaveTourReservation(tourReservation);
             }
+            // ovo mozda moze drugacije
             TourOccurrence.Guests.AddRange(users);
             Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();
             reservationsWindow.CloseWindow();
         }
-
+        private User GetUserByName(int i)
+        {
+            return userRepository.GetUsers().Find(x => (x.Username == GuestList.Items.GetItemAt(i).ToString() && x.Role == Roles.Guest2));
+        }
+        private void CheckGuestNumber()
+        {
+            if(numberOfGuests == 1)
+            {
+                AddButton.IsEnabled = false;
+            }
+            else
+            {
+                SubmitButton.IsEnabled = false;
+            }
+        }
         private void CancelClick(object sender, RoutedEventArgs e)
         {
             Close();

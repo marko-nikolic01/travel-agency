@@ -27,7 +27,6 @@ namespace TravelAgency.View
         public TourOccurrence TourOccurrence { get; set; }
         //jel i ovo treba sa malom crtom ispred?
         private ObservableCollection<TourOccurrence> tourOccurrences;
-        public static bool reservationFinished;
         private string _imageUrl;
         private string _numberOfGuestsInput;
         private string _spotsLeft;
@@ -69,6 +68,7 @@ namespace TravelAgency.View
         }
         private int i, imagesCount;
         private List<Photo> images;
+        private User activeGuest;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -76,25 +76,43 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tO)
+        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tO, User user)
         {
             InitializeComponent();
             DataContext = this;
-            TourOccurrence= tourOccurrence;
+            TourOccurrence = tourOccurrence;
             i = 0;
-            imagesCount=TourOccurrence.Tour.Photos.Count;
+            imagesCount = TourOccurrence.Tour.Photos.Count;
             images = TourOccurrence.Tour.Photos;
             ImageUrl = images[i].Link;
             SpotsLeft = "";
             tourOccurrences = tO;
-            reservationFinished = false;
             AddGuestsButton.IsEnabled = false;
+            activeGuest = user;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int input;
             if (int.TryParse(NumberOfGuestsInput, out input))
+            {
+                CheckSpotsNumber(input);
+            }
+            else
+            {
+                SpotsLeft = "Wrong input";
+                AddGuestsButton.IsEnabled = false;
+            }
+        }
+
+        private void CheckSpotsNumber(int input)
+        {
+            if (input == 0)
+            {
+                SpotsLeft = "Wrong input";
+                AddGuestsButton.IsEnabled = false;
+            }
+            else
             {
                 int spotsLeft = TourOccurrence.Tour.MaxGuestNumber - (TourOccurrence.Guests.Count + input);
                 if (spotsLeft < 0)
@@ -107,11 +125,6 @@ namespace TravelAgency.View
                     SpotsLeft = spotsLeft.ToString();
                     AddGuestsButton.IsEnabled = true;
                 }
-            }
-            else
-            {
-                SpotsLeft = "Wrong input";
-                AddGuestsButton.IsEnabled = false;
             }
         }
 
@@ -130,7 +143,7 @@ namespace TravelAgency.View
 
         private void AlternativeToursClick(object sender, RoutedEventArgs e)
         {
-            AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location, this);
+            AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location, activeGuest, this);
             alternativeTours.Show();
         }
        
@@ -140,10 +153,8 @@ namespace TravelAgency.View
             {
                 int input;
                 input = int.Parse(NumberOfGuestsInput);
-                TourGuests tourGuests = new TourGuests(input, TourOccurrence, this);
+                TourGuests tourGuests = new TourGuests(input, TourOccurrence, this, activeGuest);
                 tourGuests.Show();
-                if (reservationFinished)
-                    Close();
             }
         }
         public void CloseWindow()

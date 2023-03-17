@@ -8,6 +8,7 @@
         Title="AlternativeTours" Height="450" Width="600">
     <Grid>
         <StackPanel>
+            <Label HorizontalAlignment="Left" Margin="10" x:Name="altToursLabel"></Label>
             <Label HorizontalAlignment="Center" Content="{Binding tourLocation}"></Label>
             <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False"
                   SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Margin="0 20">

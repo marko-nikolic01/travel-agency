@@ -50,8 +50,13 @@
                 <DataGridTextColumn Header="Current guest number" Binding="{Binding Guests.Count}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="2">
-            <Button Width="100" Height="40" Margin="20" Click="ReserveClick">Reserve</Button>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="110"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Width="100" Height="40" Margin="20" Click="ReserveClick">Reserve</Button>
+            <Button Grid.Column="1" Width="100" Height="40" Click="SignOutClick">Sign out</Button>
+        </Grid>
     </Grid>
 </Window>
