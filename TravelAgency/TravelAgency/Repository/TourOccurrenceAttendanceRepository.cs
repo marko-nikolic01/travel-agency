@@ -48,5 +48,33 @@ namespace TravelAgency.Repository
             oldTourOccurrenceAttendance.ResponseStatus = tourOccurrenceAttendance.ResponseStatus;
             _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
         }
+
+        public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id)
+        {
+            List<TourOccurrenceAttendance> result = new List<TourOccurrenceAttendance>();
+            foreach(TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
+            {
+                if(tourOccurrenceAttendance.TourOccurrenceId == id)
+                {
+                    result.Add(tourOccurrenceAttendance);
+                }
+            }
+            return result;
+        }
+
+        public void SaveOrUpdate(TourOccurrenceAttendance attendance)
+        {
+            TourOccurrenceAttendance oldAttendance = tourOccurrenceAttendances.Find(k => k.TourOccurrenceId == attendance.TourOccurrenceId && k.GuestId == attendance.GuestId);
+            if(oldAttendance != null)
+            {
+                oldAttendance.KeyPointId = attendance.KeyPointId;
+            }
+            else
+            {
+                attendance.Id = GetNewId();
+                tourOccurrenceAttendances.Add(attendance);
+            }
+            _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
+        }
     }
 }

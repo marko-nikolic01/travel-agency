@@ -49,13 +49,14 @@ namespace TravelAgency.Repository
             }
             return result;
         }
-        public void SaveTourOccurrences(TourOccurrence tourOccurrence, User activeGuide)
+        public TourOccurrence SaveTourOccurrences(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = GetNewId();
             tourOccurrence.GuideId = activeGuide.Id;
             tourOccurrences.Add(tourOccurrence);
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
+            return tourOccurrence;
         }
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
