@@ -43,6 +43,7 @@ namespace TravelAgency.View
         public User? ChosenGuest { get; set; }
         public Dictionary<User, int> UserKeyPointIdPairs { get; set; }
         public User ActiveGuide { get; set; }
+
         public GuideMain(User user)
         {
             InitializeComponent();
@@ -56,16 +57,18 @@ namespace TravelAgency.View
             TourReservationRepository = new TourReservationRepository();
             UserRepository = new UserRepository();
             TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
-            LinkTourLocation();
-            LinkTourPhotos();
-            LinkTourOccurrences();
-            LinkKeyPoints();
-            LinkTourGuests();
-            LinkKeyPointGuests();
+            LinkData();
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodaysTourOccurrences(ActiveGuide));
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
+
+            ShadowFinishedTourOccurrences();
+            UserKeyPointIdPairs = new Dictionary<User, int>();
+        }
+
+        private void ShadowFinishedTourOccurrences()
+        {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
                 if (tourOccurrence.CurrentState == CurrentState.Ended)
@@ -74,20 +77,15 @@ namespace TravelAgency.View
                     tourOccurrence.ToDisplay = 0;
                 }
             }
-            UserKeyPointIdPairs = new Dictionary<User, int>();
         }
 
-        private void LinkKeyPointGuests()
+        private void LinkData()
         {
-            foreach(TourOccurrenceAttendance tourOccurrenceAttendance in TourOccurrenceAttendanceRepository.GetTourOccurrenceAttendances())
-            {
-                KeyPoint keyPoint = KeyPointRepository.GetKeyPoints().Find(k => k.Id == tourOccurrenceAttendance.GuestId);
-                User guest = UserRepository.GetUsers().Find(u => u.Id == tourOccurrenceAttendance.KeyPointId);
-                if(keyPoint != null && guest != null)
-                {
-                    keyPoint.Guests.Add(guest);
-                }
-            }
+            LinkTourLocation();
+            LinkTourPhotos();
+            LinkTourOccurrences();
+            LinkKeyPoints();
+            LinkTourGuests();
         }
 
         private void LinkTourGuests()
@@ -148,15 +146,14 @@ namespace TravelAgency.View
             }
         }
 
-
-        private void SignOutClick(object sender, RoutedEventArgs e)
+        private void SignOut_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
         }
 
-        private void NewTourClick(object sender, RoutedEventArgs e)
+        private void NewTour_Click(object sender, RoutedEventArgs e)
         {
             CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository, ActiveGuide);
             createTour.Show();
@@ -171,23 +168,27 @@ namespace TravelAgency.View
             }
         }
 
-        private void StartButtonClick(object sender, RoutedEventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            if(SelectedTourOccurrence == null)
+            if (!CheckStartConditions())
             {
-                MessageBox.Show("You have to select the tour you would like to start first!");
                 return;
             }
-            if(SelectedTourOccurrence.Guests.Count == 0)
-            {
-                MessageBox.Show("No guests have reserved this tour, therefore it can't be started!");
-                return;
-            }
-            StartButton.IsEnabled = false;
-            StopButton.IsEnabled = true;
-            NewTourButton.IsEnabled = false;
-            SignOutButton.IsEnabled = false;
-            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+
+            ModifyViewStart();
+
+            StartTourShadowNotActive();
+
+            LoadKeyPoints();
+            
+            LoadGuests();
+            
+            ComboColumn.ItemsSource = StartedTourKeyPoints;
+            ChosenKeyPointId = -1;
+        }
+
+        private void StartTourShadowNotActive()
+        {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
                 if (tourOccurrence == SelectedTourOccurrence)
@@ -199,24 +200,54 @@ namespace TravelAgency.View
                 tourOccurrence.ToDisplay = 0;
                 tourOccurrence.ToShadow = 1;
             }
+        }
 
-            StartedTourKeyPoints.Clear();
-            StartedTourKeyPoints.Add(new KeyPoint(-1, "NOT PRESENT", new List<User>(), SelectedTourOccurrence.Id));
-            foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
-            {
-                StartedTourKeyPoints.Add(keyPoint);
-            }
+        private void LoadGuests()
+        {
             Guests.Clear();
-            foreach(User guest in SelectedTourOccurrence.Guests)
+            foreach (User guest in SelectedTourOccurrence.Guests)
             {
                 Guests.Add(guest);
                 UserKeyPointIdPairs[guest] = -1;
             }
-            ComboColumn.ItemsSource = StartedTourKeyPoints;
-            ChosenKeyPointId = -1;
         }
 
-        private void StopButtonClick(object sender, RoutedEventArgs e)
+        private void LoadKeyPoints()
+        {
+            StartedTourKeyPoints.Clear();
+            StartedTourKeyPoints.Add(new KeyPoint(-1, "NOT PRESENT", SelectedTourOccurrence.Id));
+            foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
+            {
+                StartedTourKeyPoints.Add(keyPoint);
+            }
+        }
+
+        private void ModifyViewStart()
+        {
+            StartButton.IsEnabled = false;
+            StopButton.IsEnabled = true;
+            NewTourButton.IsEnabled = false;
+            SignOutButton.IsEnabled = false;
+
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+        }
+
+        private bool CheckStartConditions()
+        {
+            if (SelectedTourOccurrence == null)
+            {
+                MessageBox.Show("You have to select the tour you would like to start first!");
+                return false;
+            }
+            else if (SelectedTourOccurrence.Guests.Count == 0)
+            {
+                MessageBox.Show("No guests have reserved this tour, therefore it can't be started!");
+                return false;
+            }
+            return true;
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             EndTour();
         }
@@ -226,7 +257,7 @@ namespace TravelAgency.View
             UserKeyPointIdPairs[ChosenGuest] = ChosenKeyPointId;
         }
 
-        private void RowButtonClick(object sender, RoutedEventArgs e)
+        private void RowButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedKeyPoint.IsChecked = true;
             if (SelectedTourOccurrence.KeyPoints[SelectedTourOccurrence.KeyPoints.Count - 1].Id == SelectedKeyPoint.Id)
@@ -237,11 +268,42 @@ namespace TravelAgency.View
 
         private void EndTour()
         {
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = false;
-            NewTourButton.IsEnabled = true;
-            SignOutButton.IsEnabled = true;
-            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            ModifyViewEnd();
+
+            EndTourShadowNotActive();
+
+            SaveGuestAttendances();
+
+            UpdateKeyPoints();
+
+            TourOccurrenceRepository.UpdateTourOccurrence(SelectedTourOccurrence);
+            MessageBox.Show("Tour ended!");
+        }
+
+        private void UpdateKeyPoints()
+        {
+            StartedTourKeyPoints.Clear();
+            foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
+            {
+                KeyPointRepository.UpdateKeyPoint(keyPoint);
+            }
+        }
+
+        private void SaveGuestAttendances()
+        {
+            Guests.Clear();
+            foreach (User guest in SelectedTourOccurrence.Guests)
+            {
+                KeyPoint keyPoint = SelectedTourOccurrence.KeyPoints.Find(k => k.Id == UserKeyPointIdPairs[guest]);
+                if (keyPoint != null)
+                {
+                    TourOccurrenceAttendanceRepository.SaveTourOccurrenceAttendaces(new TourOccurrenceAttendance(SelectedTourOccurrence.Id, keyPoint.Id, guest.Id));
+                }
+            }
+        }
+
+        private void EndTourShadowNotActive()
+        {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
                 if (tourOccurrence.CurrentState == CurrentState.Started)
@@ -256,23 +318,15 @@ namespace TravelAgency.View
                     tourOccurrence.ToDisplay = 1;
                 }
             }
-            Guests.Clear();
-            StartedTourKeyPoints.Clear();
-            foreach(User guest in SelectedTourOccurrence.Guests)
-            {
-                KeyPoint keyPoint = SelectedTourOccurrence.KeyPoints.Find(k => k.Id == UserKeyPointIdPairs[guest]);
-                if(keyPoint != null)
-                {
-                    keyPoint.Guests.Add(guest);
-                    TourOccurrenceAttendanceRepository.SaveTourOccurrenceAttendaces(new TourOccurrenceAttendance(SelectedTourOccurrence.Id, keyPoint.Id, guest.Id));
-                }
-            }
-            foreach(KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
-            {
-                KeyPointRepository.UpdateKeyPoint(keyPoint);
-            }
-            TourOccurrenceRepository.UpdateTourOccurrence(SelectedTourOccurrence);
-            MessageBox.Show("Tour ended!");
+        }
+
+        private void ModifyViewEnd()
+        {
+            StartButton.IsEnabled = true;
+            StopButton.IsEnabled = false;
+            NewTourButton.IsEnabled = true;
+            SignOutButton.IsEnabled = true;
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
         }
     }
 }

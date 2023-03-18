@@ -160,6 +160,18 @@ namespace TravelAgency.View
                 PhotoRepository.SavePhotos(photo);
             }
         }
+        private void ProcessIntInputs(Tour newTour)
+        {
+            int result;
+            if (int.TryParse(MaxGuests.Text, out result))
+            {
+                newTour.MaxGuestNumber = result;
+            }
+            if (int.TryParse(Duration.Text, out result))
+            {
+                newTour.Duration = result;
+            }
+        }
 
         private Location ProcessLocationInput()
         {
@@ -205,17 +217,6 @@ namespace TravelAgency.View
             return true;
         }
 
-        private void ProcessIntInputs(Tour newTour)
-        {
-            int result;
-            if (int.TryParse(MaxGuests.Text, out result))
-            {
-                newTour.MaxGuestNumber = result;
-            }
-            if (int.TryParse(Duration.Text, out result))
-            {
-                newTour.Duration = result;
-            }
-        }
+        
     }
 }
