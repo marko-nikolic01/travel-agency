@@ -8,42 +8,73 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationPhotoRepository
+    public class AccommodationPhotoRepository : IRepository<AccommodationPhoto>
     {
         private const string FilePath = "../../../Resources/Data/accommodationPhotos.csv";
 
-        private readonly Serializer<AccommodationPhoto> _serializer;
+        private readonly Serializer<AccommodationPhoto> serializer;
 
-        private List<AccommodationPhoto> _accommodationPhotos;
+        private List<AccommodationPhoto> accommodationPhotos;
 
         public AccommodationPhotoRepository()
         {
-            _serializer = new Serializer<AccommodationPhoto>();
-            _accommodationPhotos = _serializer.FromCSV(FilePath);
+            serializer = new Serializer<AccommodationPhoto>();
+            accommodationPhotos = serializer.FromCSV(FilePath);
         }
 
         public int NextId()
         {
-            _accommodationPhotos = _serializer.FromCSV(FilePath);
-            if (_accommodationPhotos.Count < 1)
+            if (accommodationPhotos.Count < 1)
             {
                 return 1;
             }
-            return _accommodationPhotos.Max(c => c.Id) + 1;
+            return accommodationPhotos.Max(c => c.Id) + 1;
+        }
+
+        public List<AccommodationPhoto> GetAll()
+        {
+            return accommodationPhotos;
+        }
+
+        IEnumerable<AccommodationPhoto> IRepository<AccommodationPhoto>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AccommodationPhoto GetById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public AccommodationPhoto Save(AccommodationPhoto image)
         {
             image.Id = NextId();
-            _accommodationPhotos = _serializer.FromCSV(FilePath);
-            _accommodationPhotos.Add(image);
-            _serializer.ToCSV(FilePath, _accommodationPhotos);
+            accommodationPhotos.Add(image);
+            serializer.ToCSV(FilePath, accommodationPhotos);
             return image;
         }
 
-        public List<AccommodationPhoto> GetAll()
+        public void SaveAll(IEnumerable<AccommodationPhoto> entities)
         {
-            return _accommodationPhotos;
+            foreach (var entity in entities)
+            {
+                Save(entity);
+            }
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(AccommodationPhoto entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

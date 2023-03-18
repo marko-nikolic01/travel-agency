@@ -15,70 +15,70 @@ namespace TravelAgency.Model
     public class Accommodation : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
-        private string _name;
+        private string name;
 
         public string Name
         {
-            get => _name;
+            get => name;
             set
             {
-                if (value != _name)
+                if (value != name)
                 {
-                    _name = value;
+                    name = value;
                     OnPropertyChanged();
                 }
             }
         }
         public int OwnerId { get; set; }
         public int LocationId { get; set; }
-        private AccommodationType _type;
+        private AccommodationType type;
         public AccommodationType Type
         {
-            get => _type;
+            get => type;
             set
             {
-                if (value != _type)
+                if (value != type)
                 {
-                    _type = value;
+                    type = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _maxGuests;
+        private int maxGuests;
         public int MaxGuests
         {
-            get => _maxGuests;
+            get => maxGuests;
             set
             {
-                if (value != _maxGuests)
+                if (value != maxGuests)
                 {
-                    _maxGuests = value;
+                    maxGuests = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _minDays;
+        private int minDays;
         public int MinDays
         {
-            get => _minDays;
+            get => minDays;
             set
             {
-                if (value != _minDays)
+                if (value != minDays)
                 {
-                    _minDays = value;
+                    minDays = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _daysToCancel;
+        private int daysToCancel;
         public int DaysToCancel
         {
-            get => _daysToCancel;
+            get => daysToCancel;
             set
             {
-                if (value != _daysToCancel)
+                if (value != daysToCancel)
                 {
-                    _daysToCancel = value;
+                    daysToCancel = value;
                     OnPropertyChanged();
                 }
             }
@@ -86,7 +86,7 @@ namespace TravelAgency.Model
 
         public User? Owner { get; set; }
         public Location? Location { get; set; }
-        public List<AccommodationPhoto> Images { get; set; }
+        public List<AccommodationPhoto> Photos { get; set; }
 
         public Accommodation()
         {
@@ -99,7 +99,7 @@ namespace TravelAgency.Model
             MinDays = 1;
             DaysToCancel = 0;
 
-            Images = new List<AccommodationPhoto>();
+            Photos = new List<AccommodationPhoto>();
         }
 
         public Accommodation(int id, string name, int ownerId, int locationId, AccommodationType type, int maxGuests, int minDays, int daysToCancel)
@@ -113,7 +113,7 @@ namespace TravelAgency.Model
             MinDays = minDays;
             DaysToCancel = daysToCancel;
 
-            Images = new List<AccommodationPhoto>();
+            Photos = new List<AccommodationPhoto>();
         }
 
         public string[] ToCSV()
@@ -161,28 +161,28 @@ namespace TravelAgency.Model
                 {
                     if (Name == "")
                     {
-                        return "Naziv mora biti popunjen";
+                        return "Name cannot be empty";
                     }
                 }
                 else if (columnName == "MaxGuests")
                 {
                     if (MaxGuests < 1)
                     {
-                        return "Maksimalan broj gostiju mora biti veći od 0";
+                        return "Max number of guests must be greater than 0";
                     }
                 }
                 else if (columnName == "MinDays")
                 {
                     if (MinDays< 1)
                     {
-                        return "Minimalan broj dana mora biti veći od 0";
+                        return "Min number of days must be greater than 0";
                     }
                 }
                 else if (columnName == "DaysToCancel")
                 {
                     if (DaysToCancel < 1)
                     {
-                        return "Broj dana za otkazivanje mora biti veći od 0";
+                        return "Number of days to cancel must be greater than 0";
                     }
                 }
 

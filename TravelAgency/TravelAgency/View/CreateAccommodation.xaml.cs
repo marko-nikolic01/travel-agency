@@ -28,22 +28,22 @@ namespace TravelAgency.View
 
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationRepository _AccommodationRepository;
-        private readonly LocationRepository _LocationRepository;
-        private readonly AccommodationPhotoRepository _ImageRepository;
+        private readonly AccommodationRepository accommodationRepository;
+        private readonly LocationRepository locationRepository;
+        private readonly AccommodationPhotoRepository accommodationPhotoRepository;
         
         public Accommodation NewAccommodation { get; set; }
         public Location NewLocation { get; set; }
 
-        public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository)
+        public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, AccommodationPhotoRepository accommodationPhotoRepository)
         {
             InitializeComponent();
             DataContext = this;
             LoggedInUser = loggedInUser;
-            _LocationRepository = locationRepository;
-            _AccommodationRepository = accommodationRepository;
-            _ImageRepository = imageRepository;
-            NewAccommodation = new() { Id = _AccommodationRepository.NextId(), OwnerId = LoggedInUser.Id, Owner = LoggedInUser};
+            this.locationRepository = locationRepository;
+            this.accommodationRepository = accommodationRepository;
+            this.accommodationPhotoRepository = accommodationPhotoRepository;
+            NewAccommodation = new() { Id = this.accommodationRepository.NextId(), OwnerId = LoggedInUser.Id, Owner = LoggedInUser };
             NewLocation = new();
 
             Images = new ObservableCollection<string>();
@@ -63,7 +63,7 @@ namespace TravelAgency.View
 
                 AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
 
-                NewAccommodation.Images.Add(NewImage);
+                NewAccommodation.Photos.Add(NewImage);
 
                 Images.Add(imagePath);
             }
@@ -84,17 +84,14 @@ namespace TravelAgency.View
                 NewAccommodation.Type = AccommodationType.HUT;
             }
 
-            Location savedLocation = _LocationRepository.SaveLocation(NewLocation);
+            Location savedLocation = locationRepository.SaveLocation(NewLocation);
 
             NewAccommodation.LocationId = savedLocation.Id;
             NewAccommodation.Location = savedLocation;
 
-            Accommodation savedAccommodation = _AccommodationRepository.Save(NewAccommodation);
+            Accommodation savedAccommodation = accommodationRepository.Save(NewAccommodation);
 
-            foreach (var image in savedAccommodation.Images)
-            {
-                _ImageRepository.Save(image);
-            }
+            accommodationPhotoRepository.SaveAll(savedAccommodation.Photos);
 
             OwnerMain.Accommodations.Add(savedAccommodation);
 

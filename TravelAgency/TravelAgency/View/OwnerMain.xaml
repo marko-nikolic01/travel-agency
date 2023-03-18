@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="Prikaz smeštaja" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Accommodation overview" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <DockPanel LastChildFill="False">
 
         <Menu DockPanel.Dock="Top" Height="20">
@@ -14,8 +14,9 @@
         </Menu>
 
         <ToolBar DockPanel.Dock="Top" Height="Auto">
-            <Button Content="Dodaj smeštaj" Click="ShowCreateAccommodation_Click"/>
-            <Button Content="Oceni goste" Click="ShowAccommodationGuestRatingWindow_Click"/>
+            <Button Content="Add accommodation" Click="ShowCreateAccommodation_Click"/>
+            <Button Content="Rate guests" Click="ShowAccommodationGuestRatingWindow_Click"/>
+            <Button Content="Sign out" Click="SignOut_Click"/>
         </ToolBar>
 
         <DataGrid DockPanel.Dock="Top"
@@ -24,12 +25,12 @@
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Naziv" Width="1.5*" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Tip" Width="1.5*" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Maksimalan broj gostiju" Width="1.5*" Binding="{Binding MaxGuests}"/>
-                <DataGridTextColumn Header="Minimalan broj dana" Width="2*" Binding="{Binding MinDays}"/>
-                <DataGridTextColumn Header="Mesto" Width="2*" Binding="{Binding Location.City}"/>
-                <DataGridTextColumn Header="Država" Width="2*" Binding="{Binding Location.Country}"/>
+                <DataGridTextColumn Header="Name" Width="1.5*" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Type" Width="1.5*" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Max guests" Width="1.5*" Binding="{Binding MaxGuests}"/>
+                <DataGridTextColumn Header="Min number of days" Width="2*" Binding="{Binding MinDays}"/>
+                <DataGridTextColumn Header="City" Width="2*" Binding="{Binding Location.City}"/>
+                <DataGridTextColumn Header="Country" Width="2*" Binding="{Binding Location.Country}"/>
             </DataGrid.Columns>
 
         </DataGrid>
