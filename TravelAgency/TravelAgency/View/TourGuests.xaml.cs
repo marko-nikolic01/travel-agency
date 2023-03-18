@@ -80,7 +80,6 @@ namespace TravelAgency.View
                 tourReservation = new TourReservation(TourOccurrence.Id, user.Id);
                 tourReservationRepository.SaveTourReservation(tourReservation);
             }
-            // ovo mozda moze drugacije
             TourOccurrence.Guests.AddRange(users);
             Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();

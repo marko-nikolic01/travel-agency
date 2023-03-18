@@ -32,7 +32,7 @@ namespace TravelAgency.View
         public LocationRepository LocationRepository { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
         public UserRepository UserRepository { get; set; }
-        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository {get; set; }
+        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
         public User ActiveGuest { get; set; }
 
         public Guest2Main(User user)
@@ -51,10 +51,22 @@ namespace TravelAgency.View
             LinkingTourOccurrences();
             LinkingTourImages();
             LinkingTourGuests();
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTourOccurrences());
+            TourOccurrences = new ObservableCollection<TourOccurrence>();
+            FilterTourOccurrences();
             TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
             AllertIfSelectеd(ActiveGuest);
+        }
+
+        private void FilterTourOccurrences()
+        {
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            {
+                if (tourOccurrence.DateTime.Date >= DateTime.Now.Date)
+                {
+                    TourOccurrences.Add(tourOccurrence);
+                }
+            }
         }
 
         private void AllertIfSelectеd(User activeGuest)
@@ -108,7 +120,15 @@ namespace TravelAgency.View
                 if (tbLanguage.Text != "")
                     tbLanguageEmpty = false;
                 if (tbNumOfGuests.Text != "")
+                {
+                    if(!IsValid())
+                    {
+                        MessageBox.Show("Number of guests must be a number");
+                        tbNumOfGuests.Text = "";
+                        return;
+                    }
                     tbNumOfGuestsEmpty = false;
+                }
                 
                 ToursDataGrid.ItemsSource = FilterList(tbCityEmpty, tbDurEmpty, tbCountryEmpty, tbLanguageEmpty, tbNumOfGuestsEmpty);
             }
@@ -131,6 +151,19 @@ namespace TravelAgency.View
                                                         (x.Tour.Language.ToLower().Contains(tbLanguage.Text) || tbLanguageEmpty) &&
                                                         (x.Tour.Duration.ToString().Contains(tbDuration.Text) || tbDurEmpty) &&
                                                         ((x.Tour.MaxGuestNumber - x.Guests.Count) >= numOfGuests));
+        }
+
+        private bool IsValid()
+        {
+            int res;
+            if(int.TryParse(tbNumOfGuests.Text, out res))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void LinkingTourLocation()
@@ -182,10 +215,7 @@ namespace TravelAgency.View
         public void Update()
         {
             TourOccurrences.Clear();
-            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
-            {
-                TourOccurrences.Add(tourOccurrence);
-            }
+            FilterTourOccurrences();
             ToursDataGrid.ItemsSource = TourOccurrences;
         }
 

@@ -55,7 +55,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="110"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="100" Height="40" Margin="20" Click="ReserveClick">Reserve</Button>
+            <Button Grid.Column="0" Width="120" Height="40" Margin="20" Click="ReserveClick">Make a reservation</Button>
             <Button Grid.Column="1" Width="100" Height="40" Click="SignOutClick">Sign out</Button>
         </Grid>
     </Grid>

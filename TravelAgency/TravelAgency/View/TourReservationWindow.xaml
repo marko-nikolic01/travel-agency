@@ -26,7 +26,7 @@
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">City:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Description:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Language:</Label>
-                <Label HorizontalAlignment="Right" Margin="20 10 0 0">Date and time of begining:</Label>
+                <Label HorizontalAlignment="Right" Margin="20 10 0 0">Date and time of beginning:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Duration:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 30 0 0">Number of guests:</Label>
                 <Label HorizontalAlignment="Right" Margin="20 10 0 0">Number of free spots left:</Label>

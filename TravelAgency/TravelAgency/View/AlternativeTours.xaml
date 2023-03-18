@@ -22,8 +22,8 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Width="100" Margin="20" Click="ReserveClick">Reserve</Button>
-                <Button Width="100" Height="30" Margin="20" Click="CancelClick">Cancel</Button>
+                <Button Width="120" Margin="20" Click="ReserveClick">Make a reservation</Button>
+                <Button Width="120" Height="30" Margin="20" Click="CancelClick">Cancel</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

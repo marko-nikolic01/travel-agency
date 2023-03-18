@@ -25,7 +25,6 @@ namespace TravelAgency.View
     public partial class TourReservationWindow : Window, INotifyPropertyChanged
     {
         public TourOccurrence TourOccurrence { get; set; }
-        //jel i ovo treba sa malom crtom ispred?
         private ObservableCollection<TourOccurrence> tourOccurrences;
         private string _imageUrl;
         private string _numberOfGuestsInput;
