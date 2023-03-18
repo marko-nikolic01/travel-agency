@@ -106,16 +106,34 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
+        public int CalculateDaysLeftForRating(AccommodationReservation accommodationReservation)
+        {
+            return 5 - DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber + accommodationReservation.DateSpan.EndDate.DayNumber;
+        }
+
+        public bool ReservationIsActive(AccommodationReservation accommodationReservation)
+        {
+            return (DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber) < 0;
+        }
+
         public List<AccommodationReservation> GetUnrated(IEnumerable<AccommodationGuestRating> ratings)
         {
             List<AccommodationReservation> unrated = new List<AccommodationReservation>(_accommodationReservations);
+
             foreach (var accommodationReservation in _accommodationReservations)
             {
+                if (CalculateDaysLeftForRating(accommodationReservation) < 1 || ReservationIsActive(accommodationReservation))
+                {
+                    unrated.Remove(accommodationReservation);
+                    continue;
+                }
+
                 foreach (var rating in ratings)
                 {
                     if (accommodationReservation.Id == rating.AccommodationReservationId)
                     {
                         unrated.Remove(accommodationReservation);
+                        break;
                     }
                 }
             }
@@ -229,6 +247,5 @@ namespace TravelAgency.Repository
 
             return true;
         }
-
     }
 }

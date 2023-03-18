@@ -50,6 +50,8 @@ namespace TravelAgency.View
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
+
+            ShowNotifications();
         }
 
         private void ShowCreateAccommodation_Click(object sender, RoutedEventArgs e)
@@ -64,9 +66,15 @@ namespace TravelAgency.View
             accommodationGuestRatingWindow.ShowDialog();
         }
 
-        private void NorifyOwnerForUnratedGuests()
+        private void ShowNotifications()
         {
             var unratedGuests = accommodationReservationRepository.GetUnrated(accommodationGuestRatingRepository.GetAll());
+
+            foreach (var unratedGuest in unratedGuests)
+            {
+                int daysLeft = accommodationReservationRepository.CalculateDaysLeftForRating(unratedGuest);
+                MessageBox.Show($"Neocenjen gost!\n{unratedGuest.Guest.Username}\n{unratedGuest.Accommodation.Name}\nBroj preostalih dana za ocenu: {daysLeft}");
+            }
         }
     }
 }
