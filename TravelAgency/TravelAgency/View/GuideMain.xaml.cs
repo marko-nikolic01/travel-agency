@@ -41,8 +41,8 @@ namespace TravelAgency.View
         public KeyPoint? SelectedKeyPoint { get; set; }
         public int ChosenKeyPointId { get; set; }
         public User? ChosenGuest { get; set; }
-        public Dictionary<User, int> UserKeyPointIdPairs { get; set; }
         public User ActiveGuide { get; set; }
+        public Dictionary<User, int> GuestKeyPointIdPairs { get; set; }
 
         public GuideMain(User user)
         {
@@ -62,9 +62,9 @@ namespace TravelAgency.View
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
+            GuestKeyPointIdPairs = new Dictionary<User, int>();
 
             ShadowFinishedTourOccurrences();
-            UserKeyPointIdPairs = new Dictionary<User, int>();
         }
 
         private void ShadowFinishedTourOccurrences()
@@ -76,6 +76,28 @@ namespace TravelAgency.View
                     tourOccurrence.ToShadow = 1;
                     tourOccurrence.ToDisplay = 0;
                 }
+                if(tourOccurrence.CurrentState == CurrentState.Started)
+                {
+                    SelectedTourOccurrence = tourOccurrence;
+                    StartTour();
+                    RemoveNotifiedGuests();
+                }
+            }
+        }
+
+        private void RemoveNotifiedGuests()
+        { 
+            List<User> notifiedGuests = new List<User>();
+            foreach(TourOccurrenceAttendance attendance in TourOccurrenceAttendanceRepository.GetByTourOccurrenceId(SelectedTourOccurrence.Id)){
+                User guest = UserRepository.GetUsers().Find(g => g.Id == attendance.GuestId);
+                if(guest != null && attendance.KeyPointId != -1)
+                {
+                    notifiedGuests.Add(guest);
+                }
+            }
+            foreach(User guest in notifiedGuests)
+            {
+                Guests.Remove(guest);
             }
         }
 
@@ -148,6 +170,13 @@ namespace TravelAgency.View
 
         private void SignOut_Click(object sender, RoutedEventArgs e)
         {
+            if (!StartButton.IsEnabled)
+            {
+                UpdateKeyPoints();
+
+                TourOccurrenceRepository.UpdateTourOccurrence(SelectedTourOccurrence);
+            }
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
@@ -175,14 +204,19 @@ namespace TravelAgency.View
                 return;
             }
 
+            StartTour();
+        }
+
+        private void StartTour()
+        {
             ModifyViewStart();
 
             StartTourShadowNotActive();
 
             LoadKeyPoints();
-            
+
             LoadGuests();
-            
+
             ComboColumn.ItemsSource = StartedTourKeyPoints;
             ChosenKeyPointId = -1;
         }
@@ -208,7 +242,7 @@ namespace TravelAgency.View
             foreach (User guest in SelectedTourOccurrence.Guests)
             {
                 Guests.Add(guest);
-                UserKeyPointIdPairs[guest] = -1;
+                GuestKeyPointIdPairs[guest] = -1;
             }
         }
 
@@ -227,7 +261,6 @@ namespace TravelAgency.View
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
             NewTourButton.IsEnabled = false;
-            SignOutButton.IsEnabled = false;
 
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
         }
@@ -254,7 +287,8 @@ namespace TravelAgency.View
 
         private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UserKeyPointIdPairs[ChosenGuest] = ChosenKeyPointId;
+            GuestKeyPointIdPairs[ChosenGuest] = ChosenKeyPointId;
+            TourOccurrenceAttendanceRepository.SaveOrUpdate(new TourOccurrenceAttendance(SelectedTourOccurrence.Id, ChosenKeyPointId, ChosenGuest.Id));
         }
 
         private void RowButton_Click(object sender, RoutedEventArgs e)
@@ -272,7 +306,7 @@ namespace TravelAgency.View
 
             EndTourShadowNotActive();
 
-            SaveGuestAttendances();
+            Guests.Clear();
 
             UpdateKeyPoints();
 
@@ -286,19 +320,6 @@ namespace TravelAgency.View
             foreach (KeyPoint keyPoint in SelectedTourOccurrence.KeyPoints)
             {
                 KeyPointRepository.UpdateKeyPoint(keyPoint);
-            }
-        }
-
-        private void SaveGuestAttendances()
-        {
-            Guests.Clear();
-            foreach (User guest in SelectedTourOccurrence.Guests)
-            {
-                KeyPoint keyPoint = SelectedTourOccurrence.KeyPoints.Find(k => k.Id == UserKeyPointIdPairs[guest]);
-                if (keyPoint != null)
-                {
-                    TourOccurrenceAttendanceRepository.SaveTourOccurrenceAttendaces(new TourOccurrenceAttendance(SelectedTourOccurrence.Id, keyPoint.Id, guest.Id));
-                }
             }
         }
 
@@ -325,7 +346,6 @@ namespace TravelAgency.View
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
             NewTourButton.IsEnabled = true;
-            SignOutButton.IsEnabled = true;
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
         }
     }
