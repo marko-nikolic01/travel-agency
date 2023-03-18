@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Ocenite gosta" Width="450" SizeToContent="Height" WindowStartupLocation="CenterScreen">
+        Title="Ocenite gosta" Width="550" SizeToContent="Height" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="RatingSlider" TargetType="Slider">
             <Setter Property="Minimum" Value="1"/>
@@ -30,6 +30,7 @@
                               ItemsSource="{Binding UnratedReservations}"
                               SelectedItem="{Binding SelectedUnratedReservation}" MinHeight="200">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Smeštaj" Binding="{Binding Accommodation.Name}"/>
                             <DataGridTextColumn Header="Korisničko ime gosta" Binding="{Binding Guest.Username}"/>
                             <DataGridTextColumn Header="Datum početka rezervacije" Binding="{Binding DateSpan.StartDate}"/>
                             <DataGridTextColumn Header="Datum završetka rezervacije" Binding="{Binding DateSpan.EndDate}" Width="*"/>
@@ -102,13 +103,13 @@
                               HeadersVisibility="Column"
                               ItemsSource="{Binding AccommodationGuestRatings}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Smeštaj" Binding="{Binding AccommodationReservation.Accommodation.Name}"/>
                             <DataGridTextColumn Header="Korisničko ime gosta" Binding="{Binding AccommodationReservation.Guest.Username}"/>
+                            <DataGridTextColumn Header="Smeštaj" Binding="{Binding AccommodationReservation.Accommodation.Name}"/>
                             <DataGridTextColumn Header="Čistoća" Binding="{Binding Cleanliness}"/>
                             <DataGridTextColumn Header="Poštovanje pravila" Binding="{Binding Compliance}"/>
-                            <DataGridTextColumn Header="Poštovanje pravila" Binding="{Binding Noisiness}"/>
-                            <DataGridTextColumn Header="Poštovanje pravila" Binding="{Binding Friendliness}"/>
-                            <DataGridTextColumn Header="Poštovanje pravila" Binding="{Binding Responsivenes}" Width="*"/>
+                            <DataGridTextColumn Header="Bučnost" Binding="{Binding Noisiness}"/>
+                            <DataGridTextColumn Header="Ljubaznost" Binding="{Binding Friendliness}"/>
+                            <DataGridTextColumn Header="Odzivnost" Binding="{Binding Responsivenes}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
