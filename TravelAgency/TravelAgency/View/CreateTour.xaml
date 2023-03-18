@@ -55,7 +55,7 @@
         <Label Grid.Row="11" Grid.Column="0" Content="Date and time:" FontSize="13"></Label>
         <Label Grid.Row="14" Grid.Column="0" Content="Duration:" FontSize="13"></Label>
         <Label Grid.Row="15" Grid.Column="0" Content="Images:" FontSize="13"></Label>
-        <Button Grid.Column="3" Grid.Row="18" Margin="5" Width="50" Content="Create" FontSize="15" Click="CreateClick"></Button>
+        <Button Grid.Column="3" Grid.Row="18" Margin="5" Width="50" Content="Create" FontSize="15" Click="Create_Click"></Button>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="9" Text="{Binding Path=NewTour.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
         <TextBox Grid.Row="2" Grid.Column="1" Margin="9" Text="{Binding Path=Location.FullName, UpdateSourceTrigger=PropertyChanged, 
@@ -67,16 +67,16 @@
         <TextBox Grid.Row="6" Grid.Column="1" Margin="9" Name="MaxGuests" Text="{Binding Path=NewTour.MaxGuestNumberInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
         <TextBox Grid.Row="7" Grid.Column="1" Margin="9" Name="KeyPointsText"></TextBox>
-        <Button Grid.Row="7" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddKeyPointClick"></Button>
+        <Button Grid.Row="7" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddKeyPoint_Click"></Button>
         <ListBox Grid.Row="8" Grid.Column="1" Grid.RowSpan="3" Margin="9" Name="ListKeyPoints"></ListBox>
         <DatePicker Grid.Row="11" Grid.Column="1" Name="DateCalendar" Margin="9"></DatePicker>
-        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="11" Grid.Column="2" Margin="9" Name="TimeText"></xctk:TimePicker>
-        <Button Grid.Row="11" Grid.Column="3" Margin="9" Content="Add" Width="40" Click="AddDateTimeClick"></Button>
+        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="11" Grid.Column="2" Margin="9" Name="Time"></xctk:TimePicker>
+        <Button Grid.Row="11" Grid.Column="3" Margin="9" Content="Add" Width="40" Click="AddDateTime_Click"></Button>
         <ListBox Grid.Row="12" Grid.Column="1" Grid.RowSpan="2" Margin="9" Name="ListDateTimes"></ListBox>
         <TextBox Grid.Row="14" Grid.Column="1" Margin="9" Name="Duration" Text="{Binding Path=NewTour.DurationInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
         <TextBox Grid.Row="15" Grid.Column="1" Margin="9" Name="ImageText"></TextBox>
-        <Button Grid.Row="15" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddImagesClick"></Button>
+        <Button Grid.Row="15" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddImages_Click"></Button>
         <ListBox Grid.Row="16" Grid.Column="1" Grid.RowSpan="2" Margin="9" Name="ListPhotos"></ListBox>
     </Grid>
 </Window>

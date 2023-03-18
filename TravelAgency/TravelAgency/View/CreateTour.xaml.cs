@@ -53,7 +53,7 @@ namespace TravelAgency.View
             Thread.CurrentThread.CurrentCulture = ci;
         }
 
-        private void AddKeyPointClick(object sender, RoutedEventArgs e)
+        private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(KeyPointsText.Text))
             {
@@ -64,17 +64,17 @@ namespace TravelAgency.View
             KeyPointsText.Focus();
         }
 
-        private void AddDateTimeClick(object sender, RoutedEventArgs e)
+        private void AddDateTime_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(DateCalendar.Text) || string.IsNullOrEmpty(TimeText.Text))
+            if (string.IsNullOrEmpty(DateCalendar.Text) || string.IsNullOrEmpty(Time.Text))
             {
                 return;
             }
-            ListDateTimes.Items.Add(DateCalendar.Text + " " + TimeText.Text);
+            ListDateTimes.Items.Add(DateCalendar.Text + " " + Time.Text);
             DateCalendar.Focus();
         }
 
-        private void AddImagesClick(object sender, RoutedEventArgs e)
+        private void AddImages_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ImageText.Text))
             {
@@ -85,82 +85,137 @@ namespace TravelAgency.View
             ImageText.Focus();
         }
 
-        private void CreateClick(object sender, RoutedEventArgs e)
+        private void Create_Click(object sender, RoutedEventArgs e)
         {
-            if(ListKeyPoints.Items.Count < 2) {
-                MessageBox.Show("You have to enter at least two key points!");
-                return;
-            }
-            else if (ListPhotos.Items.Count == 0)
+            if (!AreListsComplete() || !AreInputsValid())
             {
-                MessageBox.Show("You have to enter at least one photo link!");
-                return;
-            }
-            else if (ListDateTimes.Items.Count == 0)
-            {
-                MessageBox.Show("You have to enter at least one date and time!");
                 return;
             }
 
-            int result;
-            if(int.TryParse(MaxGuests.Text, out result))
-            {
-                NewTour.MaxGuestNumber = result;
-            }
-            if (int.TryParse(Duration.Text, out result))
-            {
-                NewTour.Duration = result;
-            }
+            ProcessInputs(NewTour);
 
-            if (Location.IsValid == false)
+            SaveTours();
+
+            Close();
+        }
+
+        private void SaveTours()
+        {
+            TourRepository.SaveTours(NewTour);
+
+            SaveTourPhotos(NewTour);
+
+            SaveTourOccurrences(NewTour);
+        }
+
+        private void ProcessInputs(Tour newTour)
+        {
+            ProcessIntInputs(newTour);
+            Location savedLocation = ProcessLocationInput();
+
+            newTour.Location = savedLocation;
+            newTour.LocationId = savedLocation.Id;
+        }
+
+        private void SaveTourOccurrences(Tour newTour)
+        {
+            foreach (string dateTimeItem in ListDateTimes.Items)
             {
-                MessageBox.Show("Location entry is wrong");
-                return;
+                DateTime dateTime = DateTime.ParseExact(dateTimeItem, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
+                TourOccurrence tourOccurrence = SaveTourOccurrence(dateTime, newTour);
+                
+                foreach (string keyPointItem in ListKeyPoints.Items)
+                {
+                    SaveKeyPoint(keyPointItem, tourOccurrence);
+                }
             }
+        }
+
+        private void SaveKeyPoint(string keyPointItem, TourOccurrence tourOccurrence)
+        {
+            KeyPoint keyPoint = new KeyPoint();
+            keyPoint.TourOccurrenceId = tourOccurrence.Id;
+            keyPoint.Name = keyPointItem;
+            tourOccurrence.KeyPoints.Add(keyPoint);
+            KeyPointRepository.SaveKeyPoints(keyPoint);
+        }
+
+        private TourOccurrence SaveTourOccurrence(DateTime dateTime, Tour newTour)
+        {
+            TourOccurrence tourOccurrence = new TourOccurrence();
+            tourOccurrence.TourId = newTour.Id;
+            tourOccurrence.Tour = newTour;
+            tourOccurrence.DateTime = dateTime;
+            return TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence, ActiveGuide);
+        }
+
+        private void SaveTourPhotos(Tour newTour)
+        {
+            foreach (string link in ListPhotos.Items)
+            {
+                Photo photo = new Photo();
+                photo.TourId = newTour.Id;
+                photo.Link = link;
+                newTour.Photos.Add(photo);
+                PhotoRepository.SavePhotos(photo);
+            }
+        }
+
+        private Location ProcessLocationInput()
+        {
             string[] cityCountry = Location.FullName.Split(',');
             Location.City = cityCountry[0];
             Location.Country = cityCountry[1];
 
-            Location savedLocation = LocationRepository.SaveLocation(Location);
-            NewTour.Location = savedLocation;
-            NewTour.LocationId = savedLocation.Id;
-
-            if(NewTour.IsValid == false)
-            {
-                MessageBox.Show("Tour entry is wrong");
-                return;
-            }
-
-            TourRepository.SaveTours(NewTour);
-
-            foreach (string link in ListPhotos.Items)
-            {
-                Photo photo = new Photo();
-                photo.TourId = NewTour.Id;
-                photo.Link = link;
-                NewTour.Photos.Add(photo);
-                PhotoRepository.SavePhotos(photo);
-            }
-
-            foreach (string dateTimeItem in ListDateTimes.Items)
-            {
-                DateTime dateTime = DateTime.ParseExact(dateTimeItem, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
-                TourOccurrence tourOccurrence = new TourOccurrence();
-                tourOccurrence.TourId = NewTour.Id;
-                tourOccurrence.Tour = NewTour;
-                tourOccurrence.DateTime = dateTime;
-                TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence, ActiveGuide);
-                foreach (string keyPointItem in ListKeyPoints.Items)
-                {
-                    KeyPoint keyPoint = new KeyPoint();
-                    keyPoint.TourOccurrenceId = tourOccurrence.Id;
-                    keyPoint.Name = keyPointItem;
-                    tourOccurrence.KeyPoints.Add(keyPoint);
-                    KeyPointRepository.SaveKeyPoints(keyPoint);
-                }
-            }
-            Close();
+            return LocationRepository.SaveLocation(Location);
         }
 
+        private bool AreListsComplete()
+        {
+            if (ListKeyPoints.Items.Count < 2)
+            {
+                MessageBox.Show("You have to enter at least two key points!");
+                return false;
+            }
+            else if (ListPhotos.Items.Count == 0)
+            {
+                MessageBox.Show("You have to enter at least one photo link!");
+                return false;
+            }
+            else if (ListDateTimes.Items.Count == 0)
+            {
+                MessageBox.Show("You have to enter at least one date and time!");
+                return false;
+            }
+            return true;
+        }
+
+        private bool AreInputsValid()
+        {
+            if (!Location.IsValid)
+            {
+                MessageBox.Show("Location entry is wrong");
+                return false;
+            }
+            else if (NewTour.IsValid == false)
+            {
+                MessageBox.Show("Tour entry is wrong");
+                return false;
+            }
+            return true;
+        }
+
+        private void ProcessIntInputs(Tour newTour)
+        {
+            int result;
+            if (int.TryParse(MaxGuests.Text, out result))
+            {
+                newTour.MaxGuestNumber = result;
+            }
+            if (int.TryParse(Duration.Text, out result))
+            {
+                newTour.Duration = result;
+            }
+        }
     }
 }

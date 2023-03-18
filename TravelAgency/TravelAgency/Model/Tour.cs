@@ -129,9 +129,9 @@ namespace TravelAgency.Model
                 {
                     if (string.IsNullOrEmpty(DurationInput))
                     {
-                        return "Enter duradtion";
+                        return "Enter duration";
                     }
-                    else if (!positiveNumbers.IsMatch(MaxGuestNumberInput))
+                    else if (!positiveNumbers.IsMatch(DurationInput))
                     {
                         return "You should enter a positive integer";
                     }
