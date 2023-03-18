@@ -3,12 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="CreateTour" Height="450" Width="800">
+        Title="CreateTour" Height="750" Width="430">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -22,43 +40,43 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="50"></ColumnDefinition>
-            <ColumnDefinition Width="120"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="50"></ColumnDefinition>
-            
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="135"></ColumnDefinition>
+            <ColumnDefinition Width="90"></ColumnDefinition>
+            <ColumnDefinition Width="65"></ColumnDefinition>
+
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.Column="1" Content="Name:" FontSize="15"></Label>
-        <Label Grid.Row="2" Grid.Column="1" Content="Location:" FontSize="15"></Label>
-        <Label Grid.Row="3" Grid.Column="1" Content="Description:" FontSize="15"></Label>
-        <Label Grid.Row="5" Grid.Column="1" Content="Language:" FontSize="15"></Label>
-        <Label Grid.Row="6" Grid.Column="1" Content="Max number of guests:" FontSize="15"></Label>
-        <Label Grid.Row="7" Grid.Column="1" Content="Key points:" FontSize="15"></Label>
-        <Label Grid.Row="1" Grid.Column="4" Content="Date and time:" FontSize="15"></Label>
-        <Label Grid.Row="5" Grid.Column="4" Content="Duration:" FontSize="15"></Label>
-        <Label Grid.Row="6" Grid.Column="4" Content="Images:" FontSize="15"></Label>
-        <Button Grid.Column="5" Grid.Row="11" HorizontalAlignment="Right" Margin="5" Width="80" Content="Create" FontSize="15" Click="CreateClick"></Button>
-        <TextBox Grid.Row="1" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Name}"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="2" Margin="5" Text="{Binding Path=Location.FullName}"></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=NewTour.Description}"></TextBox>
-        <TextBox Grid.Row="5" Grid.Column="2" Margin="5" Text="{Binding Path=NewTour.Language}"></TextBox>
-        <TextBox Grid.Row="6" Grid.Column="2" Margin="5" Name="MaxGuestsText"></TextBox>
-        <TextBox Grid.Row="7" Grid.Column="2" Margin="5" Name="KeyPointsText"></TextBox>
-        <Button Grid.Row="7" Grid.Column="3" Margin="5" Content="Add" Width="30" Click="AddKeyPointClick"></Button>
-        <ListBox Grid.Row="8" Grid.Column="2" Grid.RowSpan="3" Margin="5" Name="ListKeyPoints"></ListBox>
-        <DatePicker Grid.Row="1" Grid.Column="5" Name="DateCalendar" Margin="5"></DatePicker>
-        <TextBox Grid.Row="1" Grid.Column="6" Margin="5" Name="TimeText"></TextBox>
-        <Button Grid.Row="1" Grid.Column="7" Margin="5" Content="Add" Width="30" Click="AddDateTimeClick"></Button>
-        <ListBox Grid.Row="2" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListDateTimes"></ListBox>
-        <TextBox Grid.Row="5" Grid.Column="5" Margin="5" Name="DurationText"></TextBox>
-        <TextBox Grid.Row="6" Grid.Column="5" Margin="5" Name="ImageText"></TextBox>
-        <Button Grid.Row="6" Grid.Column="6" Margin="5" Content="Add" Width="30" Click="AddImagesClick"></Button>
-        <ListBox Grid.Row="7" Grid.Column="5" Grid.RowSpan="3" Margin="5" Name="ListPhotos"></ListBox>
-        
-        
+        <Label Grid.Row="1" Grid.Column="0" Content="Name:" FontSize="13"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Location:" FontSize="13"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Description:" FontSize="13"></Label>
+        <Label Grid.Row="5" Grid.Column="0" Content="Language:" FontSize="13"></Label>
+        <Label Grid.Row="6" Grid.Column="0" Content="Max guests number:" FontSize="13"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Content="Key points:" FontSize="13"></Label>
+        <Label Grid.Row="11" Grid.Column="0" Content="Date and time:" FontSize="13"></Label>
+        <Label Grid.Row="14" Grid.Column="0" Content="Duration:" FontSize="13"></Label>
+        <Label Grid.Row="15" Grid.Column="0" Content="Images:" FontSize="13"></Label>
+        <Button Grid.Column="3" Grid.Row="18" Margin="5" Width="50" Content="Create" FontSize="15" Click="CreateClick"></Button>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="9" Text="{Binding Path=NewTour.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="9" Text="{Binding Path=Location.FullName, UpdateSourceTrigger=PropertyChanged, 
+            ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="9" TextWrapping="Wrap" Text="{Binding Path=NewTour.Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="9" Text="{Binding Path=NewTour.Language, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}" ></TextBox>
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="9" Name="MaxGuests" Text="{Binding Path=NewTour.MaxGuestNumberInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="7" Grid.Column="1" Margin="9" Name="KeyPointsText"></TextBox>
+        <Button Grid.Row="7" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddKeyPointClick"></Button>
+        <ListBox Grid.Row="8" Grid.Column="1" Grid.RowSpan="3" Margin="9" Name="ListKeyPoints"></ListBox>
+        <DatePicker Grid.Row="11" Grid.Column="1" Name="DateCalendar" Margin="9"></DatePicker>
+        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="11" Grid.Column="2" Margin="9" Name="TimeText"></xctk:TimePicker>
+        <Button Grid.Row="11" Grid.Column="3" Margin="9" Content="Add" Width="40" Click="AddDateTimeClick"></Button>
+        <ListBox Grid.Row="12" Grid.Column="1" Grid.RowSpan="2" Margin="9" Name="ListDateTimes"></ListBox>
+        <TextBox Grid.Row="14" Grid.Column="1" Margin="9" Name="Duration" Text="{Binding Path=NewTour.DurationInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="15" Grid.Column="1" Margin="9" Name="ImageText"></TextBox>
+        <Button Grid.Row="15" Grid.Column="2" Margin="9" Content="Add" Width="40" Click="AddImagesClick"></Button>
+        <ListBox Grid.Row="16" Grid.Column="1" Grid.RowSpan="2" Margin="9" Name="ListPhotos"></ListBox>
     </Grid>
 </Window>

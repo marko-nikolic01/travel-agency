@@ -45,8 +45,9 @@ namespace TravelAgency.View
             PhotoRepository = photoRepository;
             TourOccurrenceRepository = tourOccurrenceRepository;
             KeyPointRepository = keyPointeRepository;
+
             DateCalendar.DisplayDateStart = DateTime.Today;
-            //sa stackoverflow
+            //cultureinfo from stackoverflow
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
             Thread.CurrentThread.CurrentCulture = ci;
@@ -70,7 +71,6 @@ namespace TravelAgency.View
                 return;
             }
             ListDateTimes.Items.Add(DateCalendar.Text + " " + TimeText.Text);
-            TimeText.Clear();
             DateCalendar.Focus();
         }
 
@@ -87,19 +87,53 @@ namespace TravelAgency.View
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
+            if(ListKeyPoints.Items.Count < 2) {
+                MessageBox.Show("You have to enter at least two key points!");
+                return;
+            }
+            else if (ListPhotos.Items.Count == 0)
+            {
+                MessageBox.Show("You have to enter at least one photo link!");
+                return;
+            }
+            else if (ListDateTimes.Items.Count == 0)
+            {
+                MessageBox.Show("You have to enter at least one date and time!");
+                return;
+            }
+
+            int result;
+            if(int.TryParse(MaxGuests.Text, out result))
+            {
+                NewTour.MaxGuestNumber = result;
+            }
+            if (int.TryParse(Duration.Text, out result))
+            {
+                NewTour.Duration = result;
+            }
+
+            if (Location.IsValid == false)
+            {
+                MessageBox.Show("Location entry is wrong");
+                return;
+            }
             string[] cityCountry = Location.FullName.Split(',');
             Location.City = cityCountry[0];
             Location.Country = cityCountry[1];
-            LocationRepository.SaveLocation(Location);
-            NewTour.LocationId = Location.Id;
-            NewTour.Location = Location;
-            int result = 0;
-            int.TryParse(MaxGuestsText.Text, out result);
-            NewTour.MaxGuestNumber = result;
-            int.TryParse(DurationText.Text, out result);
-            NewTour.Duration = result;
+
+            Location savedLocation = LocationRepository.SaveLocation(Location);
+            NewTour.Location = savedLocation;
+            NewTour.LocationId = savedLocation.Id;
+
+            if(NewTour.IsValid == false)
+            {
+                MessageBox.Show("Tour entry is wrong");
+                return;
+            }
+
             TourRepository.SaveTours(NewTour);
-            foreach (String link in ListPhotos.Items)
+
+            foreach (string link in ListPhotos.Items)
             {
                 Photo photo = new Photo();
                 photo.TourId = NewTour.Id;
@@ -107,7 +141,8 @@ namespace TravelAgency.View
                 NewTour.Photos.Add(photo);
                 PhotoRepository.SavePhotos(photo);
             }
-            foreach (String dateTimeItem in ListDateTimes.Items)
+
+            foreach (string dateTimeItem in ListDateTimes.Items)
             {
                 DateTime dateTime = DateTime.ParseExact(dateTimeItem, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
                 TourOccurrence tourOccurrence = new TourOccurrence();
@@ -115,7 +150,7 @@ namespace TravelAgency.View
                 tourOccurrence.Tour = NewTour;
                 tourOccurrence.DateTime = dateTime;
                 TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence, ActiveGuide);
-                foreach (String keyPointItem in ListKeyPoints.Items)
+                foreach (string keyPointItem in ListKeyPoints.Items)
                 {
                     KeyPoint keyPoint = new KeyPoint();
                     keyPoint.TourOccurrenceId = tourOccurrence.Id;

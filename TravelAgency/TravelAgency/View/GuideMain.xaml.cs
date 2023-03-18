@@ -140,7 +140,7 @@ namespace TravelAgency.View
         {
             foreach(var tour in TourRepository.GetTours())
             {
-                Location location = LocationRepository.GetLocations().Find(l => l.Id == tour.Id);
+                Location location = LocationRepository.GetLocations().Find(l => l.Id == tour.LocationId);
                 if(location != null)
                 {
                     tour.Location = location;
