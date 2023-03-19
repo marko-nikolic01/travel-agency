@@ -120,47 +120,47 @@ namespace TravelAgency.View
 
         private void Search(object sender, RoutedEventArgs e)
         {
-            var filtered = Accommodations.Where(accommodation => accommodation.Name != "");
+            IEnumerable<Accommodation> searchedAccommodations = Accommodations;
 
             if (nameTextBox.Text != "")
             {
-                filtered = filtered.Where(accommodation => accommodation.Name.ToLower().Contains(nameTextBox.Text.ToLower()));
+                searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Name.ToLower().Contains(nameTextBox.Text.ToLower()));
             }
 
             if (countryComboBox.SelectedIndex != 0)
             {
-                filtered = filtered.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryComboBox.Text.ToLower()));
+                searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryComboBox.Text.ToLower()));
             }
 
             if (cityComboBox.SelectedIndex != 0)
             {
-                filtered = filtered.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityComboBox.Text.ToLower()));
+                searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityComboBox.Text.ToLower()));
             }
 
             switch (typeComboBox.SelectedIndex)
             {
                 case 1:
-                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT);
+                    searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT);
                     break;
                 case 2:
-                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.HOUSE);
+                    searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.HOUSE);
                     break;
                 case 3:
-                    filtered = filtered.Where(accommodation => accommodation.Type == AccommodationType.HUT);
+                    searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.HUT);
                     break;
             }
 
             if (guestNumberUpDown.Value != 0)
             {
-                filtered = filtered.Where(accommodation => guestNumberUpDown.Value <= accommodation.MaxGuests);
+                searchedAccommodations = searchedAccommodations.Where(accommodation => guestNumberUpDown.Value <= accommodation.MaxGuests);
             }
 
             if (dayNumberUpDown.Value != 0)
             {
-                filtered = filtered.Where(accommodation => dayNumberUpDown.Value >= accommodation.MinDays);
+                searchedAccommodations = searchedAccommodations.Where(accommodation => dayNumberUpDown.Value >= accommodation.MinDays);
             }
 
-            accommodationsDataGrid.ItemsSource = filtered;
+            accommodationsDataGrid.ItemsSource = searchedAccommodations;
         }
 
         private void CancelSearch(object sender, RoutedEventArgs e)
