@@ -33,7 +33,7 @@ namespace TravelAgency.Repository
                         break;
                     }
                 }
-                foreach (Location location in locationRepository.GetLocations())
+                foreach (Location location in locationRepository.GetAll())
                 {
                     if (accommodation.LocationId == location.Id)
                     {
@@ -71,7 +71,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        IEnumerable<Accommodation> IRepository<Accommodation>.GetAll()
+        List<Accommodation> IRepository<Accommodation>.GetAll()
         {
             throw new NotImplementedException();
         }

@@ -36,7 +36,7 @@ namespace TravelAgency.Repository
             return accommodationPhotos;
         }
 
-        IEnumerable<AccommodationPhoto> IRepository<AccommodationPhoto>.GetAll()
+        List<AccommodationPhoto> IRepository<AccommodationPhoto>.GetAll()
         {
             throw new NotImplementedException();
         }

@@ -9,7 +9,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class LocationRepository
+    public class LocationRepository : IRepository<Location>
     {
         private const string FilePath = "../../../Resources/Data/locations.csv";
         private readonly Serializer<Location> _serializer;
@@ -30,12 +30,12 @@ namespace TravelAgency.Repository
             return locations[locations.Count - 1].Id + 1;
         }
         
-        public List<Location> GetLocations()
+        public List<Location> GetAll()
         {
             return locations;
         }
 
-        public Location SaveLocation(Location location)
+        public Location Save(Location location)
         {
             location.Id = NextId();
             locations.Add(location);
@@ -88,6 +88,8 @@ namespace TravelAgency.Repository
                 }
             }
 
+            cities.Sort();
+
             return cities;
         }
 
@@ -100,6 +102,44 @@ namespace TravelAgency.Repository
                     return location;
                 }
             }
+            return null;
+        }
+
+        public Location GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveAll(IEnumerable<Location> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Location entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Location GetLocationForCountryAndCity(string country, string city)
+        {
+            foreach(Location location in locations)
+            {
+                if (location.Country == country && location.City == city)
+                {
+                    return location;
+                }
+            }
+
             return null;
         }
     }

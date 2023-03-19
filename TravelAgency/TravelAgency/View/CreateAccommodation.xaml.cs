@@ -16,6 +16,7 @@ using TravelAgency.Model;
 using TravelAgency.Repository;
 using System.Collections.ObjectModel;
 using AccommodationPhoto = TravelAgency.Model.AccommodationPhoto;
+using System.Diagnostics.Metrics;
 
 namespace TravelAgency.View
 {
@@ -39,14 +40,29 @@ namespace TravelAgency.View
         {
             InitializeComponent();
             DataContext = this;
+
             LoggedInUser = loggedInUser;
+
             this.locationRepository = locationRepository;
             this.accommodationRepository = accommodationRepository;
             this.accommodationPhotoRepository = accommodationPhotoRepository;
+
             NewAccommodation = new() { Id = this.accommodationRepository.NextId(), OwnerId = LoggedInUser.Id, Owner = LoggedInUser };
             NewLocation = new();
 
+            InitializeComboboxes();
+
             Images = new ObservableCollection<string>();
+        }
+
+        private void InitializeComboboxes()
+        {
+            var countries = locationRepository.GetAllCountries();
+            foreach (var country in countries)
+            {
+                CountryComboBox.Items.Add(country);
+            }
+            CountryComboBox.SelectedIndex = 0;
         }
 
         private void AddImage_Click(object sender, RoutedEventArgs e)
@@ -71,6 +87,12 @@ namespace TravelAgency.View
 
         private void RegisterAccommodation_Click(object sender, RoutedEventArgs e)
         {
+            if (!NewAccommodation.IsValid)
+            {
+                System.Windows.MessageBox.Show("Fields not valid!");
+                return;
+            }
+
             if (ApartmentRadioButton.IsChecked == true)
             {
                 NewAccommodation.Type = AccommodationType.APARTMENT;
@@ -84,10 +106,22 @@ namespace TravelAgency.View
                 NewAccommodation.Type = AccommodationType.HUT;
             }
 
-            Location savedLocation = locationRepository.SaveLocation(NewLocation);
+            if (CountryComboBox.SelectedIndex == 0)
+            {
+                System.Windows.MessageBox.Show("Select a country!");
+                return;
+            }
+            if (CityComboBox.SelectedIndex == 0)
+            {
+                System.Windows.MessageBox.Show("Select a city!");
+                return;
+            }
 
-            NewAccommodation.LocationId = savedLocation.Id;
-            NewAccommodation.Location = savedLocation;
+            var country = CountryComboBox.SelectedItem as string;
+            var city = CityComboBox.SelectedItem as string;
+
+            NewAccommodation.Location = locationRepository.GetLocationForCountryAndCity(country, city);
+            NewAccommodation.LocationId = NewAccommodation.Location.Id;
 
             Accommodation savedAccommodation = accommodationRepository.Save(NewAccommodation);
 
@@ -101,6 +135,27 @@ namespace TravelAgency.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void CountryChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CountryComboBox.SelectedIndex != 0)
+            {
+                string country = (string)CountryComboBox.SelectedValue;
+                var cities = locationRepository.GetCitiesByCountry(country);
+                CityComboBox.Items.Clear();
+                CityComboBox.Items.Add("<Select a city>");
+                foreach (var city in cities)
+                {
+                    CityComboBox.Items.Add(city);
+                }
+                CityComboBox.SelectedIndex = 0;
+                CityComboBox.IsEnabled = true;
+            }
+            else
+            {
+                CityComboBox.IsEnabled = false;
+            }
         }
     }
 }

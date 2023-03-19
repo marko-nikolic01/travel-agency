@@ -173,14 +173,14 @@ namespace TravelAgency.Model
                 }
                 else if (columnName == "MinDays")
                 {
-                    if (MinDays< 1)
+                    if (MinDays < 1)
                     {
                         return "Min number of days must be greater than 0";
                     }
                 }
                 else if (columnName == "DaysToCancel")
                 {
-                    if (DaysToCancel < 1)
+                    if (DaysToCancel < 0)
                     {
                         return "Number of days to cancel must be greater than 0";
                     }
