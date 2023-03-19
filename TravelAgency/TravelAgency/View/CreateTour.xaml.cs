@@ -28,7 +28,6 @@ namespace TravelAgency.View
         public TourRepository TourRepository { get; set; }
         public LocationRepository LocationRepository { get; set; }
         public Tour NewTour { get; set; }
-        public Location Location { get; set; }
         public PhotoRepository PhotoRepository { get; set; }
         public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
         public KeyPointRepository KeyPointRepository { get; set; }
@@ -39,18 +38,29 @@ namespace TravelAgency.View
             DataContext = this;
             ActiveGuide = activeGuide;
             NewTour = new Tour();
-            Location = new Location();
             TourRepository = tourRepository;
             LocationRepository = locationRepository;
             PhotoRepository = photoRepository;
             TourOccurrenceRepository = tourOccurrenceRepository;
             KeyPointRepository = keyPointeRepository;
 
+            InitializeComboboxes();
+
             DateCalendar.DisplayDateStart = DateTime.Today;
             //cultureinfo from stackoverflow
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
             Thread.CurrentThread.CurrentCulture = ci;
+        }
+
+        private void InitializeComboboxes()
+        {
+            var countries = LocationRepository.GetAllCountries();
+            foreach (var country in countries)
+            {
+                CountryComboBox.Items.Add(country);
+            }
+            CountryComboBox.SelectedIndex = 0;
         }
 
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
@@ -111,10 +121,8 @@ namespace TravelAgency.View
         private void ProcessInputs(Tour newTour)
         {
             ProcessIntInputs(newTour);
-            Location savedLocation = ProcessLocationInput();
+            ProcessLocationInput(newTour);
 
-            newTour.Location = savedLocation;
-            newTour.LocationId = savedLocation.Id;
         }
 
         private void SaveTourOccurrences(Tour newTour)
@@ -173,13 +181,14 @@ namespace TravelAgency.View
             }
         }
 
-        private Location ProcessLocationInput()
+        private void ProcessLocationInput(Tour newTour)
         {
-            string[] cityCountry = Location.FullName.Split(',');
-            Location.City = cityCountry[0];
-            Location.Country = cityCountry[1];
 
-            return LocationRepository.Save(Location);
+            var country = CountryComboBox.SelectedItem as string;
+            var city = CityComboBox.SelectedItem as string;
+
+            newTour.Location = LocationRepository.GetLocationForCountryAndCity(country, city);
+            newTour.LocationId = newTour.Location.Id;
         }
 
         private bool AreListsComplete()
@@ -204,9 +213,14 @@ namespace TravelAgency.View
 
         private bool AreInputsValid()
         {
-            if (!Location.IsValid)
+            if (CountryComboBox.SelectedIndex == 0)
             {
-                MessageBox.Show("Location entry is wrong");
+                MessageBox.Show("Select a country!");
+                return false;
+            }
+            if (CityComboBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Select a city!");
                 return false;
             }
             else if (NewTour.IsValid == false)
@@ -217,6 +231,38 @@ namespace TravelAgency.View
             return true;
         }
 
-        
+        private void CountryChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CountryComboBox.SelectedIndex != 0)
+            {
+                string country = (string)CountryComboBox.SelectedValue;
+                var cities = LocationRepository.GetCitiesByCountry(country);
+                CityComboBox.Items.Clear();
+                CityComboBox.Items.Add("<Select a city>");
+                foreach (var city in cities)
+                {
+                    CityComboBox.Items.Add(city);
+                }
+                CityComboBox.SelectedIndex = 0;
+                CityComboBox.IsEnabled = true;
+            }
+            else
+            {
+                CityComboBox.IsEnabled = false;
+            }
+        }
+
+        private void DateCalendar_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(DateCalendar.SelectedDate == DateTime.Now.Date)
+            {
+                Time.StartTime = DateTime.Now.TimeOfDay;
+            }
+            else
+            {
+                TimeSpan timeSpan = (TimeSpan)DateTime.ParseExact("00:00", "HH:mm", null).TimeOfDay;
+                Time.StartTime = timeSpan;
+            }
+        }
     }
 }
