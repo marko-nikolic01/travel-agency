@@ -11,15 +11,15 @@ namespace TravelAgency.Repository
     public class AccommodationGuestRatingRepository : IRepository<AccommodationGuestRating>
     {
         private const string FilePath = "../../../Resources/Data/accommodationGuestRatings.csv";
-        private readonly Serializer<AccommodationGuestRating> _serializer;
-        private List<AccommodationGuestRating> _accommodationGuestRatings;
+        private readonly Serializer<AccommodationGuestRating> serializer;
+        private List<AccommodationGuestRating> accommodationGuestRatings;
 
         public AccommodationGuestRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
         {
-            _serializer = new Serializer<AccommodationGuestRating>();
-            _accommodationGuestRatings = _serializer.FromCSV(FilePath);
+            serializer = new Serializer<AccommodationGuestRating>();
+            accommodationGuestRatings = serializer.FromCSV(FilePath);
 
-            foreach (var accommodationGuestRating in _accommodationGuestRatings)
+            foreach (var accommodationGuestRating in accommodationGuestRatings)
             {
                 foreach (var accommodationReservation in accommodationReservations)
                 {
@@ -48,7 +48,7 @@ namespace TravelAgency.Repository
 
         public List<AccommodationGuestRating> GetAll()
         {
-            return _accommodationGuestRatings;
+            return accommodationGuestRatings;
         }
 
         public AccommodationGuestRating GetById(int id)
@@ -58,18 +58,18 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            if (_accommodationGuestRatings.Count < 1)
+            if (accommodationGuestRatings.Count < 1)
             {
                 return 1;
             }
-            return _accommodationGuestRatings.Max(c => c.Id) + 1;
+            return accommodationGuestRatings.Max(c => c.Id) + 1;
         }
 
         public AccommodationGuestRating Save(AccommodationGuestRating entity)
         {
             entity.Id = NextId();
-            _accommodationGuestRatings.Add(entity);
-            _serializer.ToCSV(FilePath, _accommodationGuestRatings);
+            accommodationGuestRatings.Add(entity);
+            serializer.ToCSV(FilePath, accommodationGuestRatings);
             return entity;
         }
 

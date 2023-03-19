@@ -121,7 +121,7 @@ namespace TravelAgency.View
 
             //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             string img1 = "https://optimise2.assets-servd.host/maniacal-finch/production/animals/amur-tiger-01-01.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1658935145&s=1b96c26544a1ee414f976c17b18f2811";
-            string img2 = "..\\Resources\\Images\\ProfilePicture.jpg";
+            string img2 = "..\\Resources\\Photos\\ProfilePicture.jpg";
             string img3 = "https://www.sfzoo.org/wp-content/uploads/2021/03/AfricanLionJasiri_resize2019.jpg";
 
             ImageSources = new List<BitmapImage>();

@@ -54,7 +54,7 @@ namespace TravelAgency.View
         {
             if (SelectedUnratedReservation == null)
             {
-                MessageBox.Show("Odaberite rezervaciju!");
+                MessageBox.Show("Select a reservation first!");
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace TravelAgency.View
                 AccommodationGuestRatings.Add(rating);
             }
 
-            MessageBox.Show("Ocena uspešno sačuvana");
+            MessageBox.Show("Rating has been created successfully!");
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

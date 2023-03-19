@@ -73,8 +73,16 @@ namespace TravelAgency.View
             foreach (var unratedGuest in unratedGuests)
             {
                 int daysLeft = accommodationReservationRepository.CalculateDaysLeftForRating(unratedGuest);
-                MessageBox.Show($"Neocenjen gost!\n{unratedGuest.Guest.Username}\n{unratedGuest.Accommodation.Name}\nBroj preostalih dana za ocenu: {daysLeft}");
+                MessageBox.Show($"Rate the guest.\n\nUsername: {unratedGuest.Guest.Username}\n" +
+                    $"Accommodation: {unratedGuest.Accommodation.Name}\nDays left for rating: {daysLeft}", "Unrated guest", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void SignOut_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
         }
     }
 }
