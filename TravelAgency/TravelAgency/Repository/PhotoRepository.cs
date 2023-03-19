@@ -8,7 +8,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class PhotoRepository
+    public class PhotoRepository : IRepository<Photo>
     {
         private const string FilePath = "../../../Resources/Data/photos.csv";
         private readonly Serializer<Photo> _serializer;
@@ -20,7 +20,7 @@ namespace TravelAgency.Repository
             photos = _serializer.FromCSV(FilePath);
         }
 
-        private int GetNewId()
+        public int NextId()
         {
             if (photos.Count == 0)
             {
@@ -29,16 +29,42 @@ namespace TravelAgency.Repository
             return photos[photos.Count - 1].Id + 1;
         }
 
-
-        public List<Photo> GetPhotos()
+        public List<Photo> GetAll()
         {
             return photos;
         }
-        public void SavePhotos(Photo photo)
+
+        public Photo GetById(int id)
         {
-            photo.Id = GetNewId();
+            throw new NotImplementedException();
+        }
+
+        public Photo Save(Photo photo)
+        {
+            photo.Id = NextId();
             photos.Add(photo);
             _serializer.ToCSV(FilePath, photos);
+            return photo;
+        }
+
+        public void SaveAll(IEnumerable<Photo> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Photo entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

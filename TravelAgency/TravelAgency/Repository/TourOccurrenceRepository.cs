@@ -9,7 +9,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourOccurrenceRepository : ISubject
+    public class TourOccurrenceRepository : ISubject, IRepository<TourOccurrence>
     {
         private const string FilePath = "../../../Resources/Data/tourOccurrences.csv";
         private readonly Serializer<TourOccurrence> _serializer;
@@ -23,7 +23,7 @@ namespace TravelAgency.Repository
             observers = new List<IObserver>();
         }
 
-        private int GetNewId()
+        public int NextId()
         {
             if (tourOccurrences.Count == 0)
             {
@@ -32,12 +32,11 @@ namespace TravelAgency.Repository
             return tourOccurrences[tourOccurrences.Count - 1].Id + 1;
         }
 
-
-        public List<TourOccurrence> GetTourOccurrences()
+        public List<TourOccurrence> GetAll()
         {
             return tourOccurrences;
         }
-        public List<TourOccurrence> GetTodaysTourOccurrences(User activeGuide)
+        public List<TourOccurrence> GetTodays(User activeGuide)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
@@ -49,13 +48,14 @@ namespace TravelAgency.Repository
             }
             return result;
         }
-        public void SaveTourOccurrences(TourOccurrence tourOccurrence, User activeGuide)
+        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
         {
-            tourOccurrence.Id = GetNewId();
+            tourOccurrence.Id = NextId();
             tourOccurrence.GuideId = activeGuide.Id;
             tourOccurrences.Add(tourOccurrence);
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
+            return tourOccurrence;
         }
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
@@ -84,5 +84,34 @@ namespace TravelAgency.Repository
             }
         }
 
+        public TourOccurrence GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TourOccurrence Save(TourOccurrence entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveAll(IEnumerable<TourOccurrence> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(TourOccurrence entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
