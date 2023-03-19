@@ -1,0 +1,108 @@
+﻿<Window x:Class="TravelAgency.View.AccommodationReservationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="GuestMain" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock FontSize="8" Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Background="LightGray" Height="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="nameLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Name:</Label>
+            <Label Name="locationLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Location:</Label>
+            <Label Name="typeLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Type:</Label>
+            <Label Name="maxGuestsLabel" Grid.Row="4" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Max. Guests:</Label>
+            <Label Name="minDaysLabel" Grid.Row="5" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Min. Days:</Label>
+            <Label Name="daysToCancelLabel" Grid.Row="6" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days To Cancel:</Label>
+            <Label Name="ownerLabel" Grid.Row="7" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Owner:</Label>
+            <Border Margin="10, 10, 10, 0" Grid.Row="1" Grid.RowSpan="6" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="2, 2, 2, 1" BorderBrush="Black" Background="DarkGray">
+                <Image Name="accommodationPhoto" Source="../Resources/Images/ProfilePicture.jpg"></Image>
+            </Border>
+            <Button Name="previousImageButton" Grid.Row="7" Grid.Column="2" Margin="10, 0, 0, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="20" Click="ShowPreviousImage">Previous</Button>
+            <Button Name="nextImageButton" Grid.Row="7" Grid.Column="3" Margin="0, 0, 10, 0" BorderThickness="2, 1, 2, 2" BorderBrush="Black" FontSize="20" Click="ShowNextImage">Next</Button>
+            <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="0, 0, 0, 1" BorderBrush="DarkGray"></Border>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Top" Height="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Grid.RowSpan="6" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="DarkGray"></Border>
+            <Label Name="daysLabel" Grid.Row="1" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Days:</Label>
+            <Label Name="firstDateLabel" Grid.Row="2" Grid.Column="0" FontSize="20" VerticalAlignment="Center">First date:</Label>
+            <Label Name="lastDateLabel" Grid.Row="3" Grid.Column="0" FontSize="20" VerticalAlignment="Center">Last Date:</Label>
+            <xctk:IntegerUpDown Name="daysNumberUpDown" Grid.Row="1" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        Value="{Binding Path=DayNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Minimum="{Binding Accommodation.MinDays}" ValueChanged="DayNumberSelectionChanged"></xctk:IntegerUpDown>
+            <DatePicker Name="firstDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        SelectedDateChanged="DatePickerSelectedDateChanged" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=FirstDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
+            <DatePicker Name="lastDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
+                        SelectedDateChanged="DatePickerSelectedDateChanged"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
+            <Button Click="FindAvailableDates" Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
+            <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 30" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
+                        AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" ItemsSource="{Binding AvailableDateSpans, UpdateSourceTrigger=PropertyChanged}"
+                        Name="dateSpansDataGrid" SelectedItem="{Binding Path=Reservation.DateSpan, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsReadOnly="True" Visibility="Hidden" SelectionMode="Single">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Pick a date span:" Width="*">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}{0} - {1}">
+                                <Binding Path="StartDate"/>
+                                <Binding Path="EndDate"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center" Visibility="Hidden">Guests:</Label>
+            <xctk:IntegerUpDown Name="guestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray" 
+                        Value="{Binding Path=Reservation.NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
+                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Visibility="Hidden" Minimum="1" Maximum="{Binding Accommodation.MaxGuests}"></xctk:IntegerUpDown>
+            <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" 
+                    FontSize="20" Visibility="Hidden" Click="MakeReservation">Make a reservation</Button>
+        </Grid>
+    </DockPanel>
+</Window>

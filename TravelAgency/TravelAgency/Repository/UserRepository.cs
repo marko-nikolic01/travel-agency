@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
 
@@ -27,6 +28,27 @@ namespace TravelAgency.Repository
         {
             _users = _serializer.FromCSV(FilePath);
             return _users.FirstOrDefault(u => u.Username == username);
+        }
+
+        private int GetNewId()
+        {
+            if (_users.Count == 0)
+            {
+                return 1;
+            }
+            return _users[_users.Count - 1].Id + 1;
+        }
+
+        public List<User> GetUsers()
+        {
+            return _users;
+        }
+
+        public void SaveUser(User user)
+        {
+            user.Id = GetNewId();
+            _users.Add(user);
+            _serializer.ToCSV(FilePath, _users);
         }
     }
 }

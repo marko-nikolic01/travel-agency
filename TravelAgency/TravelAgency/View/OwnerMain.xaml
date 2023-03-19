@@ -1,0 +1,38 @@
+﻿<Window x:Class="TravelAgency.View.OwnerMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="Accommodation overview" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <DockPanel LastChildFill="False">
+
+        <Menu DockPanel.Dock="Top" Height="20">
+            <MenuItem Header="_File" Height="20"></MenuItem>
+            <MenuItem Header="_Edit" Height="20"></MenuItem>
+        </Menu>
+
+        <ToolBar DockPanel.Dock="Top" Height="Auto">
+            <Button Content="Add accommodation" Click="ShowCreateAccommodation_Click"/>
+            <Button Content="Rate guests" Click="ShowAccommodationGuestRatingWindow_Click"/>
+            <Button Content="Sign out" Click="SignOut_Click"/>
+        </ToolBar>
+
+        <DataGrid DockPanel.Dock="Top"
+                  ItemsSource="{Binding Accommodations}"
+                  SelectedItem="{Binding Path=SelectedAccommodation}"
+                  IsReadOnly="True" SelectionMode="Single"
+                  AutoGenerateColumns="False" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="1.5*" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Type" Width="1.5*" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Max guests" Width="1.5*" Binding="{Binding MaxGuests}"/>
+                <DataGridTextColumn Header="Min number of days" Width="2*" Binding="{Binding MinDays}"/>
+                <DataGridTextColumn Header="City" Width="2*" Binding="{Binding Location.City}"/>
+                <DataGridTextColumn Header="Country" Width="2*" Binding="{Binding Location.Country}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </DockPanel>
+</Window>
