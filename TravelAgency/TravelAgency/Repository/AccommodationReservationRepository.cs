@@ -186,38 +186,35 @@ namespace TravelAgency.Repository
         {
             List<DateSpan> availableDates = new List<DateSpan>();
 
-            int dateSpanCount = 0;
             DateOnly startDateIterator = DateOnly.FromDateTime(firstDate).AddDays(-1);
             DateOnly endDateIterator = DateOnly.FromDateTime(firstDate).AddDays(reservationLength - 2);
-            DateOnly iterationStopperDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
+            DateOnly iterationStopperDate = DateOnly.FromDateTime(DateTime.Now);
 
             bool isDateSpanAllowed = startDateIterator.CompareTo(iterationStopperDate) > 0;
-            while (isDateSpanAllowed && dateSpanCount < 3)
+            while (isDateSpanAllowed)
             {
                 if (IsDateSpanAvailable(startDateIterator, endDateIterator, accommodationId))
                 {
                     DateSpan dateSpan = new DateSpan(startDateIterator, endDateIterator);
                     availableDates.Add(dateSpan);
-                    dateSpanCount++;
+                    break;
                 }
 
                 startDateIterator = startDateIterator.AddDays(-1);
                 endDateIterator = endDateIterator.AddDays(-1);
                 isDateSpanAllowed = startDateIterator.CompareTo(iterationStopperDate) >= 0;
             }
-            availableDates.Reverse();
 
-            dateSpanCount = 0;
             startDateIterator = DateOnly.FromDateTime(lastDate).AddDays(-reservationLength + 2);
             endDateIterator = DateOnly.FromDateTime(lastDate).AddDays(1);
 
-            while (dateSpanCount < 3)
+            while (true)
             {
                 if (IsDateSpanAvailable(startDateIterator, endDateIterator, accommodationId))
                 {
                     DateSpan dateSpan = new DateSpan(startDateIterator, endDateIterator);
                     availableDates.Add(dateSpan);
-                    dateSpanCount++;
+                    break;
                 }
 
                 startDateIterator = startDateIterator.AddDays(1);

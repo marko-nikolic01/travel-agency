@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using TravelAgency.Model;
+using TravelAgency.Model.DTO;
+using System.ComponentModel;
 using TravelAgency.Repository;
+using System.Collections.ObjectModel;
+using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
 {
@@ -26,10 +35,9 @@ namespace TravelAgency.View
         private DateTime _lastDate;
         public ObservableCollection<DateSpan> AvailableDateSpans { get; set; }
         public DateSpan SelectedDateSpan { get; set; }
-        public List<BitmapImage> Photos { get; set; }
-        public int currentPhotoIndex;
-        bool ShouldValidate { get; set; }
-
+        public List<BitmapImage> ImageSources { get; set; }
+        public int currentImageNumber;
+        
         public int DayNumber
         {
             get => _dayNumber;
@@ -38,7 +46,7 @@ namespace TravelAgency.View
                 if (value != _dayNumber)
                 {
                     _dayNumber = value;
-                    OnPropertyChanged(nameof(DayNumber));
+                    OnPropertyChanged("DayNumber");
                 }
             }
         }
@@ -51,7 +59,7 @@ namespace TravelAgency.View
                 if (value != _firstDate)
                 {
                     _firstDate = value;
-                    OnPropertyChanged(nameof(FirstDate));
+                    OnPropertyChanged("FirstDate");
                 }
             }
         }
@@ -64,7 +72,7 @@ namespace TravelAgency.View
                 if (value != _lastDate)
                 {
                     _lastDate = value;
-                    OnPropertyChanged(nameof(LastDate));
+                    OnPropertyChanged("LastDate");
                 }
             }
         }
@@ -78,6 +86,8 @@ namespace TravelAgency.View
 
         public AccommodationReservationWindow(User guest, Accommodation accommodation, AccommodationReservationRepository accommodationReservationRepository)
         {
+            
+
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
@@ -85,15 +95,16 @@ namespace TravelAgency.View
 
             this.accommodationReservationRepository = accommodationReservationRepository;
 
+            FirstDate = DateTime.Now.Date;
+            LastDate = DateTime.Now.Date;
+            AvailableDateSpans = new ObservableCollection<DateSpan>();
+
             Guest = guest;
             Accommodation = accommodation;
             Reservation = new AccommodationReservation(Accommodation.Id, Accommodation, Guest.Id, Guest);
 
             DayNumber = Accommodation.MinDays;
-            FirstDate = DateTime.Now.Date;
-            LastDate = DateTime.Now.Date;
-            AvailableDateSpans = new ObservableCollection<DateSpan>();
-
+            
             nameLabel.Content = "Name: " + Accommodation.Name;
             locationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
             typeLabel.Content = "Type: " + Accommodation.Type;
@@ -103,52 +114,64 @@ namespace TravelAgency.View
             ownerLabel.Content = "Owner: " + Accommodation.Owner.Username;
             firstDatePicker.DisplayDateStart = DateTime.Today;
             lastDatePicker.DisplayDateStart = DateTime.Today;
-            ShouldValidate = true;
 
-            LoadPhotos();
-        }
 
-        private void LoadPhotos()
-        {
-            Photos = new List<BitmapImage>();
 
-            foreach (AccommodationPhoto accommodationPhoto in Accommodation.Images)
-            {
-                Uri uri = new Uri(accommodationPhoto.Path, UriKind.RelativeOrAbsolute);
-                BitmapImage photo = new BitmapImage(uri);
-                Photos.Add(photo);
-            }
-            currentPhotoIndex = 0;
-            accommodationPhoto.Source = Photos[0];
+
+
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            string img1 = "https://optimise2.assets-servd.host/maniacal-finch/production/animals/amur-tiger-01-01.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1658935145&s=1b96c26544a1ee414f976c17b18f2811";
+            string img2 = "..\\Resources\\Photos\\ProfilePicture.jpg";
+            string img3 = "https://www.sfzoo.org/wp-content/uploads/2021/03/AfricanLionJasiri_resize2019.jpg";
+
+            ImageSources = new List<BitmapImage>();
+
+            Uri uri1 = new Uri(img1, UriKind.RelativeOrAbsolute);
+            Uri uri2 = new Uri(img2, UriKind.RelativeOrAbsolute);
+            Uri uri3 = new Uri(img3, UriKind.RelativeOrAbsolute);
+
+            BitmapImage bmi1 = new BitmapImage(uri1);
+            BitmapImage bmi2 = new BitmapImage(uri2);
+            BitmapImage bmi3 = new BitmapImage(uri3);
+
+            ImageSources.Add(bmi1);
+            ImageSources.Add(bmi2);
+            ImageSources.Add(bmi3);
+
+            currentImageNumber = 0;
+            accommodationImage.Source = ImageSources[0];
+            
+
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         }
 
         private void ShowPreviousImage(object sender, RoutedEventArgs e)
         {
-            currentPhotoIndex--;
+            currentImageNumber--;
 
-            if (currentPhotoIndex == -1)
+            if (currentImageNumber == -1)
             {
-                currentPhotoIndex = Photos.Count() - 1;
-                accommodationPhoto.Source = Photos[currentPhotoIndex];
+                currentImageNumber = ImageSources.Count() - 1;
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
             else
             {
-                accommodationPhoto.Source = Photos[currentPhotoIndex];
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
         }
 
         private void ShowNextImage(object sender, RoutedEventArgs e)
         {
-            currentPhotoIndex++;
+            currentImageNumber++;
 
-            if (currentPhotoIndex == Photos.Count())
+            if (currentImageNumber == ImageSources.Count())
             {
-                currentPhotoIndex = 0;
-                accommodationPhoto.Source = Photos[currentPhotoIndex];
+                currentImageNumber = 0;
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
             else
             {
-                accommodationPhoto.Source = Photos[currentPhotoIndex];
+                accommodationImage.Source = ImageSources[currentImageNumber];
             }
         }
 
@@ -164,7 +187,6 @@ namespace TravelAgency.View
                 {
                     AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(FirstDate, LastDate, Accommodation.Id));
                     dateSpansDataGrid.ItemsSource = AvailableDateSpans;
-                    System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
                 }
 
                 Reservation.DateSpan = null;
@@ -176,7 +198,7 @@ namespace TravelAgency.View
                 guestsNumberUpDown.Value = 1;
                 makeReservationButton.Visibility = Visibility.Visible;
             }
-            else
+            else 
             {
                 System.Windows.MessageBox.Show("Date span wasn't properly specified!");
             }
@@ -206,20 +228,20 @@ namespace TravelAgency.View
                 else if (columnName == "FirstDate")
                 {
                     bool isFutureDate = FirstDate.CompareTo(DateTime.Now) > 0;
-
+                    
                     if (!isFutureDate)
                     {
                         return "* First date must be a future date";
                     }
 
                     double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
-                    if (dateSpanLength <= 0)
+                    if (dateSpanLength < 0)
                     {
-                        return "*First date can't be after last date";
+                        return "*First date can't be after end date";
                     }
                     else if (dateSpanLength < DayNumber)
                     {
-                        return "*Date span can't be shorter than specified\nnumber of days";
+                         return "*Date span can't be shorter than specified\nnumber of days";
                     }
 
                 }
@@ -232,11 +254,10 @@ namespace TravelAgency.View
                     }
 
                     double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
-                    if (dateSpanLength <= 0)
+                    if (dateSpanLength < 0)
                     {
-                        return "*Last date can't be before first date";
                     }
-                    else if (dateSpanLength < DayNumber)
+                    else if(dateSpanLength < DayNumber)
                     {
                         return "*Date span can't be shorter than specified\nnumber of days";
                     }
@@ -262,48 +283,21 @@ namespace TravelAgency.View
             }
         }
 
-        private void DatePickerSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+
+        private void DatePickerLostFocus(object sender, RoutedEventArgs e)
         {
-            if (!ShouldValidate)
-            {
-                return;
-            }
-            ShouldValidate = false;
-
-            var datePicker = (sender as DatePicker);
-
-            if (datePicker.Name == firstDatePicker.Name)
-            {
-                TriggerValidationMessage(false, true);
-            }
-
-            if (datePicker.Name == lastDatePicker.Name)
-            {
-                TriggerValidationMessage(true, false);
-            }
+            FirstDate = FirstDate.AddDays(1);
+            FirstDate = FirstDate.AddDays(-1);
+            LastDate = LastDate.AddDays(1);
+            LastDate = LastDate.AddDays(-1);
         }
 
         private void DayNumberSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            ShouldValidate = false;
-            TriggerValidationMessage(true, true);
-        }
-
-        private void TriggerValidationMessage(bool shouldValidateFirst, bool shouldValidateLast)
-        {
-            if (shouldValidateFirst)
-            {
-                FirstDate = FirstDate.AddDays(1);
-                FirstDate = FirstDate.AddDays(-1);
-            }
-
-            if (shouldValidateLast)
-            {
-                LastDate = LastDate.AddDays(1);
-                LastDate = LastDate.AddDays(-1);
-            }
-
-            ShouldValidate = true;
+            FirstDate = FirstDate.AddDays(1);
+            FirstDate = FirstDate.AddDays(-1);
+            LastDate = LastDate.AddDays(1);
+            LastDate = LastDate.AddDays(-1);
         }
 
         private void MakeReservation(object sender, RoutedEventArgs e)
@@ -318,7 +312,5 @@ namespace TravelAgency.View
                 System.Windows.MessageBox.Show("Reservation wasn't properly specified!");
             }
         }
-
-        
     }
 }
