@@ -29,7 +29,7 @@ namespace TravelAgency.View
             CheckGuestNumber();
         }
 
-        private void AddGuestClick(object sender, RoutedEventArgs e)
+        private void AddGuest_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(GuestUsernameText.Text))
             {
@@ -53,7 +53,7 @@ namespace TravelAgency.View
                 SubmitButton.IsEnabled = false;
             }
         }
-        private void RemoveGuestClick(object sender, RoutedEventArgs e)
+        private void RemoveGuest_Click(object sender, RoutedEventArgs e)
         {
             if(GuestList.SelectedItem != null && GuestList.SelectedIndex != 0)
             {
@@ -63,7 +63,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void SubmitClick(object sender, RoutedEventArgs e)
+        private void Submit_Click(object sender, RoutedEventArgs e)
         {
             List<User> users = new List<User>();
             TourReservation tourReservation;
@@ -100,7 +100,7 @@ namespace TravelAgency.View
                 SubmitButton.IsEnabled = false;
             }
         }
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

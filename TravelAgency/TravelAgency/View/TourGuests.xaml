@@ -14,13 +14,13 @@
         <Label Grid.Column="0">Guests</Label>
         <StackPanel Grid.Column="1">
         <TextBox Margin="10" Name="GuestUsernameText"></TextBox>
-            <Button Margin="5" Content="Add" Width="30" Click="AddGuestClick" x:Name="AddButton"></Button>
+            <Button Margin="5" Content="Add" Width="30" Click="AddGuest_Click" x:Name="AddButton"></Button>
             <ListBox Margin="10" Name="GuestList">
             </ListBox>
-            <Button Margin="5" Content="Remove Guest" Width="90" Click="RemoveGuestClick"></Button>
+            <Button Margin="5" Content="Remove Guest" Width="90" Click="RemoveGuest_Click"></Button>
             <StackPanel Margin="0 50" Height="100" Orientation="Horizontal">
-                <Button Width="120" Height="40" Margin="10" Click="SubmitClick" x:Name="SubmitButton">Submit Reservation</Button>
-                <Button Width="120" Height="40" Margin="10" Click="CancelClick">Cancel</Button>
+                <Button Width="120" Height="40" Margin="10" Click="Submit_Click" x:Name="SubmitButton">Submit Reservation</Button>
+                <Button Width="120" Height="40" Margin="10" Click="Cancel_Click">Cancel</Button>
             </StackPanel>
         </StackPanel>
     </Grid>
