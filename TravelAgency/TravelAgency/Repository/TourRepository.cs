@@ -9,7 +9,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourRepository : ISubject
+    public class TourRepository : ISubject, IRepository<Tour>
     {
         private const string FilePath = "../../../Resources/Data/tours.csv";
         private readonly Serializer<Tour> _serializer;
@@ -23,7 +23,7 @@ namespace TravelAgency.Repository
             observers = new List<IObserver>();
         }
 
-        private int GetNewId()
+        public int NextId()
         {
             if(tours.Count == 0)
             {
@@ -32,17 +32,18 @@ namespace TravelAgency.Repository
             return tours[tours.Count - 1].Id +1;
         }
 
-
-        public List<Tour> GetTours()
+        public List<Tour> GetAll()
         {
             return tours;
         }
-        public void SaveTours(Tour tour)
+
+        public Tour Save(Tour tour)
         {
-            tour.Id = GetNewId();
+            tour.Id = NextId();
             tours.Add(tour);
             _serializer.ToCSV(FilePath, tours);
             NotifyObservers();
+            return tour;
         }
 
         public void Subscribe(IObserver observer)
@@ -61,6 +62,31 @@ namespace TravelAgency.Repository
             {
                 observer.Update();
             }
+        }
+
+        public Tour GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveAll(IEnumerable<Tour> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Tour entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

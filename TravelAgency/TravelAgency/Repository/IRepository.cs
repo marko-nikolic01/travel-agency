@@ -8,7 +8,7 @@ namespace TravelAgency.Repository
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
 
         T GetById(int id);
 

@@ -58,7 +58,7 @@ namespace TravelAgency.View
             UserRepository = new UserRepository();
             TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
             LinkData();
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodaysTourOccurrences(ActiveGuide));
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodays(ActiveGuide));
             Guests = new ObservableCollection<User>();
             StartedTourKeyPoints = new ObservableCollection<KeyPoint>();
             TourOccurrenceRepository.Subscribe(this);
@@ -114,7 +114,7 @@ namespace TravelAgency.View
         {
             foreach (TourReservation tourReservation in TourReservationRepository.GetTourReservations())
             {
-                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
                 User guest = UserRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
                 tourOccurrence.Guests.Add(guest);
             }
@@ -124,7 +124,7 @@ namespace TravelAgency.View
         {
             foreach(KeyPoint keyPoint in KeyPointRepository.GetKeyPoints())
             {
-                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetTourOccurrences().Find(tO => tO.Id == keyPoint.TourOccurrenceId);
+                TourOccurrence tourOccurrence = TourOccurrenceRepository.GetAll().Find(tO => tO.Id == keyPoint.TourOccurrenceId);
                 if (tourOccurrence != null)
                 {
                     tourOccurrence.KeyPoints.Add(keyPoint);
@@ -134,9 +134,9 @@ namespace TravelAgency.View
 
         private void LinkTourOccurrences()
         {
-            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTourOccurrences())
+            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetAll())
             {
-                Tour tour = TourRepository.GetTours().Find(t => t.Id == tourOccurrence.TourId);
+                Tour tour = TourRepository.GetAll().Find(t => t.Id == tourOccurrence.TourId);
                 if (tour != null)
                 {
                     tourOccurrence.Tour = tour;
@@ -146,9 +146,9 @@ namespace TravelAgency.View
 
         private void LinkTourPhotos()
         {
-            foreach(Photo photo in PhotoRepository.GetPhotos())
+            foreach(Photo photo in PhotoRepository.GetAll())
             {
-                Tour tour = TourRepository.GetTours().Find(t => t.Id == photo.TourId);
+                Tour tour = TourRepository.GetAll().Find(t => t.Id == photo.TourId);
                 if(tour != null)
                 {
                     tour.Photos.Add(photo);
@@ -158,7 +158,7 @@ namespace TravelAgency.View
 
         private void LinkTourLocation()
         {
-            foreach(var tour in TourRepository.GetTours())
+            foreach(var tour in TourRepository.GetAll())
             {
                 Location location = LocationRepository.GetLocations().Find(l => l.Id == tour.LocationId);
                 if(location != null)
@@ -191,7 +191,7 @@ namespace TravelAgency.View
         public void Update()
         {
             TourOccurrences.Clear();
-            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTodaysTourOccurrences(ActiveGuide))
+            foreach(TourOccurrence tourOccurrence in TourOccurrenceRepository.GetTodays(ActiveGuide))
             {
                 TourOccurrences.Add(tourOccurrence);
             }

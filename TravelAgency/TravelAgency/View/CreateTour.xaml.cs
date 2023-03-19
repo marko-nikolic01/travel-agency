@@ -101,7 +101,7 @@ namespace TravelAgency.View
 
         private void SaveTours()
         {
-            TourRepository.SaveTours(NewTour);
+            TourRepository.Save(NewTour);
 
             SaveTourPhotos(NewTour);
 
@@ -146,7 +146,7 @@ namespace TravelAgency.View
             tourOccurrence.TourId = newTour.Id;
             tourOccurrence.Tour = newTour;
             tourOccurrence.DateTime = dateTime;
-            return TourOccurrenceRepository.SaveTourOccurrences(tourOccurrence, ActiveGuide);
+            return TourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, ActiveGuide);
         }
 
         private void SaveTourPhotos(Tour newTour)
@@ -157,7 +157,7 @@ namespace TravelAgency.View
                 photo.TourId = newTour.Id;
                 photo.Link = link;
                 newTour.Photos.Add(photo);
-                PhotoRepository.SavePhotos(photo);
+                PhotoRepository.Save(photo);
             }
         }
         private void ProcessIntInputs(Tour newTour)
