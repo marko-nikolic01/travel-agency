@@ -65,7 +65,7 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<AccommodationReservation> GetAll()
+        public List<AccommodationReservation> GetAll()
         {
             return _accommodationReservations;
         }
