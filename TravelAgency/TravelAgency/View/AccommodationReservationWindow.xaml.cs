@@ -35,8 +35,8 @@ namespace TravelAgency.View
         private DateTime _lastDate;
         public ObservableCollection<DateSpan> AvailableDateSpans { get; set; }
         public DateSpan SelectedDateSpan { get; set; }
-        public List<BitmapImage> ImageSources { get; set; }
-        public int currentImageNumber;
+        public List<BitmapImage> Photos { get; set; }
+        public int currentPhotoIndex;
         
         public int DayNumber
         {
@@ -85,9 +85,7 @@ namespace TravelAgency.View
         }
 
         public AccommodationReservationWindow(User guest, Accommodation accommodation, AccommodationReservationRepository accommodationReservationRepository)
-        {
-            
-
+        { 
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
@@ -95,16 +93,15 @@ namespace TravelAgency.View
 
             this.accommodationReservationRepository = accommodationReservationRepository;
 
-            FirstDate = DateTime.Now.Date;
-            LastDate = DateTime.Now.Date;
-            AvailableDateSpans = new ObservableCollection<DateSpan>();
-
             Guest = guest;
             Accommodation = accommodation;
             Reservation = new AccommodationReservation(Accommodation.Id, Accommodation, Guest.Id, Guest);
 
             DayNumber = Accommodation.MinDays;
-            
+            FirstDate = DateTime.Now.Date;
+            LastDate = DateTime.Now.Date;
+            AvailableDateSpans = new ObservableCollection<DateSpan>();
+
             nameLabel.Content = "Name: " + Accommodation.Name;
             locationLabel.Content = "Location: " + Accommodation.Location.City + ", " + Accommodation.Location.Country;
             typeLabel.Content = "Type: " + Accommodation.Type;
@@ -115,63 +112,51 @@ namespace TravelAgency.View
             firstDatePicker.DisplayDateStart = DateTime.Today;
             lastDatePicker.DisplayDateStart = DateTime.Today;
 
+            LoadPhotos();
+        }
 
+        private void LoadPhotos()
+        {
+            Photos = new List<BitmapImage>();
 
+            foreach (AccommodationPhoto accommodationPhoto in Accommodation.Images)
+            {
+                Uri uri = new Uri(accommodationPhoto.Path, UriKind.RelativeOrAbsolute);
+                BitmapImage photo = new BitmapImage(uri);
+                Photos.Add(photo);
+            }
 
-
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            string img1 = "https://optimise2.assets-servd.host/maniacal-finch/production/animals/amur-tiger-01-01.jpg?w=1200&auto=compress%2Cformat&fit=crop&dm=1658935145&s=1b96c26544a1ee414f976c17b18f2811";
-            string img2 = "..\\Resources\\Images\\ProfilePicture.jpg";
-            string img3 = "https://www.sfzoo.org/wp-content/uploads/2021/03/AfricanLionJasiri_resize2019.jpg";
-
-            ImageSources = new List<BitmapImage>();
-
-            Uri uri1 = new Uri(img1, UriKind.RelativeOrAbsolute);
-            Uri uri2 = new Uri(img2, UriKind.RelativeOrAbsolute);
-            Uri uri3 = new Uri(img3, UriKind.RelativeOrAbsolute);
-
-            BitmapImage bmi1 = new BitmapImage(uri1);
-            BitmapImage bmi2 = new BitmapImage(uri2);
-            BitmapImage bmi3 = new BitmapImage(uri3);
-
-            ImageSources.Add(bmi1);
-            ImageSources.Add(bmi2);
-            ImageSources.Add(bmi3);
-
-            currentImageNumber = 0;
-            accommodationImage.Source = ImageSources[0];
-            
-
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            currentPhotoIndex = 0;
+            accommodationPhoto.Source = Photos[0];
         }
 
         private void ShowPreviousImage(object sender, RoutedEventArgs e)
         {
-            currentImageNumber--;
+            currentPhotoIndex--;
 
-            if (currentImageNumber == -1)
+            if (currentPhotoIndex == -1)
             {
-                currentImageNumber = ImageSources.Count() - 1;
-                accommodationImage.Source = ImageSources[currentImageNumber];
+                currentPhotoIndex = Photos.Count() - 1;
+                accommodationPhoto.Source = Photos[currentPhotoIndex];
             }
             else
             {
-                accommodationImage.Source = ImageSources[currentImageNumber];
+                accommodationPhoto.Source = Photos[currentPhotoIndex];
             }
         }
 
         private void ShowNextImage(object sender, RoutedEventArgs e)
         {
-            currentImageNumber++;
+            currentPhotoIndex++;
 
-            if (currentImageNumber == ImageSources.Count())
+            if (currentPhotoIndex == Photos.Count())
             {
-                currentImageNumber = 0;
-                accommodationImage.Source = ImageSources[currentImageNumber];
+                currentPhotoIndex = 0;
+                accommodationPhoto.Source = Photos[currentPhotoIndex];
             }
             else
             {
-                accommodationImage.Source = ImageSources[currentImageNumber];
+                accommodationPhoto.Source = Photos[currentPhotoIndex];
             }
         }
 
