@@ -96,7 +96,8 @@
             <Button Click="CancelSearch"  Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Cancel search</Button>
             <DataGrid Grid.Row="0" Grid.RowSpan="8" Grid.Column="3" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                       AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="accommodationsDataGrid"
-                      IsReadOnly="True" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding Path=SelectedAccommodation, Mode=TwoWay}">
+                      IsReadOnly="True" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding Path=SelectedAccommodation, Mode=TwoWay}"
+                      SelectionMode="Single">
                 <DataGrid.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
                 </DataGrid.Resources>
