@@ -9,7 +9,7 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourOccurrenceAttendanceRepository
+    public class TourOccurrenceAttendanceRepository : IRepository<TourOccurrenceAttendance>
     {
         private const string FilePath = "../../../Resources/Data/tourOccurrenceAttendances.csv";
         private readonly Serializer<TourOccurrenceAttendance> _serializer;
@@ -21,7 +21,7 @@ namespace TravelAgency.Repository
             tourOccurrenceAttendances = _serializer.FromCSV(FilePath);
         }
 
-        private int GetNewId()
+        public int NextId()
         {
             if (tourOccurrenceAttendances.Count == 0)
             {
@@ -30,16 +30,16 @@ namespace TravelAgency.Repository
             return tourOccurrenceAttendances[tourOccurrenceAttendances.Count - 1].Id + 1;
         }
 
-
-        public List<TourOccurrenceAttendance> GetTourOccurrenceAttendances()
+        public List<TourOccurrenceAttendance> GetAll()
         {
             return tourOccurrenceAttendances;
         }
-        public void SaveTourOccurrenceAttendaces(TourOccurrenceAttendance tourOccurrenceAttendance)
+        public TourOccurrenceAttendance Save(TourOccurrenceAttendance tourOccurrenceAttendance)
         {
-            tourOccurrenceAttendance.Id = GetNewId();
+            tourOccurrenceAttendance.Id = NextId();
             tourOccurrenceAttendances.Add(tourOccurrenceAttendance);
             _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
+            return tourOccurrenceAttendance;
         }
 
         public void UpdateTourOccurrenceAttendaces(TourOccurrenceAttendance tourOccurrenceAttendance)
@@ -47,6 +47,59 @@ namespace TravelAgency.Repository
             TourOccurrenceAttendance oldTourOccurrenceAttendance = tourOccurrenceAttendances.Find(t => t.Id == tourOccurrenceAttendance.Id);
             oldTourOccurrenceAttendance.ResponseStatus = tourOccurrenceAttendance.ResponseStatus;
             _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
+        }
+
+        public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id)
+        {
+            List<TourOccurrenceAttendance> result = new List<TourOccurrenceAttendance>();
+            foreach(TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
+            {
+                if(tourOccurrenceAttendance.TourOccurrenceId == id)
+                {
+                    result.Add(tourOccurrenceAttendance);
+                }
+            }
+            return result;
+        }
+
+        public void SaveOrUpdate(TourOccurrenceAttendance attendance)
+        {
+            TourOccurrenceAttendance oldAttendance = tourOccurrenceAttendances.Find(k => k.TourOccurrenceId == attendance.TourOccurrenceId && k.GuestId == attendance.GuestId);
+            if(oldAttendance != null)
+            {
+                oldAttendance.KeyPointId = attendance.KeyPointId;
+            }
+            else
+            {
+                attendance.Id = NextId();
+                tourOccurrenceAttendances.Add(attendance);
+            }
+            _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
+        }
+
+        public TourOccurrenceAttendance GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveAll(IEnumerable<TourOccurrenceAttendance> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(TourOccurrenceAttendance entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

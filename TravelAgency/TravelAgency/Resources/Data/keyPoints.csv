@@ -1,40 +1,12 @@
-1|1|ns|False
-2|1|petrovaradin|False
-3|1|karlovci|False
-4|2|ns|True
-5|2|petrovaradin|True
-6|2|karlovci|True
-7|3|center|True
-8|3|museum|True
-9|3|river Begej|True
-10|4|Zentrum|False
-11|4|Belgrad am Wasser|False
-12|4|Nikola Tesla Museum|False
-13|4|Knez Mihailova Strasse|False
-14|5|Zentrum|False
-15|5|Belgrad am Wasser|False
-16|5|Nikola Tesla Museum|False
-17|5|Knez Mihailova Strasse|False
-18|6|Zentrum|False
-19|6|Belgrad am Wasser|False
-20|6|Nikola Tesla Museum|False
-21|6|Knez Mihailova Strasse|False
-22|7|df|False
-23|7|vd|False
-24|8|psf|False
-25|8|vdssc|False
-26|8|sccs|False
-27|9|dcvd|True
-28|9|vddvdvd|True
-29|9|vdvd|True
-30|10|css|True
-31|10|html|True
-32|10|javascript|True
-33|11|dvv|True
-34|11|vddvd|True
-35|12|dppd|False
-36|12|pdpdp|False
-37|12|dp|False
-38|13|dppd|False
-39|13|pdpdp|False
-40|13|dp|False
+1|1|fedc|True
+2|1|ssfed|True
+3|2|fedc|True
+4|2|ssfed|True
+5|1|cs|True
+6|1|www|True
+7|1|w|True
+8|2|cs|True
+9|2|www|True
+10|2|w|True
+11|3|cdas|True
+12|3|aasx|False
