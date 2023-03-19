@@ -46,13 +46,14 @@ namespace TravelAgency.View
             this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
+            Guest = guest;
+
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
 
-            Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
 
             Countries = locationRepository.GetAllCountries();
@@ -64,7 +65,7 @@ namespace TravelAgency.View
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
             {
-                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss tt");
+                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss");
             }, this.Dispatcher);
             timer.Start();
         }
