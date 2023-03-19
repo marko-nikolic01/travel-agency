@@ -64,7 +64,7 @@ namespace TravelAgency.View
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
             {
-                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss tt");
+                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/MM/yyyy     hh:mm:ss tt");
             }, this.Dispatcher);
             timer.Start();
         }
@@ -127,35 +127,35 @@ namespace TravelAgency.View
                 searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Name.ToLower().Contains(nameTextBox.Text.ToLower()));
             }
 
-            if (countryComboBox.SelectedIndex != 0)
+            if (countryComboBox.SelectedItem.ToString() != "Not specified")
             {
                 searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryComboBox.Text.ToLower()));
             }
 
-            if (cityComboBox.SelectedIndex != 0)
+            if (cityComboBox.SelectedItem.ToString() != "Not specified")
             {
                 searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityComboBox.Text.ToLower()));
             }
 
-            switch (typeComboBox.SelectedIndex)
+            switch (typeComboBox.SelectedValue.ToString())
             {
-                case 1:
+                case "Appartment":
                     searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT);
                     break;
-                case 2:
+                case "House":
                     searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.HOUSE);
                     break;
-                case 3:
+                case "Hut":
                     searchedAccommodations = searchedAccommodations.Where(accommodation => accommodation.Type == AccommodationType.HUT);
                     break;
             }
 
-            if (guestNumberUpDown.Value != 0)
+            if (guestNumberUpDown.Value > 0)
             {
                 searchedAccommodations = searchedAccommodations.Where(accommodation => guestNumberUpDown.Value <= accommodation.MaxGuests);
             }
 
-            if (dayNumberUpDown.Value != 0)
+            if (dayNumberUpDown.Value > 0)
             {
                 searchedAccommodations = searchedAccommodations.Where(accommodation => dayNumberUpDown.Value >= accommodation.MinDays);
             }
