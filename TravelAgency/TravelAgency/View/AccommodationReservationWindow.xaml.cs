@@ -112,7 +112,8 @@ namespace TravelAgency.View
         {
             Photos = new List<BitmapImage>();
 
-            foreach (AccommodationPhoto accommodationPhoto in Accommodation.Photos)
+
+            foreach (AccommodationPhoto accommodationPhoto in Accommodation.Images)
             {
                 Uri uri = new Uri(accommodationPhoto.Path, UriKind.RelativeOrAbsolute);
                 BitmapImage photo = new BitmapImage(uri);
@@ -320,6 +321,8 @@ namespace TravelAgency.View
             }
         }
 
+
+        
 
     }
 }
