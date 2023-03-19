@@ -46,14 +46,13 @@ namespace TravelAgency.View
             this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
-            Guest = guest;
-
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
 
+            Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
 
             Countries = locationRepository.GetAllCountries();
@@ -65,7 +64,7 @@ namespace TravelAgency.View
         {
             DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, (object s, EventArgs ev) =>
             {
-                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss");
+                this.statusBarDateTime.Content = DateTime.Now.ToString("dd/mm/yyyy     hh:mm:ss tt");
             }, this.Dispatcher);
             timer.Start();
         }
@@ -82,15 +81,20 @@ namespace TravelAgency.View
 
         private void CountrySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedCountry != "")
+            if (SelectedCountry != "Not specified")
             {
                 Cities = locationRepository.GetCitiesByCountry(SelectedCountry);
-                Cities.Insert(0, "Not specified");
-                cityComboBox.ItemsSource = Cities;
-                cityComboBox.SelectedItem = 0;
-                SelectedCity = Cities[0];
-                cityComboBox.Text = Cities[0];
             }
+            else
+            {
+                Cities = locationRepository.GetAllCities();
+            }
+
+            Cities.Insert(0, "Not specified");
+            cityComboBox.ItemsSource = Cities;
+            cityComboBox.SelectedItem = 0;
+            SelectedCity = Cities[0];
+            cityComboBox.Text = Cities[0];
 
         }
 
@@ -182,7 +186,7 @@ namespace TravelAgency.View
                 AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation, accommodationReservationRepository);
                 accommodationReservationWindow.Show();
             }
-            else 
+            else
             {
                 string message = "You didn't select an accommodation!";
                 System.Windows.MessageBox.Show(message);
