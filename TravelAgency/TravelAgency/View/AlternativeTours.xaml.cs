@@ -38,7 +38,7 @@ namespace TravelAgency.View
             tourLocation = "TOURS IN " + location.City.ToUpper() + ", " + location.Country.ToUpper();
         }
 
-        private void ReserveClick(object sender, RoutedEventArgs e)
+        private void Reserve_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedTourOccurrence == null)
             {
@@ -56,7 +56,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

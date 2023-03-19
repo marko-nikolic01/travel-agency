@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
 
 namespace TravelAgency.View
@@ -26,41 +15,41 @@ namespace TravelAgency.View
     {
         public TourOccurrence TourOccurrence { get; set; }
         private ObservableCollection<TourOccurrence> tourOccurrences;
-        private string _imageUrl;
-        private string _numberOfGuestsInput;
-        private string _spotsLeft;
+        private string imageUrl;
+        private string numberOfGuestsInput;
+        private string spotsLeft;
         public string ImageUrl
         {
-            get => _imageUrl;
+            get => imageUrl;
             set
             {
-                if(value != _imageUrl)
+                if(value != imageUrl)
                 {
-                    _imageUrl = value;
+                    imageUrl = value;
                     OnPropertyChanged();
                 }
             }
         }
         public string NumberOfGuestsInput
         {
-            get => _numberOfGuestsInput;
+            get => numberOfGuestsInput;
             set
             {
-                if (value != _numberOfGuestsInput)
+                if (value != numberOfGuestsInput)
                 {
-                    _numberOfGuestsInput = value;
+                    numberOfGuestsInput = value;
                     OnPropertyChanged();
                 }
             }
         }
         public string SpotsLeft
         {
-            get => _spotsLeft;
+            get => spotsLeft;
             set
             {
-                if (value != _spotsLeft)
+                if (value != spotsLeft)
                 {
-                    _spotsLeft = value;
+                    spotsLeft = value;
                     OnPropertyChanged();
                 }
             }
@@ -75,7 +64,7 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tO, User user)
+        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tourOccurrences, User user)
         {
             InitializeComponent();
             DataContext = this;
@@ -85,7 +74,7 @@ namespace TravelAgency.View
             images = TourOccurrence.Tour.Photos;
             ImageUrl = images[i].Link;
             SpotsLeft = "";
-            tourOccurrences = tO;
+            this.tourOccurrences = tourOccurrences;
             AddGuestsButton.IsEnabled = false;
             activeGuest = user;
         }
@@ -106,7 +95,7 @@ namespace TravelAgency.View
 
         private void CheckSpotsNumber(int input)
         {
-            if (input == 0)
+            if (input <= 0)
             {
                 SpotsLeft = "Wrong input";
                 AddGuestsButton.IsEnabled = false;
@@ -127,7 +116,7 @@ namespace TravelAgency.View
             }
         }
 
-        private void ChangeImage(object sender, RoutedEventArgs e)
+        private void ChangeImage_Click(object sender, RoutedEventArgs e)
         {
             if(i!=imagesCount - 1)
             {
@@ -140,13 +129,13 @@ namespace TravelAgency.View
             ImageUrl = images[i].Link;
         }
 
-        private void AlternativeToursClick(object sender, RoutedEventArgs e)
+        private void AlternativeTours_Click(object sender, RoutedEventArgs e)
         {
             AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location, activeGuest, this);
             alternativeTours.Show();
         }
        
-        private void AddGuestsClick(object sender, RoutedEventArgs e)
+        private void AddGuests_Click(object sender, RoutedEventArgs e)
         {
             if (AddGuestsButton.IsEnabled)
             {
@@ -160,7 +149,7 @@ namespace TravelAgency.View
         {
             Close();
         }
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
