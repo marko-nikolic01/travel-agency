@@ -14,80 +14,80 @@ namespace TravelAgency.Model
     {
         public int Id { get; set; }
         public int AccommodationReservationId { get; set; }
-        private int _cleanliness;
+        private int cleanliness;
         public int Cleanliness
         {
-            get => _cleanliness;
+            get => cleanliness;
             set
             {
-                if (_cleanliness != value)
+                if (cleanliness != value)
                 {
-                    _cleanliness = value;
+                    cleanliness = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _compliance;
+        private int compliance;
         public int Compliance
         {
-            get => _compliance;
+            get => compliance;
             set
             {
-                if (_compliance != value)
+                if (compliance != value)
                 {
-                    _compliance = value;
+                    compliance = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _noisiness;
+        private int noisiness;
         public int Noisiness
         {
-            get => _noisiness;
+            get => noisiness;
             set
             {
-                if (_noisiness != value)
+                if (noisiness != value)
                 {
-                    _noisiness = value;
+                    noisiness = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _friendliness;
+        private int friendliness;
         public int Friendliness
         {
-            get => _friendliness;
+            get => friendliness;
             set
             {
-                if (_friendliness != value)
+                if (friendliness != value)
                 {
-                    _friendliness = value;
+                    friendliness = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private int _responsivenes;
+        private int responsivenes;
         public int Responsivenes
         {
-            get => _responsivenes;
+            get => responsivenes;
             set
             {
-                if (_responsivenes != value)
+                if (responsivenes != value)
                 {
-                    _responsivenes = value;
+                    responsivenes = value;
                     OnPropertyChanged();
                 }
             }
         }
-        private string _comment;
+        private string comment;
         public string Comment
         {
-            get => _comment;
+            get => comment;
             set
             {
-                if (value != _comment)
+                if (value != comment)
                 {
-                    _comment = value;
+                    comment = value;
                     OnPropertyChanged();
                 }
             }
@@ -162,35 +162,35 @@ namespace TravelAgency.Model
                 {
                     if (Cleanliness < 1 || Cleanliness > 5)
                     {
-                        return "Ocena za čistoću mora imati vrednost od 1 do 5";
+                        return "Rating for cleanliness must be between 1 and 5";
                     }
                 }
                 else if (columnName == "Compliance")
                 {
                     if (Compliance < 1 || Compliance > 5)
                     {
-                        return "Ocena za poštovanje pravila mora imati vrednost od 1 do 5";
+                        return "Rating for rule compliance must be between 1 and 5";
                     }
                 }
                 else if (columnName == "Noisiness")
                 {
                     if (Noisiness < 1 || Noisiness > 5)
                     {
-                        return "Ocena za poštovanje pravila mora imati vrednost od 1 do 5";
+                        return "Rating for noisiness must be between 1 and 5";
                     }
                 }
                 else if (columnName == "Friendliness")
                 {
                     if (Friendliness < 1 || Friendliness > 5)
                     {
-                        return "Ocena za ljubaznost mora imati vrednost od 1 do 5";
+                        return "Rating for friendliness must be between 1 and 5";
                     }
                 }
                 else if (columnName == "Responsivenes")
                 {
                     if (Responsivenes < 1 || Responsivenes > 5)
                     {
-                        return "Ocena za odzivnost mora imati vrednost od 1 do 5";
+                        return "Rating for responsivenes must be between 1 and 5";
                     }
                 }
 

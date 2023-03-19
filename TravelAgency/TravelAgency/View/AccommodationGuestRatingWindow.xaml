@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Ocenite gosta" Width="550" SizeToContent="Height" WindowStartupLocation="CenterScreen">
+        Title="Rating guests" Width="600" SizeToContent="Height" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="RatingSlider" TargetType="Slider">
             <Setter Property="Minimum" Value="1"/>
@@ -19,7 +19,7 @@
     <DockPanel>
 
         <TabControl DockPanel.Dock="Top">
-            <TabItem Header="Neocenjeni gosti">
+            <TabItem Header="Unrated guests">
 
                 <StackPanel>
 
@@ -30,10 +30,10 @@
                               ItemsSource="{Binding UnratedReservations}"
                               SelectedItem="{Binding SelectedUnratedReservation}" MinHeight="200">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Smeštaj" Binding="{Binding Accommodation.Name}"/>
-                            <DataGridTextColumn Header="Korisničko ime gosta" Binding="{Binding Guest.Username}"/>
-                            <DataGridTextColumn Header="Datum početka rezervacije" Binding="{Binding DateSpan.StartDate}"/>
-                            <DataGridTextColumn Header="Datum završetka rezervacije" Binding="{Binding DateSpan.EndDate}" Width="*"/>
+                            <DataGridTextColumn Header="Accommodation" Binding="{Binding Accommodation.Name}"/>
+                            <DataGridTextColumn Header="Username" Binding="{Binding Guest.Username}"/>
+                            <DataGridTextColumn Header="Start date" Binding="{Binding DateSpan.StartDate}"/>
+                            <DataGridTextColumn Header="End date" Binding="{Binding DateSpan.EndDate}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -61,12 +61,12 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Čistoća"/>
-                            <Label Grid.Row="1" Grid.Column="0" Content="Poštovanje pravila"/>
-                            <Label Grid.Row="2" Grid.Column="0" Content="Bučnost"/>
-                            <Label Grid.Row="3" Grid.Column="0" Content="Ljubaznost"/>
-                            <Label Grid.Row="4" Grid.Column="0" Content="Odzivnost"/>
-                            <Label Grid.Row="5" Grid.Column="0" Content="Komentar"/>
+                            <Label Grid.Row="0" Grid.Column="0" Content="Cleanliness"/>
+                            <Label Grid.Row="1" Grid.Column="0" Content="Rule compliance"/>
+                            <Label Grid.Row="2" Grid.Column="0" Content="Noisiness"/>
+                            <Label Grid.Row="3" Grid.Column="0" Content="Friendliness"/>
+                            <Label Grid.Row="4" Grid.Column="0" Content="Responsivenes"/>
+                            <Label Grid.Row="5" Grid.Column="0" Content="Comment"/>
 
                             <Slider x:Name="CleanlinessSlider" Grid.Row="0" Grid.Column="1" Style="{StaticResource RatingSlider}"/>
                             <Slider x:Name="ComplianceSlider" Grid.Row="1" Grid.Column="1" Style="{StaticResource RatingSlider}"/>
@@ -85,8 +85,8 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Row="0" Grid.Column="0" Content="Dodaj ocenu" Click="CreateRating_Click"/>
-                            <Button Grid.Row="0" Grid.Column="1" Content="Izađi" Click="Cancel_Click"/>
+                            <Button Grid.Row="0" Grid.Column="0" Content="Create rating" Click="CreateRating_Click"/>
+                            <Button Grid.Row="0" Grid.Column="1" Content="Close" Click="Cancel_Click"/>
                         </Grid>
                     </Grid>
 
@@ -94,7 +94,7 @@
 
             </TabItem>
 
-            <TabItem Header="Ocenjeni gosti">
+            <TabItem Header="Ratings">
                 <StackPanel>
 
                     <DataGrid x:Name="RatedGuestsDataGrid" AutoGenerateColumns="False" Height="200"
@@ -103,13 +103,13 @@
                               HeadersVisibility="Column"
                               ItemsSource="{Binding AccommodationGuestRatings}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Korisničko ime gosta" Binding="{Binding AccommodationReservation.Guest.Username}"/>
-                            <DataGridTextColumn Header="Smeštaj" Binding="{Binding AccommodationReservation.Accommodation.Name}"/>
-                            <DataGridTextColumn Header="Čistoća" Binding="{Binding Cleanliness}"/>
-                            <DataGridTextColumn Header="Poštovanje pravila" Binding="{Binding Compliance}"/>
-                            <DataGridTextColumn Header="Bučnost" Binding="{Binding Noisiness}"/>
-                            <DataGridTextColumn Header="Ljubaznost" Binding="{Binding Friendliness}"/>
-                            <DataGridTextColumn Header="Odzivnost" Binding="{Binding Responsivenes}" Width="*"/>
+                            <DataGridTextColumn Header="Username" Binding="{Binding AccommodationReservation.Guest.Username}"/>
+                            <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationReservation.Accommodation.Name}"/>
+                            <DataGridTextColumn Header="Cleanliness" Binding="{Binding Cleanliness}"/>
+                            <DataGridTextColumn Header="Rule compliance" Binding="{Binding Compliance}"/>
+                            <DataGridTextColumn Header="Noisiness" Binding="{Binding Noisiness}"/>
+                            <DataGridTextColumn Header="Friendliness" Binding="{Binding Friendliness}"/>
+                            <DataGridTextColumn Header="Responsivenes" Binding="{Binding Responsivenes}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

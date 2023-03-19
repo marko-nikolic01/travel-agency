@@ -179,7 +179,7 @@ namespace TravelAgency.View
             Location.City = cityCountry[0];
             Location.Country = cityCountry[1];
 
-            return LocationRepository.SaveLocation(Location);
+            return LocationRepository.Save(Location);
         }
 
         private bool AreListsComplete()

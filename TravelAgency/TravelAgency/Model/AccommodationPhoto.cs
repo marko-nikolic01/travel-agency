@@ -58,7 +58,7 @@ namespace TravelAgency.Model
                 {
                     if (Path == "")
                     {
-                        return "Path can't be null";
+                        return "Path cannot be empty";
                     }
                 }
                 return null;
