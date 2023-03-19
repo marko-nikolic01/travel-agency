@@ -93,6 +93,23 @@ namespace TravelAgency.View
                 return;
             }
 
+            if (CountryComboBox.SelectedIndex == 0)
+            {
+                System.Windows.MessageBox.Show("Select a country!");
+                return;
+            }
+            if (CityComboBox.SelectedIndex == 0)
+            {
+                System.Windows.MessageBox.Show("Select a city!");
+                return;
+            }
+            if (NewAccommodation.Photos.Count == 0)
+            {
+                System.Windows.MessageBox.Show("Add at least one photo!");
+                return;
+            }
+
+
             if (ApartmentRadioButton.IsChecked == true)
             {
                 NewAccommodation.Type = AccommodationType.APARTMENT;
@@ -104,17 +121,6 @@ namespace TravelAgency.View
             else
             {
                 NewAccommodation.Type = AccommodationType.HUT;
-            }
-
-            if (CountryComboBox.SelectedIndex == 0)
-            {
-                System.Windows.MessageBox.Show("Select a country!");
-                return;
-            }
-            if (CityComboBox.SelectedIndex == 0)
-            {
-                System.Windows.MessageBox.Show("Select a city!");
-                return;
             }
 
             var country = CountryComboBox.SelectedItem as string;
