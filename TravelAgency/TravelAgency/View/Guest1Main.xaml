@@ -87,7 +87,8 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
-            <ComboBox Name="typeComboBox" Grid.Row="3" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center" SelectedIndex="0">
+            <ComboBox Name="typeComboBox" Grid.Row="3" Grid.Column="1" Height="30" Background="LightGray" VerticalContentAlignment="Center" SelectedIndex="0"
+                      SelectedValuePath="Content">
                 <ComboBoxItem Background="LightGray">Not specified</ComboBoxItem>
                 <ComboBoxItem Background="LightGray">Appartment</ComboBoxItem>
                 <ComboBoxItem Background="LightGray">House</ComboBoxItem>
