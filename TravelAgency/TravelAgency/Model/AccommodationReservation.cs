@@ -94,8 +94,8 @@ namespace TravelAgency.Model
                 AccomodationId.ToString(),
                 GuestId.ToString(),
                 NumberOfGuests.ToString(),
-                DateSpan.StartDate.ToString(),
-                DateSpan.EndDate.ToString()
+                DateSpan.StartDate.ToString("dd/MM/yyyy"),
+                DateSpan.EndDate.ToString("dd/MM/yyyy")
             };
             return csvValues;
         }
@@ -106,8 +106,8 @@ namespace TravelAgency.Model
             AccomodationId = Convert.ToInt32(values[1]);
             GuestId = Convert.ToInt32(values[2]);
             NumberOfGuests = Convert.ToInt32(values[3]);
-            DateSpan.StartDate = DateOnly.Parse(values[4]);
-            DateSpan.EndDate = DateOnly.Parse(values[5]);
+            DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
+            DateSpan.EndDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy");
         }
 
         public string Error => null;

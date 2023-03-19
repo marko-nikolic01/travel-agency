@@ -73,13 +73,11 @@
                         Value="{Binding Path=DayNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Minimum="{Binding Accommodation.MinDays}" ValueChanged="DayNumberSelectionChanged"></xctk:IntegerUpDown>
             <DatePicker Name="firstDatePicker" Grid.Row="2" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
-                        LostFocus="DatePickerLostFocus"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        SelectedDate="{Binding FirstDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=dd/MM/yyyy}"
-                        Text="{Binding Path=FirstDate, StringFormat=dd/MM/yyyy}"></DatePicker>
+                        SelectedDateChanged="DatePickerSelectedDateChanged" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=FirstDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
             <DatePicker Name="lastDatePicker" Grid.Row="3" Grid.Column="1" Margin="10, 0" Height="35" FontSize="20" Background="LightGray"
-                        LostFocus="DatePickerLostFocus" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        SelectedDate="{Binding LastDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=dd/MM/yyyy}"
-                        Text="{Binding Path=FirstDate, StringFormat=dd/MM/yyyy}"></DatePicker>
+                        SelectedDateChanged="DatePickerSelectedDateChanged"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=LastDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
             <Button Click="FindAvailableDates" Name="findDatesButton" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="10, 0" Height="35" FontSize="20">Find available dates</Button>
             <DataGrid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" Margin="10, 0, 0, 30" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                         AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" ItemsSource="{Binding AvailableDateSpans, UpdateSourceTrigger=PropertyChanged}"

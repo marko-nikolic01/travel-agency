@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
-using TravelAgency.Model.DTO;
-using System.ComponentModel;
 using TravelAgency.Repository;
-using System.Collections.ObjectModel;
-using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
 {
@@ -37,7 +28,8 @@ namespace TravelAgency.View
         public DateSpan SelectedDateSpan { get; set; }
         public List<BitmapImage> Photos { get; set; }
         public int currentPhotoIndex;
-        
+        bool ShouldValidate { get; set; }
+
         public int DayNumber
         {
             get => _dayNumber;
@@ -46,7 +38,7 @@ namespace TravelAgency.View
                 if (value != _dayNumber)
                 {
                     _dayNumber = value;
-                    OnPropertyChanged("DayNumber");
+                    OnPropertyChanged(nameof(DayNumber));
                 }
             }
         }
@@ -59,7 +51,7 @@ namespace TravelAgency.View
                 if (value != _firstDate)
                 {
                     _firstDate = value;
-                    OnPropertyChanged("FirstDate");
+                    OnPropertyChanged(nameof(FirstDate));
                 }
             }
         }
@@ -72,7 +64,7 @@ namespace TravelAgency.View
                 if (value != _lastDate)
                 {
                     _lastDate = value;
-                    OnPropertyChanged("LastDate");
+                    OnPropertyChanged(nameof(LastDate));
                 }
             }
         }
@@ -85,7 +77,7 @@ namespace TravelAgency.View
         }
 
         public AccommodationReservationWindow(User guest, Accommodation accommodation, AccommodationReservationRepository accommodationReservationRepository)
-        { 
+        {
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
@@ -111,6 +103,7 @@ namespace TravelAgency.View
             ownerLabel.Content = "Owner: " + Accommodation.Owner.Username;
             firstDatePicker.DisplayDateStart = DateTime.Today;
             lastDatePicker.DisplayDateStart = DateTime.Today;
+            ShouldValidate = true;
 
             LoadPhotos();
         }
@@ -172,6 +165,7 @@ namespace TravelAgency.View
                 {
                     AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(FirstDate, LastDate, Accommodation.Id));
                     dateSpansDataGrid.ItemsSource = AvailableDateSpans;
+                    System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
                 }
 
                 Reservation.DateSpan = null;
@@ -183,7 +177,7 @@ namespace TravelAgency.View
                 guestsNumberUpDown.Value = 1;
                 makeReservationButton.Visibility = Visibility.Visible;
             }
-            else 
+            else
             {
                 System.Windows.MessageBox.Show("Date span wasn't properly specified!");
             }
@@ -213,20 +207,20 @@ namespace TravelAgency.View
                 else if (columnName == "FirstDate")
                 {
                     bool isFutureDate = FirstDate.CompareTo(DateTime.Now) > 0;
-                    
+
                     if (!isFutureDate)
                     {
                         return "* First date must be a future date";
                     }
 
                     double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
-                    if (dateSpanLength < 0)
+                    if (dateSpanLength <= 0)
                     {
-                        return "*First date can't be after end date";
+                        return "*First date can't be after last date";
                     }
                     else if (dateSpanLength < DayNumber)
                     {
-                         return "*Date span can't be shorter than specified\nnumber of days";
+                        return "*Date span can't be shorter than specified\nnumber of days";
                     }
 
                 }
@@ -239,10 +233,11 @@ namespace TravelAgency.View
                     }
 
                     double dateSpanLength = (LastDate - FirstDate).TotalDays + 1;
-                    if (dateSpanLength < 0)
+                    if (dateSpanLength <= 0)
                     {
+                        return "*Last date can't be before first date";
                     }
-                    else if(dateSpanLength < DayNumber)
+                    else if (dateSpanLength < DayNumber)
                     {
                         return "*Date span can't be shorter than specified\nnumber of days";
                     }
@@ -268,21 +263,48 @@ namespace TravelAgency.View
             }
         }
 
-
-        private void DatePickerLostFocus(object sender, RoutedEventArgs e)
+        private void DatePickerSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            FirstDate = FirstDate.AddDays(1);
-            FirstDate = FirstDate.AddDays(-1);
-            LastDate = LastDate.AddDays(1);
-            LastDate = LastDate.AddDays(-1);
+            if (!ShouldValidate)
+            {
+                return;
+            }
+            ShouldValidate = false;
+
+            var datePicker = (sender as DatePicker);
+
+            if (datePicker.Name == firstDatePicker.Name)
+            {
+                TriggerValidationMessage(false, true);
+            }
+
+            if (datePicker.Name == lastDatePicker.Name)
+            {
+                TriggerValidationMessage(true, false);
+            }
         }
 
         private void DayNumberSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            FirstDate = FirstDate.AddDays(1);
-            FirstDate = FirstDate.AddDays(-1);
-            LastDate = LastDate.AddDays(1);
-            LastDate = LastDate.AddDays(-1);
+            ShouldValidate = false;
+            TriggerValidationMessage(true, true);
+        }
+
+        private void TriggerValidationMessage(bool shouldValidateFirst, bool shouldValidateLast)
+        {
+            if (shouldValidateFirst)
+            {
+                FirstDate = FirstDate.AddDays(1);
+                FirstDate = FirstDate.AddDays(-1);
+            }
+
+            if (shouldValidateLast)
+            {
+                LastDate = LastDate.AddDays(1);
+                LastDate = LastDate.AddDays(-1);
+            }
+
+            ShouldValidate = true;
         }
 
         private void MakeReservation(object sender, RoutedEventArgs e)
@@ -297,5 +319,7 @@ namespace TravelAgency.View
                 System.Windows.MessageBox.Show("Reservation wasn't properly specified!");
             }
         }
+
+        
     }
 }
