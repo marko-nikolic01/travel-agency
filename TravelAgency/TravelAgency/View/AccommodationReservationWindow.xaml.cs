@@ -158,12 +158,12 @@ namespace TravelAgency.View
             if (this.IsValid)
             {
                 accommodationReservationRepository.SetReservationLength(DayNumber);
-                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateSpan(FirstDate, LastDate, Accommodation.Id));
+                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateRange(FirstDate, LastDate, Accommodation.Id));
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 if (AvailableDateSpans.Count == 0)
                 {
-                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateSpan(FirstDate, LastDate, Accommodation.Id));
+                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateRange(FirstDate, LastDate, Accommodation.Id));
                     dateSpansDataGrid.ItemsSource = AvailableDateSpans;
                     System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
                 }
