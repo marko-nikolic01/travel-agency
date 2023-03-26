@@ -35,6 +35,7 @@ namespace TravelAgency.View
         public UserRepository UserRepository { get; set; }
         public TourReservationRepository? TourReservationRepository { get; set; } 
         public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
+        public VoucherRepository VoucherRepository { get; set; }
         public ObservableCollection<User> Guests { get; set; }
         public ObservableCollection<KeyPoint> StartedTourKeyPoints { get; set; }
         public TourOccurrence? SelectedTourOccurrence { get; set; }
@@ -45,7 +46,7 @@ namespace TravelAgency.View
         public Dictionary<User, int> GuestKeyPointIdPairs { get; set; }
 
         public TodaysTours(User user, TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointRepository,
-            TourReservationRepository? tourReservationRepository, UserRepository userRepository, TourOccurrenceAttendanceRepository tourOccurrenceAttendanceRepository)
+            TourReservationRepository? tourReservationRepository, UserRepository userRepository, TourOccurrenceAttendanceRepository tourOccurrenceAttendanceRepository, VoucherRepository voucherRepository)
         {
             InitializeComponent();
             DataContext = this;
@@ -57,6 +58,7 @@ namespace TravelAgency.View
             KeyPointRepository = keyPointRepository;
             TourReservationRepository = tourReservationRepository;
             UserRepository = userRepository;
+            VoucherRepository = voucherRepository;
             TourOccurrenceAttendanceRepository = tourOccurrenceAttendanceRepository;
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetTodays(ActiveGuide));
             Guests = new ObservableCollection<User>();

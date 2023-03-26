@@ -28,6 +28,7 @@ namespace TravelAgency.View
         public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
         public KeyPointRepository KeyPointRepository { get; set; }
         public UserRepository UserRepository { get; set; }
+        public VoucherRepository VoucherRepository { get; set; }
         public TourReservationRepository? TourReservationRepository { get; set; }
         public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
         public GuideHome(Model.User user)
@@ -43,6 +44,7 @@ namespace TravelAgency.View
             KeyPointRepository = new KeyPointRepository();
             TourReservationRepository = new TourReservationRepository();
             UserRepository = new UserRepository();
+            VoucherRepository = new VoucherRepository();
             TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
 
             LinkData();
@@ -63,7 +65,10 @@ namespace TravelAgency.View
             {
                 TourOccurrence tourOccurrence = TourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
                 User guest = UserRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
-                tourOccurrence.Guests.Add(guest);
+                if (tourOccurrence != null && guest != null)
+                {
+                    tourOccurrence.Guests.Add(guest);
+                }
             }
         }
 
@@ -116,7 +121,8 @@ namespace TravelAgency.View
         }
         private void UpcomingTours_Click(object sender, RoutedEventArgs e)
         {
-            UpcomingTours upcomingTours = new UpcomingTours();
+            UpcomingTours upcomingTours = new UpcomingTours(ActiveGuide, TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository,
+                KeyPointRepository, TourReservationRepository, UserRepository, TourOccurrenceAttendanceRepository, VoucherRepository);
             upcomingTours.Show();
             Close();
         }
@@ -124,7 +130,7 @@ namespace TravelAgency.View
         private void TodaysTours_Click(object sender, RoutedEventArgs e)
         {
             TodaysTours todaysTours = new TodaysTours(ActiveGuide, TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, 
-                KeyPointRepository, TourReservationRepository, UserRepository, TourOccurrenceAttendanceRepository);
+                KeyPointRepository, TourReservationRepository, UserRepository, TourOccurrenceAttendanceRepository, VoucherRepository);
             todaysTours.Show();
             Close();
         }
