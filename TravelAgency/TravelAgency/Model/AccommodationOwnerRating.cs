@@ -18,7 +18,7 @@ namespace TravelAgency.Model
         private int accommodationComfort;
         private int accommodationLocation;
         private int ownerCorrectness;
-        private int ownerResponsivenes;
+        private int ownerResponsiveness;
         private string comment;
         public int AccommodationCleanliness
         {
@@ -72,14 +72,14 @@ namespace TravelAgency.Model
             }
         }
         
-        public int OwnerResponsivenes
+        public int OwnerResponsiveness
         {
-            get => ownerResponsivenes;
+            get => ownerResponsiveness;
             set
             {
-                if (ownerResponsivenes != value)
+                if (ownerResponsiveness != value)
                 {
-                    ownerResponsivenes = value;
+                    ownerResponsiveness = value;
                     OnPropertyChanged();
                 }
             }
@@ -107,11 +107,11 @@ namespace TravelAgency.Model
             AccommodationComfort = -1;
             AccommodationLocation = -1;
             OwnerCorrectness = -1;
-            OwnerResponsivenes = -1;
+            OwnerResponsiveness = -1;
             Comment = "";
         }
 
-        public AccommodationOwnerRating(int id, int accommodationReservationId, int accommodationCleanliness, int accommodationComfort, int accommodationLocation, int ownerCorrectness, int ownerResponsivenes, string comment)
+        public AccommodationOwnerRating(int id, int accommodationReservationId, int accommodationCleanliness, int accommodationComfort, int accommodationLocation, int ownerCorrectness, int ownerResponsiveness, string comment)
         {
             Id = id;
             AccommodationReservationId = accommodationReservationId;
@@ -119,7 +119,7 @@ namespace TravelAgency.Model
             AccommodationComfort = accommodationComfort;
             AccommodationLocation = accommodationLocation;
             OwnerCorrectness = ownerCorrectness;
-            OwnerResponsivenes = ownerResponsivenes;
+            OwnerResponsiveness = ownerResponsiveness;
             Comment = comment;
         }
 
@@ -133,7 +133,7 @@ namespace TravelAgency.Model
                 AccommodationComfort.ToString(),
                 AccommodationLocation.ToString(),
                 OwnerCorrectness.ToString(),
-                OwnerResponsivenes.ToString(),
+                OwnerResponsiveness.ToString(),
                 Comment
             };
             return csvValues;
@@ -147,7 +147,7 @@ namespace TravelAgency.Model
             AccommodationComfort = Convert.ToInt32(values[3]);
             AccommodationLocation = Convert.ToInt32(values[4]);
             OwnerCorrectness = Convert.ToInt32(values[5]);
-            OwnerResponsivenes = Convert.ToInt32(values[6]);
+            OwnerResponsiveness = Convert.ToInt32(values[6]);
             Comment = values[7];
         }
 
@@ -191,11 +191,11 @@ namespace TravelAgency.Model
                         return "Rating for owner correctness must be between 1 and 5";
                     }
                 }
-                else if (columnName == "Responsivenes")
+                else if (columnName == "Responsiveness")
                 {
-                    if (OwnerResponsivenes < 1 || OwnerResponsivenes > 5)
+                    if (OwnerResponsiveness < 1 || OwnerResponsiveness > 5)
                     {
-                        return "Rating for owner responsivenes must be between 1 and 5";
+                        return "Rating for owner responsiveness must be between 1 and 5";
                     }
                 }
 
@@ -203,7 +203,7 @@ namespace TravelAgency.Model
             }
         }
 
-        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsivenes" };
+        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness" };
 
         public bool IsValid
         {
