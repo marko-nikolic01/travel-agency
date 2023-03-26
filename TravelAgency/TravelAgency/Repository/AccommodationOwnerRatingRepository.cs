@@ -77,5 +77,29 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<AccommodationOwnerRating> GetByUser(User user)
+        {
+            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == user.Id);
+        }
+
+        public List<AccommodationOwnerRating> GetVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
+        {
+            List<AccommodationOwnerRating> ownerRatings = new List<AccommodationOwnerRating>();
+
+            foreach (var guestRating in guestRatings)
+            {
+                foreach (var accommodationOwnerRating in accommodationOwnerRatings)
+                {
+                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId)
+                    {
+                        ownerRatings.Add(accommodationOwnerRating);
+                        break;
+                    }
+                }
+            }
+
+            return ownerRatings;
+        }
     }
 }
