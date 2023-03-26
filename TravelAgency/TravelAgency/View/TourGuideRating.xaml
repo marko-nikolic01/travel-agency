@@ -1,0 +1,25 @@
+﻿<Window x:Class="TravelAgency.View.TourGuideRating"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="TourGuideRating" Height="450" Width="800">
+    <Grid>
+        <Label Content="Guide knowledge" HorizontalAlignment="Left" Margin="103,59,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="281,67,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Guide language" HorizontalAlignment="Left" Margin="103,107,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="281,115,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Interesting" HorizontalAlignment="Left" Margin="103,147,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="281,155,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Images" HorizontalAlignment="Left" Margin="103,191,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="281,199,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="257"/>
+        <ListBox Margin="281,235,237,147" />
+        <TextBox HorizontalAlignment="Left" Margin="281,311,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="282" Height="44"/>
+        <Label Content="Additional comment" HorizontalAlignment="Left" Margin="102,311,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="622,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.381,0.144" Click="Button_Click"/>
+        <Button Content="Submit" HorizontalAlignment="Left" Margin="281,380,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.381,0.144" Click="Button_Click" Height="25" Width="83"/>
+
+    </Grid>
+</Window>

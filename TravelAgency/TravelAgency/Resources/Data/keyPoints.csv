@@ -24,14 +24,6 @@
 24|8|prvaTacka|False
 25|8|drugaTacka|False
 26|8|treca|False
-27|9|prvaTacka|False
-28|9|drugaTacka|False
-29|9|treca|False
-30|10|s|False
-31|10|sf|False
-32|11|s|True
-33|11|sf|True
-34|12|dd|False
-35|12|hg|False
-36|13|dd|False
-37|13|hg|False
+27|9|prvaTacka|True
+28|9|drugaTacka|True
+29|9|treca|True

@@ -23,6 +23,65 @@ namespace TravelAgency.Repository
             observers = new List<IObserver>();
         }
 
+        public TourOccurrenceRepository(PhotoRepository photoRepository, LocationRepository locationRepository, TourRepository tourRepository, TourReservationRepository reservationRepository, UserRepository userRepository)
+        {
+            _serializer = new Serializer<TourOccurrence>();
+            tourOccurrences = _serializer.FromCSV(FilePath);
+            observers = new List<IObserver>();
+            //dodati jos da se ovde stvaraju repozitorijumi, da se ne prosledjuju
+            LinkTourLocations(locationRepository, tourRepository);
+            LinkTourPhotos(photoRepository, tourRepository);
+            LinkTourOccurrences(tourRepository);
+            LinkTourGuests(reservationRepository, userRepository);
+
+        }
+
+        private void LinkTourGuests(TourReservationRepository reservationRepository, UserRepository userRepository)
+        {
+            foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = tourOccurrences.Find(x => x.Id == tourReservation.TourOccurrenceId);
+                User guest = userRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
+                tourOccurrence.Guests.Add(guest);
+            }
+        }
+
+        private void LinkTourOccurrences(TourRepository tourRepository)
+        {
+            foreach (TourOccurrence tourOccurrence in tourOccurrences)
+            {
+                Tour tour = tourRepository.GetAll().Find(t => t.Id == tourOccurrence.TourId);
+                if (tour != null)
+                {
+                    tourOccurrence.Tour = tour;
+                }
+            }
+        }
+
+        private static void LinkTourPhotos(PhotoRepository photoRepository, TourRepository tourRepository)
+        {
+            foreach (Photo photo in photoRepository.GetAll())
+            {
+                Tour tour = tourRepository.GetAll().Find(t => t.Id == photo.TourId);
+                if (tour != null)
+                {
+                    tour.Photos.Add(photo);
+                }
+            }
+        }
+
+        private static void LinkTourLocations(LocationRepository locationRepository, TourRepository tourRepository)
+        {
+            foreach (var tour in tourRepository.GetAll())
+            {
+                Location location = locationRepository.GetAll().Find(l => l.Id == tour.LocationId);
+                if (location != null)
+                {
+                    tour.Location = location;
+                }
+            }
+        }
+
         public int NextId()
         {
             if (tourOccurrences.Count == 0)
