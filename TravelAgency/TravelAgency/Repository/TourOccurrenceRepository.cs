@@ -28,7 +28,6 @@ namespace TravelAgency.Repository
             _serializer = new Serializer<TourOccurrence>();
             tourOccurrences = _serializer.FromCSV(FilePath);
             observers = new List<IObserver>();
-            //dodati jos da se ovde stvaraju repozitorijumi, da se ne prosledjuju
             LinkTourLocations(locationRepository, tourRepository);
             LinkTourPhotos(photoRepository, tourRepository);
             LinkTourOccurrences(tourRepository);
@@ -42,7 +41,10 @@ namespace TravelAgency.Repository
             {
                 TourOccurrence tourOccurrence = tourOccurrences.Find(x => x.Id == tourReservation.TourOccurrenceId);
                 User guest = userRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
-                tourOccurrence.Guests.Add(guest);
+                if (tourOccurrence != null && guest != null)
+                {
+                    tourOccurrence.Guests.Add(guest);
+                }
             }
         }
 
