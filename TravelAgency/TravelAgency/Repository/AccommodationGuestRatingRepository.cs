@@ -77,10 +77,5 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
-
-        public bool IsRated(AccommodationReservation accommodationReservation)
-        {
-            return accommodationGuestRatings.Any(c => c.AccommodationReservation.Id == accommodationReservation.Id);
-        }
     }
 }
