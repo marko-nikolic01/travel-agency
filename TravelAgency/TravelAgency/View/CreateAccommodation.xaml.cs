@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using System.Collections.ObjectModel;
-using AccommodationPhoto = TravelAgency.Model.AccommodationPhoto;
 using System.Diagnostics.Metrics;
 
 namespace TravelAgency.View
@@ -25,8 +24,6 @@ namespace TravelAgency.View
     /// </summary>
     public partial class CreateAccommodation : Window
     {
-        public static ObservableCollection<string> Images { get; set; }
-
         public User LoggedInUser { get; set; }
 
         private readonly AccommodationRepository accommodationRepository;
@@ -51,8 +48,6 @@ namespace TravelAgency.View
             NewLocation = new();
 
             InitializeComboboxes();
-
-            Images = new ObservableCollection<string>();
         }
 
         private void InitializeComboboxes()
@@ -80,8 +75,6 @@ namespace TravelAgency.View
                 AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
 
                 NewAccommodation.Photos.Add(NewImage);
-
-                Images.Add(imagePath);
             }
         }
 
@@ -108,7 +101,6 @@ namespace TravelAgency.View
                 System.Windows.MessageBox.Show("Add at least one photo!");
                 return;
             }
-
 
             if (ApartmentRadioButton.IsChecked == true)
             {
@@ -162,6 +154,22 @@ namespace TravelAgency.View
             {
                 CityComboBox.IsEnabled = false;
             }
+        }
+
+        private void AddPhotoFromInternet_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(AccommodationPhotoURLTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Enter an URL for the photo.");
+                return;
+            }
+
+            var photoURL = AccommodationPhotoURLTextBox.Text;
+            AccommodationPhotosListView.Items.Add(photoURL);
+            AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = photoURL };
+            NewAccommodation.Photos.Add(NewImage);
+
+            AccommodationPhotoURLTextBox.Text = "";
         }
     }
 }
