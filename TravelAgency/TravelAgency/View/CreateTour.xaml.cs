@@ -145,7 +145,7 @@ namespace TravelAgency.View
             keyPoint.TourOccurrenceId = tourOccurrence.Id;
             keyPoint.Name = keyPointItem;
             tourOccurrence.KeyPoints.Add(keyPoint);
-            KeyPointRepository.SaveKeyPoints(keyPoint);
+            KeyPointRepository.Save(keyPoint);
         }
 
         private TourOccurrence SaveTourOccurrence(DateTime dateTime, Tour newTour)
