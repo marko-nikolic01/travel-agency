@@ -108,5 +108,77 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Accommodation> Search(AccommodationSearchFilter filter)
+        {
+            List<Accommodation> searchedAccommodations = GetAll();
+            searchedAccommodations = SerachByName(filter.NameFilter, searchedAccommodations);
+            searchedAccommodations = SerachByCountry(filter.CountryFilter, searchedAccommodations);
+            searchedAccommodations = SerachByCity(filter.CityFilter, searchedAccommodations);
+            searchedAccommodations = SerachByType(filter.TypeFilter, searchedAccommodations);
+            searchedAccommodations = SerachByGuestNumber(filter.GuestNumberFilter, searchedAccommodations);
+            searchedAccommodations = SerachByDayNumber(filter.DayNumberFilter, searchedAccommodations);
+            return searchedAccommodations;
+        }
+
+        public List<Accommodation> SerachByName(string nameFilter, List<Accommodation> accommodations)
+        {
+            if (nameFilter != "")
+            {
+                return accommodations.Where(accommodation => accommodation.Name.ToLower().Trim().Contains(nameFilter.ToLower().Trim())).ToList();
+            }
+            return accommodations;
+        }
+
+        public List<Accommodation> SerachByCountry(string countryFilter, List<Accommodation> accommodations)
+        {
+            if (countryFilter != "Not specified")
+            {
+                return accommodations.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryFilter.ToLower())).ToList();
+            }
+            return accommodations;
+        }
+
+        public List<Accommodation> SerachByCity(string cityFilter, List<Accommodation> accommodations)
+        {
+            if (cityFilter != "Not specified")
+            {
+                return accommodations.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityFilter.ToLower())).ToList();
+            }
+            return accommodations;
+        }
+
+        public List<Accommodation> SerachByType(string typeFilter, List<Accommodation> accommodations)
+        {
+            switch (typeFilter)
+            {
+                case "Appartment":
+                    return accommodations.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT).ToList();
+                case "House":
+                    return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HOUSE).ToList();
+                case "Hut":
+                    return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HUT).ToList();
+            }
+            return accommodations;
+        }
+
+        public List<Accommodation> SerachByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
+        {
+            if (guestNumberFilter > 0)
+            {
+                return accommodations.Where(accommodation => guestNumberFilter <= accommodation.MaxGuests).ToList();
+            }
+            return accommodations;
+        }
+
+        public List<Accommodation> SerachByDayNumber(int DayFilter, List<Accommodation> accommodations)
+        {
+            if (DayFilter > 0)
+            {
+                return accommodations.Where(accommodation => DayFilter >= accommodation.MinDays).ToList();
+            }
+            return accommodations;
+        }
+
     }
 }
