@@ -118,27 +118,38 @@ namespace TravelAgency.Repository
 
         public List<AccommodationReservation> GetUnrated(IEnumerable<AccommodationGuestRating> ratings)
         {
-            List<AccommodationReservation> unrated = new List<AccommodationReservation>(_accommodationReservations);
+            List<AccommodationReservation> unrated = new();
 
             foreach (var accommodationReservation in _accommodationReservations)
             {
-                if (CalculateDaysLeftForRating(accommodationReservation) < 1 || ReservationIsActive(accommodationReservation))
+                if (IsValidForRating(accommodationReservation, ratings))
                 {
-                    unrated.Remove(accommodationReservation);
+                    unrated.Add(accommodationReservation);
                     continue;
-                }
-
-                foreach (var rating in ratings)
-                {
-                    if (accommodationReservation.Id == rating.AccommodationReservationId)
-                    {
-                        unrated.Remove(accommodationReservation);
-                        break;
-                    }
                 }
             }
 
             return unrated;
+        }
+
+        private bool IsValidForRating(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
+        {
+            return CalculateDaysLeftForRating(accommodationReservation) >= 1 &&
+                !ReservationIsActive(accommodationReservation) &&
+                !IsRated(accommodationReservation, accommodationGuestRatings);
+        }
+
+        private bool IsRated(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
+        {
+            foreach (var accommodationGuestRating in accommodationGuestRatings)
+            {
+                if (accommodationReservation.Id == accommodationGuestRating.AccommodationReservationId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public List<AccommodationReservation> GetAllByAccommodationId(int accommodationId)
