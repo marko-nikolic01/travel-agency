@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Resource Include="Resources\Images\ThreeLineMenu.jpg"></Resource>
+	  <Resource Include="Resources\Images\ArrowUpRight.png"></Resource>
     <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

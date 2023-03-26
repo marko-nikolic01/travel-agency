@@ -107,6 +107,19 @@ namespace TravelAgency.Repository
             }
             return result;
         }
+
+        public List<TourOccurrence> GetUpcomings(User activeGuide)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence tourOccurrence in tourOccurrences)
+            {
+                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id)
+                {
+                    result.Add(tourOccurrence);
+                }
+            }
+            return result;
+        }
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = NextId();
@@ -163,9 +176,16 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
-        public void Delete(TourOccurrence entity)
+        public void Delete(TourOccurrence tourOccurrence)
         {
-            throw new NotImplementedException();
+            TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
+            if (oldTourOccurrence == null)
+            {
+                return;
+            }
+            tourOccurrences.Remove(oldTourOccurrence);
+            _serializer.ToCSV(FilePath, tourOccurrences);
+            NotifyObservers();
         }
 
         public void DeleteAll()

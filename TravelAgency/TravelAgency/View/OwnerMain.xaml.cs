@@ -23,6 +23,7 @@ namespace TravelAgency.View
     public partial class OwnerMain : Window
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public static ObservableCollection<AccommodationOwnerRating> AccommodationOwnerRatings { get; set; }
 
         public Accommodation? SelectedAccommodation { get; set; }
 
@@ -34,6 +35,7 @@ namespace TravelAgency.View
         private readonly AccommodationPhotoRepository imageRepository;
         private readonly AccommodationReservationRepository accommodationReservationRepository;
         private readonly AccommodationGuestRatingRepository accommodationGuestRatingRepository;
+        private readonly AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public OwnerMain(User user)
         {
@@ -48,8 +50,10 @@ namespace TravelAgency.View
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
+            accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
+            AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
 
             ShowNotifications();
         }

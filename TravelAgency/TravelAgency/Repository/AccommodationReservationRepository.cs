@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,13 +17,16 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationReservation> _serializer;
 
         private List<AccommodationReservation> _accommodationReservations;
-        private int reservationLength;
+        private int _reservationLength;
+        private DateOnly _startDateIterator;
+        private DateOnly _endDateIterator;
+        private DateOnly _iterationStopperDate;
 
         public AccommodationReservationRepository(AccommodationRepository accommodationRepository, UserRepository userRepository)
         {
             _serializer = new Serializer<AccommodationReservation>();
             _accommodationReservations = _serializer.FromCSV(FilePath);
-            reservationLength = 1;
+            _reservationLength = 1;
 
 
             foreach (AccommodationReservation accommodationReservation in _accommodationReservations)
@@ -47,7 +51,7 @@ namespace TravelAgency.Repository
 
         public void SetReservationLength(int length)
         {
-            reservationLength = length;
+            _reservationLength = length;
         }
 
         public void Delete(AccommodationReservation accommodationReservation)
@@ -118,27 +122,38 @@ namespace TravelAgency.Repository
 
         public List<AccommodationReservation> GetUnrated(IEnumerable<AccommodationGuestRating> ratings)
         {
-            List<AccommodationReservation> unrated = new List<AccommodationReservation>(_accommodationReservations);
+            List<AccommodationReservation> unrated = new();
 
             foreach (var accommodationReservation in _accommodationReservations)
             {
-                if (CalculateDaysLeftForRating(accommodationReservation) < 1 || ReservationIsActive(accommodationReservation))
+                if (IsValidForRating(accommodationReservation, ratings))
                 {
-                    unrated.Remove(accommodationReservation);
+                    unrated.Add(accommodationReservation);
                     continue;
-                }
-
-                foreach (var rating in ratings)
-                {
-                    if (accommodationReservation.Id == rating.AccommodationReservationId)
-                    {
-                        unrated.Remove(accommodationReservation);
-                        break;
-                    }
                 }
             }
 
             return unrated;
+        }
+
+        private bool IsValidForRating(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
+        {
+            return CalculateDaysLeftForRating(accommodationReservation) >= 1 &&
+                !ReservationIsActive(accommodationReservation) &&
+                !IsRated(accommodationReservation, accommodationGuestRatings);
+        }
+
+        private bool IsRated(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
+        {
+            foreach (var accommodationGuestRating in accommodationGuestRatings)
+            {
+                if (accommodationReservation.Id == accommodationGuestRating.AccommodationReservationId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public List<AccommodationReservation> GetAllByAccommodationId(int accommodationId)
@@ -156,99 +171,98 @@ namespace TravelAgency.Repository
             return reservations;
         }
 
-        public List<DateSpan> FindAvailableDatesInsideDateSpan(DateTime firstDate, DateTime lastDate, int accommodationId)
+        public List<DateSpan> FindAvailableDatesInsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, int accommodationId)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
-
-            DateOnly startDateIterator = DateOnly.FromDateTime(firstDate);
-            DateOnly endDateIterator = DateOnly.FromDateTime(firstDate).AddDays(reservationLength - 1);
-            DateOnly iterationStopperDate = DateOnly.FromDateTime(lastDate);
-
-            int provera = endDateIterator.CompareTo(iterationStopperDate);
-            bool isDateSpanAllowed = endDateIterator.CompareTo(iterationStopperDate) <= 0;
+            PrepareDateIterators(dateRangeStart, dateRangeStart.AddDays(_reservationLength - 1), dateRangeEnd);
+            bool isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
             while (isDateSpanAllowed)
             {
-                if (IsDateSpanAvailable(startDateIterator, endDateIterator, accommodationId))
+                if (IsDateSpanAvailable(accommodationId))
                 {
-                    DateSpan dateSpan = new DateSpan(startDateIterator, endDateIterator);
-                    availableDates.Add(dateSpan);
+                    availableDates.Add(CreateDateSpan());
                 }
-
-                startDateIterator = startDateIterator.AddDays(1);
-                endDateIterator = endDateIterator.AddDays(1);
-                isDateSpanAllowed = endDateIterator.CompareTo(iterationStopperDate) <= 0;
+                AddDaysToIterators(1);
+                isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
             }
-
             return availableDates;
         }
 
-        public List<DateSpan> FindAvailableDatesOutsideDateSpan(DateTime firstDate, DateTime lastDate, int accommodationId)
+        public List<DateSpan> FindAvailableDatesOutsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, int accommodationId)
+        {
+            List<DateSpan> availableDatesBefore = FindAvailableDatesBeforeDateRange(dateRangeStart, accommodationId);
+            availableDatesBefore.Reverse();
+            List<DateSpan> availableDatesAfter = FindAvailableDatesAfterDateRange(dateRangeEnd, accommodationId);
+            List<DateSpan> availableDates = availableDatesBefore.Concat(availableDatesAfter).ToList();
+            return availableDates;
+        }
+
+        private List<DateSpan> FindAvailableDatesBeforeDateRange(DateTime dateRangeStart, int accommodationId)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
-
-            int dateSpanCount = 0;
-            DateOnly startDateIterator = DateOnly.FromDateTime(firstDate).AddDays(-1);
-            DateOnly endDateIterator = DateOnly.FromDateTime(firstDate).AddDays(reservationLength - 2);
-            DateOnly iterationStopperDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
-
-            bool isDateSpanAllowed = startDateIterator.CompareTo(iterationStopperDate) > 0;
-            while (isDateSpanAllowed && dateSpanCount < 3)
+            PrepareDateIterators(dateRangeStart.AddDays(-1), dateRangeStart.AddDays(_reservationLength - 2), DateTime.Now.AddDays(1));
+            bool isDateSpanAllowed = _startDateIterator.CompareTo(_iterationStopperDate) > 0;
+            while (isDateSpanAllowed && availableDates.Count() < 3)
             {
-                if (IsDateSpanAvailable(startDateIterator, endDateIterator, accommodationId))
+                if (IsDateSpanAvailable(accommodationId))
                 {
-                    DateSpan dateSpan = new DateSpan(startDateIterator, endDateIterator);
-                    availableDates.Add(dateSpan);
-                    dateSpanCount++;
+                    availableDates.Add(CreateDateSpan());
                 }
-
-                startDateIterator = startDateIterator.AddDays(-1);
-                endDateIterator = endDateIterator.AddDays(-1);
-                isDateSpanAllowed = startDateIterator.CompareTo(iterationStopperDate) >= 0;
+                AddDaysToIterators(-1);
+                isDateSpanAllowed = _startDateIterator.CompareTo(_iterationStopperDate) >= 0;
             }
-            availableDates.Reverse();
-
-            dateSpanCount = 0;
-            startDateIterator = DateOnly.FromDateTime(lastDate).AddDays(-reservationLength + 2);
-            endDateIterator = DateOnly.FromDateTime(lastDate).AddDays(1);
-
-            while (dateSpanCount < 3)
-            {
-                if (IsDateSpanAvailable(startDateIterator, endDateIterator, accommodationId))
-                {
-                    DateSpan dateSpan = new DateSpan(startDateIterator, endDateIterator);
-                    availableDates.Add(dateSpan);
-                    dateSpanCount++;
-                }
-
-                startDateIterator = startDateIterator.AddDays(1);
-                endDateIterator = endDateIterator.AddDays(1);
-            }
-
             return availableDates;
         }
 
-        public bool IsDateSpanAvailable(DateOnly startDate, DateOnly endDate, int accommodationId)
+        private List<DateSpan> FindAvailableDatesAfterDateRange(DateTime dateRangeEnd, int accommodationId)
         {
-            List<AccommodationReservation> reservations = GetAllByAccommodationId(accommodationId);
-            DateOnly dateIterator = new DateOnly(startDate.Year, startDate.Month, startDate.Day);
+            List<DateSpan> availableDates = new List<DateSpan>();
+            PrepareDateIterators(dateRangeEnd.AddDays(-_reservationLength + 2), dateRangeEnd.AddDays(1), DateTime.Now);
+            while (availableDates.Count() < 3)
+            {
+                if (IsDateSpanAvailable(accommodationId))
+                {
+                    availableDates.Add(CreateDateSpan());
+                }
+                AddDaysToIterators(1);
+            }
+            return availableDates;
+        }
 
-            bool isDateInsideSpan = dateIterator.CompareTo(endDate) <= 0;
+        private bool IsDateSpanAvailable(int accommodationId)
+        {
+            DateOnly dateIterator = new DateOnly(_startDateIterator.Year, _startDateIterator.Month, _startDateIterator.Day);
+            bool isDateInsideSpan = dateIterator.CompareTo(_endDateIterator) <= 0;
             while (isDateInsideSpan)
             {
-                foreach (AccommodationReservation reservation in reservations)
+                foreach (AccommodationReservation reservation in GetAllByAccommodationId(accommodationId))
                 {
-                    bool isDateNotAvailable = (dateIterator.CompareTo(reservation.DateSpan.StartDate) >= 0) && (dateIterator.CompareTo(reservation.DateSpan.EndDate) <= 0);
-                    if (isDateNotAvailable)
-                    {
-                        return false;
-                    }
+                    bool isDateAvailable = (dateIterator.CompareTo(reservation.DateSpan.StartDate) < 0) || (dateIterator.CompareTo(reservation.DateSpan.EndDate) > 0);
+                    if (!isDateAvailable) return false;
                 }
-
                 dateIterator = dateIterator.AddDays(1);
-                isDateInsideSpan = dateIterator.CompareTo(endDate) <= 0;
+                isDateInsideSpan = dateIterator.CompareTo(_endDateIterator) <= 0;
             }
-
             return true;
+        }
+
+        private void PrepareDateIterators(DateTime startDateIterator, DateTime endDateIterator, DateTime iterationStopperDate)
+        {
+            _startDateIterator = DateOnly.FromDateTime(startDateIterator);
+            _endDateIterator = DateOnly.FromDateTime(endDateIterator);
+            _iterationStopperDate = DateOnly.FromDateTime(iterationStopperDate);
+        }
+
+        private void AddDaysToIterators(int dayNumber)
+        {
+            _startDateIterator = _startDateIterator.AddDays(dayNumber);
+            _endDateIterator = _endDateIterator.AddDays(dayNumber);
+        }
+
+        private DateSpan CreateDateSpan()
+        {
+            DateSpan dateSpan = new DateSpan(_startDateIterator, _endDateIterator);
+            return dateSpan;
         }
     }
 }
