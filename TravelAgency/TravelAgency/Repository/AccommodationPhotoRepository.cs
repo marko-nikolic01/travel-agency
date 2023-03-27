@@ -24,11 +24,7 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            if (accommodationPhotos.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationPhotos.Max(c => c.Id) + 1;
+            return accommodationPhotos.Count < 1 ? 1 : accommodationPhotos.Max(c => c.Id) + 1;
         }
 
         public List<AccommodationPhoto> GetAll()

@@ -54,11 +54,7 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            if (accommodations.Count < 1)
-            {
-                return 1;
-            }
-            return accommodations.Max(c => c.Id) + 1;
+            return accommodations.Count < 1 ? 1 : accommodations.Max(c => c.Id) + 1;
         }
 
         public List<Accommodation> GetByUser(User user)

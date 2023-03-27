@@ -58,11 +58,7 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            if (accommodationGuestRatings.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationGuestRatings.Max(c => c.Id) + 1;
+            return accommodationGuestRatings.Count < 1 ? 1 : accommodationGuestRatings.Max(c => c.Id) + 1;
         }
 
         public AccommodationGuestRating Save(AccommodationGuestRating entity)

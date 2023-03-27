@@ -22,13 +22,22 @@ namespace TravelAgency.Serializer
                 csv.AppendLine(line);
             }
 
-            File.WriteAllText(fileName, csv.ToString());
+            if (File.Exists(fileName))
+            {
+                File.Create(fileName);
+            }
 
+            File.WriteAllText(fileName, csv.ToString());
         }
 
         public List<T> FromCSV(string fileName)
         {
             List<T> objects = new List<T>();
+
+            if (File.Exists(fileName))
+            {
+                File.Create(fileName);
+            }
 
             foreach (string line in File.ReadLines(fileName))
             {
