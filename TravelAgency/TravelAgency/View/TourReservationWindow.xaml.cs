@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using TravelAgency.Model;
+using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
@@ -18,6 +19,7 @@ namespace TravelAgency.View
         private string imageUrl;
         private string numberOfGuestsInput;
         private string spotsLeft;
+        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
         public string ImageUrl
         {
             get => imageUrl;
@@ -64,7 +66,7 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tourOccurrences, User user)
+        public TourReservationWindow(TourOccurrence tourOccurrence, ObservableCollection<TourOccurrence> tourOccurrences, User user, Repository.TourOccurrenceRepository tourOccurrenceRepository)
         {
             InitializeComponent();
             DataContext = this;
@@ -77,6 +79,7 @@ namespace TravelAgency.View
             this.tourOccurrences = tourOccurrences;
             AddGuestsButton.IsEnabled = false;
             activeGuest = user;
+            TourOccurrenceRepository = tourOccurrenceRepository;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -131,7 +134,7 @@ namespace TravelAgency.View
 
         private void AlternativeTours_Click(object sender, RoutedEventArgs e)
         {
-            AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location, activeGuest, this);
+            AlternativeTours alternativeTours = new AlternativeTours(tourOccurrences, TourOccurrence.Id, TourOccurrence.Tour.Location, activeGuest, TourOccurrenceRepository, this);
             alternativeTours.Show();
         }
        
@@ -141,7 +144,7 @@ namespace TravelAgency.View
             {
                 int input;
                 input = int.Parse(NumberOfGuestsInput);
-                TourGuests tourGuests = new TourGuests(input, TourOccurrence, this, activeGuest);
+                TourGuests tourGuests = new TourGuests(input, TourOccurrence, this, activeGuest, TourOccurrenceRepository);
                 tourGuests.Show();
             }
         }

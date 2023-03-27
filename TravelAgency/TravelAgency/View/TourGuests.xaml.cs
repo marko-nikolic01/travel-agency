@@ -16,13 +16,15 @@ namespace TravelAgency.View
         private TourOccurrence TourOccurrence;
         private TourReservationWindow reservationsWindow;
         private User activeGuest;
-        public TourGuests(int guests, TourOccurrence tourOccurrence, TourReservationWindow reservationsWindow, User user)
+        public TourOccurrenceRepository TourOccurrenceRepository;
+        public TourGuests(int guests, TourOccurrence tourOccurrence, TourReservationWindow reservationsWindow, User user, TourOccurrenceRepository tourOccurrenceRepository)
         {
             numberOfGuests = guests;
             InitializeComponent();
             userRepository = new UserRepository();
             tourReservationRepository = new TourReservationRepository();
             TourOccurrence = tourOccurrence;
+            TourOccurrenceRepository = tourOccurrenceRepository;
             this.reservationsWindow = reservationsWindow;
             activeGuest = user;
             GuestList.Items.Add(activeGuest.Username);
@@ -81,6 +83,9 @@ namespace TravelAgency.View
                 tourReservationRepository.SaveTourReservation(tourReservation);
             }
             TourOccurrence.Guests.AddRange(users);
+
+            TourOccurrence.FreeSpots -= users.Count;
+            TourOccurrenceRepository.UpdateTourOccurrence(TourOccurrence);
             Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();
             reservationsWindow.CloseWindow();
