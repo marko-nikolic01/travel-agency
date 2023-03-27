@@ -23,6 +23,7 @@ namespace TravelAgency.Model
         public CurrentState CurrentState { get; set; }
         public User Guide { get; set; }
         public int GuideId { get; set; }
+        public int FreeSpots { get; set; }
 
         private int toShadow;
         public int ToShadow
@@ -66,6 +67,7 @@ namespace TravelAgency.Model
             Tour = tour;
             DateTime = dateTime;
             KeyPoints = keyPoints;
+            FreeSpots = tour.MaxGuestNumber;
         }
 
         public TourOccurrence()
@@ -76,7 +78,7 @@ namespace TravelAgency.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), TourId.ToString(), DateTime.ToString("dd-MM-yyyy HH-mm"), ((int)CurrentState).ToString(), GuideId.ToString() };
+            string[] csvValues = { Id.ToString(), TourId.ToString(), DateTime.ToString("dd-MM-yyyy HH-mm"), ((int)CurrentState).ToString(), GuideId.ToString(), FreeSpots.ToString() };
             return csvValues;
         }
 
@@ -87,6 +89,7 @@ namespace TravelAgency.Model
             DateTime = DateTime.ParseExact(values[2], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
             CurrentState = (CurrentState)Convert.ToInt32(values[3]);
             GuideId = int.Parse(values[4]);
+            FreeSpots = int.Parse(values[5]);
         }
     }
 }

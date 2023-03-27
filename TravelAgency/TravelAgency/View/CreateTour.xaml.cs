@@ -154,6 +154,7 @@ namespace TravelAgency.View
             tourOccurrence.TourId = newTour.Id;
             tourOccurrence.Tour = newTour;
             tourOccurrence.DateTime = dateTime;
+            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
             return TourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, ActiveGuide);
         }
 

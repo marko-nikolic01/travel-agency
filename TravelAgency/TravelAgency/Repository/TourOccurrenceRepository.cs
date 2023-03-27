@@ -136,6 +136,7 @@ namespace TravelAgency.Repository
         {
             TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
             oldTourOccurrence.CurrentState = tourOccurrence.CurrentState;
+            oldTourOccurrence.FreeSpots = tourOccurrence.FreeSpots;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
         }
