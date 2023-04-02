@@ -31,9 +31,18 @@ namespace TravelAgency.View
             this.currentGuestId = currentGuestId;
             tourOccurrence= selectedTourOccurrence;
         }
-
-        private void SubmitRating_Click(object sender, RoutedEventArgs e)
+        private void AddUrl_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(urlText.Text))
+            {
+                return;
+            }
+            urlsList.Items.Add(urlText.Text);
+            urlText.Clear();
+            urlText.Focus();
+        }
+            private void SubmitRating_Click(object sender, RoutedEventArgs e)
+            {
             int guideKnowledge;
             int guideLanguage;
             int interesting;
@@ -46,8 +55,21 @@ namespace TravelAgency.View
             interesting = int.Parse(s3);
             additionalComment = commentTb.Text;
             TourRating tourRating = new TourRating(currentGuestId, tourOccurrence.Id, guideKnowledge, guideLanguage, interesting, additionalComment, null);
-            tourRatingRepository.Save(tourRating);
+            TourRating savedTourRating = tourRatingRepository.Save(tourRating);
+            savePhotos(savedTourRating.Id);
             Close();
+        }
+
+        private void savePhotos(int id)
+        {
+            TourRatingPhotoRepository tourRatingPhotoRepository = new TourRatingPhotoRepository();
+            for (int i = 0; i < urlsList.Items.Count; i++)
+            {
+                TourRatingPhoto photo = new TourRatingPhoto();
+                photo.Link = urlsList.Items.GetItemAt(i).ToString();
+                photo.TourRatingId = id;
+                tourRatingPhotoRepository.Save(photo);
+            }
         }
     }
 }

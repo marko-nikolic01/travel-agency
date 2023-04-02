@@ -31,11 +31,16 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            throw new NotImplementedException();
+            if (tourRatings.Count == 0)
+            {
+                return 1;
+            }
+            return tourRatings[tourRatings.Count - 1].Id + 1;
         }
 
         public TourRating Save(TourRating tourRating)
         {
+            tourRating.Id = NextId();
             tourRatings.Add(tourRating);
             _serializer.ToCSV(FilePath, tourRatings);
 

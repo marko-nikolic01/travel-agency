@@ -8,6 +8,7 @@ namespace TravelAgency.Model
 {
     public class TourRating : Serializer.ISerializable
     {
+        public int Id { get; set; }
         public int GuestId { get; set; }
         public int TourOccurrenceId { get; set; }
         public int GuideKnowledge { get; set; }
@@ -33,18 +34,19 @@ namespace TravelAgency.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { GuestId.ToString(), TourOccurrenceId.ToString(), GuideKnowledge.ToString(), GuideLanguage.ToString(), Interesting.ToString(), AdditionalComment};
+            string[] csvValues = {Id.ToString(), GuestId.ToString(), TourOccurrenceId.ToString(), GuideKnowledge.ToString(), GuideLanguage.ToString(), Interesting.ToString(), AdditionalComment};
             return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
-            GuestId = int.Parse(values[0]);
-            TourOccurrenceId = int.Parse(values[1]);
-            GuideKnowledge = int.Parse(values[2]);
-            GuideLanguage = int.Parse(values[3]);
-            Interesting = int.Parse(values[4]);
-            AdditionalComment = values[5];
+            Id = int.Parse(values[0]);
+            GuestId = int.Parse(values[1]);
+            TourOccurrenceId = int.Parse(values[2]);
+            GuideKnowledge = int.Parse(values[3]);
+            GuideLanguage = int.Parse(values[4]);
+            Interesting = int.Parse(values[5]);
+            AdditionalComment = values[6];
         }
     }
 }
