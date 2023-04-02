@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="Guest2Main" Height="450" Width="800">
+        Title="Guest2Main" Height="768" Width="1024">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
@@ -39,8 +40,8 @@
             <Button Grid.Column="5" Grid.Row="1" Margin="10" Click="Search_Click">Search</Button>
             <Button Grid.Column="6" Content="My Tours" HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="62" Click="MyToursButton_Click"/>
         </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False"
-                  SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid">
+        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False"
+                  SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Height="NaN" Margin="0,94,0,83">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
                 <DataGridTextColumn Header="City" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
@@ -51,7 +52,7 @@
                 <DataGridTextColumn Header="Current guest number" Binding="{Binding Guests.Count}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="110"/>
