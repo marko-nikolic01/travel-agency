@@ -122,6 +122,45 @@ namespace TravelAgency.Repository
             }
             return result;
         }
+
+        public List<TourOccurrence> GetOffered()
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence tourOccurrence in tourOccurrences)
+            {
+                if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended)
+                {
+                    result.Add(tourOccurrence);
+                }
+            }
+            return result;
+        }
+
+        public List<TourOccurrence> GetFinishedOccurrencesForGuest(int guestId)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence occurrence in tourOccurrences)
+            {
+                if (occurrence.CurrentState == CurrentState.Ended)
+                {
+                    if (WasGuestOnTour(occurrence, guestId))
+                        result.Add(occurrence);
+                }
+            }
+            return result;
+        }
+        private bool WasGuestOnTour(TourOccurrence occurrence, int guestId)
+        {
+            TourOccurrenceAttendanceRepository attendanceRepository = new TourOccurrenceAttendanceRepository();
+            TourOccurrenceAttendance attendance;
+            attendance = attendanceRepository.GetAll().Find(x => x.TourOccurrenceId == occurrence.Id && x.GuestId == guestId);
+            if (attendance != null)
+            {
+                if (attendance.ResponseStatus == ResponseStatus.Accepted)
+                    return true;
+            }
+            return false;
+        }
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = NextId();

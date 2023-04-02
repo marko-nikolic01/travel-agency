@@ -16,47 +16,21 @@ namespace TravelAgency.View
         public TourOccurrence SelectedTourOccurrence { get; set; }
         private TourOccurrenceRepository tourOccurrenceRepository;
         private int currentGuestId;
-        public MyTours(TourOccurrenceRepository tourOccurrenceRepository, int guestId)
+        public MyTours(TourOccurrenceRepository occurrenceRepository, int guestId)
         {
             InitializeComponent();
             DataContext = this;
-            this.tourOccurrenceRepository = tourOccurrenceRepository;
-            TourOccurrences = new List<TourOccurrence>();
+            tourOccurrenceRepository = occurrenceRepository;
+            TourOccurrences = tourOccurrenceRepository.GetFinishedOccurrencesForGuest(guestId);
             currentGuestId = guestId;
-            FilterFinishedTourOccurrences();
-        }
-        //ovo prebaciti u repository posle ili gde vec treba
-        private void FilterFinishedTourOccurrences()
-        {
-            //TourOccurrenceAttendanceRepository toar = new TourOccurrenceAttendanceRepository();
-            foreach (TourOccurrence occurrence in tourOccurrenceRepository.GetAll())
-            {
-                if(occurrence.CurrentState == CurrentState.Ended)
-                {
-                    if(WasGuestOnTour(occurrence))
-                        TourOccurrences.Add(occurrence);
-                }
-            }
-        }
-        private bool WasGuestOnTour(TourOccurrence occurrence)
-        {
-            TourOccurrenceAttendanceRepository toar = new TourOccurrenceAttendanceRepository();
-            TourOccurrenceAttendance toa;
-            toa = toar.GetAll().Find(x => x.TourOccurrenceId == occurrence.Id && x.GuestId == currentGuestId);
-            if (toa != null)
-            {
-                if (toa.ResponseStatus == ResponseStatus.Accepted)
-                    return true;
-            }
-            return false;
         }
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
             if(SelectedTourOccurrence != null)
             {
-                TourGuideRating tourGuideRating = new TourGuideRating();
-                tourGuideRating.Show();
+                TourRatingWindow tourRatingWindow = new TourRatingWindow(SelectedTourOccurrence, currentGuestId);
+                tourRatingWindow.Show();
             }
         }
     }

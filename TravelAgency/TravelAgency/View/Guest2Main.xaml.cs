@@ -47,22 +47,10 @@ namespace TravelAgency.View
             UserRepository = new UserRepository();
             TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
             TourOccurrenceRepository = new TourOccurrenceRepository(PhotoRepository, LocationRepository, TourRepository, TourReservationRepository, UserRepository);
-            TourOccurrences = new ObservableCollection<TourOccurrence>();
-            FilterTourOccurrences();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetOffered());
             TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
             AllertIfSelectеd(ActiveGuest);
-        }
-
-        private void FilterTourOccurrences()
-        {
-            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetAll())
-            {
-                if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended)
-                {
-                    TourOccurrences.Add(tourOccurrence);
-                }
-            }
         }
 
         private void AllertIfSelectеd(User activeGuest)
@@ -163,7 +151,7 @@ namespace TravelAgency.View
         public void Update()
         {
             TourOccurrences.Clear();
-            FilterTourOccurrences();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetOffered());
             ToursDataGrid.ItemsSource = TourOccurrences;
         }
 
