@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Height="750" Width="430">
     <Grid>
         
@@ -41,7 +42,7 @@
                     <MenuItem Header="⋮" FontSize="20" HorizontalAlignment="Right"></MenuItem>
                 </Menu>
             </StackPanel>
-            <Button Content="+" FontSize="20" Grid.Row="2" Height="40" Width="40">
+            <Button Content="+" FontSize="20" Grid.Row="2" Height="40" Width="40" Click="NewTour_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="20"/>

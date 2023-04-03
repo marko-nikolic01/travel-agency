@@ -116,12 +116,6 @@ namespace TravelAgency.View
             Close();
         }
 
-        private void NewTour_Click(object sender, RoutedEventArgs e)
-        {
-            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository, ActiveGuide);
-            createTour.Show();
-        }
-
         public void Update()
         {
             TourOccurrences.Clear();
@@ -163,6 +157,7 @@ namespace TravelAgency.View
                 {
                     tourOccurrence.CurrentState = CurrentState.Started;
                     tourOccurrence.KeyPoints[0].IsChecked = true;
+                    tourOccurrence.ActiveKeyPointId = tourOccurrence.KeyPoints[0].Id;
                     continue;
                 }
                 tourOccurrence.ToDisplay = 0;
@@ -194,7 +189,6 @@ namespace TravelAgency.View
         {
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
-            NewTourButton.IsEnabled = false;
 
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
         }
@@ -228,6 +222,7 @@ namespace TravelAgency.View
         private void RowButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedKeyPoint.IsChecked = true;
+            SelectedTourOccurrence.ActiveKeyPointId = SelectedKeyPoint.Id;
             if (SelectedTourOccurrence.KeyPoints[SelectedTourOccurrence.KeyPoints.Count - 1].Id == SelectedKeyPoint.Id)
             {
                 EndTour();
@@ -279,7 +274,6 @@ namespace TravelAgency.View
         {
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
-            NewTourButton.IsEnabled = true;
             TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
         }
     }

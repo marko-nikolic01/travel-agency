@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TravelAgency.View"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="CreateTour" Height="750" Width="430">
     <Window.Resources>
