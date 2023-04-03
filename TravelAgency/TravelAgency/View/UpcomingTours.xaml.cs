@@ -75,5 +75,11 @@ namespace TravelAgency.View
                 TourOccurrences.Add(tourOccurrence);
             }
         }
+
+        private void NewTour_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository, ActiveGuide);
+            createTour.Show();
+        }
     }
 }
