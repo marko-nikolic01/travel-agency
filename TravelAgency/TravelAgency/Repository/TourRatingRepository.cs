@@ -47,6 +47,10 @@ namespace TravelAgency.Repository
             return tourRating;
         }
 
+        internal bool TourIsNotRated(int guestId, int occurrenceId)
+        {
+            return !tourRatings.Exists(x => x.GuestId == guestId && x.TourOccurrenceId == occurrenceId);
+        }
         public void SaveAll(IEnumerable<TourRating> entities)
         {
             throw new NotImplementedException();
@@ -66,5 +70,6 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
+       
     }
 }
