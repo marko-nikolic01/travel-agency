@@ -155,6 +155,12 @@ namespace TravelAgency.View
             ToursDataGrid.ItemsSource = TourOccurrences;
         }
 
+        private void MyToursButton_Click(object sender, RoutedEventArgs e)
+        {
+            MyTours myTours = new MyTours(TourOccurrenceRepository, TourOccurrenceAttendanceRepository, ActiveGuest.Id);
+            myTours.Show();
+        }
+
         private void SignOut_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -162,10 +168,5 @@ namespace TravelAgency.View
             Close();
         }
 
-        private void MyToursButton_Click(object sender, RoutedEventArgs e)
-        {
-            MyTours myTours = new MyTours(TourOccurrenceRepository, ActiveGuest.Id);
-            myTours.Show();
-        }
     }
 }

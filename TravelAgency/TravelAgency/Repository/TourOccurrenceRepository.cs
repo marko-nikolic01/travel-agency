@@ -161,6 +161,32 @@ namespace TravelAgency.Repository
             }
             return false;
         }
+
+        public string GetActiveTour(int guestId)
+        {
+            string result = "There is no active tour";
+            foreach (TourOccurrence occurrence in tourOccurrences)
+            {
+                if (occurrence.CurrentState == CurrentState.Started)
+                {
+                    TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
+                    if (tourAttendance != null)
+                    {
+                        result = "Active tour: " + occurrence.Tour.Name;
+                        result += "\n" + occurrence.Tour.Description;
+                        result += "\n\nCurrent key point: ";
+                        result += "\n\nStatus: " + tourAttendance.ResponseStatus.ToString();
+                        return result;
+                    }
+                }
+            }
+            return result;
+        }
+        private TourOccurrenceAttendance FindAttendance(int currentGuestId, int id)
+        {
+            TourOccurrenceAttendanceRepository tourAttendanceRepository = new TourOccurrenceAttendanceRepository();
+            return tourAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
+        }
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = NextId();

@@ -15,14 +15,17 @@ namespace TravelAgency.View
         public List<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         private TourOccurrenceRepository tourOccurrenceRepository;
+        private TourOccurrenceAttendanceRepository tourAttendanceRepository;
         private int currentGuestId;
-        public MyTours(TourOccurrenceRepository occurrenceRepository, int guestId)
+        public MyTours(TourOccurrenceRepository occurrenceRepository, TourOccurrenceAttendanceRepository tourAttendanceRepository, int guestId)
         {
             InitializeComponent();
             DataContext = this;
             tourOccurrenceRepository = occurrenceRepository;
+            this.tourAttendanceRepository = tourAttendanceRepository;
             TourOccurrences = tourOccurrenceRepository.GetFinishedOccurrencesForGuest(guestId);
             currentGuestId = guestId;
+            activeTourText.Text = tourOccurrenceRepository.GetActiveTour(currentGuestId);
         }
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
