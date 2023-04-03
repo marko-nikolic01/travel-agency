@@ -172,9 +172,11 @@ namespace TravelAgency.Repository
                     TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
                     if (tourAttendance != null)
                     {
+                        KeyPointRepository keyPointRepository = new KeyPointRepository(this);
+                        string keyPointName = keyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
                         result = "Active tour: " + occurrence.Tour.Name;
                         result += "\n" + occurrence.Tour.Description;
-                        result += "\n\nCurrent key point: ";
+                        result += "\n\nCurrent key point: " +keyPointName;
                         result += "\n\nStatus: " + tourAttendance.ResponseStatus.ToString();
                         return result;
                     }
@@ -187,6 +189,7 @@ namespace TravelAgency.Repository
             TourOccurrenceAttendanceRepository tourAttendanceRepository = new TourOccurrenceAttendanceRepository();
             return tourAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
         }
+
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
         {
             tourOccurrence.Id = NextId();
@@ -260,5 +263,6 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
     }
 }

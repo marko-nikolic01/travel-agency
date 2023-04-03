@@ -18,7 +18,7 @@
             <!--<Label x:Name="descriptionLabel" HorizontalAlignment="Center" Margin="0 -30" Content="Description: " Height="60"></Label>-->
             <!--<Label HorizontalAlignment="Center" Content="Current key point: "></Label>-->
             <!--<Label x:Name="statusLabel" HorizontalAlignment="Center" Content="Status: "></Label>-->
-            <TextBlock x:Name="activeTourText" Width="100" Height="100" Margin="0 20"></TextBlock>
+            <TextBlock x:Name="activeTourText" TextAlignment="Center" Width="500" Height="100" Margin="0 20"></TextBlock>
         </StackPanel>
         <DataGrid Grid.Row="2" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
                  SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">

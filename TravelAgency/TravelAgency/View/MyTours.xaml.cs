@@ -30,10 +30,18 @@ namespace TravelAgency.View
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
+            TourRatingRepository tourRatingRepository = new TourRatingRepository();
             if(SelectedTourOccurrence != null)
             {
-                TourRatingWindow tourRatingWindow = new TourRatingWindow(SelectedTourOccurrence, currentGuestId);
-                tourRatingWindow.Show();
+                if (tourRatingRepository.TourIsNotRated(currentGuestId, SelectedTourOccurrence.Id))
+                {
+                    TourRatingWindow tourRatingWindow = new TourRatingWindow(SelectedTourOccurrence, currentGuestId);
+                    tourRatingWindow.Show();
+                }
+                else 
+                {
+                    MessageBox.Show("This tour occurrence is already rated.");
+                }
             }
         }
     }

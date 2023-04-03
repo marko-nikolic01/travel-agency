@@ -59,7 +59,7 @@ namespace TravelAgency.Repository
         }
         public KeyPoint GetById(int id)
         {
-            throw new NotImplementedException();
+            return keyPoints.Find(x => x.Id == id);
         }
 
         public void SaveAll(IEnumerable<KeyPoint> entities)
