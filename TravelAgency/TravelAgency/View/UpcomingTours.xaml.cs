@@ -61,7 +61,7 @@ namespace TravelAgency.View
             {
                 foreach (var guest in SelectedTourOccurrence.Guests)
                 {
-                    VoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuide.Id });
+                    VoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuide.Id, Deadline = DateTime.Now.AddYears(1) });
                 }
                 TourOccurrenceRepository.Delete(SelectedTourOccurrence);
             }

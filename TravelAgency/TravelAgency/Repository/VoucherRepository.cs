@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Observer;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class VoucherRepository
+    public class VoucherRepository : IVoucherRepository
     {
         private const string FilePath = "../../../Resources/Data/vouchers.csv";
         private readonly Serializer<Voucher> _serializer;

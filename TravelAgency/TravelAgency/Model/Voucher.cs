@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.LinkLabel;
+using System.Globalization;
 
 namespace TravelAgency.Model
 {
@@ -13,22 +9,23 @@ namespace TravelAgency.Model
         public int GuestId { get; set; }
         public int GuideId { get; set; }
         public bool IsUsed { get; set; }
-
+        public DateTime Deadline { get; set; }
         public Voucher()
         {
         }
 
-        public Voucher(int id, int guestId, int guideId)
+        public Voucher(int id, int guestId, int guideId, DateTime dateTime)
         {
             Id = id;
             GuestId = guestId;
             GuideId = guideId;
             IsUsed = false;
+            Deadline = dateTime;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString() };
+            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm") };
             return csvValues;
         }
 
@@ -38,6 +35,7 @@ namespace TravelAgency.Model
             GuestId = int.Parse(values[1]);
             GuideId = int.Parse(values[2]);
             IsUsed = bool.Parse(values[3]);
+            Deadline = DateTime.ParseExact(values[4], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
         }
     }
 }

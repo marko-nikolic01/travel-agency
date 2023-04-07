@@ -147,7 +147,11 @@ namespace TravelAgency.View
                 return false;
             }
         }
-
+        private void Vouchers_Click(object sender, RoutedEventArgs e)
+        {
+            VouchersView vouchersView = new VouchersView(ActiveGuest.Id);
+            vouchersView.Show();
+        }
         public void Update()
         {
             TourOccurrences.Clear();

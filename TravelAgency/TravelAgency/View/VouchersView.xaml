@@ -1,0 +1,18 @@
+﻿<Window x:Class="TravelAgency.View.VouchersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.View"
+        mc:Ignorable="d"
+        Title="VouchersView" Height="768" Width="1280">
+    <Grid>
+        <Label Content="My Vouchers"></Label>
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=Vouchers}" AutoGenerateColumns="False" Margin="0,94">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Voucher id" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
