@@ -59,6 +59,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Width="120" Height="40" Margin="20" Click="Reserve_Click">Make a reservation</Button>
             <Button Grid.Column="1" Width="100" Height="40" Click="SignOut_Click">Sign out</Button>
+            <Button Grid.Column="0" Width="120" Height="40" Margin="602,20,192,20" Click="Vouchers_Click" Content="My vouchers"/>
         </Grid>
     </Grid>
 </Window>

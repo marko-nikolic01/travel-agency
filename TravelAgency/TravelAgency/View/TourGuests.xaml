@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0">Guests</Label>
         <StackPanel Grid.Column="1">
@@ -18,6 +18,9 @@
             <ListBox Margin="10" Name="GuestList">
             </ListBox>
             <Button Margin="5" Content="Remove Guest" Width="90" Click="RemoveGuest_Click"></Button>
+            <ListBox ItemsSource="{Binding Vouchers}" Name="vouchersList"
+             SelectedValue="{Binding SelectedVoucher}" 
+             DisplayMemberPath="Id" />
             <StackPanel Margin="0 50" Height="100" Orientation="Horizontal">
                 <Button Width="120" Height="40" Margin="10" Click="Submit_Click" x:Name="SubmitButton">Submit Reservation</Button>
                 <Button Width="120" Height="40" Margin="10" Click="Cancel_Click">Cancel</Button>
