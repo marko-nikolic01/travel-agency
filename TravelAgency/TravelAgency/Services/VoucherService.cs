@@ -28,5 +28,18 @@ namespace TravelAgency.Services
             }
             return vouchers;
         }
+
+        public void DisableVoucher(Voucher selectedVoucher)
+        {
+            foreach (Voucher voucher in voucherRepository.GetAll())
+            {
+                if (voucher.Id == selectedVoucher.Id)
+                {
+                    voucher.IsUsed = true;
+                    voucherRepository.Update(voucher);
+                    return;
+                }
+            }
+        }
     }
 }

@@ -6,9 +6,8 @@ namespace TravelAgency.RepositoryInterfaces
     public interface IVoucherRepository
     {
         List<Voucher> GetAll();
-
         int NextId();
-
-        Voucher Save(Voucher entity);
+        Voucher Save(Voucher voucher);
+        Voucher Update(Voucher voucher);
     }
 }

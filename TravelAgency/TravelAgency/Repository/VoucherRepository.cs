@@ -43,5 +43,13 @@ namespace TravelAgency.Repository
             _serializer.ToCSV(FilePath, vouchers);
             return voucher;
         }
+
+        public Voucher Update(Voucher voucher)
+        {
+            Voucher oldVoucher = vouchers.Find(x => x.Id == voucher.Id);
+            oldVoucher.IsUsed = voucher.IsUsed;
+            _serializer.ToCSV(FilePath, vouchers);
+            return oldVoucher;
+        }
     }
 }

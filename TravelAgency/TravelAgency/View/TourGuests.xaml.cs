@@ -2,6 +2,7 @@
 using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -17,6 +18,7 @@ namespace TravelAgency.View
         private TourReservationWindow reservationsWindow;
         private User activeGuest;
         public TourOccurrenceRepository TourOccurrenceRepository;
+        VoucherViewModel voucherViewModel;
         public TourGuests(int guests, TourOccurrence tourOccurrence, TourReservationWindow reservationsWindow, User user, TourOccurrenceRepository tourOccurrenceRepository)
         {
             numberOfGuests = guests;
@@ -28,6 +30,8 @@ namespace TravelAgency.View
             this.reservationsWindow = reservationsWindow;
             activeGuest = user;
             GuestList.Items.Add(activeGuest.Username);
+            voucherViewModel = new VoucherViewModel(user.Id);
+            vouchersList.DataContext = voucherViewModel;
             CheckGuestNumber();
         }
 
@@ -86,6 +90,7 @@ namespace TravelAgency.View
 
             TourOccurrence.FreeSpots -= users.Count;
             TourOccurrenceRepository.UpdateTourOccurrence(TourOccurrence);
+            voucherViewModel.UpdateVoucher();
             Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();
             reservationsWindow.CloseWindow();
