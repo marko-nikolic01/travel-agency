@@ -19,6 +19,25 @@ namespace TravelAgency.Repository
             tourRatings = _serializer.FromCSV(FilePath);
         }
 
+        public TourRatingRepository(TourRatingPhotoRepository tourRatingPhotoRepository)
+        {
+            _serializer = new Serializer<TourRating>();
+            tourRatings = _serializer.FromCSV(FilePath);
+            LinkRatingPhoto(tourRatingPhotoRepository);
+        }
+
+        private void LinkRatingPhoto(TourRatingPhotoRepository tourRatingPhotoRepository)
+        {
+            foreach (TourRatingPhoto tourRatingPhoto in tourRatingPhotoRepository.GetAll())
+            {
+                TourRating tourRating = tourRatings.Find(t => t.Id == tourRatingPhoto.TourRatingId);
+                if (tourRating != null)
+                {
+                    tourRating.PhotoUrls.Add(tourRatingPhoto);
+                }
+            }
+        }
+
         public List<TourRating> GetAll()
         {
             return tourRatings;
@@ -27,6 +46,19 @@ namespace TravelAgency.Repository
         public TourRating GetById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public List<TourRating> GetRatingsByTourOccurrenceId(int id)
+        {
+            List<TourRating> result = new List<TourRating>();
+            foreach (TourRating tourRating in tourRatings)
+            {
+                if (tourRating.TourOccurrenceId == id)
+                {
+                    result.Add(tourRating);
+                }
+            }
+            return result;
         }
 
         public int NextId()

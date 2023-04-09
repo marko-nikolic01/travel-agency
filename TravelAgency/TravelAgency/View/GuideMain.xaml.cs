@@ -63,5 +63,12 @@ namespace TravelAgency.View
             todaysTours.Show();
             Close();
         }
+
+        private void GuestReviews_Click(object sender, RoutedEventArgs e)
+        {
+            TourReviews tourReviews = new TourReviews(ActiveGuide);
+            tourReviews.Show();
+            Close();
+        }
     }
 }

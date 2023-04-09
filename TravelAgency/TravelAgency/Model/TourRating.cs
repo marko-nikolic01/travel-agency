@@ -15,9 +15,9 @@ namespace TravelAgency.Model
         public int GuideLanguage { get; set; }
         public int Interesting { get; set; }
         public string? AdditionalComment { get; set; }
-        public List<string>? PhotoUrls { get; set; }
+        public List<TourRatingPhoto> PhotoUrls { get; set; }
 
-        public TourRating(int guestId, int tourOccurrenceId, int guideKnowledge, int guideLanguage, int interesting, string additionalComment, List<string> photoUrls)
+        public TourRating(int guestId, int tourOccurrenceId, int guideKnowledge, int guideLanguage, int interesting, string additionalComment, List<TourRatingPhoto> photoUrls)
         {
             GuestId = guestId;
             TourOccurrenceId = tourOccurrenceId;
@@ -30,6 +30,7 @@ namespace TravelAgency.Model
 
         public TourRating()
         {
+            PhotoUrls = new List<TourRatingPhoto>();
         }
 
         public string[] ToCSV()

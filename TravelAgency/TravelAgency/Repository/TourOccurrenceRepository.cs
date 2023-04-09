@@ -149,6 +149,20 @@ namespace TravelAgency.Repository
             }
             return result;
         }
+
+        public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence occurrence in tourOccurrences)
+            {
+                if (occurrence.CurrentState == CurrentState.Ended && occurrence.GuideId == guideId)
+                {
+                    result.Add(occurrence);
+                }
+            }
+            return result;
+        }
+
         private bool WasGuestOnTour(TourOccurrence occurrence, int guestId)
         {
             TourOccurrenceAttendanceRepository attendanceRepository = new TourOccurrenceAttendanceRepository();
