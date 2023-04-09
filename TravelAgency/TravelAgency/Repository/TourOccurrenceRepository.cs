@@ -23,6 +23,13 @@ namespace TravelAgency.Repository
             observers = new List<IObserver>();
         }
 
+        public TourOccurrenceRepository(TourRepository tourRepository)
+        {
+            _serializer = new Serializer<TourOccurrence>();
+            tourOccurrences = _serializer.FromCSV(FilePath);
+            LinkTourOccurrences(tourRepository);
+        }
+
         public TourOccurrenceRepository(PhotoRepository photoRepository, LocationRepository locationRepository, TourRepository tourRepository, TourReservationRepository reservationRepository, UserRepository userRepository)
         {
             _serializer = new Serializer<TourOccurrence>();
@@ -243,7 +250,8 @@ namespace TravelAgency.Repository
 
         public TourOccurrence GetById(int id)
         {
-            throw new NotImplementedException();
+            TourOccurrence tourOccurrence = tourOccurrences.Find(t => t.Id == id);
+            return tourOccurrence;
         }
 
         public TourOccurrence Save(TourOccurrence entity)

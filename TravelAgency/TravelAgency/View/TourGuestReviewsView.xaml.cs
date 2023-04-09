@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -22,14 +23,10 @@ namespace TravelAgency.View
     /// </summary>
     public partial class TourGuestReviews : Window
     {
-        public ObservableCollection<TourRating> TourRatings { get; set; }
         public TourGuestReviews(int id)
         {
             InitializeComponent();
-            DataContext = this;
-            TourRatingPhotoRepository tourRatingPhotoRepository = new TourRatingPhotoRepository();
-            TourRatingRepository tourRatingRepository = new TourRatingRepository(tourRatingPhotoRepository);
-            TourRatings = new ObservableCollection<TourRating>(tourRatingRepository.GetRatingsByTourOccurrenceId(id));
+            DataContext = new TourGuestReviewsViewModel(id);
         }
     }
 }

@@ -42,7 +42,7 @@
                 </Menu>
             </StackPanel>
             <ScrollViewer Grid.Row ="1" Grid.RowSpan="6" Grid.ColumnSpan="5">
-                <ItemsControl Grid.Row ="1" Grid.RowSpan="6" Grid.ColumnSpan="5" ItemsSource="{Binding Path=TourRatings}">
+                <ItemsControl Grid.Row ="1" Grid.RowSpan="6" Grid.ColumnSpan="5" ItemsSource="{Binding Path=TourReviews}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border CornerRadius="1" BorderThickness="2" BorderBrush="Black" Padding="5" Margin="5" Width="380">
@@ -57,18 +57,18 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                        <ColumnDefinition Width="120"></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="True" IsEnabled="False"></CheckBox>
                                     <Button Content="Report as invalid" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="100"></Button>
-                                    <Label Grid.Row="0" Grid.Column="1" Content="Tour Guest "></Label>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding TourOccurrence.Tour.Name}"></Label>
                                     <Label Grid.Row="1" Content="Arrival point: "></Label>
                                     <Label Grid.Row="2" Content="Guides expertiese: "></Label>
                                     <Label Grid.Row="3" Content="Guides language skills: "></Label>
                                     <Label Grid.Row="4" Content="Tours interestingness: "></Label>
                                     <Label Grid.Row="5" Content="Additional comment: "></Label>
-                                    <Image Source="{Binding PhotoUrls[0].Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
+                                    <Image Source="{Binding TourRating.PhotoUrls[0].Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
                                     <Button Grid.Row="5" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Right">
                                         <Image Source="../Resources/Images/RightArrow.png"></Image>
                                         <Button.Resources>
@@ -85,10 +85,11 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Text="{Binding GuideKnowledge}"></TextBlock>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Text="{Binding GuideLanguage}"></TextBlock>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Text="{Binding Interesting}"></TextBlock>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" Text="{Binding AdditionalComment}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Text="{Binding ArrivalKeyPoint.Name}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Text="{Binding TourRating.GuideKnowledge}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Text="{Binding TourRating.GuideLanguage}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Text="{Binding TourRating.Interesting}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" Text="{Binding TourRating.AdditionalComment}" TextWrapping="Wrap"></TextBlock>
                                 </Grid>
                             </Border>
                         </DataTemplate>

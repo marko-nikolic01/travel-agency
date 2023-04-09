@@ -62,6 +62,18 @@ namespace TravelAgency.Repository
             return result;
         }
 
+        public TourOccurrenceAttendance GetByTourOccurrenceIdAndGuestId(int TourOccurrenceId, int GuestId)
+        {
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
+            {
+                if (tourOccurrenceAttendance.TourOccurrenceId == TourOccurrenceId && tourOccurrenceAttendance.GuestId == GuestId)
+                {
+                    return tourOccurrenceAttendance;
+                }
+            }
+            return null;
+        }
+
         public void SaveOrUpdate(TourOccurrenceAttendance attendance)
         {
             TourOccurrenceAttendance oldAttendance = tourOccurrenceAttendances.Find(k => k.TourOccurrenceId == attendance.TourOccurrenceId && k.GuestId == attendance.GuestId);
