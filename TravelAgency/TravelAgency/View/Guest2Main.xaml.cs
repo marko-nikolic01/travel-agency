@@ -86,8 +86,10 @@ namespace TravelAgency.View
             }
             else
             {
-                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences, ActiveGuest, TourOccurrenceRepository);
-                tourReservation.Show();
+                /* TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences, ActiveGuest, TourOccurrenceRepository);
+                 tourReservation.Show();*/
+                TourGuests tourGuests = new TourGuests(SelectedTourOccurrence, ActiveGuest, TourOccurrenceRepository);
+                tourGuests.Show();
             }
         }
 
@@ -178,8 +180,9 @@ namespace TravelAgency.View
         }
         private void Vouchers_Click(object sender, RoutedEventArgs e)
         {
-            VouchersView vouchersView = new VouchersView(ActiveGuest.Id);
+            VouchersView vouchersView = new VouchersView(ActiveGuest, TourOccurrenceRepository, TourOccurrenceAttendanceRepository);
             vouchersView.Show();
+            Close();
         }
         public void Update()
         {

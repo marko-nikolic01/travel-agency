@@ -6,21 +6,48 @@
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
         Title="MyTours" Height="768" Width="1024">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="54"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Offered Tours" Width="180"/>
+                <Button Content="My Tours" Width="180"/>
+                <ComboBox Width="180">
+                </ComboBox>
+                <Button Content="Notifications" Width="180"/>
+                <Button Content="Help" Width="180"/>
+                <ComboBox Width="120">
+                </ComboBox>
+            </StackPanel>
+        </Grid>
         <StackPanel Grid.Row="1">
-            <!-- <Label x:Name="tourLabel" HorizontalAlignment="Center" Margin="0 20" Content="Active tour: "></Label>-->
-            <!--<Label x:Name="descriptionLabel" HorizontalAlignment="Center" Margin="0 -30" Content="Description: " Height="60"></Label>-->
-            <!--<Label HorizontalAlignment="Center" Content="Current key point: "></Label>-->
-            <!--<Label x:Name="statusLabel" HorizontalAlignment="Center" Content="Status: "></Label>-->
-            <TextBlock x:Name="activeTourText" TextAlignment="Center" Width="500" Height="100" Margin="0 20"></TextBlock>
+            <Label Margin="20" FontSize="24" Content="My Tours"></Label>
+            <TextBlock x:Name="activeTourText" TextAlignment="Left" Width="auto" Height="120" Margin="25 0"></TextBlock>
+            <Separator/>
         </StackPanel>
-        <DataGrid Grid.Row="2" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
+        <StackPanel Grid.Row="2">
+        <Label Margin="20 0" FontSize="24" Content="Finished Tours"></Label>
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
                  SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
@@ -30,8 +57,13 @@
                 <DataGridTextColumn Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="3" Width="200" Height="50" Click="RateTour_Click">Rate the tour</Button>
-        <Label Content="Active tours" HorizontalAlignment="Left" Margin="66,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Finished tours" HorizontalAlignment="Left" Margin="66,131,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        </StackPanel>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Width="374" Height="43" Click="RateTour_Click">Rate the tour</Button>
+        </Grid>
     </Grid>
 </Window>
