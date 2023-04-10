@@ -97,7 +97,7 @@ namespace TravelAgency.Model
             Type = AccommodationType.APARTMENT;
             MaxGuests = 1;
             MinDays = 1;
-            DaysToCancel = 0;
+            DaysToCancel = 1;
 
             Photos = new List<AccommodationPhoto>();
         }

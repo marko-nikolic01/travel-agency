@@ -20,6 +20,8 @@ namespace TravelAgency.Model
         private int ownerCorrectness;
         private int ownerResponsiveness;
         private string comment;
+        public List<AccommodationRatingPhoto> Photos { get; set; }
+
         public int AccommodationCleanliness
         {
             get => accommodationCleanliness;
@@ -109,6 +111,7 @@ namespace TravelAgency.Model
             OwnerCorrectness = -1;
             OwnerResponsiveness = -1;
             Comment = "";
+            Photos = new List<AccommodationRatingPhoto>();
         }
 
         public AccommodationOwnerRating(int id, int accommodationReservationId, int accommodationCleanliness, int accommodationComfort, int accommodationLocation, int ownerCorrectness, int ownerResponsiveness, string comment)
@@ -121,6 +124,7 @@ namespace TravelAgency.Model
             OwnerCorrectness = ownerCorrectness;
             OwnerResponsiveness = ownerResponsiveness;
             Comment = comment;
+            Photos = new List<AccommodationRatingPhoto>();
         }
 
         public string[] ToCSV()
@@ -191,7 +195,7 @@ namespace TravelAgency.Model
                         return "Rating for owner correctness must be between 1 and 5";
                     }
                 }
-                else if (columnName == "Responsiveness")
+                else if (columnName == "OwnerResponsiveness")
                 {
                     if (OwnerResponsiveness < 1 || OwnerResponsiveness > 5)
                     {
