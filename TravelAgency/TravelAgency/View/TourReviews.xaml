@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="TourReviews" Height="750" Width="430">
+        Title="TourReviews" Height="750" Width="430"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>

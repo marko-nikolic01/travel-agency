@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
@@ -28,5 +29,6 @@ namespace TravelAgency.View
             InitializeComponent();
             DataContext = new TourGuestReviewsViewModel(id);
         }
+
     }
 }

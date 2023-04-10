@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="TourGuestReviews" Height="750" Width="430">
+        Title="TourGuestReviews" Height="750" Width="430"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -60,16 +61,23 @@
                                         <ColumnDefinition Width="120"></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="True" IsEnabled="False"></CheckBox>
-                                    <Button Content="Report as invalid" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="100"></Button>
-                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding TourOccurrence.Tour.Name}"></Label>
+                                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=TourRating.IsValid}" IsEnabled="False"></CheckBox>
+                                    <Button x:Name="btn" Content="Report as not valid" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="100"></Button>
+                                    <TextBlock Grid.Column="1">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} : {1}">
+                                                <Binding Path= "TourOccurrence.Tour.Name" />
+                                                <Binding Path="Guest.Username" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                     <Label Grid.Row="1" Content="Arrival point: "></Label>
                                     <Label Grid.Row="2" Content="Guides expertiese: "></Label>
                                     <Label Grid.Row="3" Content="Guides language skills: "></Label>
                                     <Label Grid.Row="4" Content="Tours interestingness: "></Label>
                                     <Label Grid.Row="5" Content="Additional comment: "></Label>
-                                    <Image Source="{Binding TourRating.PhotoUrls[0].Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
-                                    <Button Grid.Row="5" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Right">
+                                    <Image Source="{Binding CurrentPhoto.Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
+                                    <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" HorizontalAlignment="Right">
                                         <Image Source="../Resources/Images/RightArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">
@@ -77,7 +85,7 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button Grid.Row="5" Grid.Column="2" Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left">
+                                    <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left">
                                         <Image Source="../Resources/Images/LeftArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">

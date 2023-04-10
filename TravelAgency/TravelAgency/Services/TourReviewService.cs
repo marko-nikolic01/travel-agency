@@ -30,5 +30,10 @@ namespace TravelAgency.Services
             }
             return tourReviews;
         }
+
+        public void UpdateTourRatingIsValid(TourRating tourRating)
+        {
+            new TourRatingRepository().UpdateIsValid(tourRating);
+        }
     }
 }

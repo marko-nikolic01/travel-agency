@@ -101,7 +101,12 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+        public void UpdateIsValid(TourRating tourRating)
+        {
+            TourRating oldTourRating = tourRatings.Find(t => t.Id == tourRating.Id);
+            oldTourRating.IsValid = tourRating.IsValid;
+            _serializer.ToCSV(FilePath, tourRatings);
+        }
 
-       
     }
 }
