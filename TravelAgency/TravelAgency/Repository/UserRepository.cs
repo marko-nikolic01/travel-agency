@@ -30,6 +30,12 @@ namespace TravelAgency.Repository
             return _users.FirstOrDefault(u => u.Username == username);
         }
 
+        public User GetById(int id)
+        {
+            User user = _users.Find(u => u.Id == id);
+            return user;
+        }
+
         private int GetNewId()
         {
             if (_users.Count == 0)

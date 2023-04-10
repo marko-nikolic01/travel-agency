@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -21,6 +22,13 @@ namespace TravelAgency.Repository
             keyPoints = _serializer.FromCSV(FilePath);
             LinkKeyPoints(tourOccurrenceRepository);
         }
+
+        public KeyPointRepository()
+        {
+            _serializer = new Serializer<KeyPoint>();
+            keyPoints = _serializer.FromCSV(FilePath);
+        }
+
         private void LinkKeyPoints(TourOccurrenceRepository tourOccurrenceRepository)
         {
             foreach (KeyPoint keyPoint in keyPoints)
@@ -59,7 +67,8 @@ namespace TravelAgency.Repository
         }
         public KeyPoint GetById(int id)
         {
-            return keyPoints.Find(x => x.Id == id);
+            KeyPoint keyPoint = keyPoints.Find(x => x.Id == id);
+            return keyPoint;
         }
 
         public void SaveAll(IEnumerable<KeyPoint> entities)
