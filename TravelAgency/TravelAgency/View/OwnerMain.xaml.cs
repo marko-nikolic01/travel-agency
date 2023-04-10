@@ -53,9 +53,10 @@ namespace TravelAgency.View
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
-            AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
+            AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
 
             ShowNotifications();
+            SetSuperOwner();
         }
 
         private void ShowCreateAccommodation_Click(object sender, RoutedEventArgs e)
@@ -79,6 +80,17 @@ namespace TravelAgency.View
                 int daysLeft = accommodationReservationRepository.CalculateDaysLeftForRating(unratedGuest);
                 MessageBox.Show($"Rate the guest.\n\nUsername: {unratedGuest.Guest.Username}\n" +
                     $"Accommodation: {unratedGuest.Accommodation.Name}\nDays left for rating: {daysLeft}", "Unrated guest", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void SetSuperOwner()
+        {
+            if (accommodationOwnerRatingRepository.IsSuperOwner(LoggedInUser)) {
+                SuperOwnerLabel.Content = "Yes";
+            }
+            else
+            {
+                SuperOwnerLabel.Content = "No";
             }
         }
 

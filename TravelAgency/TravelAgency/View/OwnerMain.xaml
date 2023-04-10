@@ -71,6 +71,20 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Profile">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="Super-owner:"/>
+                    <Label Grid.Column="1" x:Name="SuperOwnerLabel"/>
+                </Grid>
+            </TabItem>
         </TabControl>
         
     </DockPanel>
