@@ -21,6 +21,7 @@ namespace TravelAgency.Model
         public Accommodation Accommodation { get; set; }
         public int GuestId { get; set; }
         public User Guest { get; set; }
+        public bool Canceled { get; set; }
         private int _numberOfGuests;
         private DateSpan _dateSpan;
 
@@ -65,6 +66,7 @@ namespace TravelAgency.Model
             GuestId = -1;
             NumberOfGuests = -1;
             DateSpan = new DateSpan();
+            Canceled = false;
         }
 
         public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateSpan dateSpan)
@@ -74,6 +76,7 @@ namespace TravelAgency.Model
             GuestId = guestId;
             NumberOfGuests = numberOfGuests;
             DateSpan = dateSpan;
+            Canceled = false;
         }
 
         public AccommodationReservation(int accommodationId, Accommodation accommodation, int guestId, User guest)
@@ -84,6 +87,7 @@ namespace TravelAgency.Model
             GuestId = guestId;
             Guest = guest;
             NumberOfGuests = -1;
+            Canceled = false;
         }
 
         public string[] ToCSV()
@@ -95,7 +99,8 @@ namespace TravelAgency.Model
                 GuestId.ToString(),
                 NumberOfGuests.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
-                DateSpan.EndDate.ToString("dd/MM/yyyy")
+                DateSpan.EndDate.ToString("dd/MM/yyyy"),
+                Canceled.ToString()
             };
             return csvValues;
         }
@@ -108,6 +113,7 @@ namespace TravelAgency.Model
             NumberOfGuests = Convert.ToInt32(values[3]);
             DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
             DateSpan.EndDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy");
+            Canceled = Convert.ToBoolean(Convert.ToInt32(values[6]));
         }
 
         public string Error => null;

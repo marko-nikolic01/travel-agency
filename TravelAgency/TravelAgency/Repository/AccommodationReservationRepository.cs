@@ -264,5 +264,53 @@ namespace TravelAgency.Repository
             DateSpan dateSpan = new DateSpan(_startDateIterator, _endDateIterator);
             return dateSpan;
         }
+
+        public int CalculateDaysLeftForRating2(AccommodationReservation accommodationReservation)
+        {
+            return 5 - DateOnly.FromDateTime(DateTime.Now).DayNumber + accommodationReservation.DateSpan.EndDate.DayNumber;
+        }
+
+        public bool IsReservationActive2(AccommodationReservation accommodationReservation)
+        {
+            return DateOnly.FromDateTime(DateTime.Now).CompareTo(accommodationReservation.DateSpan.EndDate) <= 0;
+        }
+
+        public List<AccommodationReservation> GetUnrated2(IEnumerable<AccommodationOwnerRating> ratings)
+        {
+            List<AccommodationReservation> unrated = new();
+
+            foreach (var accommodationReservation in _accommodationReservations)
+            {
+                if (IsValidForRating2(accommodationReservation, ratings))
+                {
+                    unrated.Add(accommodationReservation);
+                    continue;
+                }
+            }
+
+            return unrated;
+        }
+
+        private bool IsValidForRating2(AccommodationReservation accommodationReservation, IEnumerable<AccommodationOwnerRating> accommodationOwnerRatings)
+        {
+            return CalculateDaysLeftForRating2(accommodationReservation) >= 0 &&
+                !IsReservationActive2(accommodationReservation) &&
+                !IsRated2(accommodationReservation, accommodationOwnerRatings);
+        }
+
+        private bool IsRated2(AccommodationReservation accommodationReservation, IEnumerable<AccommodationOwnerRating> accommodationOwnerRatings)
+        {
+            foreach (var rating in accommodationOwnerRatings)
+            {
+                if (accommodationReservation.Id == rating.AccommodationReservationId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        
     }
 }
