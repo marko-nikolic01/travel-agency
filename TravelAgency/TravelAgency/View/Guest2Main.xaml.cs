@@ -86,21 +86,43 @@ namespace TravelAgency.View
             }
             else
             {
-                TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences, ActiveGuest, TourOccurrenceRepository);
-                tourReservation.Show();
+                /* TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences, ActiveGuest, TourOccurrenceRepository);
+                 tourReservation.Show();*/
+                TourGuests tourGuests = new TourGuests(SelectedTourOccurrence, ActiveGuest, TourOccurrenceRepository);
+                tourGuests.Show();
             }
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        private void tbCountry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(tbCity.Text != "" || tbCountry.Text != "" || tbLanguage.Text != "" || tbDuration.Text != "" || tbNumOfGuests.Text != "")
+            Search();
+        }
+        private void tbCity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search();
+        }
+        private void tbDuration_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search();
+        }
+        private void tbLanguage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search();
+        }
+        private void tbGuests_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search();
+        }
+        private void Search()
+        {
+            if (tbCity.Text != "" || tbCountry.Text != "" || tbLanguage.Text != "" || tbDuration.Text != "" || tbNumOfGuests.Text != "")
             {
-             if(!IsValid())
-             {
-                MessageBox.Show("Number of guests must be a non negative number");
-                tbNumOfGuests.Text = "";
-                return;
-             }
+                if (!IsValid())
+                {
+                    MessageBox.Show("Number of guests must be a non negative number");
+                    tbNumOfGuests.Text = "";
+                    return;
+                }
                 ToursDataGrid.ItemsSource = FilterList(IsTextBoxEmpty(tbCity), IsTextBoxEmpty(tbCountry), IsTextBoxEmpty(tbDuration), IsTextBoxEmpty(tbLanguage), IsTextBoxEmpty(tbNumOfGuests));
             }
             else
@@ -147,10 +169,20 @@ namespace TravelAgency.View
                 return false;
             }
         }
+
+        private void ShowPhotos_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedTourOccurrence != null)
+            {
+                TourPhotosView tourPhotosView = new TourPhotosView(SelectedTourOccurrence);
+                tourPhotosView.Show();
+            }
+        }
         private void Vouchers_Click(object sender, RoutedEventArgs e)
         {
-            VouchersView vouchersView = new VouchersView(ActiveGuest.Id);
+            VouchersView vouchersView = new VouchersView(ActiveGuest, TourOccurrenceRepository, TourOccurrenceAttendanceRepository);
             vouchersView.Show();
+            Close();
         }
         public void Update()
         {
@@ -165,12 +197,12 @@ namespace TravelAgency.View
             myTours.Show();
         }
 
-        private void SignOut_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
-        }
+        /*  private void SignOut_Click(object sender, RoutedEventArgs e)
+          {
+              MainWindow mainWindow = new MainWindow();
+              mainWindow.Show();
+              Close();
+          }*/
 
     }
 }
