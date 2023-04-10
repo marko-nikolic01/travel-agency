@@ -5,39 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="TourGuideRating" Height="768" Width="1024">
+        Title="TourGuideRating" Height="768" Width="1024" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Label Content="Guide knowledge" HorizontalAlignment="Left" Margin="103,59,0,0" VerticalAlignment="Top"/>
-        <Label Content="Guide language" HorizontalAlignment="Left" Margin="103,107,0,0" VerticalAlignment="Top"/>
-        <Label Content="Interesting" HorizontalAlignment="Left" Margin="103,147,0,0" VerticalAlignment="Top"/>
-        <Label Content="Images" HorizontalAlignment="Left" Margin="103,191,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="urlText" HorizontalAlignment="Left" Margin="281,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="257"/>
-        <ListBox x:Name="urlsList" Margin="281,235,237,464" />
-        <TextBox x:Name="commentTb" HorizontalAlignment="Left" Margin="281,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" Height="44"/>
-        <Label Content="Additional comment" HorizontalAlignment="Left" Margin="102,311,0,0" VerticalAlignment="Top"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="622,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.381,0.144" Click="AddUrl_Click"/>
-        <Button Content="Submit" HorizontalAlignment="Left" Margin="281,380,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.381,0.144" Click="SubmitRating_Click" Height="25" Width="83"/>
-        <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Margin="290,63,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="5"></ComboBoxItem>
-            <ComboBoxItem Content="4"></ComboBoxItem>
-            <ComboBoxItem Content="3"></ComboBoxItem>
-            <ComboBoxItem Content="2"></ComboBoxItem>
-            <ComboBoxItem Content="1"></ComboBoxItem>
-        </ComboBox>
-        <ComboBox x:Name="languageCb" HorizontalAlignment="Left" Margin="290,109,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="5"></ComboBoxItem>
-            <ComboBoxItem Content="4"></ComboBoxItem>
-            <ComboBoxItem Content="3"></ComboBoxItem>
-            <ComboBoxItem Content="2"></ComboBoxItem>
-            <ComboBoxItem Content="1"></ComboBoxItem>
-        </ComboBox>
-        <ComboBox x:Name="interestingCb" HorizontalAlignment="Left" Margin="290,157,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="5"></ComboBoxItem>
-            <ComboBoxItem Content="4"></ComboBoxItem>
-            <ComboBoxItem Content="3"></ComboBoxItem>
-            <ComboBoxItem Content="2"></ComboBoxItem>
-            <ComboBoxItem Content="1"></ComboBoxItem>
-        </ComboBox>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"></RowDefinition>
+            <RowDefinition Height="140"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Offered Tours" Width="180"/>
+                <Button Content="My Tours" Width="180" />
+                <ComboBox Width="180">
+                </ComboBox>
+                <Button Content="Notifications" Width="180"/>
+                <Button Content="Help" Width="180"/>
+                <ComboBox Width="120">
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <Label Margin="20" FontSize="24" Content="Rating a tour"></Label>
+                <Label Margin="20 0" FontSize="20" Content="Description"></Label>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Guide knowledge" HorizontalAlignment="Left" />
+            <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="Guide language" HorizontalAlignment="Left"/>
+            <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Interesting" HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Images" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="20 10" x:Name="urlText" HorizontalAlignment="Left" Width="500"/>
+            <ListBox x:Name="urlsList" Grid.Row="4" Grid.Column="1" Width="500" HorizontalAlignment="Left" Margin="20 0 0 10" />
+            <TextBox x:Name="commentTb" Grid.Row="5" Grid.Column="1" Margin="20 10 0 0" Width="500" HorizontalAlignment="Left"/>
+            <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Additional comment" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Add" HorizontalAlignment="Right" Margin="10 0 50 0" Height="50" Width="80" Click="AddUrl_Click"/>
+            <Button Grid.Row="4" Grid.Column="1" Content="Preview" HorizontalAlignment="Right" Margin="10 0 50 0" Height="50" Width="80" Click="AddUrl_Click"/>
+            <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <ComboBoxItem Content="5"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="languageCb" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <ComboBoxItem Content="5"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="interestingCb" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <ComboBoxItem Content="5"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Width="374" Height="43" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel reservation"/>
+        </Grid>
     </Grid>
 </Window>

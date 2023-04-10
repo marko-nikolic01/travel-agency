@@ -176,8 +176,8 @@ namespace TravelAgency.Repository
                         string keyPointName = keyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
                         result = "Active tour: " + occurrence.Tour.Name;
                         result += "\n" + occurrence.Tour.Description;
-                        result += "\n\nCurrent key point: " +keyPointName;
-                        result += "\n\nStatus: " + tourAttendance.ResponseStatus.ToString();
+                        result += "\nCurrent key point: " +keyPointName;
+                        result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
                         return result;
                     }
                 }
