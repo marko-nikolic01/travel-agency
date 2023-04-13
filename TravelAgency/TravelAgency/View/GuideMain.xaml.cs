@@ -42,8 +42,8 @@ namespace TravelAgency.View
             PhotoRepository = new PhotoRepository();
             TourReservationRepository = new TourReservationRepository();
             UserRepository = new UserRepository();
-            TourOccurrenceRepository = new TourOccurrenceRepository(PhotoRepository, LocationRepository, TourRepository, TourReservationRepository, UserRepository);
-            KeyPointRepository = new KeyPointRepository(TourOccurrenceRepository);
+            KeyPointRepository = new KeyPointRepository();
+            TourOccurrenceRepository = new TourOccurrenceRepository(PhotoRepository, LocationRepository, TourRepository, TourReservationRepository, UserRepository, KeyPointRepository);
             TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
             VoucherRepository = new VoucherRepository();
         }
@@ -68,6 +68,13 @@ namespace TravelAgency.View
         {
             TourReviews tourReviews = new TourReviews(ActiveGuide);
             tourReviews.Show();
+            Close();
+        }
+
+        private void TourStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            TourStatistics tourStatistics = new TourStatistics(ActiveGuide);
+            tourStatistics.Show();
             Close();
         }
     }
