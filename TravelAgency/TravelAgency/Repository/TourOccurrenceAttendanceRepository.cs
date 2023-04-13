@@ -113,5 +113,18 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
+        public int GetCountForTour(int id)
+        {
+            int count = 0;
+            foreach(TourOccurrenceAttendance attendance in tourOccurrenceAttendances)
+            {
+                if(attendance.TourOccurrenceId == id)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }

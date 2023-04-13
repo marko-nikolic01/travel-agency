@@ -33,7 +33,8 @@ namespace TravelAgency.View
             TourRepository tourRepository = new TourRepository();
             TourReservationRepository tourReservationRepository = new TourReservationRepository();
             UserRepository userRepository = new UserRepository();
-            TourOccurrenceRepository tourOccurrenceRepository = new TourOccurrenceRepository( photoRepository,  locationRepository,  tourRepository,  tourReservationRepository,  userRepository);
+            KeyPointRepository keyPointRepository = new KeyPointRepository();
+            TourOccurrenceRepository tourOccurrenceRepository = new TourOccurrenceRepository( photoRepository,  locationRepository,  tourRepository,  tourReservationRepository,  userRepository, keyPointRepository);
             TourOccurrences = new ObservableCollection<TourOccurrence>(tourOccurrenceRepository.GetFinishedOccurrencesForGuide(activeGuide.Id));
         }
         private void View_Click(object sender, RoutedEventArgs e)

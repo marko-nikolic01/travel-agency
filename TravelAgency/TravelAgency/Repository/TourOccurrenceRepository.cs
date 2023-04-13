@@ -30,7 +30,7 @@ namespace TravelAgency.Repository
             LinkTourOccurrences(tourRepository);
         }
 
-        public TourOccurrenceRepository(PhotoRepository photoRepository, LocationRepository locationRepository, TourRepository tourRepository, TourReservationRepository reservationRepository, UserRepository userRepository)
+        public TourOccurrenceRepository(PhotoRepository photoRepository, LocationRepository locationRepository, TourRepository tourRepository, TourReservationRepository reservationRepository, UserRepository userRepository, KeyPointRepository keyPointRepository)
         {
             _serializer = new Serializer<TourOccurrence>();
             tourOccurrences = _serializer.FromCSV(FilePath);
@@ -39,9 +39,20 @@ namespace TravelAgency.Repository
             LinkTourPhotos(photoRepository, tourRepository);
             LinkTourOccurrences(tourRepository);
             LinkTourGuests(reservationRepository, userRepository);
-
+            LinkKeyPoints(keyPointRepository);
         }
 
+        private void LinkKeyPoints(KeyPointRepository keyPointRepository)
+        {
+            foreach (KeyPoint keyPoint in keyPointRepository.GetAll())
+            {
+                TourOccurrence tourOccurrence = tourOccurrences.Find(tO => tO.Id == keyPoint.TourOccurrenceId);
+                if (tourOccurrence != null)
+                {
+                    tourOccurrence.KeyPoints.Add(keyPoint);
+                }
+            }
+        }
         private void LinkTourGuests(TourReservationRepository reservationRepository, UserRepository userRepository)
         {
             foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
@@ -163,6 +174,19 @@ namespace TravelAgency.Repository
             foreach (TourOccurrence occurrence in tourOccurrences)
             {
                 if (occurrence.CurrentState == CurrentState.Ended && occurrence.GuideId == guideId)
+                {
+                    result.Add(occurrence);
+                }
+            }
+            return result;
+        }
+
+        public List<TourOccurrence> GetFinishedOccurrencesForGuideByYear(int guideId, int year)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence occurrence in tourOccurrences)
+            {
+                if (occurrence.CurrentState == CurrentState.Ended && occurrence.GuideId == guideId && occurrence.DateTime.Year == year)
                 {
                     result.Add(occurrence);
                 }
