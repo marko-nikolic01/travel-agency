@@ -16,6 +16,7 @@ namespace TravelAgency.Model
         public int ReservationId { get; set; }
         public AccommodationReservation Reservation { get; set; }
         public AccommodationReservationMoveRequestStatus Status { get; set; }
+        public bool StatusChanged { get; set; }
         public string RejectionExplanation { get; set; }
         private DateSpan _dateSpan;
 
@@ -44,6 +45,7 @@ namespace TravelAgency.Model
             Id = -1;
             ReservationId = -1;
             Status = AccommodationReservationMoveRequestStatus.WAITING;
+            StatusChanged = false;
             RejectionExplanation = "";
             DateSpan = new DateSpan();
         }
@@ -53,6 +55,7 @@ namespace TravelAgency.Model
             Id = id;
             ReservationId = reservationId;
             Status = AccommodationReservationMoveRequestStatus.WAITING;
+            StatusChanged = false;
             RejectionExplanation = "";
             DateSpan = dateSpan;
         }
@@ -64,6 +67,7 @@ namespace TravelAgency.Model
                 Id.ToString(),
                 ReservationId.ToString(),
                 Convert.ToInt32(Status).ToString(),
+                StatusChanged.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
                 RejectionExplanation
@@ -76,9 +80,10 @@ namespace TravelAgency.Model
             Id = Convert.ToInt32(values[0]);
             ReservationId = Convert.ToInt32(values[1]);
             Status = (AccommodationReservationMoveRequestStatus)Convert.ToInt32(values[2]);
-            DateSpan.StartDate = DateOnly.ParseExact(values[3], "dd/MM/yyyy");
-            DateSpan.EndDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
-            RejectionExplanation = values[5];
+            StatusChanged = Convert.ToBoolean(Convert.ToInt32(values[3]));
+            DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
+            DateSpan.EndDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy");
+            RejectionExplanation = values[6];
         }
         
 
