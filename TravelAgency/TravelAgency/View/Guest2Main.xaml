@@ -33,6 +33,12 @@
                 <Button Content="Offered Tours" Width="180"/>
                 <Button Content="My Tours" Width="180" Click="MyToursButton_Click"/>
                 <ComboBox Width="180">
+                    <ComboBoxItem>
+                        <Button Width="180" Content="Requests" Click="RequestButton_Click"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Width="180" Content="Click1" />
+                    </ComboBoxItem>
                 </ComboBox>
                 <Button Content="Notifications" Width="180"/>
                 <Button Content="Help" Width="180"/>

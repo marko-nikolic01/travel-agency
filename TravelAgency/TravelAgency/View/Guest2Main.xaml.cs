@@ -196,7 +196,11 @@ namespace TravelAgency.View
             MyTours myTours = new MyTours(TourOccurrenceRepository, TourOccurrenceAttendanceRepository, ActiveGuest.Id);
             myTours.Show();
         }
-
+        private void RequestButton_Click(object sender, RoutedEventArgs e)
+        {
+            TourRequestWindow requests = new TourRequestWindow();
+            requests.Show();
+        }
         /*  private void SignOut_Click(object sender, RoutedEventArgs e)
           {
               MainWindow mainWindow = new MainWindow();
