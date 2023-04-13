@@ -69,5 +69,29 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
+        public bool NotifyStatusChange()
+        {
+            bool notify = false;
+            foreach(AccommodationReservationMoveRequest moveRequest in _moveRequests) 
+            {
+                if (StatusChanged(moveRequest))
+                {
+                    notify = true;
+                }
+            }
+            return notify;
+        }
+
+        private bool StatusChanged(AccommodationReservationMoveRequest moveRequest)
+        {
+            if (!moveRequest.StatusChanged)
+            {
+                return false;
+            }
+
+            moveRequest.StatusChanged = false;
+            return true;
+        }
     }
 }
