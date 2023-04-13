@@ -45,7 +45,7 @@ namespace TravelAgency.View
             _AccommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
 
             UnratedReservations = new ObservableCollection<AccommodationReservation>(_AccommodationReservationRepository.GetUnrated(_AccommodationGuestRatingRepository.GetAll()));
-            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(_AccommodationGuestRatingRepository.GetAll());
+            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(_AccommodationGuestRatingRepository.GetAllByOwner(loggedInUser));
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
         }

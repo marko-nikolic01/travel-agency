@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
@@ -49,6 +50,16 @@ namespace TravelAgency.Repository
             user.Id = GetNewId();
             _users.Add(user);
             _serializer.ToCSV(FilePath, _users);
+        }
+
+        public void UpdateSuperOwners()
+        {
+            _serializer.ToCSV(FilePath, _users);
+        }
+
+        public List<User> GetOwners()
+        {
+            return _users.FindAll(u => u.Role == Roles.Owner);
         }
     }
 }

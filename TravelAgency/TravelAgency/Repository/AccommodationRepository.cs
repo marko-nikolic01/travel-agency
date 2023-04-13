@@ -118,6 +118,9 @@ namespace TravelAgency.Repository
             searchedAccommodations = SerachByType(filter.TypeFilter, searchedAccommodations);
             searchedAccommodations = SerachByGuestNumber(filter.GuestNumberFilter, searchedAccommodations);
             searchedAccommodations = SerachByDayNumber(filter.DayNumberFilter, searchedAccommodations);
+
+            searchedAccommodations = SortBySuperOwnersFirst(searchedAccommodations);
+
             return searchedAccommodations;
         }
 
@@ -180,5 +183,31 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
+        public List<Accommodation> GetAllSortedBySuperOwnersFirst()
+        {
+            return SortBySuperOwnersFirst(accommodations);
+        }
+
+        public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
+        {
+            var a = new List<Accommodation>(accommodations);
+            List<Accommodation> sortedAccommodations = new List<Accommodation>();
+
+            foreach (var accommodation in accommodations)
+            {
+                if (accommodation.Owner.IsSuperOwner)
+                {
+                    sortedAccommodations.Add(accommodation);
+                    a.Remove(accommodation);
+                }
+            }
+
+            foreach (var accommodation in a)
+            {
+                sortedAccommodations.Add(accommodation);
+            }
+
+            return sortedAccommodations;
+        }
     }
 }

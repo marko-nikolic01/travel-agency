@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
 
@@ -91,7 +92,7 @@ namespace TravelAgency.Repository
             {
                 foreach (var accommodationOwnerRating in accommodationOwnerRatings)
                 {
-                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId)
+                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId && user.Id == accommodationOwnerRating.AccommodationReservation.Accommodation.OwnerId)
                     {
                         ownerRatings.Add(accommodationOwnerRating);
                         break;
@@ -123,7 +124,24 @@ namespace TravelAgency.Repository
 
         public bool IsSuperOwner(User user)
         {
-            return GetByUser(user).Count >= 50 && GetAverageRatingForOwner(user) >= 4.5;
+            return GetByUser(user).Count >= 1 && GetAverageRatingForOwner(user) >= 4.5;
+        }
+
+        public void SetSuperOwners(UserRepository userRepository)
+        {
+            foreach (var user in userRepository.GetOwners())
+            {
+                if (IsSuperOwner(user))
+                {
+                    user.IsSuperOwner = true;
+                }
+                else
+                {
+                    user.IsSuperOwner = false;
+                }
+            }
+
+            userRepository.UpdateSuperOwners();
         }
     }
 }

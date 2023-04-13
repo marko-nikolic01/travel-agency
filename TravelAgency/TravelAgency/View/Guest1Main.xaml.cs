@@ -31,6 +31,7 @@ namespace TravelAgency.View
         public LocationRepository locationRepository;
         public AccommodationPhotoRepository imageRepository;
         public AccommodationReservationRepository accommodationReservationRepository;
+        public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
@@ -51,9 +52,12 @@ namespace TravelAgency.View
             imageRepository = new AccommodationPhotoRepository();
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
+            accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
+
+            accommodationOwnerRatingRepository.SetSuperOwners(userRepository);
 
             Guest = guest;
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
+            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
@@ -133,7 +137,7 @@ namespace TravelAgency.View
 
         private void CancelSearch(object sender, RoutedEventArgs e)
         {
-            accommodationsDataGrid.ItemsSource = accommodationRepository.GetAll();
+            accommodationsDataGrid.ItemsSource = accommodationRepository.GetAllSortedBySuperOwnersFirst();
             nameTextBox.Text = "";
             countryComboBox.SelectedItem = 0;
             SelectedCountry = Cities[0];

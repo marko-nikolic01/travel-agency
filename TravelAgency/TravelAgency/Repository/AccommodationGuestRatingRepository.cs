@@ -77,5 +77,10 @@ namespace TravelAgency.Repository
         {
             throw new NotImplementedException();
         }
+
+        internal IEnumerable<AccommodationGuestRating> GetAllByOwner(User owner)
+        {
+            return accommodationGuestRatings.FindAll(agr => agr.AccommodationReservation.Accommodation.OwnerId == owner.Id);
+        }
     }
 }

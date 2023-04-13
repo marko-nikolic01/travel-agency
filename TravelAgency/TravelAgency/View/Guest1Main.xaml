@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TravelAgency.View"
+        xmlns:converters="clr-namespace:TravelAgency.Converters"
         mc:Ignorable="d"
         Title="Travel Agency" Height="768" Width="1366"
         WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <converters:SuperOwnerBooleanToStringConverter x:Key="konverter"/>
+    </Window.Resources>
+    
     <DockPanel>
         <StatusBar x:Name="statusBar" DockPanel.Dock="Bottom" Background="White" BorderBrush="DarkGray" BorderThickness="0 1 0 0">
             <StatusBarItem Content="Travel Agency"></StatusBarItem>
@@ -114,6 +120,7 @@
                     <DataGridTextColumn Width="*" Header="Type" Binding="{Binding Path=Type}"/>
                     <DataGridTextColumn Width="*" Header="Max. guests" Binding="{Binding Path=MaxGuests}"/>
                     <DataGridTextColumn Width="*" Header="Min. days" Binding="{Binding Path=MinDays}"/>
+                    <DataGridTextColumn Width="*" Header="SuperOwner" Binding="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource konverter}}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Border Grid.Row="9" Grid.Column="4" BorderBrush="DarkGray" BorderThickness="0, 1, 0, 0"></Border>
