@@ -311,6 +311,26 @@ namespace TravelAgency.Repository
             return false;
         }
 
-        
+
+        public bool CancelReservation(AccommodationReservation accommodationReservation)
+        {
+            if (!IsDeadlineOverdue(accommodationReservation))
+            {
+                accommodationReservation.Canceled = true;
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsDeadlineOverdue(AccommodationReservation accommodationReservation)
+        {
+            DateOnly deadline = accommodationReservation.DateSpan.StartDate.AddDays(-accommodationReservation.Accommodation.DaysToCancel);
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+            if (deadline.CompareTo(today) >= 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
