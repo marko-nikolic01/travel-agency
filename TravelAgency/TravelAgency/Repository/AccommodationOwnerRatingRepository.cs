@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
 
@@ -83,7 +84,7 @@ namespace TravelAgency.Repository
             return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == user.Id);
         }
 
-        public List<AccommodationOwnerRating> GetVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
+        public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
         {
             List<AccommodationOwnerRating> ownerRatings = new List<AccommodationOwnerRating>();
 
@@ -91,7 +92,7 @@ namespace TravelAgency.Repository
             {
                 foreach (var accommodationOwnerRating in accommodationOwnerRatings)
                 {
-                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId)
+                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId && user.Id == accommodationOwnerRating.AccommodationReservation.Accommodation.OwnerId)
                     {
                         ownerRatings.Add(accommodationOwnerRating);
                         break;
@@ -100,6 +101,47 @@ namespace TravelAgency.Repository
             }
 
             return ownerRatings;
+        }
+
+        public double GetAverageRatingForOwner(User user)
+        {
+            var ratings = GetByUser(user);
+            double averageRating = 0;
+            foreach (var rating in ratings)
+            {
+                double currentRating = (rating.AccommodationCleanliness +
+                                       rating.AccommodationComfort +
+                                       rating.AccommodationLocation +
+                                       rating.OwnerCorrectness +
+                                       rating.OwnerResponsiveness) / 5;
+                averageRating += currentRating;
+            }
+
+            averageRating /= ratings.Count;
+
+            return averageRating;
+        }
+
+        public bool IsSuperOwner(User user)
+        {
+            return GetByUser(user).Count >= 1 && GetAverageRatingForOwner(user) >= 4.5;
+        }
+
+        public void SetSuperOwners(UserRepository userRepository)
+        {
+            foreach (var user in userRepository.GetOwners())
+            {
+                if (IsSuperOwner(user))
+                {
+                    user.IsSuperOwner = true;
+                }
+                else
+                {
+                    user.IsSuperOwner = false;
+                }
+            }
+
+            userRepository.UpdateSuperOwners();
         }
     }
 }

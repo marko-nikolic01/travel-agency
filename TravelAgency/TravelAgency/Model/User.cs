@@ -14,6 +14,7 @@ namespace TravelAgency.Model
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public bool IsSuperOwner { get; set; }
 
         public Roles Role { get; set; }
 
@@ -22,18 +23,20 @@ namespace TravelAgency.Model
             Id = -1;
             Username = "";
             Password = "";
+            IsSuperOwner = false;
         }
 
-        public User(string username, string password, Roles role)
+        public User(string username, string password, Roles role, bool isSuperOwner = false)
         {
             Username = username;
             Password = password;
             Role = role;
+            IsSuperOwner = isSuperOwner;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString() };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString() };
             return csvValues;
         }
 
@@ -43,6 +46,7 @@ namespace TravelAgency.Model
             Username = values[1];
             Password = values[2];
             Role = (Roles)Convert.ToInt32(values[3]);
+            IsSuperOwner = Convert.ToBoolean(Convert.ToInt32(values[4]));
         }
     }
 }
