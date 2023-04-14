@@ -50,10 +50,11 @@ namespace TravelAgency.Model
             DateSpan = new DateSpan();
         }
 
-        public AccommodationReservationMoveRequest(int id, int reservationId, DateSpan dateSpan)
+        public AccommodationReservationMoveRequest(AccommodationReservation reservation, DateSpan dateSpan)
         {
-            Id = id;
-            ReservationId = reservationId;
+            Id = -1;
+            ReservationId = reservation.Id;
+            Reservation = reservation;
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";

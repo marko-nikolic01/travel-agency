@@ -227,6 +227,24 @@ namespace TravelAgency.Repository
             return availableDates;
         }
 
+        public List<DateSpan> FindDatesForReservationMoveRequest(DateTime dateRangeStart, DateTime dateRangeEnd, AccommodationReservation reservation)
+        {
+            List<DateSpan> availableDates = new List<DateSpan>();
+            SetReservationLength((dateRangeEnd.Date - dateRangeStart.Date).Days);
+            PrepareDateIterators(dateRangeStart, dateRangeStart.AddDays(_reservationLength - 1), dateRangeEnd);
+            bool isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
+            while (isDateSpanAllowed)
+            {
+                if (_startDateIterator.CompareTo(reservation.DateSpan.StartDate) != 0)
+                {
+                    availableDates.Add(CreateDateSpan());
+                }
+                AddDaysToIterators(1);
+                isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
+            }
+            return availableDates;
+        }
+
         private List<DateSpan> FindAvailableDatesAfterDateRange(DateTime dateRangeEnd, int accommodationId)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
