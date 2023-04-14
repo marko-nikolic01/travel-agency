@@ -100,7 +100,7 @@ namespace TravelAgency.Model
                 NumberOfGuests.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
-                Canceled.ToString()
+                Convert.ToInt32(Canceled).ToString()
             };
             return csvValues;
         }

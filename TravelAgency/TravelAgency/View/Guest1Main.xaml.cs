@@ -34,6 +34,7 @@ namespace TravelAgency.View
         public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public ObservableCollection<AccommodationReservation> Reservations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         public List<string> Countries { get; set; }
         public List<string> Cities { get; set; }
@@ -58,6 +59,7 @@ namespace TravelAgency.View
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
+            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
