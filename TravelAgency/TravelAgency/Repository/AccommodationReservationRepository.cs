@@ -79,7 +79,7 @@ namespace TravelAgency.Repository
             List<AccommodationReservation> reservations = new List<AccommodationReservation>();
             foreach (AccommodationReservation reservation in _accommodationReservations)
             {
-                if (reservation.Guest.Id == guest.Id && !reservation.Canceled)
+                if (reservation.Guest.Id == guest.Id && !reservation.Canceled && reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)
                 {
                     reservations.Add(reservation);
                 }
@@ -120,7 +120,7 @@ namespace TravelAgency.Repository
 
         public void SaveAll(IEnumerable<AccommodationReservation> entities)
         {
-            throw new NotImplementedException();
+            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
 
         public int CalculateDaysLeftForRating(AccommodationReservation accommodationReservation)
@@ -330,6 +330,7 @@ namespace TravelAgency.Repository
             if (!IsDeadlineOverdue(accommodationReservation))
             {
                 accommodationReservation.Canceled = true;
+                SaveAll(_accommodationReservations);
                 return true;
             }
             return false;
