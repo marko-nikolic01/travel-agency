@@ -115,7 +115,7 @@ namespace TravelAgency.View
                 user = GetUserByName(i);
                 if (user == null)
                 {
-                    user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2);
+                    user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2, new DateOnly(2004,2,15));
                     userRepository.SaveUser(user);
                 }
                 users.Add(user);
@@ -125,7 +125,7 @@ namespace TravelAgency.View
             TourOccurrence.Guests.AddRange(users);
             TourOccurrence.FreeSpots -= users.Count;
             TourOccurrenceRepository.UpdateTourOccurrence(TourOccurrence);
-            voucherViewModel.UpdateVoucher();
+            voucherViewModel.UpdateVoucher(TourOccurrence.Id);
             Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();
         }

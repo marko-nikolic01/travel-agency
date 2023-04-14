@@ -40,8 +40,7 @@ namespace TravelAgency.View
         private void View_Click(object sender, RoutedEventArgs e)
         {
             TourGuestReviews tourGuestReviews = new TourGuestReviews(SelectedTourOccurrence.Id);
-            tourGuestReviews.Show();
-            Close();
+            tourGuestReviews.ShowDialog();
         }
     }
 }

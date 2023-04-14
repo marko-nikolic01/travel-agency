@@ -10,6 +10,7 @@ namespace TravelAgency.Model
         public int GuideId { get; set; }
         public bool IsUsed { get; set; }
         public DateTime Deadline { get; set; }
+        public int TourOccurrenceId { get; set; }
         public Voucher()
         {
         }
@@ -21,11 +22,12 @@ namespace TravelAgency.Model
             GuideId = guideId;
             IsUsed = false;
             Deadline = dateTime;
+            TourOccurrenceId = -1;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm") };
+            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm"), TourOccurrenceId.ToString() };
             return csvValues;
         }
 
@@ -36,6 +38,7 @@ namespace TravelAgency.Model
             GuideId = int.Parse(values[2]);
             IsUsed = bool.Parse(values[3]);
             Deadline = DateTime.ParseExact(values[4], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
+            TourOccurrenceId = int.Parse(values[5]);
         }
     }
 }

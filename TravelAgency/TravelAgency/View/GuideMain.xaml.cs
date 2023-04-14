@@ -73,7 +73,7 @@ namespace TravelAgency.View
 
         private void TourStatistics_Click(object sender, RoutedEventArgs e)
         {
-            TourStatistics tourStatistics = new TourStatistics(ActiveGuide);
+            TourStatistics tourStatistics = new TourStatistics(ActiveGuide.Id);
             tourStatistics.Show();
             Close();
         }

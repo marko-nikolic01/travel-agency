@@ -36,6 +36,19 @@ namespace TravelAgency.Repository
             return vouchers;
         }
 
+        public List<Voucher> GetByTourOccurrenceId(int id)
+        {
+            List<Voucher> result = new List<Voucher>();
+            foreach(var voucher in vouchers)
+            {
+                if(voucher.TourOccurrenceId == id)
+                {
+                    result.Add(voucher);
+                }
+            }
+            return result;
+        }
+
         public Voucher Save(Voucher voucher)
         {
             voucher.Id = NextId();

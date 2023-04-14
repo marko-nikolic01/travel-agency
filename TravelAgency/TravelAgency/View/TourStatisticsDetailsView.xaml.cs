@@ -11,20 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TravelAgency.Model;
-using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
     /// <summary>
-    /// Interaction logic for TourStatistics.xaml
+    /// Interaction logic for TourStatisticsDetailsView.xaml
     /// </summary>
-    public partial class TourStatistics : Window
+    public partial class TourStatisticsDetailsView : Window
     {
-        public TourStatistics(int activeGuideId)
+        public TourStatisticsDetailsView()
         {
             InitializeComponent();
-            DataContext = new TourStatisticsViewModel(activeGuideId);
         }
     }
 }

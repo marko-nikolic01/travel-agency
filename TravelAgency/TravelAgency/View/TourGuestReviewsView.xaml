@@ -62,7 +62,7 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=TourRating.IsValid}" IsEnabled="False"></CheckBox>
-                                    <Button x:Name="btn" Content="Report as not valid" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="100"></Button>
+                                    <Button x:Name="btn" Content="Report as not valid" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="110"></Button>
                                     <TextBlock Grid.Column="1">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} : {1}">

@@ -62,7 +62,7 @@
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date" Width="*"></DataGridTextColumn>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Cancel?">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Name="CancelButton" Margin="5" Content="Cancel" Click="CancelButton_Click"></Button>
