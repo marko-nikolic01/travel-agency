@@ -7,10 +7,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using TravelAgency.Commands;
 using TravelAgency.Model;
 using TravelAgency.Observer;
 using TravelAgency.Repository;
 using TravelAgency.Services;
+using TravelAgency.View;
 
 namespace TravelAgency.ViewModel
 {
@@ -89,6 +92,10 @@ namespace TravelAgency.ViewModel
                 }
         }
         public TourOccurrenceAttendanceService AttendanceService { get; set; }
+        public StatisticsButtonCommand RightCommand { get; set; }
+        public StatisticsButtonCommand LeftCommand { get; set; }
+        public StatisticsButtonCommand ViewCommand { get; set; }
+        public TourOccurrence SelectedTourOccurrence { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -110,6 +117,59 @@ namespace TravelAgency.ViewModel
             Years.Add("2019");
             SelectedYear = Years[0];
             FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));
+            RightCommand = new StatisticsButtonCommand(ShowNextPhoto);
+            LeftCommand = new StatisticsButtonCommand(ShowPreviousPhoto);
+            ViewCommand = new StatisticsButtonCommand(ViewDetails);
+        }
+
+        public void ViewDetails()
+        {
+            TourStatisticsDetailsViewModel viewModel = new TourStatisticsDetailsViewModel(SelectedTourOccurrence);
+            TourStatisticsDetailsView tourStatisticsDetailsView = new TourStatisticsDetailsView();
+            tourStatisticsDetailsView.DataContext = viewModel;
+            tourStatisticsDetailsView.ShowDialog();
+        }
+
+        private void ShowNextPhoto()
+        {
+            for (int i = 0; i < displayTour.Tour.Photos.Count; i++)
+            {
+                if (CurrentPhoto.Id == displayTour.Tour.Photos[i].Id)
+                {
+                    if (i < displayTour.Tour.Photos.Count - 1)
+                    {
+                        CurrentPhoto = displayTour.Tour.Photos[++i];
+                        return;
+                    }
+                    else
+                    {
+                        CurrentPhoto = displayTour.Tour.Photos[0];
+                        return;
+                    }
+                }
+            }
+            return;
+        }
+
+        private void ShowPreviousPhoto()
+        {
+            for (int i = 0; i < displayTour.Tour.Photos.Count; i++)
+            {
+                if (CurrentPhoto.Id == displayTour.Tour.Photos[i].Id)
+                {
+                    if (i == 0)
+                    {
+                        CurrentPhoto = displayTour.Tour.Photos[displayTour.Tour.Photos.Count - 1];
+                        return;
+                    }
+                    else
+                    {
+                        CurrentPhoto = displayTour.Tour.Photos[--i];
+                        return;
+                    }
+                }
+            }
+            return;
         }
     }
 }

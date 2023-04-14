@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,8 @@ namespace TravelAgency.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsSuperOwner { get; set; }
-
         public Roles Role { get; set; }
-
+        public DateOnly BirthDay { get;set; }
         public User()
         {
             Id = -1;
@@ -26,17 +26,18 @@ namespace TravelAgency.Model
             IsSuperOwner = false;
         }
 
-        public User(string username, string password, Roles role, bool isSuperOwner = false)
+        public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
         {
             Username = username;
             Password = password;
             Role = role;
             IsSuperOwner = isSuperOwner;
+            BirthDay = birthDay;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString() };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy") };
             return csvValues;
         }
 
@@ -47,6 +48,7 @@ namespace TravelAgency.Model
             Password = values[2];
             Role = (Roles)Convert.ToInt32(values[3]);
             IsSuperOwner = Convert.ToBoolean(Convert.ToInt32(values[4]));
+            BirthDay = DateOnly.ParseExact(values[5], "dd-MM-yyyy", CultureInfo.InvariantCulture);
         }
     }
 }

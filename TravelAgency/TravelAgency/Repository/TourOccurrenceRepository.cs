@@ -120,7 +120,7 @@ namespace TravelAgency.Repository
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id)
+                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }
@@ -133,7 +133,7 @@ namespace TravelAgency.Repository
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id)
+                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }
@@ -146,7 +146,7 @@ namespace TravelAgency.Repository
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended)
+                if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }
@@ -300,7 +300,7 @@ namespace TravelAgency.Repository
             {
                 return;
             }
-            tourOccurrences.Remove(oldTourOccurrence);
+            oldTourOccurrence.IsDeleted = true;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
         }

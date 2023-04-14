@@ -32,11 +32,11 @@ namespace TravelAgency.ViewModel
                 VouchersNumber = "You have " + Vouchers.Count + " vouchers.";
             }
         }
-        public void UpdateVoucher()
+        public void UpdateVoucher(int tourOccurrenceId)
         {
             if(SelectedVoucher != null)
             {
-                voucherService.DisableVoucher(SelectedVoucher);
+                voucherService.DisableVoucher(SelectedVoucher, tourOccurrenceId);
             }
         }
     }

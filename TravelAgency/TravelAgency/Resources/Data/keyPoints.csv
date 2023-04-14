@@ -1,67 +1,41 @@
-1|1|fedc|True
-2|1|ssfed|True
-3|2|fedc|True
-4|2|ssfed|True
-5|1|cs|True
-6|1|www|True
-7|1|w|True
-8|2|cs|True
-9|2|www|True
-10|2|w|True
-11|3|cdas|True
-12|3|aasx|False
-13|4|mars|True
-14|4|saturn|True
-15|4|jupiter|True
-16|5|centar|False
-17|5|jezero|False
-18|5|dvorac skenderbega|False
-19|6|centar|False
-20|6|jezero|False
-21|6|dvorac skenderbega|False
-22|7|kp|True
-23|7|xw|False
-24|8|prvaTacka|False
-25|8|drugaTacka|False
-26|8|treca|False
-27|9|prva tackico|True
-28|9|drugaTacka|True
-29|9|treca|True
-30|10|etwas|True
-31|10|haus|True
-32|10|garten|True
-33|11|etwas|False
-34|11|haus|False
-35|11|garten|False
-36|12|etwas|False
-37|12|haus|False
-38|12|garten|False
-39|13|wq|True
-40|13|qq|True
-41|13|xx|True
-42|14|wq|False
-43|14|qq|False
-44|14|xx|False
-45|15|h|True
-46|15|j|True
-47|16|sd|True
-48|16|cscs|True
-49|17|sd|True
-50|17|cscs|True
-51|13|ww|False
-52|13|www|False
-53|14|sq|False
-54|14|cd|False
-55|15|re|False
-56|15|er|False
-57|16|wq|True
-58|16|qq|True
-59|16|op|True
-60|17|wq|True
-61|17|qq|True
-62|17|op|True
-63|18|a|False
-64|18|r|False
-65|18|u|False
-66|19|okr|True
-67|19|unf|True
+1|1|prvT|False
+2|1|drugT|False
+3|1|triT|False
+4|2|prvT|False
+5|2|drugT|False
+6|2|triT|False
+7|3|prvT|False
+8|3|drugT|False
+9|3|triT|False
+10|4|tackica1|True
+11|4|tackica2|True
+12|4|tackica3|True
+13|4|tackica4|True
+14|5|tackica1|False
+15|5|tackica2|False
+16|5|tackica3|False
+17|5|tackica4|False
+18|6|tackica1|False
+19|6|tackica2|False
+20|6|tackica3|False
+21|6|tackica4|False
+22|7|tackica1|False
+23|7|tackica2|False
+24|7|tackica3|False
+25|7|tackica4|False
+26|8|prvaPiramida|True
+27|8|keopsova piramida|True
+28|8|neka treca piramida|True
+29|8|nazad u grad na reku nil|True
+30|9|prvaPiramida|False
+31|9|keopsova piramida|False
+32|9|neka treca piramida|False
+33|9|nazad u grad na reku nil|False
+34|10|prvaPiramida|False
+35|10|keopsova piramida|False
+36|10|neka treca piramida|False
+37|10|nazad u grad na reku nil|False
+38|11|prvaPiramida|False
+39|11|keopsova piramida|False
+40|11|neka treca piramida|False
+41|11|nazad u grad na reku nil|False

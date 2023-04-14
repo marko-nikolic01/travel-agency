@@ -54,6 +54,8 @@ namespace TravelAgency.Model
             }
         }
 
+        public bool IsDeleted { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -68,6 +70,7 @@ namespace TravelAgency.Model
             KeyPoints = keyPoints;
             FreeSpots = tour.MaxGuestNumber;
             ActiveKeyPointId = -1;
+            IsDeleted = false;
         }
 
         public TourOccurrence()
@@ -75,11 +78,12 @@ namespace TravelAgency.Model
             KeyPoints = new List<KeyPoint>();
             Guests = new List<User>();
             ActiveKeyPointId = -1;
+            IsDeleted=false;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), TourId.ToString(), DateTime.ToString("dd-MM-yyyy HH-mm"), ((int)CurrentState).ToString(), GuideId.ToString(), FreeSpots.ToString(), ActiveKeyPointId.ToString() };
+            string[] csvValues = { Id.ToString(), TourId.ToString(), DateTime.ToString("dd-MM-yyyy HH-mm"), ((int)CurrentState).ToString(), GuideId.ToString(), FreeSpots.ToString(), ActiveKeyPointId.ToString(), IsDeleted.ToString() };
             return csvValues;
         }
 
@@ -92,6 +96,7 @@ namespace TravelAgency.Model
             GuideId = int.Parse(values[4]);
             FreeSpots = int.Parse(values[5]);
             ActiveKeyPointId = int.Parse(values[6]);
+            IsDeleted = bool.Parse(values[7]);
         }
     }
 }

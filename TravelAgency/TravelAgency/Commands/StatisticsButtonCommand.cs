@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TravelAgency.Services;
-using TravelAgency.View;
 using TravelAgency.ViewModel;
 
 namespace TravelAgency.Commands
 {
-    public class ButtonCommand<T> : ICommand
+    public class StatisticsButtonCommand : ICommand
     {
-        public Action<T> _onClick;
         public event EventHandler? CanExecuteChanged;
+        public Action _onClick;
 
         public bool CanExecute(object? parameter)
         {
@@ -22,10 +20,10 @@ namespace TravelAgency.Commands
 
         public void Execute(object? parameter)
         {
-            _onClick((T)parameter);
+            _onClick();
         }
 
-        public ButtonCommand(Action<T> onClick)
+        public StatisticsButtonCommand(Action onClick)
         {
             _onClick = onClick;
         }
