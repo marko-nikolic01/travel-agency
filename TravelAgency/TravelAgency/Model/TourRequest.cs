@@ -25,14 +25,12 @@ namespace TravelAgency.Model
         public User Guest { get; set; }
 
         public RequestStatus Status { get; set; }
-        public DateTime GivenDate { get; set; }
+        public DateTime? GivenDate { get; set; }
         public TourRequest()
         {
-
         }
-        public TourRequest(int id, Location location, string description, string language, int guestNumber, DateTime minDate, DateTime maxDate, int guestId, RequestStatus status, DateTime givenDate)
+        public TourRequest(Location location, string description, string language, int guestNumber, DateTime minDate, DateTime maxDate, int guestId, RequestStatus status, DateTime givenDate)
         {
-            Id = id;
             Location = location;
             Description = description;
             Language = language;
@@ -63,6 +61,18 @@ namespace TravelAgency.Model
             MaxDate = DateTime.ParseExact(values[6], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
             GuestId = int.Parse(values[7]);
             Status = (RequestStatus)Convert.ToInt32(values[8]);
+        }
+
+        public bool Valid(string language, string numberOfGuests)
+        {
+            int result = 0;
+            if(language != null && int.TryParse(numberOfGuests, out result))
+            {
+                Language = language;
+                GuestNumber = result;
+                return true;
+            }
+            return false;
         }
     }
 }

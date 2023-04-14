@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using TravelAgency.Model;
+using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
-    /// <summary>
-    /// Interaction logic for TourRequestWindow.xaml
-    /// </summary>
     public partial class TourRequestWindow : Window
     {
-        public TourRequestWindow()
+        private int guestId;
+        public ObservableCollection<TourRequest> MadeRequests { get; set; }
+        public TourRequestWindow(int id)
         {
             InitializeComponent();
+            DataContext = this;
+            TourRequestRepository repository = new TourRequestRepository();
+            MadeRequests = new ObservableCollection<TourRequest>(repository.GetAll());
+            guestId = id;
         }
 
         private void CreateRequest_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestFormWindow createRequest = new TourRequestFormWindow();
+            TourRequestFormWindow createRequest = new TourRequestFormWindow(guestId);
             createRequest.Show();
         }
     }

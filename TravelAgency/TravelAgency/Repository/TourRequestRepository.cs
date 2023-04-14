@@ -16,5 +16,27 @@ namespace TravelAgency.Repository
             _serializer = new Serializer<TourRequest>();
             tourRequests = _serializer.FromCSV(FilePath);
         }
+        public int NextId()
+        {
+            if (tourRequests.Count == 0)
+            {
+                return 1;
+            }
+            return tourRequests[tourRequests.Count - 1].Id + 1;
+        }
+
+        public List<TourRequest> GetAll()
+        {
+            return tourRequests;
+        }
+
+        public TourRequest Save(TourRequest tourRequest)
+        {
+            tourRequest.Id = NextId();
+            tourRequests.Add(tourRequest);
+            _serializer.ToCSV(FilePath, tourRequests);
+            return tourRequest;
+
+        }
     }
 }

@@ -39,7 +39,7 @@
         <Grid Grid.Row="1">
             <Label Margin="20" FontSize="24" Content="Tour requests"></Label>
         </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=TourRequests}" AutoGenerateColumns="False">
+        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
                 <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>

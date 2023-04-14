@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -19,9 +20,25 @@ namespace TravelAgency.View
     /// </summary>
     public partial class TourRequestFormWindow : Window
     {
-        public TourRequestFormWindow()
+        public TourRequestFormViewModel TourRequestFormViewModel { get; set; }
+        private int guestId;
+        public TourRequestFormWindow(int id)
         {
             InitializeComponent();
+            guestId = id;
+            TourRequestFormViewModel = new TourRequestFormViewModel(guestId);
+            DataContext = TourRequestFormViewModel;
+        }
+
+        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TourRequestFormViewModel.SetCitiesComboBox();         
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TourRequestFormViewModel.SubmitRequest())
+                Close();
         }
     }
 }

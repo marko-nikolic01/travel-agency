@@ -64,26 +64,32 @@
                 <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
-            <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuestsInput, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+            <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220" SelectionChanged="Country_SelectionChanged"
+                      ItemsSource="{Binding Countries}" 
+                      SelectedItem="{Binding SelectedCountry}"
+                      >
                 
             </ComboBox>
-                <ComboBox x:Name="languageCb" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+                          ItemsSource="{Binding Cities}" 
+                          SelectedItem="{Binding SelectedCity}"
+                          >
                     
                 </ComboBox>
-                <ComboBox x:Name="interestingCb" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
                 
-                </ComboBox>
-            <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0"></DatePicker>
-            <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0"></DatePicker>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" HorizontalAlignment="Left"/>
+                </TextBox>
+            <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
+            <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
+            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="500" HorizontalAlignment="Left" Text="{Binding Description}"/>
         </Grid>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Width="374" Height="43" x:Name="SubmitButton">Submit rating</Button>
+                <Button Grid.Column="0" Width="374" Height="43" Click="SubmitButton_Click" x:Name="SubmitButton">Submit rating</Button>
                 <Button Grid.Column="1" Width="374" Height="43" Content="Cancel reservation"/>
             </Grid>
         </Grid>

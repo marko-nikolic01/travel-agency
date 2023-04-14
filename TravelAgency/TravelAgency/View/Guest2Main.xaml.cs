@@ -198,7 +198,7 @@ namespace TravelAgency.View
         }
         private void RequestButton_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestWindow requests = new TourRequestWindow();
+            TourRequestWindow requests = new TourRequestWindow(ActiveGuest.Id);
             requests.Show();
         }
         /*  private void SignOut_Click(object sender, RoutedEventArgs e)
