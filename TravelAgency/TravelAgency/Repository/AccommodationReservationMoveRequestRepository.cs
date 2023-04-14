@@ -93,5 +93,12 @@ namespace TravelAgency.Repository
             moveRequest.StatusChanged = false;
             return true;
         }
+
+        public void CreateNew(AccommodationReservation Reservation, DateSpan dateSpan)
+        {
+            AccommodationReservationMoveRequest moveRequest = new AccommodationReservationMoveRequest(Reservation, dateSpan);
+            Save(moveRequest);
+        }
+
     }
 }

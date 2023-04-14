@@ -38,7 +38,6 @@
             <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Content="{Binding Guest.Username}"></Label>
             <Button Click="SignOut" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 20" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="60" Height="30">Sign out</Button>
         </Grid>
-        <Label Height="30" DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="LightGray" BorderBrush="DarkGray" BorderThickness="0 1 0 1">ACCOMMODATIONS</Label>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"></RowDefinition>
@@ -106,25 +105,67 @@
                                 VerticalContentAlignment="Center" ValueChanged="NumberUpDownValueChanged"></xctk:IntegerUpDown>
             <Button Click="Search"  Grid.Row="6" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Search</Button>
             <Button Click="CancelSearch"  Grid.Row="7" Grid.Column="1" Width="100" HorizontalAlignment="Right" Height="30">Cancel search</Button>
-            <DataGrid Grid.Row="0" Grid.RowSpan="8" Grid.Column="3" CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
+            <TabControl Grid.Row="0" Grid.RowSpan="9" Grid.Column="3">
+                <TabItem Header="Accommodations">
+                    <DataGrid CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                       AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="accommodationsDataGrid"
                       IsReadOnly="True" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding Path=SelectedAccommodation, Mode=TwoWay}"
                       SelectionMode="Single">
-                <DataGrid.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path=Name}"/>
-                    <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Location.Country}"/>
-                    <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Location.City}"/>
-                    <DataGridTextColumn Width="*" Header="Type" Binding="{Binding Path=Type}"/>
-                    <DataGridTextColumn Width="*" Header="Max. guests" Binding="{Binding Path=MaxGuests}"/>
-                    <DataGridTextColumn Width="*" Header="Min. days" Binding="{Binding Path=MinDays}"/>
-                    <DataGridTextColumn Width="*" Header="SuperOwner" Binding="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource konverter}}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <Border Grid.Row="9" Grid.Column="4" BorderBrush="DarkGray" BorderThickness="0, 1, 0, 0"></Border>
-            <Button Grid.Row="9" Grid.Column="4" Height="30" Width="150" HorizontalAlignment="Right" Margin="0, 0, 10, 0" Click="MakeReservation">Make a reservation</Button>
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Path=Name}"/>
+                            <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Location.Country}"/>
+                            <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Location.City}"/>
+                            <DataGridTextColumn Width="*" Header="Type" Binding="{Binding Path=Type}"/>
+                            <DataGridTextColumn Width="*" Header="Max. guests" Binding="{Binding Path=MaxGuests}"/>
+                            <DataGridTextColumn Width="*" Header="Min. days" Binding="{Binding Path=MinDays}"/>
+                            <DataGridTextColumn Width="0.5*" Header="SuperOwner" Binding="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource konverter}}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="MakeReservation">Reservation</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Reservations">
+                    <DataGrid CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
+                      AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="reservationsDataGrid"
+                      IsReadOnly="True" ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedReservation, Mode=TwoWay}"
+                      SelectionMode="Single">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Accommodation" Binding="{Binding Path=Accommodation.Name}"/>
+                            <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Accommodation.Location.Country}"/>
+                            <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Location.City}"/>
+                            <DataGridTextColumn Width="*" Header="Guests" Binding="{Binding Path=NumberOfGuests}"/>
+                            <DataGridTextColumn Width="*" Header="Start date" Binding="{Binding Path=DateSpan.StartDate}"/>
+                            <DataGridTextColumn Width="*" Header="End date" Binding="{Binding Path=DateSpan.EndDate}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button>Move</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="CancelReservation">Cancel</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem></TabItem>
+            </TabControl>
         </Grid>
     </DockPanel>
 </Window>

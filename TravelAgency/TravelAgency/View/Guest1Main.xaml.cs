@@ -34,7 +34,9 @@ namespace TravelAgency.View
         public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public ObservableCollection<AccommodationReservation> Reservations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
+        public AccommodationReservation SelectedReservation { get; set; }
         public List<string> Countries { get; set; }
         public List<string> Cities { get; set; }
         public string SelectedCountry { get; set; }
@@ -58,6 +60,7 @@ namespace TravelAgency.View
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
+            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
@@ -161,6 +164,19 @@ namespace TravelAgency.View
             else
             {
                 string message = "You didn't select an accommodation!";
+                System.Windows.MessageBox.Show(message);
+            }
+        }
+
+        private void CancelReservation(object sender, RoutedEventArgs e)
+        {
+            if (accommodationReservationRepository.CancelReservation(SelectedReservation))
+            {
+                Reservations.Remove(SelectedReservation);
+            }
+            else
+            {
+                string message = "Cancelation deadline for this reservation is overdue!";
                 System.Windows.MessageBox.Show(message);
             }
         }
