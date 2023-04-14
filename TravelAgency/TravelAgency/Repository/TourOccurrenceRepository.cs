@@ -212,7 +212,7 @@ namespace TravelAgency.Repository
             string result = "There is no active tour";
             foreach (TourOccurrence occurrence in tourOccurrences)
             {
-                if (occurrence.CurrentState == CurrentState.Started)
+                if (occurrence.CurrentState == CurrentState.Started && occurrence.DateTime.Date.Equals(DateTime.Now.Date))
                 {
                     TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
                     if (tourAttendance != null)

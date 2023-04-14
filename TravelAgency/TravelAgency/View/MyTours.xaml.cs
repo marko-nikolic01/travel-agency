@@ -7,9 +7,6 @@ using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
-    /// <summary>
-    /// Interaction logic for MyTours.xaml
-    /// </summary>
     public partial class MyTours : Window
     {
         public List<TourOccurrence> TourOccurrences { get; set; }
