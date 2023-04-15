@@ -14,18 +14,18 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationReservationMoveRequest> _serializer;
         private List<AccommodationReservationMoveRequest> _moveRequests;
 
-        public AccommodationReservationMoveRequestRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        public AccommodationReservationMoveRequestRepository(AccommodationReservationRepository accommodationReservationRepository)
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
             _moveRequests = _serializer.FromCSV(FilePath);
 
-            foreach (var moveRequest in _moveRequests)
+            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
-                foreach (var accommodationReservation in accommodationReservations)
+                foreach (AccommodationReservation reservation in accommodationReservationRepository.GetAll())
                 {
-                    if (moveRequest.ReservationId == accommodationReservation.Id)
+                    if (moveRequest.ReservationId == reservation.Id)
                     {
-                        moveRequest.Reservation = accommodationReservation;
+                        moveRequest.Reservation = reservation;
                     }
                 }
             }
@@ -49,6 +49,19 @@ namespace TravelAgency.Repository
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             return _moveRequests;
+        }
+
+        public List<AccommodationReservationMoveRequest> GetAllByGuest(User guest)
+        {
+            List<AccommodationReservationMoveRequest> moveRequests = new List<AccommodationReservationMoveRequest>();
+            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
+            {
+                if (moveRequest.Reservation.Guest.Id == guest.Id)
+                {
+                    moveRequests.Add(moveRequest);
+                }
+            }
+            return moveRequests;
         }
 
         public AccommodationReservationMoveRequest GetById(int id)
@@ -109,12 +122,6 @@ namespace TravelAgency.Repository
 
             moveRequest.StatusChanged = false;
             return true;
-        }
-
-        public void CreateNew(AccommodationReservation Reservation, DateSpan dateSpan)
-        {
-            AccommodationReservationMoveRequest moveRequest = new AccommodationReservationMoveRequest(Reservation, dateSpan);
-            Save(moveRequest);
         }
 
         public List<AccommodationReservationMoveRequest> GetByOwner(User owner)
