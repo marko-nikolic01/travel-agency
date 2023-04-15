@@ -50,8 +50,7 @@ namespace TravelAgency.View
 
         private void UpcomingTours_Click(object sender, RoutedEventArgs e)
         {
-            UpcomingTours upcomingTours = new UpcomingTours(ActiveGuide, TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository,
-                KeyPointRepository, TourReservationRepository, UserRepository, TourOccurrenceAttendanceRepository, VoucherRepository);
+            UpcomingTours upcomingTours = new UpcomingTours(ActiveGuide);
             upcomingTours.Show();
             Close();
         }

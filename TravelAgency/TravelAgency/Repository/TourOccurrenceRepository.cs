@@ -128,12 +128,12 @@ namespace TravelAgency.Repository
             return result;
         }
 
-        public List<TourOccurrence> GetUpcomings(User activeGuide)
+        public List<TourOccurrence> GetUpcomings(int activeGuideId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id && tourOccurrence.IsDeleted == false)
+                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuideId && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }

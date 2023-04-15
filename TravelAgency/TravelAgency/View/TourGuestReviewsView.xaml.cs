@@ -24,10 +24,9 @@ namespace TravelAgency.View
     /// </summary>
     public partial class TourGuestReviews : Window
     {
-        public TourGuestReviews(int id)
+        public TourGuestReviews()
         {
             InitializeComponent();
-            DataContext = new TourGuestReviewsViewModel(id);
         }
 
     }
