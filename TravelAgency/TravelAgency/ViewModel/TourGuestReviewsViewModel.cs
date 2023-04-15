@@ -15,28 +15,28 @@ namespace TravelAgency.ViewModel
 {
     public class TourGuestReviewsViewModel
     {
-        public ObservableCollection<TourReviewViewModel> TourReviews { get; set; }
-        public ButtonCommand<TourReviewViewModel> ReportCommand { get; set; }
-        public ButtonCommand<TourReviewViewModel> RightCommand { get; set; }
-        public ButtonCommand<TourReviewViewModel> LeftCommand { get; set; }
+        public ObservableCollection<TourDetailsViewModel> TourReviews { get; set; }
+        public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
+        public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
+        public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
 
         public TourGuestReviewsViewModel(int id)
         {
             TourReviewService tourReviewService = new TourReviewService();
-            TourReviews = new ObservableCollection<TourReviewViewModel>(tourReviewService.getTourReviews(id));
-            ReportCommand = new ButtonCommand<TourReviewViewModel>(ReportNotValid);
-            RightCommand = new ButtonCommand<TourReviewViewModel>(ShowNextPhoto);
-            LeftCommand = new ButtonCommand<TourReviewViewModel>(ShowPreviousPhoto);
+            TourReviews = new ObservableCollection<TourDetailsViewModel>(tourReviewService.getTourReviews(id));
+            ReportCommand = new ButtonCommand<TourDetailsViewModel>(ReportNotValid);
+            RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
+            LeftCommand = new ButtonCommand<TourDetailsViewModel>(ShowPreviousPhoto);
         }
 
-        private void ReportNotValid(TourReviewViewModel tourReviewViewModel)
+        private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
             tourReviewViewModel.TourRating.IsValid = false;
             TourReviewService tourReviewService = new TourReviewService();
             tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
         }
 
-        private void ShowNextPhoto(TourReviewViewModel tourReviewViewModel)
+        private void ShowNextPhoto(TourDetailsViewModel tourReviewViewModel)
         {
             for (int i = 0; i < tourReviewViewModel.TourRating.PhotoUrls.Count; i++)
             {
@@ -57,7 +57,7 @@ namespace TravelAgency.ViewModel
             return;
         }
 
-        private void ShowPreviousPhoto(TourReviewViewModel tourReviewViewModel)
+        private void ShowPreviousPhoto(TourDetailsViewModel tourReviewViewModel)
         {
             for (int i = 0; i < tourReviewViewModel.TourRating.PhotoUrls.Count; i++)
             {

@@ -20,11 +20,12 @@
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -53,8 +54,8 @@
         </StackPanel>
         <Label Content="The most visited tour" Grid.Row="2" Grid.ColumnSpan="4" FontSize="20"></Label>
         <ComboBox Grid.Row="2" Grid.Column="3" Margin="5" Grid.ColumnSpan="2" ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}"></ComboBox>
-        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="7" Margin="5" Grid.RowSpan="8"></Border>
-        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0 5 0 0" Text="{Binding Path=DisplayTour.Tour.Name, Mode=OneWay}"></TextBlock>
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="7" Margin="5" Grid.RowSpan="10"></Border>
+        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0 5 0 0" FontSize="15" Text="{Binding Path=DisplayTour.Tour.Name, Mode=OneWay}"></TextBlock>
         <Label Grid.Row="4" Content="Number of guests:" Grid.ColumnSpan="2"></Label>
         <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=GuestsNumber}"></TextBlock>
         <Image Source="{Binding CurrentPhoto.Link}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0 0 10 0"></Image>
@@ -87,13 +88,13 @@
         <TextBlock Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.Tour.Duration, Mode=OneWay}"></TextBlock>
         <Label Grid.Row="7" Content="Language:" Grid.ColumnSpan="2"></Label>
         <TextBlock Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.Tour.Language, Mode=OneWay}"></TextBlock>
-        <Label Grid.Row="8" Content="Description:" Grid.ColumnSpan="2"></Label>
-        <TextBlock Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.Tour.Description, Mode=OneWay}"></TextBlock>
-        <Label Grid.Row="9" Content="Key points:" Grid.ColumnSpan="2"></Label>
-        <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=KeyPoints, Mode=OneWay}"></TextBlock>
-        <Label Grid.Row="10" Content="Date:" Grid.ColumnSpan="2"></Label>
-        <TextBlock Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.DateTime, StringFormat=dd-MM-yyyy, Mode=OneWay}"></TextBlock>
-        <DataGrid Grid.Row="12" Grid.ColumnSpan="7" Grid.RowSpan="3" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
+        <Label Grid.Row="9" Content="Description:" Grid.ColumnSpan="2"></Label>
+        <TextBlock Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="2" TextWrapping="Wrap"  HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.Tour.Description, Mode=OneWay}"></TextBlock>
+        <Label Grid.Row="11" Content="Key points:" Grid.ColumnSpan="2"></Label>
+        <TextBlock Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="2" TextWrapping="Wrap" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=KeyPoints, Mode=OneWay}"></TextBlock>
+        <Label Grid.Row="8" Content="Date:" Grid.ColumnSpan="2"></Label>
+        <TextBlock Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.DateTime, StringFormat=dd-MM-yyyy, Mode=OneWay}"></TextBlock>
+        <DataGrid Grid.Row="13" Grid.ColumnSpan="7" Grid.RowSpan="3" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Language" Binding="{Binding Path=Tour.Language}"></DataGridTextColumn>
@@ -107,5 +108,17 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.ColumnSpan="6" Grid.Row="17">
+            <Separator VerticalAlignment="Top"></Separator>
+            <DockPanel Margin="0 3 0 0">
+                <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left">
+                    <Image Width="40" Height="35" Source="../Resources/Images/back.png"></Image>
+                </Button>
+                <Button Width="40" Height="35" Margin="135 0 0 0">
+                    <Image Source="../Resources/Images/home.png" Width="40" Height="35"></Image>
+                </Button>
+                <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </Window>

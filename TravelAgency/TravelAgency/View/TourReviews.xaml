@@ -24,7 +24,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.ColumnSpan="5">
                 <Menu Height="35">
@@ -52,13 +52,24 @@
                     <DataGridTemplateColumn Header="Reviews">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="View" Margin="5" Content="View" Click="View_Click"></Button>
+                                <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"></Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-
             </DataGrid>
+            <StackPanel Grid.ColumnSpan="5" Grid.Row="7">
+                <Separator VerticalAlignment="Top"></Separator>
+                <DockPanel Margin="0 3 0 0">
+                    <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left">
+                        <Image Width="40" Height="35" Source="../Resources/Images/back.png"></Image>
+                    </Button>
+                    <Button Width="40" Height="35" Margin="135 0 0 0">
+                        <Image Source="../Resources/Images/home.png" Width="40" Height="35"></Image>
+                    </Button>
+                    <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
+                </DockPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

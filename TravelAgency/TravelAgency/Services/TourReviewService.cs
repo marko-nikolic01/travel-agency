@@ -16,12 +16,12 @@ namespace TravelAgency.Services
         {
         }
 
-        public List<TourReviewViewModel> getTourReviews(int id)
+        public List<TourDetailsViewModel> getTourReviews(int id)
         {
-            List <TourReviewViewModel> tourReviews = new List <TourReviewViewModel> ();
+            List <TourDetailsViewModel> tourReviews = new List <TourDetailsViewModel> ();
             foreach (TourRating rating in new TourRatingRepository(new TourRatingPhotoRepository()).GetRatingsByTourOccurrenceId(id))
             {
-                TourReviewViewModel tourReviewViewModel = new TourReviewViewModel(rating);
+                TourDetailsViewModel tourReviewViewModel = new TourDetailsViewModel(rating);
                 tourReviewViewModel.Guest = new UserRepository().GetById(rating.GuestId);
                 tourReviewViewModel.TourOccurrence = new TourOccurrenceRepository(new TourRepository()).GetById(rating.TourOccurrenceId);
                 TourOccurrenceAttendance tourOccurrenceAttendance = new TourOccurrenceAttendanceRepository().GetByTourOccurrenceIdAndGuestId(tourReviewViewModel.TourOccurrence.Id, tourReviewViewModel.Guest.Id);
