@@ -24,6 +24,7 @@ namespace TravelAgency.View
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public static ObservableCollection<AccommodationOwnerRating> AccommodationOwnerRatings { get; set; }
+        public static ObservableCollection<AccommodationReservationMoveRequest> AccommodationReservationMoveRequests { get; set; }
 
         public Accommodation? SelectedAccommodation { get; set; }
 
@@ -36,6 +37,7 @@ namespace TravelAgency.View
         private readonly AccommodationReservationRepository accommodationReservationRepository;
         private readonly AccommodationGuestRatingRepository accommodationGuestRatingRepository;
         private readonly AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
+        private readonly AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
 
         public OwnerMain(User user)
         {
@@ -51,9 +53,11 @@ namespace TravelAgency.View
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
+            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetByOwner(LoggedInUser));
 
             ShowNotifications();
             SetSuperOwner();

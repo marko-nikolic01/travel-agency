@@ -14,6 +14,23 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationReservationMoveRequest> _serializer;
         private List<AccommodationReservationMoveRequest> _moveRequests;
 
+        public AccommodationReservationMoveRequestRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        {
+            _serializer = new Serializer<AccommodationReservationMoveRequest>();
+            _moveRequests = _serializer.FromCSV(FilePath);
+
+            foreach (var moveRequest in _moveRequests)
+            {
+                foreach (var accommodationReservation in accommodationReservations)
+                {
+                    if (moveRequest.ReservationId == accommodationReservation.Id)
+                    {
+                        moveRequest.Reservation = accommodationReservation;
+                    }
+                }
+            }
+        }
+
         public void Delete(AccommodationReservationMoveRequest entity)
         {
             throw new NotImplementedException();
@@ -100,5 +117,9 @@ namespace TravelAgency.Repository
             Save(moveRequest);
         }
 
+        public List<AccommodationReservationMoveRequest> GetByOwner(User owner)
+        {
+            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id);
+        }
     }
 }

@@ -91,7 +91,7 @@ namespace TravelAgency.View
             this.Width = 1000;
 
             this.accommodationReservationRepository = accommodationReservationRepository;
-            this.moveRequestRepository = new AccommodationReservationMoveRequestRepository();
+            this.moveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
 
 
             Reservation = reservation;

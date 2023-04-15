@@ -28,7 +28,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <DataGrid Grid.Row="0" Grid.Column="0"
                               ItemsSource="{Binding Accommodations}"
                               SelectedItem="{Binding Path=SelectedAccommodation}"
@@ -44,7 +44,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                
+
             </TabItem>
             <TabItem Header="Guest ratings">
                 <Grid>
@@ -85,7 +85,29 @@
                     <Label Grid.Column="1" x:Name="SuperOwnerLabel"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Move requests">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.Column="0"
+                              ItemsSource="{Binding AccommodationReservationMoveRequests}"
+                              IsReadOnly="True" SelectionMode="Single"
+                              AutoGenerateColumns="False" HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Accommodation" Width="1.5*" Binding="{Binding Reservation.Accommodation.Name}" />
+                            <DataGridTextColumn Header="Old Start Date" Width="1.5*" Binding="{Binding Reservation.DateSpan.StartDate}"/>
+                            <DataGridTextColumn Header="Old End Date" Width="1.5*" Binding="{Binding Reservation.DateSpan.EndDate}"/>
+                            <DataGridTextColumn Header="New Start Date" Width="2*" Binding="{Binding DateSpan.StartDate}"/>
+                            <DataGridTextColumn Header="New End Date" Width="2*" Binding="{Binding DateSpan.EndDate}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
         </TabControl>
-        
     </DockPanel>
 </Window>
