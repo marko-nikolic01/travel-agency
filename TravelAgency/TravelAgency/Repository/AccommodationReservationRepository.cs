@@ -230,7 +230,7 @@ namespace TravelAgency.Repository
         public List<DateSpan> FindDatesForReservationMoveRequest(DateTime dateRangeStart, DateTime dateRangeEnd, AccommodationReservation reservation)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
-            SetReservationLength((dateRangeEnd.Date - dateRangeStart.Date).Days);
+            SetReservationLength(reservation.DateSpan.EndDate.DayNumber - reservation.DateSpan.StartDate.DayNumber + 1);
             PrepareDateIterators(dateRangeStart, dateRangeStart.AddDays(_reservationLength - 1), dateRangeEnd);
             bool isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
             while (isDateSpanAllowed)

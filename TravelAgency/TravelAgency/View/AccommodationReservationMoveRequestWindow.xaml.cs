@@ -83,7 +83,7 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AccommodationReservationMoveRequestWindow(AccommodationReservationRepository accommodationReservationRepository, AccommodationReservation reservation)
+        public AccommodationReservationMoveRequestWindow(AccommodationReservationRepository accommodationReservationRepository, AccommodationReservation reservation, AccommodationReservationMoveRequestRepository moveRequestRepository)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -91,11 +91,11 @@ namespace TravelAgency.View
             this.Width = 1000;
 
             this.accommodationReservationRepository = accommodationReservationRepository;
-            this.moveRequestRepository = new AccommodationReservationMoveRequestRepository();
+            this.moveRequestRepository = moveRequestRepository;
 
 
             Reservation = reservation;
-            MoveRequest = new AccommodationReservationMoveRequest();
+            MoveRequest = new AccommodationReservationMoveRequest(Reservation);
 
             DayNumber = Reservation.DateSpan.EndDate.DayNumber - Reservation.DateSpan.StartDate.DayNumber;
             FirstDate = DateTime.Now.Date;
@@ -306,9 +306,9 @@ namespace TravelAgency.View
 
         private void MakeReservationMoveRequest(object sender, RoutedEventArgs e)
         {
-            if (SelectedDateSpan != null)
+            if (MoveRequest.DateSpan != null)
             {
-                moveRequestRepository.CreateNew(Reservation, SelectedDateSpan);
+                moveRequestRepository.Save(MoveRequest);
                 Close();
             }
             else

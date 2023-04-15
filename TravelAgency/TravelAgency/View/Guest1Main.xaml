@@ -143,14 +143,14 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="*" Header="Accommodation" Binding="{Binding Path=Accommodation.Name}"/>
                             <DataGridTextColumn Width="*" Header="Country" Binding="{Binding Path=Accommodation.Location.Country}"/>
-                            <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Location.City}"/>
+                            <DataGridTextColumn Width="*" Header="City" Binding="{Binding Path=Accommodation.Location.City}"/>
                             <DataGridTextColumn Width="*" Header="Guests" Binding="{Binding Path=NumberOfGuests}"/>
                             <DataGridTextColumn Width="*" Header="Start date" Binding="{Binding Path=DateSpan.StartDate}"/>
                             <DataGridTextColumn Width="*" Header="End date" Binding="{Binding Path=DateSpan.EndDate}"/>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button>Move</Button>
+                                        <Button Click="MoveReservation">Move</Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -164,7 +164,24 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
-                <TabItem></TabItem>
+                <TabItem Header="Reservation move requests">
+                    <DataGrid CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
+                      AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="reservationMoveRequestsDataGrid"
+                      IsReadOnly="True" ItemsSource="{Binding ReservationMoveRequests,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedReservationMoveRequest, Mode=TwoWay}"
+                      SelectionMode="Single">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Accommodation" Binding="{Binding Path=Reservation.Accommodation.Name}"/>
+                            <DataGridTextColumn Width="*" Header="Old start date" Binding="{Binding Path=Reservation.DateSpan.StartDate}"/>
+                            <DataGridTextColumn Width="*" Header="Old End Date" Binding="{Binding Path=Reservation.DateSpan.EndDate}"/>
+                            <DataGridTextColumn Width="*" Header="New start date" Binding="{Binding Path=DateSpan.StartDate}"/>
+                            <DataGridTextColumn Width="*" Header="New end date" Binding="{Binding Path=DateSpan.EndDate}"/>
+                            <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Path=Status}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
             </TabControl>
         </Grid>
     </DockPanel>
