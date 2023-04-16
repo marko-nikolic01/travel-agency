@@ -88,6 +88,7 @@
             <TabItem Header="Move requests">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -96,6 +97,7 @@
 
                     <DataGrid Grid.Row="0" Grid.Column="0"
                               ItemsSource="{Binding AccommodationReservationMoveRequests}"
+                              SelectedItem="{Binding SelectedMoveRequest}"
                               IsReadOnly="True" SelectionMode="Single"
                               AutoGenerateColumns="False" HeadersVisibility="Column">
                         <DataGrid.Columns>
@@ -106,6 +108,10 @@
                             <DataGridTextColumn Header="New End Date" Width="2*" Binding="{Binding DateSpan.EndDate}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <Button Grid.Row="1" Grid.Column="0"
+                            Content="Review request"
+                            Click="OpenReviewAccommodationReservationMoveRequestWindow_click"/>
                 </Grid>
             </TabItem>
         </TabControl>

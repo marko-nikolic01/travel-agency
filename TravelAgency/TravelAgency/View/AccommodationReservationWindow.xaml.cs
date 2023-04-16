@@ -197,7 +197,7 @@ namespace TravelAgency.View
                     }
                     else if (DayNumber == 0)
                     {
-                        return "* Number of guests is required";
+                        return "* Number of days is required";
                     }
                     else if (DayNumber < Accommodation.MinDays)
                     {

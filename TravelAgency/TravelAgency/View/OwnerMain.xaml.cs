@@ -26,6 +26,8 @@ namespace TravelAgency.View
         public static ObservableCollection<AccommodationOwnerRating> AccommodationOwnerRatings { get; set; }
         public static ObservableCollection<AccommodationReservationMoveRequest> AccommodationReservationMoveRequests { get; set; }
 
+        public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
+
         public Accommodation? SelectedAccommodation { get; set; }
 
         public User LoggedInUser { get; set; }
@@ -53,7 +55,7 @@ namespace TravelAgency.View
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
@@ -103,6 +105,19 @@ namespace TravelAgency.View
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
+        }
+
+        private void OpenReviewAccommodationReservationMoveRequestWindow_click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedMoveRequest == null)
+            {
+                MessageBox.Show("Select a move request.");
+            }
+            else
+            {
+                AccommodationReservationMoveRequestManagingWindow accommodationReservationMoveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, accommodationReservationMoveRequestRepository, SelectedMoveRequest);
+                accommodationReservationMoveRequestManagingWindow.Show();
+            }
         }
     }
 }

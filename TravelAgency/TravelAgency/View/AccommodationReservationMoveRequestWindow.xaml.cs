@@ -97,7 +97,7 @@ namespace TravelAgency.View
             Reservation = reservation;
             MoveRequest = new AccommodationReservationMoveRequest(Reservation);
 
-            DayNumber = Reservation.DateSpan.EndDate.DayNumber - Reservation.DateSpan.StartDate.DayNumber;
+            DayNumber = Reservation.DateSpan.EndDate.DayNumber - Reservation.DateSpan.StartDate.DayNumber + 1;
             FirstDate = DateTime.Now.Date;
             LastDate = DateTime.Now.Date;
             AvailableDateSpans = new ObservableCollection<DateSpan>();
@@ -194,11 +194,11 @@ namespace TravelAgency.View
                     }
                     else if (DayNumber == 0)
                     {
-                        return "* Number of guests is required";
+                        return "* Number of days is required";
                     }
                     else if (DayNumber < Reservation.Accommodation.MinDays)
                     {
-                        return "* Number of guests is smaller than allowed";
+                        return "* Number of days is smaller than allowed";
                     }
                 }
                 else if (columnName == "FirstDate")
