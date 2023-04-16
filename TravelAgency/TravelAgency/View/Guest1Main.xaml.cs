@@ -31,10 +31,16 @@ namespace TravelAgency.View
         public LocationRepository locationRepository;
         public AccommodationPhotoRepository imageRepository;
         public AccommodationReservationRepository accommodationReservationRepository;
+        public AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
         public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public ObservableCollection<AccommodationReservation> Reservations { get; set; }
+        public ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
+        public AccommodationReservation SelectedReservation { get; set; }
+        public AccommodationReservationMoveRequest SelectedReservationMoveRequest { get; set; }
+
         public List<string> Countries { get; set; }
         public List<string> Cities { get; set; }
         public string SelectedCountry { get; set; }
@@ -53,11 +59,14 @@ namespace TravelAgency.View
             accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
 
             accommodationOwnerRatingRepository.SetSuperOwners(userRepository);
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
+            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
+            ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
@@ -161,6 +170,37 @@ namespace TravelAgency.View
             else
             {
                 string message = "You didn't select an accommodation!";
+                System.Windows.MessageBox.Show(message);
+            }
+        }
+
+        private void CancelReservation(object sender, RoutedEventArgs e)
+        {
+            if (accommodationReservationRepository.CancelReservation(SelectedReservation))
+            {
+                Reservations.Remove(SelectedReservation);
+            }
+            else
+            {
+                string message = "Cancelation deadline for this reservation is overdue!";
+                System.Windows.MessageBox.Show(message);
+            }
+        }
+
+        private void MoveReservation(object sender, RoutedEventArgs e)
+        {
+            if (SelectedReservation != null)
+            {
+                AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(accommodationReservationRepository, SelectedReservation, accommodationReservationMoveRequestRepository);
+                moveRequestWindow.Show();
+                if (!ReservationMoveRequests.Contains(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last())) 
+                {
+                    ReservationMoveRequests.Add(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last());
+                }
+            }
+            else 
+            {
+                string message = "You didn't select a reservation";
                 System.Windows.MessageBox.Show(message);
             }
         }

@@ -9,7 +9,7 @@ using TravelAgency.Model;
 
 namespace TravelAgency.ViewModel
 {
-    public class TourReviewViewModel : INotifyPropertyChanged
+    public class TourDetailsViewModel : INotifyPropertyChanged
     {
         public TourRating TourRating { get; set; }
         public User Guest { get; set; }
@@ -35,7 +35,7 @@ namespace TravelAgency.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TourReviewViewModel(TourRating tourRating)
+        public TourDetailsViewModel(TourRating tourRating)
         {
             TourRating = tourRating;
             if(tourRating.PhotoUrls.Count > 0)

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class PhotoRepository : IRepository<Photo>
+    public class PhotoRepository : IPhotoRepository
     {
         private const string FilePath = "../../../Resources/Data/photos.csv";
         private readonly Serializer<Photo> _serializer;
@@ -34,11 +35,6 @@ namespace TravelAgency.Repository
             return photos;
         }
 
-        public Photo GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Photo Save(Photo photo)
         {
             photo.Id = NextId();
@@ -47,24 +43,5 @@ namespace TravelAgency.Repository
             return photo;
         }
 
-        public void SaveAll(IEnumerable<Photo> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Photo entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

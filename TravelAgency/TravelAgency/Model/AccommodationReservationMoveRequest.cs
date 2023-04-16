@@ -50,14 +50,15 @@ namespace TravelAgency.Model
             DateSpan = new DateSpan();
         }
 
-        public AccommodationReservationMoveRequest(int id, int reservationId, DateSpan dateSpan)
+        public AccommodationReservationMoveRequest(AccommodationReservation reservation)
         {
-            Id = id;
-            ReservationId = reservationId;
+            Id = -1;
+            ReservationId = reservation.Id;
+            Reservation = reservation;
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
-            DateSpan = dateSpan;
+            DateSpan = new DateSpan();
         }
 
         public string[] ToCSV()
@@ -67,7 +68,7 @@ namespace TravelAgency.Model
                 Id.ToString(),
                 ReservationId.ToString(),
                 Convert.ToInt32(Status).ToString(),
-                StatusChanged.ToString(),
+                Convert.ToInt32(StatusChanged).ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
                 RejectionExplanation
@@ -98,10 +99,6 @@ namespace TravelAgency.Model
                     if (DateSpan == null)
                     {
                         return "* Select a date span";
-                    }
-                    else if (DateSpan.CountDays() < Reservation.Accommodation.MinDays)
-                    {
-                        return "* Date span is too short";
                     }
                 }
 

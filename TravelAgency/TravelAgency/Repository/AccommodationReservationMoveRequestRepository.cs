@@ -14,6 +14,23 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationReservationMoveRequest> _serializer;
         private List<AccommodationReservationMoveRequest> _moveRequests;
 
+        public AccommodationReservationMoveRequestRepository(AccommodationReservationRepository accommodationReservationRepository)
+        {
+            _serializer = new Serializer<AccommodationReservationMoveRequest>();
+            _moveRequests = _serializer.FromCSV(FilePath);
+
+            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
+            {
+                foreach (AccommodationReservation reservation in accommodationReservationRepository.GetAll())
+                {
+                    if (moveRequest.ReservationId == reservation.Id)
+                    {
+                        moveRequest.Reservation = reservation;
+                    }
+                }
+            }
+        }
+
         public void Delete(AccommodationReservationMoveRequest entity)
         {
             throw new NotImplementedException();
@@ -32,6 +49,19 @@ namespace TravelAgency.Repository
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             return _moveRequests;
+        }
+
+        public List<AccommodationReservationMoveRequest> GetAllByGuest(User guest)
+        {
+            List<AccommodationReservationMoveRequest> moveRequests = new List<AccommodationReservationMoveRequest>();
+            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
+            {
+                if (moveRequest.Reservation.Guest.Id == guest.Id)
+                {
+                    moveRequests.Add(moveRequest);
+                }
+            }
+            return moveRequests;
         }
 
         public AccommodationReservationMoveRequest GetById(int id)
@@ -93,5 +123,6 @@ namespace TravelAgency.Repository
             moveRequest.StatusChanged = false;
             return true;
         }
+
     }
 }

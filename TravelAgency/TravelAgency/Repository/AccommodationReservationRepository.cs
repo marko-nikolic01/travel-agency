@@ -74,6 +74,19 @@ namespace TravelAgency.Repository
             return _accommodationReservations;
         }
 
+        public List<AccommodationReservation> GetAllNotCanceledByGuest(User guest)
+        {
+            List<AccommodationReservation> reservations = new List<AccommodationReservation>();
+            foreach (AccommodationReservation reservation in _accommodationReservations)
+            {
+                if (reservation.Guest.Id == guest.Id && !reservation.Canceled && reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)
+                {
+                    reservations.Add(reservation);
+                }
+            }
+            return reservations;
+        }
+
         public AccommodationReservation GetById(int id)
         {
             foreach (AccommodationReservation accommodationReservation in _accommodationReservations)
@@ -107,7 +120,7 @@ namespace TravelAgency.Repository
 
         public void SaveAll(IEnumerable<AccommodationReservation> entities)
         {
-            throw new NotImplementedException();
+            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
 
         public int CalculateDaysLeftForRating(AccommodationReservation accommodationReservation)
@@ -210,6 +223,24 @@ namespace TravelAgency.Repository
                 }
                 AddDaysToIterators(-1);
                 isDateSpanAllowed = _startDateIterator.CompareTo(_iterationStopperDate) >= 0;
+            }
+            return availableDates;
+        }
+
+        public List<DateSpan> FindDatesForReservationMoveRequest(DateTime dateRangeStart, DateTime dateRangeEnd, AccommodationReservation reservation)
+        {
+            List<DateSpan> availableDates = new List<DateSpan>();
+            SetReservationLength(reservation.DateSpan.EndDate.DayNumber - reservation.DateSpan.StartDate.DayNumber + 1);
+            PrepareDateIterators(dateRangeStart, dateRangeStart.AddDays(_reservationLength - 1), dateRangeEnd);
+            bool isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
+            while (isDateSpanAllowed)
+            {
+                if (_startDateIterator.CompareTo(reservation.DateSpan.StartDate) != 0)
+                {
+                    availableDates.Add(CreateDateSpan());
+                }
+                AddDaysToIterators(1);
+                isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
             }
             return availableDates;
         }
@@ -317,6 +348,7 @@ namespace TravelAgency.Repository
             if (!IsDeadlineOverdue(accommodationReservation))
             {
                 accommodationReservation.Canceled = true;
+                SaveAll(_accommodationReservations);
                 return true;
             }
             return false;
