@@ -211,8 +211,8 @@ namespace TravelAgency.View
         {
             if (SelectedStay != null)
             {
-                 ReservationMoveRequests.Add(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last());
-                }
+                AccommodationOwnerRatingWindow accommodationOwnerRatingWindow = new AccommodationOwnerRatingWindow(accommodationOwnerRatingRepository, SelectedStay);
+                accommodationOwnerRatingWindow.Show();
             }
             else
             {

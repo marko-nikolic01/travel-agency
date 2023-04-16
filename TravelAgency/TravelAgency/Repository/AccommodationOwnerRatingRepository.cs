@@ -81,7 +81,7 @@ namespace TravelAgency.Repository
 
         public List<AccommodationOwnerRating> GetByUser(User user)
         {
-            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == user.Id);
+            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.GuestId == user.Id);
         }
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)

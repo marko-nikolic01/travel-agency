@@ -33,5 +33,30 @@ namespace TravelAgency.View
             Rating = new AccommodationOwnerRating(Stay);
 
         }
+
+        private void RateAccommodationOwner(object sender, RoutedEventArgs e)
+        {
+            Rating.AccommodationCleanliness = Convert.ToInt32(cleanlinessNumberUpDown.Value);
+            Rating.AccommodationComfort = Convert.ToInt32(comfortNumberUpDown.Value);
+            Rating.AccommodationLocation = Convert.ToInt32(locationNumberUpDown.Value);
+            Rating.OwnerCorrectness = Convert.ToInt32(corectnessNumberUpDown.Value);
+            Rating.OwnerResponsiveness = Convert.ToInt32(responsivenessNumberUpDown.Value);
+            Rating.Comment = commentTextBox.Text;
+            if (Rating.IsValid)
+            {
+                ratingRepository.Save(Rating);
+                Close();
+            }
+            else
+            {
+                string message = "Rating is not valid.";
+                System.Windows.MessageBox.Show(message);
+            }
+        }
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

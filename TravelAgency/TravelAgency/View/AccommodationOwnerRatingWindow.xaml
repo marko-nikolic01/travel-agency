@@ -28,18 +28,18 @@
         <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Owner corectness:</Label>
         <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Owner responsiveness:</Label>
         <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Comment:</Label>
-        <xctk:IntegerUpDown Value="{Binding Rating.AccommodationCleanliness}" Name="cleanlinessNumberUpDown" Grid.Row="0" Grid.Column="1" DefaultValue="1" Minimum="1" Maximum="10" Height="30" Background="LightGray"
+        <xctk:IntegerUpDown Name="cleanlinessNumberUpDown" Grid.Row="0" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Value="{Binding Rating.AccommodationComfort}" Name="comfortNumberUpDown" Grid.Row="1" Grid.Column="1" DefaultValue="1" Minimum="1" Maximum="10" Height="30" Background="LightGray"
+        <xctk:IntegerUpDown Name="comfortNumberUpDown" Grid.Row="1" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Value="{Binding Rating.AccommodationLocation}" Name="locationNumberUpDown" Grid.Row="2" Grid.Column="1" DefaultValue="1" Minimum="1" Maximum="10" Height="30" Background="LightGray"
+        <xctk:IntegerUpDown Name="locationNumberUpDown" Grid.Row="2" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Value="{Binding Rating.OwnerCorrectness}" Name="corectnessNumberUpDown" Grid.Row="3" Grid.Column="1" DefaultValue="1" Minimum="1" Maximum="10" Height="30" Background="LightGray"
+        <xctk:IntegerUpDown Name="corectnessNumberUpDown" Grid.Row="3" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Value="{Binding Rating.OwnerResponsiveness}" Name="responsivenessNumberUpDown" Grid.Row="4" Grid.Column="1" DefaultValue="1" Minimum="1" Maximum="10" Height="30" Background="LightGray"
+        <xctk:IntegerUpDown Name="responsivenessNumberUpDown" Grid.Row="4" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <TextBox Text="{Binding Rating.Comment}" Name="nameTextBox" Grid.Row="5" Grid.RowSpan="2" Grid.Column="1" Height="100" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
-        <Button Grid.Row="7" Grid.Column="0" Height="30" Width="100">Rate</Button>
-        <Button Grid.Row="7" Grid.Column="1" Height="30" Width="100">Cancel</Button>
+        <TextBox Name="commentTextBox" Grid.Row="5" Grid.RowSpan="2" Grid.Column="1" Height="100" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+        <Button Grid.Row="7" Grid.Column="0" Height="30" Width="100" Click="RateAccommodationOwner">Rate</Button>
+        <Button Grid.Row="7" Grid.Column="1" Height="30" Width="100" Click="Cancel">Cancel</Button>
     </Grid>
 </Window>
