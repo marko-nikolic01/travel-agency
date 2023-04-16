@@ -209,6 +209,16 @@ namespace TravelAgency.View
 
         private void RateAccommodationOwner(object sender, RoutedEventArgs e)
         {
+            if (SelectedStay != null)
+            {
+                 ReservationMoveRequests.Add(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last());
+                }
+            }
+            else
+            {
+                string message = "You didn't select a stay to rate";
+                System.Windows.MessageBox.Show(message);
+            }
 
         }
     }

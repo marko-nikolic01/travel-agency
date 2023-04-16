@@ -101,10 +101,10 @@ namespace TravelAgency.Model
         }
         public AccommodationReservation? AccommodationReservation { get; set; }
 
-        public AccommodationOwnerRating()
+        public AccommodationOwnerRating(AccommodationReservation reservation)
         {
             Id = -1;
-            AccommodationReservationId = -1;
+            AccommodationReservationId = reservation.Id;
             AccommodationCleanliness = -1;
             AccommodationComfort = -1;
             AccommodationLocation = -1;
