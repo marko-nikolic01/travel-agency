@@ -24,6 +24,7 @@ namespace TravelAgency.Services
             {
                 if (voucher.Deadline > DateTime.Now && voucher.GuestId == guestId && !voucher.IsUsed)
                 {
+                    voucher.BuildVoucherString();
                     vouchers.Add(voucher);
                 }
             }

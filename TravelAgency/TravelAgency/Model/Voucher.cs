@@ -8,6 +8,7 @@ namespace TravelAgency.Model
         public int Id { get; set; }
         public int GuestId { get; set; }
         public int GuideId { get; set; }
+        public string VoucherString { get; set; }
         public bool IsUsed { get; set; }
         public DateTime Deadline { get; set; }
         public int TourOccurrenceId { get; set; }
@@ -25,6 +26,10 @@ namespace TravelAgency.Model
             TourOccurrenceId = -1;
         }
 
+        public void BuildVoucherString()
+        {
+            VoucherString = Id + ". Deadline - " + Deadline.ToString("dd-MM-yyyy");
+        }
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm"), TourOccurrenceId.ToString() };

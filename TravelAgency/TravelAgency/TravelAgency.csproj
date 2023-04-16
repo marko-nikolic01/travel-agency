@@ -22,6 +22,8 @@
 	  <Resource Include="Resources\Images\ArrowUpRight.png"></Resource>
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>
 	  <Resource Include="Resources\Images\RightArrow.png"></Resource>
+	  <Resource Include="Resources\Images\HelpImage.png"></Resource>
+	  <Resource Include="Resources\Images\IconBell.png"></Resource>
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
