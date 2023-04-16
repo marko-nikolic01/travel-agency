@@ -11,16 +11,16 @@ namespace TravelAgency.Services
 {
     public class VoucherService
     {
-        private IVoucherRepository voucherRepository;
-        public VoucherService(IVoucherRepository repository) 
+        private IVoucherRepository IVoucherRepository;
+        public VoucherService() 
         {
-            voucherRepository = repository;
+            IVoucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
         }
 
         public List<Voucher>? GetGuestVouchers(int guestId)
         {
             List<Voucher> vouchers = new List<Voucher>();
-            foreach (Voucher voucher in voucherRepository.GetAll())
+            foreach (Voucher voucher in IVoucherRepository.GetAll())
             {
                 if (voucher.Deadline > DateTime.Now && voucher.GuestId == guestId && !voucher.IsUsed)
                 {
@@ -32,13 +32,13 @@ namespace TravelAgency.Services
 
         public void DisableVoucher(Voucher selectedVoucher, int tourOccurrenceId)
         {
-            foreach (Voucher voucher in voucherRepository.GetAll())
+            foreach (Voucher voucher in IVoucherRepository.GetAll())
             {
                 if (voucher.Id == selectedVoucher.Id)
                 {
                     voucher.TourOccurrenceId = tourOccurrenceId;
                     voucher.IsUsed = true;
-                    voucherRepository.Update(voucher);
+                    IVoucherRepository.Update(voucher);
                     return;
                 }
             }
@@ -46,8 +46,7 @@ namespace TravelAgency.Services
 
         public int GetUsedVoucherByTour(int tourOccurrenceId)
         {
-            VoucherRepository voucherRepository = new VoucherRepository();
-            return voucherRepository.GetByTourOccurrenceId(tourOccurrenceId).Count;
+            return IVoucherRepository.GetByTourOccurrenceId(tourOccurrenceId).Count;
         }
     }
 }

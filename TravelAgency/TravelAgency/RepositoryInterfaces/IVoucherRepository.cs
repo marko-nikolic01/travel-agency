@@ -9,5 +9,6 @@ namespace TravelAgency.RepositoryInterfaces
         int NextId();
         Voucher Save(Voucher voucher);
         Voucher Update(Voucher voucher);
+        public List<Voucher> GetByTourOccurrenceId(int id);
     }
 }

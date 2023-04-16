@@ -20,7 +20,7 @@ namespace TravelAgency.ViewModel
 
         public TourReviewsViewModel(int activeGuideId)
         {
-            TourOccurrenceService tourOccurrenceService = new TourOccurrenceService(new TourOccurrenceRepository());
+            TourOccurrenceService tourOccurrenceService = new TourOccurrenceService();
             TourOccurrences = new ObservableCollection<TourOccurrence>(tourOccurrenceService.GetFinishedOccurrencesForGuide(activeGuideId));
             ViewCommand = new StatisticsButtonCommand(ViewDetails);
         }

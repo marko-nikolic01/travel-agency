@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Observer;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourOccurrenceRepository : ISubject, IRepository<TourOccurrence>
+    public class TourOccurrenceRepository : ISubject, ITourOccurrenceRepository
     {
         private const string FilePath = "../../../Resources/Data/tourOccurrences.csv";
         private readonly Serializer<TourOccurrence> _serializer;
@@ -278,21 +279,6 @@ namespace TravelAgency.Repository
             return tourOccurrence;
         }
 
-        public TourOccurrence Save(TourOccurrence entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAll(IEnumerable<TourOccurrence> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(TourOccurrence tourOccurrence)
         {
             TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
@@ -303,11 +289,6 @@ namespace TravelAgency.Repository
             oldTourOccurrence.IsDeleted = true;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
 
     }

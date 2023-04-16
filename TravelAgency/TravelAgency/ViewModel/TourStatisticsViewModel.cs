@@ -106,7 +106,7 @@ namespace TravelAgency.ViewModel
         {
             UserRepository userRepository = new UserRepository();
             ActiveGuide = userRepository.GetById(id);
-            TourOccurrenceService = new TourOccurrenceService(new TourOccurrenceRepository());
+            TourOccurrenceService = new TourOccurrenceService();
             AttendanceService = new TourOccurrenceAttendanceService();
             FillOptions();
             FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));

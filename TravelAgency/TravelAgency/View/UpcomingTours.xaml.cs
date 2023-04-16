@@ -34,7 +34,7 @@ namespace TravelAgency.View
             InitializeComponent();
             DataContext = this;
             ActiveGuide = activeGuide;
-            TourOccurrenceService = new TourOccurrenceService(new TourOccurrenceRepository());
+            TourOccurrenceService = new TourOccurrenceService();
             TourOccurrenceService.Subscribe(this);
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetUpcomingToursForGuide(ActiveGuide.Id));
         }
@@ -58,8 +58,14 @@ namespace TravelAgency.View
 
         private void NewTour_Click(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(new TourRepository(), new LocationRepository(), new PhotoRepository(), new TourOccurrenceRepository(), new KeyPointRepository(), ActiveGuide);
-            createTour.Show();
+            CreateTour createTour = new CreateTour(ActiveGuide);
+            createTour.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }
