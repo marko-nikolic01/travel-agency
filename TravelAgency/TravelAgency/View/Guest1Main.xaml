@@ -185,7 +185,7 @@
                 <TabItem Header="Rate your stay">
                     <DataGrid CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
                       AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="staysDataGrid"
-                      IsReadOnly="True" ItemsSource="{Binding Stays, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedStay, Mode=TwoWay}"
+                      IsReadOnly="True" ItemsSource="{Binding Stays, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedStay, Mode=TwoWay}"
                       SelectionMode="Single">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>

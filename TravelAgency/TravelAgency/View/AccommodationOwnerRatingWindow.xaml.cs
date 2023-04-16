@@ -45,6 +45,7 @@ namespace TravelAgency.View
             if (Rating.IsValid)
             {
                 ratingRepository.Save(Rating);
+                Guest1Main.Stays.Remove(Stay);
                 Close();
             }
             else

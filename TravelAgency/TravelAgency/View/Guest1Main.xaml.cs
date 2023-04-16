@@ -1,7 +1,9 @@
 ﻿ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,9 +37,9 @@ namespace TravelAgency.View
         public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
-        public ObservableCollection<AccommodationReservation> Reservations { get; set; }
-        public ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
-        public ObservableCollection<AccommodationReservation> Stays { get; set; }
+        public static ObservableCollection<AccommodationReservation> Reservations { get; set; }
+        public static ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
+        public static ObservableCollection<AccommodationReservation> Stays { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         public AccommodationReservation SelectedReservation { get; set; }
         public AccommodationReservationMoveRequest SelectedReservationMoveRequest { get; set; }
@@ -73,6 +75,13 @@ namespace TravelAgency.View
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void LoadDateTime(object sender, RoutedEventArgs e)
