@@ -182,6 +182,29 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
+                <TabItem Header="Rate your stay">
+                    <DataGrid CanUserDeleteRows="False" CanUserResizeColumns="False" AlternationCount="2"
+                      AutoGenerateColumns="False" AlternatingRowBackground="LightGray" CanUserAddRows="False" x:Name="staysDataGrid"
+                      IsReadOnly="True" ItemsSource="{Binding Stays, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedStay, Mode=TwoWay}"
+                      SelectionMode="Single">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightBlue"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Accommodation" Binding="{Binding Path=Accommodation.Name}"/>
+                            <DataGridTextColumn Width="*" Header="Start date" Binding="{Binding Path=DateSpan.StartDate}"/>
+                            <DataGridTextColumn Width="*" Header="End Date" Binding="{Binding Path=DateSpan.EndDate}"/>
+                            <DataGridTextColumn Width="*" Header="Number of guests" Binding="{Binding Path=NumberOfGuests}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="RateAccommodationOwner">Rate</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
             </TabControl>
         </Grid>
     </DockPanel>
