@@ -77,7 +77,7 @@
                     <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left">
                         <Image Width="40" Height="35" Source="../Resources/Images/back.png"></Image>
                     </Button>
-                    <Button Width="40" Height="35" Margin="135 0 0 0">
+                    <Button Width="40" Height="35" Margin="135 0 0 0" Click="Button_Click">
                         <Image Source="../Resources/Images/home.png" Width="40" Height="35"></Image>
                     </Button>
                     <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>

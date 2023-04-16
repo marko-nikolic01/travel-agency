@@ -29,7 +29,7 @@ namespace TravelAgency.ViewModel
             GuestsUnder18 = attendanceService.GetGuestsUnder18(SelectedTourOccurrence.Id);
             Guests18to50 = attendanceService.GetGuest18to50(SelectedTourOccurrence.Id);
             GestsAbove50 = attendanceService.GetGuestsAbove50(SelectedTourOccurrence.Id);
-            var voucherService = new VoucherService(new VoucherRepository());
+            var voucherService = new VoucherService();
             SeriesCollectionVouchers = new SeriesCollection();
             int used = voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
             SeriesCollectionVouchers.Add(new PieSeries{ Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) } });

@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Serializer;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 
 namespace TravelAgency.Repository
 {
-    public class TourReservationRepository
+    public class TourReservationRepository : ITourReservationRepository
     {
         private const string FilePath = "../../../Resources/Data/tourReservations.csv";
 

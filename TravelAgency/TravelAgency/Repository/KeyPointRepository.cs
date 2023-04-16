@@ -6,11 +6,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class KeyPointRepository : IRepository<KeyPoint>
+    public class KeyPointRepository : IKeyPointRepository
     {
         private const string FilePath = "../../../Resources/Data/keyPoints.csv";
         private readonly Serializer<KeyPoint> _serializer;
@@ -71,24 +72,5 @@ namespace TravelAgency.Repository
             return keyPoint;
         }
 
-        public void SaveAll(IEnumerable<KeyPoint> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(KeyPoint entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
