@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using TravelAgency.ViewModel;
@@ -68,6 +69,8 @@ namespace TravelAgency.View
             vouchersList.DataContext = voucherViewModel;
             AddButton.IsEnabled = false;
             NumberOfGuestsInput = "1";
+            descriptionLabel.Content = tourOccurrence.Tour.Name + " in " + tourOccurrence.Tour.Location.Country +
+                ", " + tourOccurrence.Tour.Location.City + ". " + tourOccurrence.Tour.Description;
         }
 
         private void AddGuest_Click(object sender, RoutedEventArgs e)
@@ -82,8 +85,8 @@ namespace TravelAgency.View
             isListBoxFull();
         }
         private void isListBoxFull()
-        { 
-            if(GuestList.Items.Count == int.Parse(NumberOfGuestsInput))
+        {
+            if (GuestList.Items.Count == int.Parse(NumberOfGuestsInput))
             {
                 AddButton.IsEnabled = false;
                 SubmitButton.IsEnabled = true;
@@ -96,7 +99,7 @@ namespace TravelAgency.View
         }
         private void RemoveGuest_Click(object sender, RoutedEventArgs e)
         {
-            if(GuestList.SelectedItem != null && GuestList.SelectedIndex != 0)
+            if (GuestList.SelectedItem != null && GuestList.SelectedIndex != 0)
             {
                 GuestList.Items.RemoveAt(GuestList.SelectedIndex);
                 AddButton.IsEnabled = true;
@@ -110,12 +113,12 @@ namespace TravelAgency.View
             TourReservation tourReservation;
             User user;
 
-            for(int i = 0; i<GuestList.Items.Count; i++)
+            for (int i = 0; i < GuestList.Items.Count; i++)
             {
                 user = GetUserByName(i);
                 if (user == null)
                 {
-                    user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2, new DateOnly(2004,2,15));
+                    user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2, new DateOnly(2004, 2, 15));
                     userRepository.SaveUser(user);
                 }
                 users.Add(user);
@@ -152,7 +155,7 @@ namespace TravelAgency.View
                 else
                 {
                     UpdateList();
-                    SpotsLeft = spotsLeft.ToString();
+                    SpotsLeft = "Spots left: "+spotsLeft.ToString();
                 }
             }
         }
@@ -160,14 +163,14 @@ namespace TravelAgency.View
         private void UpdateList()
         {
             int currentGuestNumber = int.Parse(NumberOfGuestsInput);
-            if(currentGuestNumber < GuestList.Items.Count)
+            if (currentGuestNumber < GuestList.Items.Count)
             {
                 for (int i = GuestList.Items.Count - 1; i >= currentGuestNumber; i--)
                     GuestList.Items.RemoveAt(i);
                 AddButton.IsEnabled = false;
                 SubmitButton.IsEnabled = true;
             }
-            else if(currentGuestNumber > GuestList.Items.Count)
+            else if (currentGuestNumber > GuestList.Items.Count)
             {
                 AddButton.IsEnabled = true;
                 SubmitButton.IsEnabled = false;
@@ -198,6 +201,10 @@ namespace TravelAgency.View
                 SubmitButton.IsEnabled = false;
                 AddButton.IsEnabled = false;
             }
+        }
+        private void Deselect_Click(object sender, RoutedEventArgs e)
+        {
+            vouchersList.UnselectAll();
         }
     }
 }

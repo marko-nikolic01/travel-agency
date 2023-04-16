@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 
@@ -40,6 +42,15 @@ namespace TravelAgency.View
                     MessageBox.Show("This tour occurrence is already rated.");
                 }
             }
+        }
+        private void ShowDetails_Click(object sender, RoutedEventArgs e)
+        {
+            FinishedTourDetailedView details = new FinishedTourDetailedView(SelectedTourOccurrence);
+            Point point = Mouse.GetPosition(this);
+            Point pointToScreen = PointToScreen(point);
+            details.Left = pointToScreen.X - 800;
+            details.Top = pointToScreen.Y - 520;
+            details.Show();
         }
     }
 }

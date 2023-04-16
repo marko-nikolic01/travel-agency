@@ -149,6 +149,7 @@ namespace TravelAgency.Repository
             {
                 if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended && tourOccurrence.IsDeleted == false)
                 {
+                    tourOccurrence.MakeDetailedRowString();
                     result.Add(tourOccurrence);
                 }
             }

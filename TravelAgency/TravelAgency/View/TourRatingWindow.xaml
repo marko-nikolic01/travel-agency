@@ -42,7 +42,7 @@
         <Grid Grid.Row="1">
             <StackPanel Orientation="Vertical">
                 <Label Margin="20" FontSize="24" Content="Rating a tour"></Label>
-                <Label Margin="20 0" FontSize="20" Content="Description"></Label>
+                <Label Margin="20 0" FontSize="20" Content="Description" x:Name="descriptionLabel"></Label>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
@@ -51,39 +51,43 @@
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Guide knowledge" HorizontalAlignment="Left" />
             <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="Guide language" HorizontalAlignment="Left"/>
             <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Interesting" HorizontalAlignment="Left"/>
-            <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Images" HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Images (url)" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="3" Grid.Column="1" Margin="20 10" x:Name="urlText" HorizontalAlignment="Left" Width="500"/>
             <ListBox x:Name="urlsList" Grid.Row="4" Grid.Column="1" Width="500" HorizontalAlignment="Left" Margin="20 0 0 10" />
             <TextBox x:Name="commentTb" Grid.Row="5" Grid.Column="1" Margin="20 10 0 0" Width="500" HorizontalAlignment="Left"/>
-            <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Additional comment" HorizontalAlignment="Left"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Add" HorizontalAlignment="Right" Margin="10 0 50 0" Height="50" Width="80" Click="AddUrl_Click"/>
-            <Button Grid.Row="4" Grid.Column="1" Content="Preview" HorizontalAlignment="Right" Margin="10 0 50 0" Height="50" Width="80" Click="AddUrl_Click"/>
+            <Label Grid.Row="5" Grid.Column="0" Margin="20 10" Content="Additional comment" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Grid.Column="2" Content="Add image" HorizontalAlignment="Left" Margin="10 0 50 0" Height="40" Width="140" Click="AddUrl_Click"/>
+            <StackPanel Grid.Row="4" Grid.Column="2">
+                <Button  Content="Preview image" HorizontalAlignment="Left" Margin="10" Height="40" Width="140" Click="PreviewImage_Click"/>
+                <Button  Content="Remove image" HorizontalAlignment="Left" Margin="10 0" Height="40" Width="140" Click="RemoveImage_Click"/>
+            </StackPanel>
             <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220">
-                <ComboBoxItem Content="5"></ComboBoxItem>
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="4"></ComboBoxItem>
                 <ComboBoxItem Content="3"></ComboBoxItem>
                 <ComboBoxItem Content="2"></ComboBoxItem>
                 <ComboBoxItem Content="1"></ComboBoxItem>
             </ComboBox>
-            <ComboBox x:Name="languageCb" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220">
-                <ComboBoxItem Content="5"></ComboBoxItem>
+            <ComboBox x:Name="languageCb" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20,16,0,4" Height="40" Width="220">
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="4"></ComboBoxItem>
                 <ComboBoxItem Content="3"></ComboBoxItem>
                 <ComboBoxItem Content="2"></ComboBoxItem>
                 <ComboBoxItem Content="1"></ComboBoxItem>
             </ComboBox>
             <ComboBox x:Name="interestingCb" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
-                <ComboBoxItem Content="5"></ComboBoxItem>
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="4"></ComboBoxItem>
                 <ComboBoxItem Content="3"></ComboBoxItem>
                 <ComboBoxItem Content="2"></ComboBoxItem>
@@ -96,7 +100,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Width="374" Height="43" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel reservation"/>
+            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel rating"/>
         </Grid>
     </Grid>
 </Window>

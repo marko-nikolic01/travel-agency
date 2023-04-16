@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Observer;
 using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
-    /// <summary>
-    /// Interaction logic for Guest2Main.xaml
-    /// </summary>
-    public partial class Guest2Main : Window, IObserver
+    public partial class Guest2Main : Window, IObserver, INotifyPropertyChanged
     {
         public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
@@ -34,7 +24,23 @@ namespace TravelAgency.View
         public UserRepository UserRepository { get; set; }
         public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
         public User ActiveGuest { get; set; }
-
+        private bool isHelpClicked;
+        public bool IsHelpClicked {
+            get => isHelpClicked;
+            set
+            {
+                if (value != isHelpClicked)
+                {
+                    isHelpClicked = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public Guest2Main(User user)
         {
             InitializeComponent();
@@ -52,6 +58,7 @@ namespace TravelAgency.View
             TourOccurrenceRepository.Subscribe(this);
             toursList = TourOccurrences.ToList();
             AllertIfSelectеd(ActiveGuest);
+            IsHelpClicked = false;
         }
 
         private void AllertIfSelectеd(User activeGuest)
@@ -202,12 +209,20 @@ namespace TravelAgency.View
             TourRequestWindow requests = new TourRequestWindow(ActiveGuest.Id);
             requests.Show();
         }
-        /*  private void SignOut_Click(object sender, RoutedEventArgs e)
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(!IsHelpClicked)
+                IsHelpClicked = true;
+            else
+                IsHelpClicked = false;
+        }
+        private void SignOut_Click(object sender, RoutedEventArgs e)
           {
               MainWindow mainWindow = new MainWindow();
               mainWindow.Show();
               Close();
-          }*/
+          }
 
     }
 }

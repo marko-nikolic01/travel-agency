@@ -29,6 +29,8 @@ namespace TravelAgency.View
             InitializeComponent();
             tourRatingRepository = new TourRatingRepository();
             this.currentGuestId = currentGuestId;
+            descriptionLabel.Content = selectedTourOccurrence.Tour.Name+ " in " +selectedTourOccurrence.Tour.Location.Country+
+                ", "+selectedTourOccurrence.Tour.Location.City+ ". "+ selectedTourOccurrence.Tour.Description;
             tourOccurrence= selectedTourOccurrence;
         }
         private void AddUrl_Click(object sender, RoutedEventArgs e)
@@ -60,6 +62,18 @@ namespace TravelAgency.View
             Close();
         }
 
+        private void RemoveImage_Click(object sender, RoutedEventArgs e)
+        {
+            if(urlsList.SelectedIndex != -1)
+            {
+                urlsList.Items.RemoveAt(urlsList.SelectedIndex);
+            }
+        }
+
+        private void PreviewImage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void savePhotos(int id)
         {
             TourRatingPhotoRepository tourRatingPhotoRepository = new TourRatingPhotoRepository();
