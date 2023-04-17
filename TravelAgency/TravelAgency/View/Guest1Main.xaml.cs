@@ -1,7 +1,9 @@
 ﻿ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,12 +37,13 @@ namespace TravelAgency.View
         public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
-        public ObservableCollection<AccommodationReservation> Reservations { get; set; }
-        public ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
+        public static ObservableCollection<AccommodationReservation> Reservations { get; set; }
+        public static ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
+        public static ObservableCollection<AccommodationReservation> Stays { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         public AccommodationReservation SelectedReservation { get; set; }
         public AccommodationReservationMoveRequest SelectedReservationMoveRequest { get; set; }
-
+        public AccommodationReservation SelectedStay { get; set; }
         public List<string> Countries { get; set; }
         public List<string> Cities { get; set; }
         public string SelectedCountry { get; set; }
@@ -67,10 +70,18 @@ namespace TravelAgency.View
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
             Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
+            Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByUser(Guest)));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void LoadDateTime(object sender, RoutedEventArgs e)
@@ -192,17 +203,28 @@ namespace TravelAgency.View
             if (SelectedReservation != null)
             {
                 AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(accommodationReservationRepository, SelectedReservation, accommodationReservationMoveRequestRepository);
-                moveRequestWindow.Show();
-                if (!ReservationMoveRequests.Contains(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last())) 
-                {
-                    ReservationMoveRequests.Add(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last());
-                }
+                moveRequestWindow.ShowDialog();
             }
             else 
             {
                 string message = "You didn't select a reservation";
                 System.Windows.MessageBox.Show(message);
             }
+        }
+
+        private void RateAccommodationOwner(object sender, RoutedEventArgs e)
+        {
+            if (SelectedStay != null)
+            {
+                AccommodationOwnerRatingWindow accommodationOwnerRatingWindow = new AccommodationOwnerRatingWindow(accommodationOwnerRatingRepository, SelectedStay);
+                accommodationOwnerRatingWindow.Show();
+            }
+            else
+            {
+                string message = "You didn't select a stay to rate";
+                System.Windows.MessageBox.Show(message);
+            }
+
         }
     }
 }
