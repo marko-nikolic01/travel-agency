@@ -192,7 +192,7 @@ namespace TravelAgency.View
             if (SelectedReservation != null)
             {
                 AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(accommodationReservationRepository, SelectedReservation, accommodationReservationMoveRequestRepository);
-                moveRequestWindow.Show();
+                moveRequestWindow.ShowDialog();
                 if (!ReservationMoveRequests.Contains(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last())) 
                 {
                     ReservationMoveRequests.Add(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest).Last());

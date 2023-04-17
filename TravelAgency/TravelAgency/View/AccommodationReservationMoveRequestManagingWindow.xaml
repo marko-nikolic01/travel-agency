@@ -5,40 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.View"
         mc:Ignorable="d"
-        Title="AccommodationReservationMoveRequestManagingWindow" Height="450" Width="800">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Title="AccommodationReservationMoveRequestManagingWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Accommodation name:"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Old start date:"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Old end date:"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="New start date:"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="New end date:"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Description (leave blank if accepting):"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:"/>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1"
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Accommodation name:"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Old start date:"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Old end date:"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="New start date:"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="New end date:"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Description (leave blank if accepting):"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding SelectedMoveRequest.Reservation.Accommodation.Name}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1"
+            <TextBlock Grid.Row="1" Grid.Column="1"
                    Text="{Binding SelectedMoveRequest.Reservation.DateSpan.StartDate}"/>
-        <TextBlock Grid.Row="2" Grid.Column="1"
+            <TextBlock Grid.Row="2" Grid.Column="1"
                    Text="{Binding SelectedMoveRequest.Reservation.DateSpan.EndDate}"/>
-        <TextBlock Grid.Row="3" Grid.Column="1"
+            <TextBlock Grid.Row="3" Grid.Column="1"
                    Text="{Binding SelectedMoveRequest.DateSpan.StartDate}"/>
-        <TextBlock Grid.Row="4" Grid.Column="1"
+            <TextBlock Grid.Row="4" Grid.Column="1"
                    Text="{Binding SelectedMoveRequest.DateSpan.EndDate}"/>
+            <TextBox x:Name="ExplanationTextBox" Grid.Row="5" Grid.Column="1"/>
+            <TextBlock x:Name="AvailabilityTextBlock" Grid.Row="6" Grid.Column="1"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Accept" Click="AcceptMoveRequest_Click"/>
+            <Button Grid.Column="1" Content="Reject" Click="RejectMoveRequest_Click"/>
+        </Grid>
     </Grid>
 </Window>

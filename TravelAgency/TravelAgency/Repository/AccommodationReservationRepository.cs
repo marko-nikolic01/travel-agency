@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 using TravelAgency.Model;
 using TravelAgency.Serializer;
 
@@ -33,7 +34,7 @@ namespace TravelAgency.Repository
             {
                 foreach (Accommodation accommodation in accommodationRepository.GetAll())
                 {
-                    if (accommodationReservation.AccomodationId == accommodation.Id)
+                    if (accommodationReservation.AccommodationId == accommodation.Id)
                     {
                         accommodationReservation.Accommodation = accommodation;
                     }
@@ -56,17 +57,19 @@ namespace TravelAgency.Repository
 
         public void Delete(AccommodationReservation accommodationReservation)
         {
-            throw new NotImplementedException();
+            DeleteById(accommodationReservation.Id);
         }
 
         public void DeleteAll()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();            
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            AccommodationReservation reservation = _accommodationReservations.Find(ar => ar.Id == id);
+            _accommodationReservations.Remove(reservation);
+            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
 
         public List<AccommodationReservation> GetAll()
@@ -175,7 +178,7 @@ namespace TravelAgency.Repository
 
             foreach (AccommodationReservation reservation in _accommodationReservations)
             {
-                if (reservation.AccomodationId == accommodationId)
+                if (reservation.AccommodationId == accommodationId)
                 {
                     reservations.Add(reservation);
                 }
@@ -277,6 +280,49 @@ namespace TravelAgency.Repository
             return true;
         }
 
+        public bool IsDateSpanAvailable(Accommodation accommodation, DateOnly StartDate, DateOnly EndDate)
+        {
+            foreach (var reservation in _accommodationReservations)
+            {
+                if (reservation.Accommodation == accommodation)
+                {
+                    if (reservation.DateSpan.StartDate.CompareTo(StartDate) >= 0 && reservation.DateSpan.StartDate.CompareTo(EndDate) <= 0 ||
+                        reservation.DateSpan.EndDate.CompareTo(StartDate) >= 0 && reservation.DateSpan.EndDate.CompareTo(EndDate) <= 0 ||
+                        reservation.DateSpan.StartDate.CompareTo(StartDate) <= 0 && reservation.DateSpan.EndDate.CompareTo(EndDate) >= 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool AreDateSpansOverlapping(DateSpan dateSpan1, DateSpan dateSpan2)
+        {
+            return  (dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.StartDate.CompareTo(dateSpan2.EndDate) <= 0 ||
+                     dateSpan1.EndDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) <= 0 ||
+                     dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) <= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) >= 0);
+        }
+
+        public bool CanResevationBeMoved(AccommodationReservationMoveRequest moveRequest)
+        {
+            foreach (var reservation in _accommodationReservations)
+            {
+                if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId)
+                {
+                    if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId &&
+                        AreDateSpansOverlapping(moveRequest.DateSpan, reservation.DateSpan) &&
+                        reservation != moveRequest.Reservation)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private void PrepareDateIterators(DateTime startDateIterator, DateTime endDateIterator, DateTime iterationStopperDate)
         {
             _startDateIterator = DateOnly.FromDateTime(startDateIterator);
@@ -363,6 +409,27 @@ namespace TravelAgency.Repository
                 return false;
             }
             return true;
+        }
+
+        public void UpdateDateSpan(AccommodationReservation reservation, DateSpan dateSpan)
+        {
+            reservation.DateSpan = new DateSpan(dateSpan.StartDate, dateSpan.EndDate);
+            _serializer.ToCSV(FilePath, _accommodationReservations);
+        }
+
+        public void DeleteOverlappingReservations(AccommodationReservation reservation)
+        {
+            var reservations = new List<AccommodationReservation>(_accommodationReservations);
+
+            foreach (var _reservation in reservations)
+            {
+                if (_reservation.Id != reservation.Id &&
+                    AreDateSpansOverlapping(reservation.DateSpan, _reservation.DateSpan))
+                {
+                    DeleteById(_reservation.Id);
+                    MessageBox.Show("izbriso");
+                }
+            }
         }
     }
 }

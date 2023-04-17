@@ -17,6 +17,7 @@ namespace TravelAgency.Repository
         public AccommodationReservationMoveRequestRepository(AccommodationReservationRepository accommodationReservationRepository)
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
+
             _moveRequests = _serializer.FromCSV(FilePath);
 
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
@@ -33,7 +34,7 @@ namespace TravelAgency.Repository
 
         public void Delete(AccommodationReservationMoveRequest entity)
         {
-            throw new NotImplementedException();
+            DeleteById(entity.Id);
         }
 
         public void DeleteAll()
@@ -43,7 +44,9 @@ namespace TravelAgency.Repository
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            AccommodationReservationMoveRequest moveRequest = _moveRequests.Find(mr => mr.Id == id);
+            _moveRequests.Remove(moveRequest);
+            _serializer.ToCSV(FilePath, _moveRequests);
         }
 
         public List<AccommodationReservationMoveRequest> GetAll()
@@ -124,9 +127,9 @@ namespace TravelAgency.Repository
             return true;
         }
 
-        public List<AccommodationReservationMoveRequest> GetByOwner(User owner)
+        public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
         {
-            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id);
+            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
         }
     }
 }
