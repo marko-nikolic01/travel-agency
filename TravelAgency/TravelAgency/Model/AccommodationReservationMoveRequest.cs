@@ -58,7 +58,6 @@ namespace TravelAgency.Model
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
-            DateSpan = new DateSpan();
         }
 
         public string[] ToCSV()
