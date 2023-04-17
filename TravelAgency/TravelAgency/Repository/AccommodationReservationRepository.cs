@@ -428,7 +428,7 @@ namespace TravelAgency.Repository
                 if (_reservation.Id != reservation.Id &&
                     AreDateSpansOverlapping(reservation.DateSpan, _reservation.DateSpan))
                 {
-                    DeleteById(_reservation.Id);
+                    CancelReservation(_reservation);
                     MessageBox.Show("izbriso");
                 }
             }
