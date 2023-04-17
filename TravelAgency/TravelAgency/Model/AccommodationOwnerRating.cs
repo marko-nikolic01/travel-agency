@@ -14,6 +14,7 @@ namespace TravelAgency.Model
     {
         public int Id { get; set; }
         public int AccommodationReservationId { get; set; }
+        public AccommodationReservation AccommodationReservation { get; set; }
         private int accommodationCleanliness;
         private int accommodationComfort;
         private int accommodationLocation;
@@ -99,12 +100,25 @@ namespace TravelAgency.Model
                 }
             }
         }
-        public AccommodationReservation? AccommodationReservation { get; set; }
 
         public AccommodationOwnerRating()
         {
             Id = -1;
             AccommodationReservationId = -1;
+            AccommodationCleanliness = -1;
+            AccommodationComfort = -1;
+            AccommodationLocation = -1;
+            OwnerCorrectness = -1;
+            OwnerResponsiveness = -1;
+            Comment = "";
+            Photos = new List<AccommodationRatingPhoto>();
+        }
+
+        public AccommodationOwnerRating(AccommodationReservation reservation)
+        {
+            Id = -1;
+            AccommodationReservationId = reservation.Id;
+            AccommodationReservation = reservation;
             AccommodationCleanliness = -1;
             AccommodationComfort = -1;
             AccommodationLocation = -1;

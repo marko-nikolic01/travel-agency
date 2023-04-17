@@ -310,7 +310,7 @@ namespace TravelAgency.View
             if (MoveRequest.DateSpan != null)
             {
                 moveRequestRepository.Save(MoveRequest);
-                this.DialogResult = true;
+                Guest1Main.ReservationMoveRequests.Add(MoveRequest);
                 Close();
             }
             else

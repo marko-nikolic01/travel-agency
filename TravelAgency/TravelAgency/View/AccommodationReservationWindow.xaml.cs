@@ -312,6 +312,7 @@ namespace TravelAgency.View
             if (Reservation.IsValid)
             {
                 accommodationReservationRepository.Save(Reservation);
+                Guest1Main.Reservations.Add(Reservation);
                 Close();
             }
             else

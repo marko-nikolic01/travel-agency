@@ -156,7 +156,8 @@ namespace TravelAgency.Repository
         {
             return CalculateDaysLeftForRating(accommodationReservation) >= 1 &&
                 !ReservationIsActive(accommodationReservation) &&
-                !IsRated(accommodationReservation, accommodationGuestRatings);
+                !IsRated(accommodationReservation, accommodationGuestRatings) &&
+                !accommodationReservation.Canceled;
         }
 
         private bool IsRated(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
@@ -372,7 +373,8 @@ namespace TravelAgency.Repository
         {
             return CalculateDaysLeftForRating2(accommodationReservation) >= 0 &&
                 !IsReservationActive2(accommodationReservation) &&
-                !IsRated2(accommodationReservation, accommodationOwnerRatings);
+                !IsRated2(accommodationReservation, accommodationOwnerRatings) &&
+                !accommodationReservation.Canceled;
         }
 
         private bool IsRated2(AccommodationReservation accommodationReservation, IEnumerable<AccommodationOwnerRating> accommodationOwnerRatings)
