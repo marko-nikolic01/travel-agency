@@ -10,6 +10,7 @@ using TravelAgency.Repository;
 using TravelAgency.RepositoryInterfaces;
 using System.Globalization;
 using System.Windows.Controls;
+using TravelAgency.Serializer;
 
 namespace TravelAgency.Services
 {
@@ -23,10 +24,11 @@ namespace TravelAgency.Services
         public ITourReservationRepository ITourReservationRepository { get; set; }
         public ILocationRepository ILocationRepository { get; set; }
         public ITourOccurrenceAttendanceRepository ITourOccurrenceAttendanceRepository { get; set; }
+        public IUserRepository IUserRepository { get; set; }
         public TourOccurrenceService()
         {
             ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();
-            IUserRepository userRepository = Injector.Injector.CreateInstance<IUserRepository>();
+            IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             IPhotoRepository = Injector.Injector.CreateInstance<IPhotoRepository>();
             ITourRepository = Injector.Injector.CreateInstance<ITourRepository>();
             IKeyPointRepository = Injector.Injector.CreateInstance<IKeyPointRepository>();
@@ -37,22 +39,27 @@ namespace TravelAgency.Services
             LinkTourLocations(ILocationRepository, ITourRepository);
             LinkTourPhotos(IPhotoRepository, ITourRepository);
             LinkTourOccurrences(ITourRepository);
-            LinkTourGuests(ITourReservationRepository, userRepository);
+            LinkTourGuests(ITourReservationRepository, IUserRepository);
             LinkKeyPoints(IKeyPointRepository);
         }
         private void LinkKeyPoints(IKeyPointRepository keyPointRepository)
         {
-            foreach (KeyPoint keyPoint in keyPointRepository.GetAll())
+            foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
             {
-                TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(tO => tO.Id == keyPoint.TourOccurrenceId);
-                if (tourOccurrence != null)
-                {
-                    tourOccurrence.KeyPoints.Add(keyPoint);
-                }
+                tourOccurrence.KeyPoints.Clear();
+                tourOccurrence.KeyPoints.AddRange(IKeyPointRepository.GetByTourOccurrence(tourOccurrence.Id));
             }
         }
         private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
         {
+            foreach(var tourReservation in reservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                if (tourOccurrence != null)
+                {
+                    tourOccurrence.Guests.Clear();
+                }
+            }
             foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
@@ -74,18 +81,15 @@ namespace TravelAgency.Services
                 }
             }
         }
-        private static void LinkTourPhotos(IPhotoRepository photoRepository, ITourRepository tourRepository)
+        private void LinkTourPhotos(IPhotoRepository photoRepository, ITourRepository tourRepository)
         {
-            foreach (Photo photo in photoRepository.GetAll())
+            foreach (Tour tour in ITourRepository.GetAll())
             {
-                Tour tour = tourRepository.GetAll().Find(t => t.Id == photo.TourId);
-                if (tour != null)
-                {
-                    tour.Photos.Add(photo);
-                }
+                tour.Photos.Clear();
+                tour.Photos.AddRange(IPhotoRepository.GetByTour(tour.Id));
             }
         }
-        private static void LinkTourLocations(ILocationRepository locationRepository, ITourRepository tourRepository)
+        private void LinkTourLocations(ILocationRepository locationRepository, ITourRepository tourRepository)
         {
             foreach (var tour in tourRepository.GetAll())
             {
@@ -192,6 +196,16 @@ namespace TravelAgency.Services
             keyPoint.Name = keyPointItem;
             tourOccurrence.KeyPoints.Add(keyPoint);
             IKeyPointRepository.Save(keyPoint);
+        }
+
+        public List<TourOccurrence> GetTodays(int activeGuideId)
+        {
+            return ITourOccurrenceRepository.GetTodays(activeGuideId);
+        }
+
+        public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
+        {
+            ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
         }
     }
 }
