@@ -97,11 +97,7 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Label Name="guestsLabel" Grid.Row="1" Grid.Column="3" FontSize="20" Margin="50, 0, 0, 0" VerticalAlignment="Center" Visibility="Hidden">Guests:</Label>
-            <xctk:IntegerUpDown IsReadOnly="True" Name="guestsNumberUpDown" Grid.Row="1" Grid.Column="4" Margin="150, 0, 50, 0" Height="35" FontSize="20" Background="LightGray" 
-                        Value="{Binding Path=Reservation.NumberOfGuests, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalContentAlignment="Center"
-                        Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Visibility="Hidden" Minimum="1"></xctk:IntegerUpDown>
-            <Button Name="makeReservationButton" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" 
+            <Button Name="makeReservationButton" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Margin="50, 0, 50, 10" Height="35" 
                     FontSize="20" Visibility="Hidden" Click="MakeReservationMoveRequest">Make a move request</Button>
         </Grid>
     </DockPanel>

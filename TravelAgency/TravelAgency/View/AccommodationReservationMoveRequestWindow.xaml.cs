@@ -170,9 +170,6 @@ namespace TravelAgency.View
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 dateSpansDataGrid.Visibility = Visibility.Visible;
-                guestsLabel.Visibility = Visibility.Visible;
-                guestsNumberUpDown.Visibility = Visibility.Visible;
-                guestsNumberUpDown.Value = 1;
                 makeReservationButton.Visibility = Visibility.Visible;
             }
             else
