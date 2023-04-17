@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TravelAgency.Model;
-using TravelAgency.Observer;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -25,25 +14,16 @@ namespace TravelAgency.View
     /// </summary>
     public partial class CreateTour : Window
     {
-        public TourRepository TourRepository { get; set; }
-        public LocationRepository LocationRepository { get; set; }
         public Tour NewTour { get; set; }
-        public PhotoRepository PhotoRepository { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
-        public KeyPointRepository KeyPointRepository { get; set; }
         public User ActiveGuide { get; set; }
-        public CreateTour(TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointeRepository, User activeGuide)
+        public TourOccurrenceService TourOccurrenceService { get; set; }
+        public CreateTour(User activeGuide)
         {
             InitializeComponent();
             DataContext = this;
             ActiveGuide = activeGuide;
             NewTour = new Tour();
-            TourRepository = tourRepository;
-            LocationRepository = locationRepository;
-            PhotoRepository = photoRepository;
-            TourOccurrenceRepository = tourOccurrenceRepository;
-            KeyPointRepository = keyPointeRepository;
-
+            TourOccurrenceService = new TourOccurrenceService();
             InitializeComboboxes();
 
             DateCalendar.DisplayDateStart = DateTime.Today;
@@ -55,7 +35,7 @@ namespace TravelAgency.View
 
         private void InitializeComboboxes()
         {
-            var countries = LocationRepository.GetAllCountries();
+            var countries = new LocationRepository().GetAllCountries();
             foreach (var country in countries)
             {
                 CountryComboBox.Items.Add(country);
@@ -101,74 +81,22 @@ namespace TravelAgency.View
             {
                 return;
             }
-
             ProcessInputs(NewTour);
-
             SaveTours();
-
             Close();
         }
 
         private void SaveTours()
         {
-            TourRepository.Save(NewTour);
-
-            SaveTourPhotos(NewTour);
-
-            SaveTourOccurrences(NewTour);
+            TourOccurrenceService.SaveNewTours(NewTour, ListPhotos.Items, ListDateTimes.Items, ListKeyPoints.Items, ActiveGuide);
         }
 
         private void ProcessInputs(Tour newTour)
         {
             ProcessIntInputs(newTour);
             ProcessLocationInput(newTour);
-
         }
 
-        private void SaveTourOccurrences(Tour newTour)
-        {
-            foreach (string dateTimeItem in ListDateTimes.Items)
-            {
-                DateTime dateTime = DateTime.ParseExact(dateTimeItem, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
-                TourOccurrence tourOccurrence = SaveTourOccurrence(dateTime, newTour);
-                
-                foreach (string keyPointItem in ListKeyPoints.Items)
-                {
-                    SaveKeyPoint(keyPointItem, tourOccurrence);
-                }
-            }
-        }
-
-        private void SaveKeyPoint(string keyPointItem, TourOccurrence tourOccurrence)
-        {
-            KeyPoint keyPoint = new KeyPoint();
-            keyPoint.TourOccurrenceId = tourOccurrence.Id;
-            keyPoint.Name = keyPointItem;
-            tourOccurrence.KeyPoints.Add(keyPoint);
-            KeyPointRepository.Save(keyPoint);
-        }
-
-        private TourOccurrence SaveTourOccurrence(DateTime dateTime, Tour newTour)
-        {
-            TourOccurrence tourOccurrence = new TourOccurrence();
-            tourOccurrence.TourId = newTour.Id;
-            tourOccurrence.Tour = newTour;
-            tourOccurrence.DateTime = dateTime;
-            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
-            return TourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, ActiveGuide);
-        }
-
-        private void SaveTourPhotos(Tour newTour)
-        {
-            foreach (string link in ListPhotos.Items)
-            {
-                Photo photo = new Photo();
-                photo.TourId = newTour.Id;
-                photo.Link = link;
-                newTour.Photos.Add(photo);
-                PhotoRepository.Save(photo);
-            }
-        }
         private void ProcessIntInputs(Tour newTour)
         {
             int result;
@@ -188,7 +116,7 @@ namespace TravelAgency.View
             var country = CountryComboBox.SelectedItem as string;
             var city = CityComboBox.SelectedItem as string;
 
-            newTour.Location = LocationRepository.GetLocationForCountryAndCity(country, city);
+            newTour.Location = new LocationRepository().GetLocationForCountryAndCity(country, city);
             newTour.LocationId = newTour.Location.Id;
         }
 
@@ -237,7 +165,7 @@ namespace TravelAgency.View
             if (CountryComboBox.SelectedIndex != 0)
             {
                 string country = (string)CountryComboBox.SelectedValue;
-                var cities = LocationRepository.GetCitiesByCountry(country);
+                var cities = new LocationRepository().GetCitiesByCountry(country);
                 CityComboBox.Items.Clear();
                 CityComboBox.Items.Add("<Select a city>");
                 foreach (var city in cities)

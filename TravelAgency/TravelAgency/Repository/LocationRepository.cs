@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Observer;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class LocationRepository : IRepository<Location>
+    public class LocationRepository : ILocationRepository
     {
         private const string FilePath = "../../../Resources/Data/locations.csv";
         private readonly Serializer<Location> _serializer;
@@ -103,31 +104,6 @@ namespace TravelAgency.Repository
                 }
             }
             return null;
-        }
-
-        public Location GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAll(IEnumerable<Location> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Location entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
 
         public Location GetLocationForCountryAndCity(string country, string city)

@@ -108,6 +108,15 @@ namespace TravelAgency.ViewModel
             ActiveGuide = userRepository.GetById(id);
             TourOccurrenceService = new TourOccurrenceService();
             AttendanceService = new TourOccurrenceAttendanceService();
+            FillOptions();
+            FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));
+            RightCommand = new StatisticsButtonCommand(ShowNextPhoto);
+            LeftCommand = new StatisticsButtonCommand(ShowPreviousPhoto);
+            ViewCommand = new StatisticsButtonCommand(ViewDetails);
+        }
+
+        private void FillOptions()
+        {
             Years = new ObservableCollection<string>();
             Years.Add("ALL TIME");
             Years.Add("2023");
@@ -116,10 +125,6 @@ namespace TravelAgency.ViewModel
             Years.Add("2020");
             Years.Add("2019");
             SelectedYear = Years[0];
-            FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));
-            RightCommand = new StatisticsButtonCommand(ShowNextPhoto);
-            LeftCommand = new StatisticsButtonCommand(ShowPreviousPhoto);
-            ViewCommand = new StatisticsButtonCommand(ViewDetails);
         }
 
         public void ViewDetails()

@@ -25,7 +25,7 @@ namespace TravelAgency.Model
         public int GuideId { get; set; }
         public int FreeSpots { get; set; }
         public int ActiveKeyPointId { get; set; }
-
+        public string DetailedRowString { get; set; }
         private int toShadow;
         public int ToShadow
         {
@@ -81,6 +81,10 @@ namespace TravelAgency.Model
             IsDeleted=false;
         }
 
+        public void MakeDetailedRowString()
+        {
+            DetailedRowString = "Description: " + Tour.Description + " Tour duration: " + Tour.Duration + " hours.";
+        }
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), TourId.ToString(), DateTime.ToString("dd-MM-yyyy HH-mm"), ((int)CurrentState).ToString(), GuideId.ToString(), FreeSpots.ToString(), ActiveKeyPointId.ToString(), IsDeleted.ToString() };

@@ -16,8 +16,7 @@ namespace TravelAgency.ViewModel
         public VoucherViewModel(int guestId)
         {
             GuestId = guestId;
-            VoucherRepository voucherRepository = new VoucherRepository();
-            voucherService = new VoucherService(voucherRepository);
+            voucherService = new VoucherService();
             Vouchers = voucherService.GetGuestVouchers(GuestId);
             PrintVouchersNumber();
         }

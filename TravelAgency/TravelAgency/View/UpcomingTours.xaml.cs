@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Observer;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -25,52 +26,31 @@ namespace TravelAgency.View
     public partial class UpcomingTours : Window, IObserver
     {
         public Model.User ActiveGuide { get; set; }
-        public TourRepository TourRepository { get; set; }
-        public LocationRepository LocationRepository { get; set; }
-        public PhotoRepository PhotoRepository { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
-        public KeyPointRepository KeyPointRepository { get; set; }
-        public UserRepository UserRepository { get; set; }
-        public TourReservationRepository? TourReservationRepository { get; set; }
-        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
-        public VoucherRepository VoucherRepository { get; set; }
         public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence? SelectedTourOccurrence { get; set; }
-        public UpcomingTours(Model.User activeGuide, TourRepository tourRepository, LocationRepository locationRepository, PhotoRepository photoRepository, TourOccurrenceRepository tourOccurrenceRepository, KeyPointRepository keyPointRepository,
-            TourReservationRepository? tourReservationRepository, UserRepository userRepository, TourOccurrenceAttendanceRepository tourOccurrenceAttendanceRepository, VoucherRepository voucherRepository)
+        public TourOccurrenceService TourOccurrenceService { get; set; }
+        public UpcomingTours(Model.User activeGuide)
         {
             InitializeComponent();
             DataContext = this;
             ActiveGuide = activeGuide;
-            TourRepository = tourRepository;
-            LocationRepository = locationRepository;
-            PhotoRepository = photoRepository;
-            TourOccurrenceRepository = tourOccurrenceRepository;
-            KeyPointRepository = keyPointRepository;
-            TourReservationRepository = tourReservationRepository;
-            UserRepository = userRepository;
-            VoucherRepository = voucherRepository;
-            TourOccurrenceAttendanceRepository = tourOccurrenceAttendanceRepository;
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetUpcomings(ActiveGuide));
-            tourOccurrenceRepository.Subscribe(this);
+            TourOccurrenceService = new TourOccurrenceService();
+            TourOccurrenceService.Subscribe(this);
+            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetUpcomingToursForGuide(ActiveGuide.Id));
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                foreach (var guest in SelectedTourOccurrence.Guests)
-                {
-                    VoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuide.Id, Deadline = DateTime.Now.AddYears(1) });
-                }
-                TourOccurrenceRepository.Delete(SelectedTourOccurrence);
+                TourOccurrenceService.CancelTour(SelectedTourOccurrence, ActiveGuide.Id);
             }
         }
 
         public void Update()
         {
             TourOccurrences.Clear();
-            foreach (TourOccurrence tourOccurrence in TourOccurrenceRepository.GetUpcomings(ActiveGuide))
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceService.GetUpcomingToursForGuide(ActiveGuide.Id))
             {
                 TourOccurrences.Add(tourOccurrence);
             }
@@ -78,8 +58,14 @@ namespace TravelAgency.View
 
         private void NewTour_Click(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, KeyPointRepository, ActiveGuide);
-            createTour.Show();
+            CreateTour createTour = new CreateTour(ActiveGuide);
+            createTour.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

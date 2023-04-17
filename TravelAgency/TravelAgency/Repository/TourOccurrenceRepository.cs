@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Observer;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourOccurrenceRepository : ISubject, IRepository<TourOccurrence>
+    public class TourOccurrenceRepository : ISubject, ITourOccurrenceRepository
     {
         private const string FilePath = "../../../Resources/Data/tourOccurrences.csv";
         private readonly Serializer<TourOccurrence> _serializer;
@@ -128,12 +129,12 @@ namespace TravelAgency.Repository
             return result;
         }
 
-        public List<TourOccurrence> GetUpcomings(User activeGuide)
+        public List<TourOccurrence> GetUpcomings(int activeGuideId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id && tourOccurrence.IsDeleted == false)
+                if (tourOccurrence.DateTime.Date > (DateTime.Now.Date) && tourOccurrence.GuideId == activeGuideId && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }
@@ -148,6 +149,7 @@ namespace TravelAgency.Repository
             {
                 if (tourOccurrence.DateTime.Date >= DateTime.Now.Date && tourOccurrence.CurrentState != CurrentState.Ended && tourOccurrence.IsDeleted == false)
                 {
+                    tourOccurrence.MakeDetailedRowString();
                     result.Add(tourOccurrence);
                 }
             }
@@ -278,21 +280,6 @@ namespace TravelAgency.Repository
             return tourOccurrence;
         }
 
-        public TourOccurrence Save(TourOccurrence entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAll(IEnumerable<TourOccurrence> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(TourOccurrence tourOccurrence)
         {
             TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
@@ -303,11 +290,6 @@ namespace TravelAgency.Repository
             oldTourOccurrence.IsDeleted = true;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
 
     }

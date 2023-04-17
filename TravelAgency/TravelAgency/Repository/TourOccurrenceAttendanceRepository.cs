@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Observer;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourOccurrenceAttendanceRepository : IRepository<TourOccurrenceAttendance>
+    public class TourOccurrenceAttendanceRepository : ITourOccurrenceAttendanceRepository
     {
         private const string FilePath = "../../../Resources/Data/tourOccurrenceAttendances.csv";
         private readonly Serializer<TourOccurrenceAttendance> _serializer;
@@ -99,31 +100,6 @@ namespace TravelAgency.Repository
                 tourOccurrenceAttendances.Add(attendance);
             }
             _serializer.ToCSV(FilePath, tourOccurrenceAttendances);
-        }
-
-        public TourOccurrenceAttendance GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAll(IEnumerable<TourOccurrenceAttendance> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(TourOccurrenceAttendance entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
 
         public int GetCountForTour(int id)
