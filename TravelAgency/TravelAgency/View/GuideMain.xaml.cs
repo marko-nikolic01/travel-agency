@@ -22,30 +22,11 @@ namespace TravelAgency.View
     public partial class GuideMain : Window
     {
         public User ActiveGuide { get; set; }
-        public TourRepository TourRepository { get; set; }
-        public LocationRepository LocationRepository { get; set; }
-        public PhotoRepository PhotoRepository { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
-        public KeyPointRepository KeyPointRepository { get; set; }
-        public UserRepository UserRepository { get; set; }
-        public VoucherRepository VoucherRepository { get; set; }
-        public TourReservationRepository? TourReservationRepository { get; set; }
-        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
         public GuideMain(Model.User user)
         {
             InitializeComponent();
             DataContext = this;
             ActiveGuide = user;
-
-            TourRepository = new TourRepository();
-            LocationRepository = new LocationRepository();
-            PhotoRepository = new PhotoRepository();
-            TourReservationRepository = new TourReservationRepository();
-            UserRepository = new UserRepository();
-            KeyPointRepository = new KeyPointRepository();
-            TourOccurrenceRepository = new TourOccurrenceRepository(PhotoRepository, LocationRepository, TourRepository, TourReservationRepository, UserRepository, KeyPointRepository);
-            TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
-            VoucherRepository = new VoucherRepository();
         }
 
         private void UpcomingTours_Click(object sender, RoutedEventArgs e)
@@ -57,8 +38,7 @@ namespace TravelAgency.View
 
         private void TodaysTours_Click(object sender, RoutedEventArgs e)
         {
-            TodaysTours todaysTours = new TodaysTours(ActiveGuide, TourRepository, LocationRepository, PhotoRepository, TourOccurrenceRepository, 
-                KeyPointRepository, TourReservationRepository, UserRepository, TourOccurrenceAttendanceRepository, VoucherRepository);
+            TodaysTours todaysTours = new TodaysTours(ActiveGuide);
             todaysTours.Show();
             Close();
         }
