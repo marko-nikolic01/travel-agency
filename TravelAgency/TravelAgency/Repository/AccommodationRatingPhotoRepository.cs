@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationRatingPhotoRepository : IRepository<AccommodationRatingPhoto>
+    public class AccommodationRatingPhotoRepository : IAccommodationRatingPhotoRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationRatingPhotos.csv";
 
@@ -22,6 +23,11 @@ namespace TravelAgency.Repository
             accommodationPhotos = serializer.FromCSV(FilePath);
         }
 
+        public List<AccommodationRatingPhoto> GetAll()
+        {
+            return accommodationPhotos;
+        }
+
         public int NextId()
         {
             if (accommodationPhotos.Count < 1)
@@ -31,45 +37,20 @@ namespace TravelAgency.Repository
             return accommodationPhotos.Max(c => c.Id) + 1;
         }
 
-        public List<AccommodationRatingPhoto> GetAll()
+        public AccommodationRatingPhoto Save(AccommodationRatingPhoto photo)
         {
-            return accommodationPhotos;
-        }
-
-        public AccommodationRatingPhoto GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public AccommodationRatingPhoto Save(AccommodationRatingPhoto image)
-        {
-            image.Id = NextId();
-            accommodationPhotos.Add(image);
+            photo.Id = NextId();
+            accommodationPhotos.Add(photo);
             serializer.ToCSV(FilePath, accommodationPhotos);
-            return image;
+            return photo;
         }
 
-        public void SaveAll(IEnumerable<AccommodationRatingPhoto> entities)
+        public void SaveAll(List<AccommodationRatingPhoto> photos)
         {
-            foreach (var entity in entities)
+            foreach (AccommodationRatingPhoto photo in photos)
             {
-                Save(entity);
+                Save(photo);
             }
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(AccommodationRatingPhoto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }

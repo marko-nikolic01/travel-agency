@@ -16,6 +16,7 @@ using TravelAgency.Model;
 using TravelAgency.Repository;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -25,57 +26,37 @@ namespace TravelAgency.View
     public partial class CreateAccommodation : Window
     {
         public User LoggedInUser { get; set; }
-
-        private readonly AccommodationRepository accommodationRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly AccommodationPhotoRepository accommodationPhotoRepository;
         
         public Accommodation NewAccommodation { get; set; }
         public Location NewLocation { get; set; }
 
-        public CreateAccommodation(User loggedInUser, AccommodationRepository accommodationRepository, LocationRepository locationRepository, AccommodationPhotoRepository accommodationPhotoRepository)
+        public AccommodationService AccommodationService { get; set; }
+        public LocationService LocationService { get; set; }
+
+        public CreateAccommodation(User loggedInUser)
         {
             InitializeComponent();
             DataContext = this;
 
             LoggedInUser = loggedInUser;
 
-            this.locationRepository = locationRepository;
-            this.accommodationRepository = accommodationRepository;
-            this.accommodationPhotoRepository = accommodationPhotoRepository;
+            AccommodationService = new AccommodationService();
+            LocationService = new LocationService();
 
-            NewAccommodation = new() { Id = this.accommodationRepository.NextId(), OwnerId = LoggedInUser.Id, Owner = LoggedInUser };
-            NewLocation = new();
+            NewAccommodation = new Accommodation() { OwnerId = LoggedInUser.Id, Owner = LoggedInUser };
+            NewLocation = new Location();
 
             InitializeComboboxes();
         }
 
         private void InitializeComboboxes()
         {
-            var countries = locationRepository.GetAllCountries();
+            var countries = LocationService.GetCountries();
             foreach (var country in countries)
             {
                 CountryComboBox.Items.Add(country);
             }
             CountryComboBox.SelectedIndex = 0;
-        }
-
-        private void AddImage_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "PNG images (*.png)|*.png|JPEG images (*.jpg, *.jpeg)|*.jpg;*.jpeg";
-            ofd.Multiselect = false;
-            ofd.InitialDirectory = $"c:\\Users\\{Environment.UserName}\\Pictures";
-            var result = ofd.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                var imagePath = ofd.FileName;
-
-                AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = imagePath};
-
-                NewAccommodation.Photos.Add(NewImage);
-            }
         }
 
         private void RegisterAccommodation_Click(object sender, RoutedEventArgs e)
@@ -91,11 +72,13 @@ namespace TravelAgency.View
                 System.Windows.MessageBox.Show("Select a country!");
                 return;
             }
+
             if (CityComboBox.SelectedIndex == 0)
             {
                 System.Windows.MessageBox.Show("Select a city!");
                 return;
             }
+
             if (NewAccommodation.Photos.Count == 0)
             {
                 System.Windows.MessageBox.Show("Add at least one photo!");
@@ -115,17 +98,15 @@ namespace TravelAgency.View
                 NewAccommodation.Type = AccommodationType.HUT;
             }
 
-            var country = CountryComboBox.SelectedItem as string;
-            var city = CityComboBox.SelectedItem as string;
+            string? country = CountryComboBox.SelectedItem as string;
+            string? city = CityComboBox.SelectedItem as string;
 
-            NewAccommodation.Location = locationRepository.GetLocationForCountryAndCity(country, city);
+            NewAccommodation.Location = LocationService.GetLocationForCountryAndCity(country, city);
             NewAccommodation.LocationId = NewAccommodation.Location.Id;
 
-            Accommodation savedAccommodation = accommodationRepository.Save(NewAccommodation);
+            AccommodationService.CreateNew(NewAccommodation);
 
-            accommodationPhotoRepository.SaveAll(savedAccommodation.Photos);
-
-            OwnerMain.Accommodations.Add(savedAccommodation);
+            OwnerMain.Accommodations.Add(NewAccommodation);
 
             Close();
         }
@@ -140,7 +121,7 @@ namespace TravelAgency.View
             if (CountryComboBox.SelectedIndex != 0)
             {
                 string country = (string)CountryComboBox.SelectedValue;
-                var cities = locationRepository.GetCitiesByCountry(country);
+                var cities = LocationService.GetCitiesByCountry(country);
                 CityComboBox.Items.Clear();
                 CityComboBox.Items.Add("<Select a city>");
                 foreach (var city in cities)
@@ -165,8 +146,10 @@ namespace TravelAgency.View
             }
 
             var photoURL = AccommodationPhotoURLTextBox.Text;
+
             AccommodationPhotosListView.Items.Add(photoURL);
-            AccommodationPhoto NewImage = new() { ObjectId = NewAccommodation.Id, Path = photoURL };
+            
+            AccommodationPhoto NewImage = new() { Path = photoURL };
             NewAccommodation.Photos.Add(NewImage);
 
             AccommodationPhotoURLTextBox.Text = "";

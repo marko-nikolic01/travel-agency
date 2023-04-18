@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -25,8 +26,9 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationMoveRequestWindow : Window, IDataErrorInfo, INotifyPropertyChanged
     {
-        public AccommodationReservationRepository accommodationReservationRepository;
-        public AccommodationReservationMoveRequestRepository moveRequestRepository;
+        public AccommodationReservationMoveService ReservationMoveService { get; set; }
+        public ReservationDateFinderService DateFinderService { get; set; }
+
         public AccommodationReservation Reservation { get; set; }
         public AccommodationReservationMoveRequest MoveRequest { get; set; }
         private int _dayNumber;
@@ -84,16 +86,12 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AccommodationReservationMoveRequestWindow(AccommodationReservationRepository accommodationReservationRepository, AccommodationReservation reservation, AccommodationReservationMoveRequestRepository moveRequestRepository)
+        public AccommodationReservationMoveRequestWindow(AccommodationReservation reservation)
         {
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
             this.Width = 1000;
-
-            this.accommodationReservationRepository = accommodationReservationRepository;
-            this.moveRequestRepository = moveRequestRepository;
-
 
             Reservation = reservation;
             MoveRequest = new AccommodationReservationMoveRequest(Reservation);
@@ -113,6 +111,9 @@ namespace TravelAgency.View
             firstDatePicker.DisplayDateStart = DateTime.Today;
             lastDatePicker.DisplayDateStart = DateTime.Today;
             ShouldValidate = true;
+
+            ReservationMoveService = new AccommodationReservationMoveService();
+            DateFinderService = new ReservationDateFinderService();
 
             LoadPhotos();
         }
@@ -166,7 +167,15 @@ namespace TravelAgency.View
         {
             if (this.IsValid)
             {
-                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindDatesForReservationMoveRequest(FirstDate, LastDate, Reservation));
+                AvailableDateSpans = new ObservableCollection<DateSpan>(DateFinderService.FindDatesForReservationMoveRequest(FirstDate, LastDate, Reservation));
+                if(AvailableDateSpans.Count == 0) 
+                {
+                    dateSpansDataGrid.Visibility = Visibility.Collapsed;
+                    makeReservationButton.Visibility = Visibility.Collapsed;
+                    System.Windows.MessageBox.Show("No dates found.");
+                    return;
+                }
+
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 dateSpansDataGrid.Visibility = Visibility.Visible;
@@ -306,7 +315,7 @@ namespace TravelAgency.View
         {
             if (MoveRequest.DateSpan != null)
             {
-                moveRequestRepository.Save(MoveRequest);
+                ReservationMoveService.CreateMoveRequest(MoveRequest);
                 Guest1Main.ReservationMoveRequests.Add(MoveRequest);
                 Close();
             }

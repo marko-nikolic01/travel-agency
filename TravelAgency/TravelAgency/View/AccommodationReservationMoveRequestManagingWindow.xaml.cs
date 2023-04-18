@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -21,30 +23,20 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationMoveRequestManagingWindow : Window
     {
-        public AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository { get; set; }
-        public AccommodationReservationRepository accommodationReservationRepository { get; set; }
+        public AccommodationReservationMoveRequestViewModel MoveRequestViewModel { get; set; }
 
-        public User LoggedInUser { get; set; }
-        public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
-
-        public AccommodationReservationMoveRequestManagingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository, AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository, AccommodationReservationMoveRequest selectedMoveRequest)
+        public AccommodationReservationMoveRequestManagingWindow(AccommodationReservationMoveRequest selectedMoveRequest)
         {
             InitializeComponent();
-            DataContext = this;
-
-            LoggedInUser = loggedInUser;
-            this.accommodationReservationMoveRequestRepository = accommodationReservationMoveRequestRepository;
-            this.accommodationReservationRepository = accommodationReservationRepository;
-            SelectedMoveRequest = selectedMoveRequest;
+            MoveRequestViewModel = new AccommodationReservationMoveRequestViewModel(selectedMoveRequest);
+            DataContext = MoveRequestViewModel;
 
             SetAvailability();
         }
 
         private void SetAvailability()
         {
-            var isAvailable = accommodationReservationRepository.CanResevationBeMoved(SelectedMoveRequest);
-
-            if (isAvailable)
+            if (MoveRequestViewModel.CanSelectedReservationBeMoved())
             {
                 AvailabilityTextBlock.Text = "Available";
             }
@@ -56,14 +48,7 @@ namespace TravelAgency.View
 
         private void AcceptMoveRequest_Click(object sender, RoutedEventArgs e)
         {
-            accommodationReservationMoveRequestRepository.Delete(SelectedMoveRequest);
-            SelectedMoveRequest.Status = AccommodationReservationMoveRequestStatus.ACCEPTED;
-            accommodationReservationMoveRequestRepository.Save(SelectedMoveRequest);
-            OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
-
-            accommodationReservationRepository.UpdateDateSpan(SelectedMoveRequest.Reservation, SelectedMoveRequest.DateSpan);
-
-            accommodationReservationRepository.DeleteOverlappingReservations(SelectedMoveRequest.Reservation);
+            MoveRequestViewModel.AcceptSelectedMoveRequest();
 
             Close();
         }
@@ -77,11 +62,8 @@ namespace TravelAgency.View
             }
             else
             {
-                accommodationReservationMoveRequestRepository.Delete(SelectedMoveRequest);
-                SelectedMoveRequest.Status = AccommodationReservationMoveRequestStatus.REJECTED;
-                SelectedMoveRequest.RejectionExplanation = ExplanationTextBox.Text;
-                accommodationReservationMoveRequestRepository.Save(SelectedMoveRequest);
-                OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
+                MoveRequestViewModel.RejectSelectedMoveRequest();
+
                 Close();
             }
         }

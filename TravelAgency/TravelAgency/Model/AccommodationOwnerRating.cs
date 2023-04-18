@@ -105,11 +105,11 @@ namespace TravelAgency.Model
         {
             Id = -1;
             AccommodationReservationId = -1;
-            AccommodationCleanliness = -1;
-            AccommodationComfort = -1;
-            AccommodationLocation = -1;
-            OwnerCorrectness = -1;
-            OwnerResponsiveness = -1;
+            AccommodationCleanliness = 1;
+            AccommodationComfort = 1;
+            AccommodationLocation = 1;
+            OwnerCorrectness = 1;
+            OwnerResponsiveness = 1;
             Comment = "";
             Photos = new List<AccommodationRatingPhoto>();
         }
@@ -119,11 +119,11 @@ namespace TravelAgency.Model
             Id = -1;
             AccommodationReservationId = reservation.Id;
             AccommodationReservation = reservation;
-            AccommodationCleanliness = -1;
-            AccommodationComfort = -1;
-            AccommodationLocation = -1;
-            OwnerCorrectness = -1;
-            OwnerResponsiveness = -1;
+            AccommodationCleanliness = 1;
+            AccommodationComfort = 1;
+            AccommodationLocation = 1;
+            OwnerCorrectness = 1;
+            OwnerResponsiveness = 1;
             Comment = "";
             Photos = new List<AccommodationRatingPhoto>();
         }

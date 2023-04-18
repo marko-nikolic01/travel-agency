@@ -11,6 +11,7 @@ namespace TravelAgency.Services
     public class UserService
     {
         public IUserRepository IUserRepository { get; set; }
+
         public UserService()
         {
             
@@ -20,6 +21,11 @@ namespace TravelAgency.Services
         public User GetById(int id)
         {
             return IUserRepository.GetById(id);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return IUserRepository.GetUsers();
         }
     }
 }

@@ -21,11 +21,11 @@ namespace TravelAgency.Model
             RatingId = -1;
         }
 
-        public AccommodationRatingPhoto(int id, string path, int ratingId)
+        public AccommodationRatingPhoto(string path)
         {
-            Id = id;
+            Id = -1;
             Path = path;
-            RatingId = ratingId;
+            RatingId = -1;
         }
 
         public string[] ToCSV()

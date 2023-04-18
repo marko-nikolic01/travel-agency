@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -31,21 +32,21 @@ namespace TravelAgency.View
 
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationReservationRepository _AccommodationReservationRepository;
-        private readonly AccommodationGuestRatingRepository _AccommodationGuestRatingRepository;
+        public AccommodationService AccommodationService { get; set; }
+        public AccommodationGuestRatingService AccommodationGuestRatingService { get; set; }
         
-        public AccommodationGuestRatingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository)
+        public AccommodationGuestRatingWindow(User loggedInUser)
         {
             InitializeComponent();
             DataContext = this;
 
             LoggedInUser = loggedInUser;
 
-            _AccommodationReservationRepository = accommodationReservationRepository;
-            _AccommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
+            AccommodationService = new AccommodationService();
+            AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
-            UnratedReservations = new ObservableCollection<AccommodationReservation>(_AccommodationReservationRepository.GetUnrated(_AccommodationGuestRatingRepository.GetAll()));
-            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(_AccommodationGuestRatingRepository.GetAllByOwner(loggedInUser));
+            UnratedReservations = new ObservableCollection<AccommodationReservation>(AccommodationGuestRatingService.GetUnratedReservations());
+            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(AccommodationGuestRatingService.GetByOwner(loggedInUser));
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
         }
@@ -67,7 +68,7 @@ namespace TravelAgency.View
             NewAccommodationGuestRating.Responsivenes = (int)ResponsivenesSlider.Value;
             NewAccommodationGuestRating.Comment = CommentTextBox.Text;
 
-            _AccommodationGuestRatingRepository.Save(NewAccommodationGuestRating);
+            AccommodationGuestRatingService.CreateNew(NewAccommodationGuestRating);
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
 
@@ -78,19 +79,24 @@ namespace TravelAgency.View
             ResponsivenesSlider.Value = 1;
             CommentTextBox.Text = "";
 
+            RefreshLists();
+
+            MessageBox.Show("Rating has been created successfully!");
+        }
+
+        private void RefreshLists()
+        {
             UnratedReservations.Clear();
-            foreach (var reservation in _AccommodationReservationRepository.GetUnrated(_AccommodationGuestRatingRepository.GetAll()))
+            foreach (var reservation in AccommodationGuestRatingService.GetUnratedReservations())
             {
                 UnratedReservations.Add(reservation);
             }
 
             AccommodationGuestRatings.Clear();
-            foreach (var rating in _AccommodationGuestRatingRepository.GetAll())
+            foreach (var rating in AccommodationGuestRatingService.GetAllRatings())
             {
                 AccommodationGuestRatings.Add(rating);
             }
-
-            MessageBox.Show("Rating has been created successfully!");
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

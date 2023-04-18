@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -32,14 +33,12 @@ namespace TravelAgency.View
 
         public User LoggedInUser { get; set; }
 
-        private readonly UserRepository userRepository;
-        private readonly AccommodationRepository accommodationRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly AccommodationPhotoRepository imageRepository;
-        private readonly AccommodationReservationRepository accommodationReservationRepository;
-        private readonly AccommodationGuestRatingRepository accommodationGuestRatingRepository;
-        private readonly AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
-        private readonly AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
+        public UserService UserService { get; set; }
+        public AccommodationService AccommodationService { get; set; }
+        public AccommodationReservationMoveService moveReqestService { get; set; } 
+        public SuperOwnerService SuperOwnerService { get; set; }
+        public AccommodationOwnerRatingService AccommodationOwnerRatingService { get; set; }
+        public AccommodationGuestRatingService AccommodationGuestRatingService { get; set; }
 
         public OwnerMain(User user)
         {
@@ -48,18 +47,17 @@ namespace TravelAgency.View
 
             LoggedInUser = user;
 
-            userRepository = new UserRepository();
-            locationRepository = new LocationRepository();
-            imageRepository = new AccommodationPhotoRepository();
-            accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
-            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
-            accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
+            UserService = new UserService();
+            AccommodationService = new AccommodationService();
+            moveReqestService = new AccommodationReservationMoveService();
+            SuperOwnerService = new SuperOwnerService();
+            AccommodationOwnerRatingService = new AccommodationOwnerRatingService();
+            AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
-            AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
-            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetWaitingByOwner(LoggedInUser));
+            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetByOwner(user));
+            AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(AccommodationOwnerRatingService.GetRatingsVisibleToOwner(user));
+
+            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(moveReqestService.GetWaitingMoveRequestsByOwner(LoggedInUser));
 
             ShowNotifications();
             SetSuperOwner();
@@ -67,32 +65,34 @@ namespace TravelAgency.View
 
         private void ShowCreateAccommodation_Click(object sender, RoutedEventArgs e)
         {
-            CreateAccommodation createAccommodation = new CreateAccommodation(LoggedInUser, accommodationRepository, locationRepository, imageRepository);
+            CreateAccommodation createAccommodation = new CreateAccommodation(LoggedInUser);
             createAccommodation.ShowDialog();
         }
 
         private void ShowAccommodationGuestRatingWindow_Click(object sender, RoutedEventArgs e)
         {
-            AccommodationGuestRatingWindow accommodationGuestRatingWindow = new AccommodationGuestRatingWindow(LoggedInUser, accommodationReservationRepository);
+            AccommodationGuestRatingWindow accommodationGuestRatingWindow = new AccommodationGuestRatingWindow(LoggedInUser);
             accommodationGuestRatingWindow.ShowDialog();
         }
 
         private void ShowNotifications()
         {
-            var unratedGuests = accommodationReservationRepository.GetUnrated(accommodationGuestRatingRepository.GetAll());
+            var unratedGuests = AccommodationGuestRatingService.GetUnratedReservations();
 
             foreach (var unratedGuest in unratedGuests)
             {
-                int daysLeft = accommodationReservationRepository.CalculateDaysLeftForRating(unratedGuest);
+                int daysLeft = AccommodationGuestRatingService.CalculateDaysLeftForRating(unratedGuest);
                 MessageBox.Show($"Rate the guest.\n\nUsername: {unratedGuest.Guest.Username}\n" +
-                    $"Accommodation: {unratedGuest.Accommodation.Name}\nDays left for rating: {daysLeft}", "Unrated guest", MessageBoxButton.OK, MessageBoxImage.Information);
+                                $"Accommodation: {unratedGuest.Accommodation.Name}\n" +
+                                $"Days left for rating: {daysLeft}",
+                                "Unrated guest", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         private void SetSuperOwner()
         {
-            AverageRatingLabel.Content = accommodationOwnerRatingRepository.GetAverageRatingForOwner(LoggedInUser).ToString();
-            if (accommodationOwnerRatingRepository.IsSuperOwner(LoggedInUser)) {
+            AverageRatingLabel.Content = SuperOwnerService.GetAverageRatingForOwner(LoggedInUser).ToString();
+            if (SuperOwnerService.IsSuperOwner(LoggedInUser)) {
                 SuperOwnerLabel.Content = "Yes";
             }
             else
@@ -116,8 +116,8 @@ namespace TravelAgency.View
             }
             else
             {
-                AccommodationReservationMoveRequestManagingWindow accommodationReservationMoveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, accommodationReservationRepository, accommodationReservationMoveRequestRepository, SelectedMoveRequest);
-                accommodationReservationMoveRequestManagingWindow.Show();
+                AccommodationReservationMoveRequestManagingWindow moveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(SelectedMoveRequest);
+                moveRequestManagingWindow.Show();
             }
         }
     }

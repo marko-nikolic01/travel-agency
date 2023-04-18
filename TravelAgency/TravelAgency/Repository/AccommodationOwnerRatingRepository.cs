@@ -5,24 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationOwnerRatingRepository : IRepository<AccommodationOwnerRating>
+    public class AccommodationOwnerRatingRepository : IAccommodationOwnerRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationOwnerRatings.csv";
         private readonly Serializer<AccommodationOwnerRating> serializer;
         private List<AccommodationOwnerRating> accommodationOwnerRatings;
 
-        public AccommodationOwnerRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        public AccommodationOwnerRatingRepository()
         {
             serializer = new Serializer<AccommodationOwnerRating>();
             accommodationOwnerRatings = serializer.FromCSV(FilePath);
+        }
 
+        public void LinkReservations(List<AccommodationReservation> reservations)
+        {
             foreach (var accommodationOwnerRating in accommodationOwnerRatings)
             {
-                foreach (var accommodationReservation in accommodationReservations)
+                foreach (var accommodationReservation in reservations)
                 {
                     if (accommodationOwnerRating.AccommodationReservationId == accommodationReservation.Id)
                     {
@@ -32,49 +36,12 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void Delete(AccommodationOwnerRating entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AccommodationOwnerRating> GetAll()
         {
             return accommodationOwnerRatings;
         }
 
         public AccommodationOwnerRating GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int NextId()
-        {
-            if (accommodationOwnerRatings.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationOwnerRatings.Max(c => c.Id) + 1;
-        }
-
-        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
-        {
-            entity.Id = NextId();
-            accommodationOwnerRatings.Add(entity);
-            serializer.ToCSV(FilePath, accommodationOwnerRatings);
-            return entity;
-        }
-
-        public void SaveAll(IEnumerable<AccommodationOwnerRating> entities)
         {
             throw new NotImplementedException();
         }
@@ -103,45 +70,21 @@ namespace TravelAgency.Repository
             return ownerRatings;
         }
 
-        public double GetAverageRatingForOwner(User owner)
+        public int NextId()
         {
-            var ratings = GetByOwner(owner);
-            double averageRating = 0;
-            foreach (var rating in ratings)
+            if (accommodationOwnerRatings.Count < 1)
             {
-                double currentRating = (double)(rating.AccommodationCleanliness +
-                                       rating.AccommodationComfort +
-                                       rating.AccommodationLocation +
-                                       rating.OwnerCorrectness +
-                                       rating.OwnerResponsiveness) / 5;
-                averageRating += currentRating;
+                return 1;
             }
-
-            averageRating /= ratings.Count;
-
-            return averageRating;
+            return accommodationOwnerRatings.Max(c => c.Id) + 1;
         }
 
-        public bool IsSuperOwner(User owner)
+        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
         {
-            return GetByOwner(owner).Count >= 1 && GetAverageRatingForOwner(owner) >= 4.5;
-        }
-
-        public void SetSuperOwners(UserRepository userRepository)
-        {
-            foreach (var user in userRepository.GetOwners())
-            {
-                if (IsSuperOwner(user))
-                {
-                    user.IsSuperOwner = true;
-                }
-                else
-                {
-                    user.IsSuperOwner = false;
-                }
-            }
-
-            userRepository.UpdateSuperOwners();
+            entity.Id = NextId();
+            accommodationOwnerRatings.Add(entity);
+            serializer.ToCSV(FilePath, accommodationOwnerRatings);
+            return entity;
         }
     }
 }

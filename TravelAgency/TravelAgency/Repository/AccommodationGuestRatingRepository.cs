@@ -4,24 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationGuestRatingRepository : IRepository<AccommodationGuestRating>
+    public class AccommodationGuestRatingRepository : IAccommodationGuestRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationGuestRatings.csv";
         private readonly Serializer<AccommodationGuestRating> serializer;
         private List<AccommodationGuestRating> accommodationGuestRatings;
 
-        public AccommodationGuestRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        public AccommodationGuestRatingRepository()
         {
             serializer = new Serializer<AccommodationGuestRating>();
             accommodationGuestRatings = serializer.FromCSV(FilePath);
+        }
 
+        public void LinkReservations(List<AccommodationReservation> reservations)
+        {
             foreach (var accommodationGuestRating in accommodationGuestRatings)
             {
-                foreach (var accommodationReservation in accommodationReservations)
+                foreach (var accommodationReservation in reservations)
                 {
                     if (accommodationGuestRating.AccommodationReservationId == accommodationReservation.Id)
                     {
@@ -31,29 +35,9 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void Delete(AccommodationGuestRating entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AccommodationGuestRating> GetAll()
         {
             return accommodationGuestRatings;
-        }
-
-        public AccommodationGuestRating GetById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public int NextId()
@@ -73,12 +57,7 @@ namespace TravelAgency.Repository
             return entity;
         }
 
-        public void SaveAll(IEnumerable<AccommodationGuestRating> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal IEnumerable<AccommodationGuestRating> GetAllByOwner(User owner)
+        public List<AccommodationGuestRating> GetByOwner(User owner)
         {
             return accommodationGuestRatings.FindAll(agr => agr.AccommodationReservation.Accommodation.OwnerId == owner.Id);
         }
