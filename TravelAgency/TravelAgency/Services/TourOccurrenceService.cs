@@ -53,6 +53,14 @@ namespace TravelAgency.Services
         }
         private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
         {
+            foreach (var tourReservation in reservationRepository.GetTourReservations())
+            {
+                TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
+                if (tourOccurrence != null)
+                {
+                    tourOccurrence.Guests.Clear();
+                }
+            }
             foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
@@ -136,6 +144,18 @@ namespace TravelAgency.Services
             return mostVisited;
         }
 
+        public void NotifyObservers()
+        {
+            ITourOccurrenceRepository.NotifyObservers();
+        }
+        public void UpdateTour(TourOccurrence tourOccurrence)
+        {
+            ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+        }
+        public List<TourOccurrence> GetOfferedTours()
+        {
+            return ITourOccurrenceRepository.GetOffered();
+        }
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId)
         {
             return ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId);
@@ -193,5 +213,72 @@ namespace TravelAgency.Services
             tourOccurrence.KeyPoints.Add(keyPoint);
             IKeyPointRepository.Save(keyPoint);
         }
+
+        public List<TourOccurrence> GetFinishedOccurrencesForGuest(int guestId)
+        {
+            List<TourOccurrence> result = new List<TourOccurrence>();
+            foreach (TourOccurrence occurrence in ITourOccurrenceRepository.GetAll())
+            {
+                if (occurrence.CurrentState == CurrentState.Ended)
+                {
+                    if (WasGuestOnTour(occurrence, guestId))
+                        result.Add(occurrence);
+                }
+            }
+            return result;
+        }
+
+        private bool WasGuestOnTour(TourOccurrence occurrence, int guestId)
+        {
+            TourOccurrenceAttendance attendance;
+            attendance = ITourOccurrenceAttendanceRepository.GetAll().Find(x => x.TourOccurrenceId == occurrence.Id && x.GuestId == guestId);
+            if (attendance != null)
+            {
+                if (attendance.ResponseStatus == ResponseStatus.Accepted)
+                    return true;
+            }
+            return false;
+        }
+
+        public string GetActiveTour(int guestId)
+        {
+            string result = "There is no active tour";
+            foreach (TourOccurrence occurrence in ITourOccurrenceRepository.GetAll())
+            {
+                if (occurrence.CurrentState == CurrentState.Started && occurrence.DateTime.Date.Equals(DateTime.Now.Date))
+                {
+                    TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
+                    if (tourAttendance != null)
+                    {
+                        result = BuildActiveTourString(occurrence);
+                        result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
+                        return result;
+                    }
+                    else if(ITourReservationRepository.IsTourReserved(guestId, occurrence.Id))
+                    {
+                        result = BuildActiveTourString(occurrence);
+                        result += "\nStatus: haven't arrived yet";
+                        return result;
+                    }
+                }
+            }
+            return result;
+        }
+
+        private string BuildActiveTourString(TourOccurrence occurrence)
+        {
+            string result;
+            string keyPointName = IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
+            result = "Active tour: " + occurrence.Tour.Name;
+            result += "\n" + occurrence.Tour.Description;
+            result += "\nCurrent key point: " + keyPointName;
+            return result;
+        }
+
+        private TourOccurrenceAttendance FindAttendance(int currentGuestId, int id)
+        {
+            return ITourOccurrenceAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
+        }
     }
+
 }

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
@@ -53,16 +54,16 @@ namespace TravelAgency.View
         private TourReservationRepository tourReservationRepository;
         private TourOccurrence TourOccurrence;
         private User activeGuest;
-        public TourOccurrenceRepository TourOccurrenceRepository;
+        public TourOccurrenceService tourOccurrenceService;
         VoucherViewModel voucherViewModel;
-        public TourGuests(TourOccurrence tourOccurrence, User user, TourOccurrenceRepository tourOccurrenceRepository)
+        public TourGuests(TourOccurrence tourOccurrence, User user)
         {
             InitializeComponent();
             DataContext = this;
             userRepository = new UserRepository();
             tourReservationRepository = new TourReservationRepository();
             TourOccurrence = tourOccurrence;
-            TourOccurrenceRepository = tourOccurrenceRepository;
+            tourOccurrenceService = new TourOccurrenceService();
             activeGuest = user;
             GuestList.Items.Add(activeGuest.Username);
             voucherViewModel = new VoucherViewModel(user.Id);
@@ -127,9 +128,8 @@ namespace TravelAgency.View
             }
             TourOccurrence.Guests.AddRange(users);
             TourOccurrence.FreeSpots -= users.Count;
-            TourOccurrenceRepository.UpdateTourOccurrence(TourOccurrence);
+            tourOccurrenceService.UpdateTour(TourOccurrence);
             voucherViewModel.UpdateVoucher(TourOccurrence.Id);
-            Guest2Main.TourOccurrenceRepository.NotifyObservers();
             Close();
         }
         private User GetUserByName(int i)

@@ -6,35 +6,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
     public partial class MyTours : Window
     {
-        public List<TourOccurrence> TourOccurrences { get; set; }
-        public TourOccurrence SelectedTourOccurrence { get; set; }
-        private TourOccurrenceRepository tourOccurrenceRepository;
-        private TourOccurrenceAttendanceRepository tourAttendanceRepository;
-        private int currentGuestId;
-        public MyTours(TourOccurrenceRepository occurrenceRepository, TourOccurrenceAttendanceRepository tourAttendanceRepository, int guestId)
+        MyToursViewModel myToursViewModel;
+        public MyTours(int guestId)
         {
             InitializeComponent();
-            DataContext = this;
-            tourOccurrenceRepository = occurrenceRepository;
-            this.tourAttendanceRepository = tourAttendanceRepository;
-            TourOccurrences = tourOccurrenceRepository.GetFinishedOccurrencesForGuest(guestId);
-            currentGuestId = guestId;
-            activeTourText.Text = tourOccurrenceRepository.GetActiveTour(currentGuestId);
+            myToursViewModel = new MyToursViewModel(guestId);
+            DataContext = myToursViewModel;
         }
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
+            //todo: refactor this function with viewmodel and service
             TourRatingRepository tourRatingRepository = new TourRatingRepository();
-            if(SelectedTourOccurrence != null)
+            if(myToursViewModel.SelectedTourOccurrence != null)
             {
-                if (tourRatingRepository.TourIsNotRated(currentGuestId, SelectedTourOccurrence.Id))
+                if (tourRatingRepository.IsTourNotRated(myToursViewModel.currentGuestId, myToursViewModel.SelectedTourOccurrence.Id))
                 {
-                    TourRatingWindow tourRatingWindow = new TourRatingWindow(SelectedTourOccurrence, currentGuestId);
+                    TourRatingWindow tourRatingWindow = new TourRatingWindow(myToursViewModel.SelectedTourOccurrence, myToursViewModel.currentGuestId);
                     tourRatingWindow.Show();
                 }
                 else 
@@ -45,7 +39,7 @@ namespace TravelAgency.View
         }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
-            FinishedTourDetailedView details = new FinishedTourDetailedView(SelectedTourOccurrence);
+            FinishedTourDetailedView details = new FinishedTourDetailedView(myToursViewModel.SelectedTourOccurrence);
             Point point = Mouse.GetPosition(this);
             Point pointToScreen = PointToScreen(point);
             details.Left = pointToScreen.X - 800;

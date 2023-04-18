@@ -5,11 +5,11 @@ using TravelAgency.Repository;
 
 namespace TravelAgency.View
 {
-    public partial class TourRequestWindow : Window
+    public partial class TourRequestView : Window
     {
         private int guestId;
         public ObservableCollection<TourRequest> MadeRequests { get; set; }
-        public TourRequestWindow(int id)
+        public TourRequestView(int id)
         {
             InitializeComponent();
             DataContext = this;
@@ -20,7 +20,7 @@ namespace TravelAgency.View
 
         private void CreateRequest_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestFormWindow createRequest = new TourRequestFormWindow(guestId);
+            TourRequestFormView createRequest = new TourRequestFormView(guestId);
             createRequest.Show();
         }
     }

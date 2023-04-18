@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
     public class TourOccurrenceAttendanceService
     {
+        public ITourOccurrenceAttendanceRepository ITourOccurrenceAttendanceRepository { get; set; }
         public TourOccurrenceAttendanceService()
         {
+            ITourOccurrenceAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
         }
         public int GetGuestsNumberByTour(int id)
         {
@@ -75,6 +79,32 @@ namespace TravelAgency.Services
                 }
             }
             return result;
+        }
+
+        public TourOccurrenceAttendance GetAttendance(int guestId)
+        {
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in ITourOccurrenceAttendanceRepository.GetAll())
+            {
+                if (tourOccurrenceAttendance.GuestId == guestId && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.NotAnsweredYet
+                    && tourOccurrenceAttendance.KeyPointId != -1)
+                {
+                    return tourOccurrenceAttendance;
+                }
+            }
+            return null;
+        }
+
+        public void SaveAnswer(bool accepted, TourOccurrenceAttendance attendance)
+        {
+            if (accepted)
+            {
+                attendance.ResponseStatus = ResponseStatus.Accepted;
+            }
+            else
+            {
+                attendance.ResponseStatus = ResponseStatus.Declined;
+            }
+            ITourOccurrenceAttendanceRepository.UpdateTourOccurrenceAttendaces(attendance);
         }
     }
 }
