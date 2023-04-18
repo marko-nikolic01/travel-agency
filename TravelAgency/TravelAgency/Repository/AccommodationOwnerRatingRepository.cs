@@ -22,11 +22,6 @@ namespace TravelAgency.Repository
             accommodationOwnerRatings = serializer.FromCSV(FilePath);
         }
 
-        public AccommodationOwnerRatingRepository(List<AccommodationReservation> reservations) : this()
-        {
-            LinkReservations(reservations);
-        }
-
         public void LinkReservations(List<AccommodationReservation> reservations)
         {
             foreach (var accommodationOwnerRating in accommodationOwnerRatings)
@@ -111,28 +106,6 @@ namespace TravelAgency.Repository
             averageRating /= ratings.Count;
 
             return averageRating;
-        }
-
-        public bool IsSuperOwner(User owner)
-        {
-            return GetByOwner(owner).Count >= 1 && GetAverageRatingForOwner(owner) >= 4.5;
-        }
-
-        public void SetSuperOwners(UserRepository userRepository)
-        {
-            foreach (var user in userRepository.GetOwners())
-            {
-                if (IsSuperOwner(user))
-                {
-                    user.IsSuperOwner = true;
-                }
-                else
-                {
-                    user.IsSuperOwner = false;
-                }
-            }
-
-            userRepository.UpdateSuperOwners();
         }
     }
 }

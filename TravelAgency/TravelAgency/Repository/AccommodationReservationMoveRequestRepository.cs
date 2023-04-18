@@ -19,11 +19,6 @@ namespace TravelAgency.Repository
             _moveRequests = _serializer.FromCSV(FilePath);
         }
 
-        public AccommodationReservationMoveRequestRepository(List<AccommodationReservation> reservations) : this()
-        {
-            LinkReservations(reservations);
-        }
-
         public void LinkReservations(List<AccommodationReservation> reservations)
         {
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
@@ -69,6 +64,11 @@ namespace TravelAgency.Repository
             return moveRequests;
         }
 
+        public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
+        {
+            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
+        }
+
         public int NextId()
         {
             if (_moveRequests.Count < 1)
@@ -84,54 +84,6 @@ namespace TravelAgency.Repository
             _moveRequests.Add(moveRequest);
             _serializer.ToCSV(FilePath, _moveRequests);
             return moveRequest;
-        }
-
-        //-----------------------------------------------------------------------------------------------------------------------------------------------
-        public void Delete(AccommodationReservationMoveRequest entity)
-        {
-            DeleteById(entity.Id);
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            AccommodationReservationMoveRequest moveRequest = _moveRequests.Find(mr => mr.Id == id);
-            _moveRequests.Remove(moveRequest);
-            _serializer.ToCSV(FilePath, _moveRequests);
-        }
-        //-----------------------------------------------------------------------------------------------------------------------------------------------
-
-        public bool NotifyStatusChange()
-        {
-            bool notify = false;
-            foreach(AccommodationReservationMoveRequest moveRequest in _moveRequests) 
-            {
-                if (StatusChanged(moveRequest))
-                {
-                    notify = true;
-                }
-            }
-            return notify;
-        }
-
-        private bool StatusChanged(AccommodationReservationMoveRequest moveRequest)
-        {
-            if (!moveRequest.StatusChanged)
-            {
-                return false;
-            }
-
-            moveRequest.StatusChanged = false;
-            return true;
-        }
-
-        public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
-        {
-            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
         }
 
         public void UpdateStatus(AccommodationReservationMoveRequest moveRequest, AccommodationReservationMoveRequestStatus status)
