@@ -64,6 +64,7 @@ namespace TravelAgency.View
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByOwner(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
+
             AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(moveReqestService.GetWaitingMoveRequestsByOwner(LoggedInUser));
 
             ShowNotifications();

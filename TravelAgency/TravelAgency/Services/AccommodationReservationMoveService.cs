@@ -96,7 +96,7 @@ namespace TravelAgency.Services
 
         public List<AccommodationReservationMoveRequest> GetWaitingMoveRequestsByOwner(User owner)
         {
-            return MoveRequestRepository.GetAll().FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
+            return MoveRequestRepository.GetWaitingByOwner(owner);
         }
     }
 }

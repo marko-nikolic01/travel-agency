@@ -134,18 +134,6 @@ namespace TravelAgency.Repository
             return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
         }
 
-        public void AcceptMoveRequest(AccommodationReservationMoveRequest moveRequest)
-        {
-            moveRequest.Status = AccommodationReservationMoveRequestStatus.ACCEPTED;
-            _serializer.ToCSV(FilePath, _moveRequests);
-        }
-
-        public void RejectMoveRequest(AccommodationReservationMoveRequest moveRequest)
-        {
-            moveRequest.Status = AccommodationReservationMoveRequestStatus.REJECTED;
-            _serializer.ToCSV(FilePath, _moveRequests);
-        }
-
         public void UpdateStatus(AccommodationReservationMoveRequest moveRequest, AccommodationReservationMoveRequestStatus status)
         {
             moveRequest.Status = status;

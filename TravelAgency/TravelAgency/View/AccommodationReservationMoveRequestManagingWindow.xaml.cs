@@ -22,7 +22,6 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationMoveRequestManagingWindow : Window
     {
-
         public User LoggedInUser { get; set; }
         public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
 
