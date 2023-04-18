@@ -32,42 +32,6 @@ namespace TravelAgency.Repository
             LinkTourOccurrences(tourRepository);
         }
 
-        public TourOccurrenceRepository(PhotoRepository photoRepository, LocationRepository locationRepository, TourRepository tourRepository, TourReservationRepository reservationRepository, UserRepository userRepository, KeyPointRepository keyPointRepository)
-        {
-            _serializer = new Serializer<TourOccurrence>();
-            tourOccurrences = _serializer.FromCSV(FilePath);
-            observers = new List<IObserver>();
-            LinkTourLocations(locationRepository, tourRepository);
-            LinkTourPhotos(photoRepository, tourRepository);
-            LinkTourOccurrences(tourRepository);
-            LinkTourGuests(reservationRepository, userRepository);
-            LinkKeyPoints(keyPointRepository);
-        }
-
-        private void LinkKeyPoints(KeyPointRepository keyPointRepository)
-        {
-            foreach (KeyPoint keyPoint in keyPointRepository.GetAll())
-            {
-                TourOccurrence tourOccurrence = tourOccurrences.Find(tO => tO.Id == keyPoint.TourOccurrenceId);
-                if (tourOccurrence != null)
-                {
-                    tourOccurrence.KeyPoints.Add(keyPoint);
-                }
-            }
-        }
-        private void LinkTourGuests(TourReservationRepository reservationRepository, UserRepository userRepository)
-        {
-            foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
-            {
-                TourOccurrence tourOccurrence = tourOccurrences.Find(x => x.Id == tourReservation.TourOccurrenceId);
-                User guest = userRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
-                if (tourOccurrence != null && guest != null)
-                {
-                    tourOccurrence.Guests.Add(guest);
-                }
-            }
-        }
-
         private void LinkTourOccurrences(TourRepository tourRepository)
         {
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
@@ -76,30 +40,6 @@ namespace TravelAgency.Repository
                 if (tour != null)
                 {
                     tourOccurrence.Tour = tour;
-                }
-            }
-        }
-
-        private static void LinkTourPhotos(PhotoRepository photoRepository, TourRepository tourRepository)
-        {
-            foreach (Photo photo in photoRepository.GetAll())
-            {
-                Tour tour = tourRepository.GetAll().Find(t => t.Id == photo.TourId);
-                if (tour != null)
-                {
-                    tour.Photos.Add(photo);
-                }
-            }
-        }
-
-        private static void LinkTourLocations(LocationRepository locationRepository, TourRepository tourRepository)
-        {
-            foreach (var tour in tourRepository.GetAll())
-            {
-                Location location = locationRepository.GetAll().Find(l => l.Id == tour.LocationId);
-                if (location != null)
-                {
-                    tour.Location = location;
                 }
             }
         }

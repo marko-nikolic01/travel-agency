@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class TourRatingRepository : IRepository<TourRating>
+    public class TourRatingRepository : ITourRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/tourRatings.csv";
         private readonly Serializer<TourRating> _serializer;
@@ -41,11 +42,6 @@ namespace TravelAgency.Repository
         public List<TourRating> GetAll()
         {
             return tourRatings;
-        }
-
-        public TourRating GetById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public List<TourRating> GetRatingsByTourOccurrenceId(int id)
@@ -82,24 +78,6 @@ namespace TravelAgency.Repository
         public bool IsTourNotRated(int guestId, int occurrenceId)
         {
             return !tourRatings.Exists(x => x.GuestId == guestId && x.TourOccurrenceId == occurrenceId);
-        }
-        public void SaveAll(IEnumerable<TourRating> entities)
-        {
-            throw new NotImplementedException();
-        }
-        public void Delete(TourRating entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
         }
         public void UpdateIsValid(TourRating tourRating)
         {

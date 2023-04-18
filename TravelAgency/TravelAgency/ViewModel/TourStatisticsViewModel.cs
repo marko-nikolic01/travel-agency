@@ -48,13 +48,18 @@ namespace TravelAgency.ViewModel
                 {
                     DisplayTour = TourOccurrenceService.GetMostVisitedAllTime(ActiveGuide.Id);
                 }
-                CurrentPhoto = DisplayTour.Tour.Photos[0];
-                KeyPoints = "";
-                foreach (KeyPoint keyPoint in DisplayTour.KeyPoints)
+                if(DisplayTour == null)
                 {
-                    KeyPoints += keyPoint.Name += ", ";
+                    CurrentPhoto = null;
+                    KeyPoints = "";
+                    GuestsNumber = 0;
                 }
-                GuestsNumber = AttendanceService.GetGuestsNumberByTour(DisplayTour.Id);
+                else
+                {
+                    CurrentPhoto = DisplayTour.Tour.Photos[0];
+                    KeyPoints = DisplayTour.GetKeyPointsString();
+                    GuestsNumber = AttendanceService.GetGuestsNumberByTour(DisplayTour.Id);
+                }
                 selectedYear = value;
                 OnPropertyChanged();
             }

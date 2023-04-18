@@ -41,7 +41,7 @@ namespace TravelAgency.Repository
             List<Voucher> result = new List<Voucher>();
             foreach(var voucher in vouchers)
             {
-                if(voucher.TourOccurrenceId == id)
+                if(voucher.TourOccurrenceId == id && voucher.IsUsed == true)
                 {
                     result.Add(voucher);
                 }

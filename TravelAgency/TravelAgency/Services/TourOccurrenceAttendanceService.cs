@@ -113,5 +113,10 @@ namespace TravelAgency.Services
         {
             IAttendanceRepository.SaveOrUpdate(tourOccurrenceAttendance);
         }
+
+        public TourOccurrenceAttendance GetByTourOccurrenceIdAndGuestId(int TourOccurrenceId, int GuestId)
+        {
+            return IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(TourOccurrenceId, GuestId);
+        }
     }
 }

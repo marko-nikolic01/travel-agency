@@ -10,14 +10,11 @@ namespace TravelAgency.Services
 {
     public class UserService
     {
-        public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
-        public ITourReservationRepository ITourReservationRepository { get; set; }
         public IUserRepository IUserRepository { get; set; }
         public UserService()
         {
-            ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();
+            
             IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
-            ITourReservationRepository = Injector.Injector.CreateInstance<ITourReservationRepository>();
         }
 
         public User GetById(int id)

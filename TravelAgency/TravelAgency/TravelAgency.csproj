@@ -28,6 +28,7 @@
 	  <Resource Include="Resources\Images\IconBell.png"></Resource>
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
+	  <Resource Include="Resources\Images\noTours.png"></Resource>
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

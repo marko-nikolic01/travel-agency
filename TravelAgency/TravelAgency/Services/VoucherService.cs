@@ -12,9 +12,12 @@ namespace TravelAgency.Services
     public class VoucherService
     {
         private IVoucherRepository IVoucherRepository;
+        private ITourOccurrenceAttendanceRepository IAttendanceRepository { get; set; }
+
         public VoucherService() 
         {
             IVoucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
+            IAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
         }
 
         public List<Voucher>? GetGuestVouchers(int guestId)
@@ -47,7 +50,21 @@ namespace TravelAgency.Services
 
         public int GetUsedVoucherByTour(int tourOccurrenceId)
         {
-            return IVoucherRepository.GetByTourOccurrenceId(tourOccurrenceId).Count;
+            var vouchers = IVoucherRepository.GetByTourOccurrenceId(tourOccurrenceId);
+            int result = vouchers.Count();
+            foreach (var voucher in vouchers)
+            {
+                var attendance = IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(tourOccurrenceId, voucher.GuestId);
+                if(attendance == null)
+                {
+                    result--;
+                }
+                else if(attendance.ResponseStatus != ResponseStatus.Accepted)
+                {
+                    result--;
+                }
+            }
+            return result;
         }
     }
 }

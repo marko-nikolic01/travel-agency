@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.View;
 using TravelAgency.ViewModel;
 
@@ -12,20 +13,43 @@ namespace TravelAgency.Services
 {
     public class TourReviewService
     {
+        public IUserRepository IUserRepository { get; set; }
+        public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
+        public ITourRatingRepository ITourRatingRepository { get; set; }
+        public IKeyPointRepository IKeyPointRepository { get; set; }
+        public ITourOccurrenceAttendanceRepository ITourOccurrenceAttendanceRepository { get; set; }
+        public ITourRatingPhotoRepository ITourRatingPhotoRepository { get; set; }
         public TourReviewService()
         {
+            IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
+            ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();
+            ITourRatingRepository = Injector.Injector.CreateInstance<ITourRatingRepository>();
+            IKeyPointRepository = Injector.Injector.CreateInstance<IKeyPointRepository>();
+            ITourOccurrenceAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
+            ITourRatingPhotoRepository = Injector.Injector.CreateInstance<ITourRatingPhotoRepository>();
+            LinkRatingPhoto();
         }
-
+        private void LinkRatingPhoto()
+        {
+            foreach (TourRatingPhoto tourRatingPhoto in ITourRatingPhotoRepository.GetAll())
+            {
+                TourRating tourRating = ITourRatingRepository.GetAll().Find(t => t.Id == tourRatingPhoto.TourRatingId);
+                if (tourRating != null)
+                {
+                    tourRating.PhotoUrls.Add(tourRatingPhoto);
+                }
+            }
+        }
         public List<TourDetailsViewModel> getTourReviews(int id)
         {
             List <TourDetailsViewModel> tourReviews = new List <TourDetailsViewModel> ();
-            foreach (TourRating rating in new TourRatingRepository(new TourRatingPhotoRepository()).GetRatingsByTourOccurrenceId(id))
+            foreach (TourRating rating in ITourRatingRepository.GetRatingsByTourOccurrenceId(id))
             {
                 TourDetailsViewModel tourReviewViewModel = new TourDetailsViewModel(rating);
-                tourReviewViewModel.Guest = new UserRepository().GetById(rating.GuestId);
-                tourReviewViewModel.TourOccurrence = new TourOccurrenceRepository(new TourRepository()).GetById(rating.TourOccurrenceId);
-                TourOccurrenceAttendance tourOccurrenceAttendance = new TourOccurrenceAttendanceRepository().GetByTourOccurrenceIdAndGuestId(tourReviewViewModel.TourOccurrence.Id, tourReviewViewModel.Guest.Id);
-                tourReviewViewModel.ArrivalKeyPoint = new KeyPointRepository().GetById(tourOccurrenceAttendance.KeyPointId);
+                tourReviewViewModel.Guest = IUserRepository.GetById(rating.GuestId);
+                tourReviewViewModel.TourOccurrence = ITourOccurrenceRepository.GetById(rating.TourOccurrenceId);
+                TourOccurrenceAttendance tourOccurrenceAttendance = ITourOccurrenceAttendanceRepository.GetByTourOccurrenceIdAndGuestId(tourReviewViewModel.TourOccurrence.Id, tourReviewViewModel.Guest.Id);
+                tourReviewViewModel.ArrivalKeyPoint = IKeyPointRepository.GetById(tourOccurrenceAttendance.KeyPointId);
                 tourReviews.Add(tourReviewViewModel);
             }
             return tourReviews;
@@ -33,7 +57,7 @@ namespace TravelAgency.Services
 
         public void UpdateTourRatingIsValid(TourRating tourRating)
         {
-            new TourRatingRepository().UpdateIsValid(tourRating);
+            ITourRatingRepository.UpdateIsValid(tourRating);
         }
     }
 }
