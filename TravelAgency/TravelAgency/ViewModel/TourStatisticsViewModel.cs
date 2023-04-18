@@ -48,14 +48,9 @@ namespace TravelAgency.ViewModel
                 {
                     DisplayTour = TourOccurrenceService.GetMostVisitedAllTime(ActiveGuide.Id);
                 }
-                if(DisplayTour == null)
+                if(DisplayTour != null)
                 {
-                    CurrentPhoto = null;
-                    KeyPoints = "";
-                    GuestsNumber = 0;
-                }
-                else
-                {
+
                     CurrentPhoto = DisplayTour.Tour.Photos[0];
                     KeyPoints = DisplayTour.GetKeyPointsString();
                     GuestsNumber = AttendanceService.GetGuestsNumberByTour(DisplayTour.Id);

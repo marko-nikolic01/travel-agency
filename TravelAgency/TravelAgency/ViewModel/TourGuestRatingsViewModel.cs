@@ -13,16 +13,16 @@ using TravelAgency.View;
 
 namespace TravelAgency.ViewModel
 {
-    public class TourGuestReviewsViewModel
+    public class TourGuestRatingsViewModel
     {
         public ObservableCollection<TourDetailsViewModel> TourReviews { get; set; }
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
 
-        public TourGuestReviewsViewModel(int id)
+        public TourGuestRatingsViewModel(int id)
         {
-            TourReviewService tourReviewService = new TourReviewService();
+            TourRatingService tourReviewService = new TourRatingService();
             TourReviews = new ObservableCollection<TourDetailsViewModel>(tourReviewService.getTourReviews(id));
             ReportCommand = new ButtonCommand<TourDetailsViewModel>(ReportNotValid);
             RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
@@ -32,7 +32,7 @@ namespace TravelAgency.ViewModel
         private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
             tourReviewViewModel.TourRating.IsValid = false;
-            TourReviewService tourReviewService = new TourReviewService();
+            TourRatingService tourReviewService = new TourRatingService();
             tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
         }
 

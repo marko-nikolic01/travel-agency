@@ -11,7 +11,7 @@ using TravelAgency.ViewModel;
 
 namespace TravelAgency.Services
 {
-    public class TourReviewService
+    public class TourRatingService
     {
         public IUserRepository IUserRepository { get; set; }
         public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
@@ -19,7 +19,7 @@ namespace TravelAgency.Services
         public IKeyPointRepository IKeyPointRepository { get; set; }
         public ITourOccurrenceAttendanceRepository ITourOccurrenceAttendanceRepository { get; set; }
         public ITourRatingPhotoRepository ITourRatingPhotoRepository { get; set; }
-        public TourReviewService()
+        public TourRatingService()
         {
             IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();

@@ -1,4 +1,4 @@
-﻿<Window x:Class="TravelAgency.View.TourReviews"
+﻿<Window x:Class="TravelAgency.View.TourRatingsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -43,7 +43,7 @@
                 </Menu>
             </StackPanel>
             
-            <Label Content="Past tours" Grid.Row="2" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+            <Label Content="Finished tours" Grid.Row="2" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
             <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
