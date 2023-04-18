@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -156,20 +157,6 @@ namespace TravelAgency.Repository
             return result;
         }
 
-        public List<TourOccurrence> GetFinishedOccurrencesForGuest(int guestId)
-        {
-            List<TourOccurrence> result = new List<TourOccurrence>();
-            foreach (TourOccurrence occurrence in tourOccurrences)
-            {
-                if (occurrence.CurrentState == CurrentState.Ended)
-                {
-                    if (WasGuestOnTour(occurrence, guestId))
-                        result.Add(occurrence);
-                }
-            }
-            return result;
-        }
-
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
@@ -194,47 +181,6 @@ namespace TravelAgency.Repository
                 }
             }
             return result;
-        }
-
-        private bool WasGuestOnTour(TourOccurrence occurrence, int guestId)
-        {
-            TourOccurrenceAttendanceRepository attendanceRepository = new TourOccurrenceAttendanceRepository();
-            TourOccurrenceAttendance attendance;
-            attendance = attendanceRepository.GetAll().Find(x => x.TourOccurrenceId == occurrence.Id && x.GuestId == guestId);
-            if (attendance != null)
-            {
-                if (attendance.ResponseStatus == ResponseStatus.Accepted)
-                    return true;
-            }
-            return false;
-        }
-
-        public string GetActiveTour(int guestId)
-        {
-            string result = "There is no active tour";
-            foreach (TourOccurrence occurrence in tourOccurrences)
-            {
-                if (occurrence.CurrentState == CurrentState.Started && occurrence.DateTime.Date.Equals(DateTime.Now.Date))
-                {
-                    TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
-                    if (tourAttendance != null)
-                    {
-                        KeyPointRepository keyPointRepository = new KeyPointRepository(this);
-                        string keyPointName = keyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
-                        result = "Active tour: " + occurrence.Tour.Name;
-                        result += "\n" + occurrence.Tour.Description;
-                        result += "\nCurrent key point: " +keyPointName;
-                        result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
-                        return result;
-                    }
-                }
-            }
-            return result;
-        }
-        private TourOccurrenceAttendance FindAttendance(int currentGuestId, int id)
-        {
-            TourOccurrenceAttendanceRepository tourAttendanceRepository = new TourOccurrenceAttendanceRepository();
-            return tourAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
         }
 
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)

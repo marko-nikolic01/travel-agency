@@ -43,5 +43,9 @@ namespace TravelAgency.Repository
             tourReservations.Add(tourReservation);
             _serializer.ToCSV(FilePath, tourReservations);
         }
+        public bool IsTourReserved(int guestId, int tourOccurrenceId)
+        {
+            return tourReservations.Exists(x => x.UserId == guestId && x.TourOccurrenceId == tourOccurrenceId);
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace TravelAgency.RepositoryInterfaces
         public List<TourReservation> GetTourReservations();
 
         public void SaveTourReservation(TourReservation tourReservation);
+
+        public bool IsTourReserved(int guestId, int tourOccurrenceId);
     }
 }

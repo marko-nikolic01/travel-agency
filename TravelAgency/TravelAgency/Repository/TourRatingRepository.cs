@@ -79,7 +79,7 @@ namespace TravelAgency.Repository
             return tourRating;
         }
 
-        internal bool TourIsNotRated(int guestId, int occurrenceId)
+        public bool IsTourNotRated(int guestId, int occurrenceId)
         {
             return !tourRatings.Exists(x => x.GuestId == guestId && x.TourOccurrenceId == occurrenceId);
         }

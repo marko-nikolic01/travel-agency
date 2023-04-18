@@ -18,11 +18,11 @@ namespace TravelAgency.View
     /// <summary>
     /// Interaction logic for TourRequestForm.xaml
     /// </summary>
-    public partial class TourRequestFormWindow : Window
+    public partial class TourRequestFormView : Window
     {
         public TourRequestFormViewModel TourRequestFormViewModel { get; set; }
         private int guestId;
-        public TourRequestFormWindow(int id)
+        public TourRequestFormView(int id)
         {
             InitializeComponent();
             guestId = id;

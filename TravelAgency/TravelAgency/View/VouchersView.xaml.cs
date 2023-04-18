@@ -23,22 +23,18 @@ namespace TravelAgency.View
     public partial class VouchersView : Window
     {
         VoucherViewModel voucherViewModel;
-        private TourOccurrenceRepository occurrenceRepository;
-        private TourOccurrenceAttendanceRepository attendanceRepository;
         User ActiveGuest;
-        public VouchersView(User ActiveGuest, TourOccurrenceRepository occurrenceRepository, TourOccurrenceAttendanceRepository attendanceRepository)
+        public VouchersView(User ActiveGuest)
         {
             InitializeComponent();
             voucherViewModel = new VoucherViewModel(ActiveGuest.Id);
             this.DataContext = voucherViewModel;
-            this.occurrenceRepository = occurrenceRepository;
-            this.attendanceRepository = attendanceRepository;
             this.ActiveGuest = ActiveGuest;
         }
 
         private void MyToursButton_Click(object sender, RoutedEventArgs e)
         {
-            MyTours myTours = new MyTours(occurrenceRepository, attendanceRepository, ActiveGuest.Id);
+            MyTours myTours = new MyTours(ActiveGuest.Id);
             myTours.Show();
             Close();
         }

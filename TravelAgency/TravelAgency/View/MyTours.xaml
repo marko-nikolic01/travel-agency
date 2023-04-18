@@ -42,7 +42,7 @@
         </Grid>
         <StackPanel Grid.Row="1">
             <Label Margin="20" FontSize="24" Content="Active Tour"></Label>
-            <TextBlock x:Name="activeTourText" TextAlignment="Left" Width="auto" Height="120" Margin="25 0"></TextBlock>
+            <TextBlock TextAlignment="Left" Width="auto" Height="120" Text="{Binding Path=ActiveTourString}" Margin="25 0"></TextBlock>
             <Separator/>
         </StackPanel>
         <StackPanel Grid.Row="2">

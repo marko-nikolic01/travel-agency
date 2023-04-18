@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using TravelAgency.Model;
 using TravelAgency.Observer;
 using TravelAgency.Repository;
+using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -16,13 +18,7 @@ namespace TravelAgency.View
         public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         private List<TourOccurrence> toursList;
-        public TourRepository TourRepository { get; set; }
-        public static TourOccurrenceRepository TourOccurrenceRepository { get; set; }
-        public static TourReservationRepository TourReservationRepository { get; set; }
-        public LocationRepository LocationRepository { get; set; }
-        public PhotoRepository PhotoRepository { get; set; }
-        public UserRepository UserRepository { get; set; }
-        public TourOccurrenceAttendanceRepository TourOccurrenceAttendanceRepository { get; set; }
+        public TourOccurrenceService tourOccurrenceService;
         public User ActiveGuest { get; set; }
         private bool isHelpClicked;
         public bool IsHelpClicked {
@@ -46,16 +42,9 @@ namespace TravelAgency.View
             InitializeComponent();
             DataContext = this;
             ActiveGuest = user;
-            TourRepository = new TourRepository();
-            LocationRepository = new LocationRepository();
-            PhotoRepository = new PhotoRepository();
-            TourReservationRepository = new TourReservationRepository();
-            UserRepository = new UserRepository();
-            TourOccurrenceAttendanceRepository = new TourOccurrenceAttendanceRepository();
-            KeyPointRepository keyPointRepository = new KeyPointRepository();
-            TourOccurrenceRepository = new TourOccurrenceRepository(PhotoRepository, LocationRepository, TourRepository, TourReservationRepository, UserRepository, keyPointRepository);
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetOffered());
-            TourOccurrenceRepository.Subscribe(this);
+            tourOccurrenceService = new TourOccurrenceService();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(tourOccurrenceService.GetOfferedTours());
+            tourOccurrenceService.Subscribe(this);
             toursList = TourOccurrences.ToList();
             AllertIfSelectеd(ActiveGuest);
             IsHelpClicked = false;
@@ -63,40 +52,40 @@ namespace TravelAgency.View
 
         private void AllertIfSelectеd(User activeGuest)
         {
-            foreach(TourOccurrenceAttendance tourOccurrenceAttendance in TourOccurrenceAttendanceRepository.GetAll())
+            TourOccurrenceAttendanceService tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
+            TourOccurrenceAttendance attendance;
+            if( (attendance = tourOccurrenceAttendanceService.GetAttendance(activeGuest.Id)) != null)
             {
-                if(tourOccurrenceAttendance.GuestId == activeGuest.Id && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.NotAnsweredYet 
-                    && tourOccurrenceAttendance.KeyPointId != -1)
+                if (MessageBox.Show("You have just been selected as present on the tour! Do you confirm?", "Notification", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if(MessageBox.Show("You have just been selected as present on the tour! Do you confirm?", "Notification", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
-                    {
-                        tourOccurrenceAttendance.ResponseStatus = ResponseStatus.Accepted;
-                    }
-                    else
-                    {
-                        tourOccurrenceAttendance.ResponseStatus = ResponseStatus.Declined;
-                    }
-                    TourOccurrenceAttendanceRepository.UpdateTourOccurrenceAttendaces(tourOccurrenceAttendance);
+                    tourOccurrenceAttendanceService.SaveAnswer(true, attendance);
+                }
+                else
+                {
+                    tourOccurrenceAttendanceService.SaveAnswer(false, attendance);
                 }
             }
         }
 
         private void Reserve_Click(object sender, RoutedEventArgs e)
         {
+            TourReservationRepository tourReservationRepository = new TourReservationRepository();
             if(SelectedTourOccurrence == null)
             {
                 MessageBox.Show("You must choose a tour.");
             }
             else if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
             {
-                AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location, ActiveGuest, TourOccurrenceRepository);
-                alternativeTours.Show();
+                /*AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location, ActiveGuest, TourOccurrenceRepository);
+                alternativeTours.Show();*/
+            }
+            else if (tourReservationRepository.IsTourReserved(ActiveGuest.Id, SelectedTourOccurrence.Id))
+            {
+                MessageBox.Show("You already have reservation for this tour.");
             }
             else
             {
-                /* TourReservationWindow tourReservation = new TourReservationWindow(SelectedTourOccurrence, TourOccurrences, ActiveGuest, TourOccurrenceRepository);
-                 tourReservation.Show();*/
-                TourGuests tourGuests = new TourGuests(SelectedTourOccurrence, ActiveGuest, TourOccurrenceRepository);
+                TourGuests tourGuests = new TourGuests(SelectedTourOccurrence, ActiveGuest);
                 tourGuests.Show();
             }
         }
@@ -188,25 +177,25 @@ namespace TravelAgency.View
         }
         private void Vouchers_Click(object sender, RoutedEventArgs e)
         {
-            VouchersView vouchersView = new VouchersView(ActiveGuest, TourOccurrenceRepository, TourOccurrenceAttendanceRepository);
+            VouchersView vouchersView = new VouchersView(ActiveGuest);
             vouchersView.Show();
             Close();
         }
         public void Update()
         {
             TourOccurrences.Clear();
-            TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceRepository.GetOffered());
+            TourOccurrences = new ObservableCollection<TourOccurrence>(tourOccurrenceService.GetOfferedTours());
             ToursDataGrid.ItemsSource = TourOccurrences;
         }
 
         private void MyToursButton_Click(object sender, RoutedEventArgs e)
         {
-            MyTours myTours = new MyTours(TourOccurrenceRepository, TourOccurrenceAttendanceRepository, ActiveGuest.Id);
+            MyTours myTours = new MyTours(ActiveGuest.Id);
             myTours.Show();
         }
         private void RequestButton_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestWindow requests = new TourRequestWindow(ActiveGuest.Id);
+            TourRequestView requests = new TourRequestView(ActiveGuest.Id);
             requests.Show();
         }
 

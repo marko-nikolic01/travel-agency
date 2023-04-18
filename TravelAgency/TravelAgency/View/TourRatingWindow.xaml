@@ -100,7 +100,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Width="374" Height="43" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel rating"/>
+            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel rating" Click="Close_Click"/>
         </Grid>
     </Grid>
 </Window>

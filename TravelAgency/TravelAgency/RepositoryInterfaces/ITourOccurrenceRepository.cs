@@ -19,13 +19,10 @@ namespace TravelAgency.RepositoryInterfaces
 
         public List<TourOccurrence> GetOffered();
 
-        public List<TourOccurrence> GetFinishedOccurrencesForGuest(int guestId);
-
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId);
 
         public List<TourOccurrence> GetFinishedOccurrencesForGuideByYear(int guideId, int year);
 
-        public string GetActiveTour(int guestId);
         public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide);
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence);
