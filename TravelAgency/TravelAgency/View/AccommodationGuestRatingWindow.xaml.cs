@@ -36,6 +36,7 @@ namespace TravelAgency.View
         private readonly AccommodationGuestRatingRepository _AccommodationGuestRatingRepository;
 
         public AccommodationService AccommodationService { get; set; }
+        public AccommodationGuestRatingService AccommodationGuestRatingService { get; set; }
         
         public AccommodationGuestRatingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository)
         {
@@ -45,6 +46,7 @@ namespace TravelAgency.View
             LoggedInUser = loggedInUser;
 
             AccommodationService = new AccommodationService();
+            AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
             _AccommodationReservationRepository = accommodationReservationRepository;
             _AccommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
@@ -83,19 +85,24 @@ namespace TravelAgency.View
             ResponsivenesSlider.Value = 1;
             CommentTextBox.Text = "";
 
+            RefreshLists();
+
+            MessageBox.Show("Rating has been created successfully!");
+        }
+
+        private void RefreshLists()
+        {
             UnratedReservations.Clear();
-            foreach (var reservation in _AccommodationReservationRepository.GetUnrated(_AccommodationGuestRatingRepository.GetAll()))
+            foreach (var reservation in AccommodationGuestRatingService.GetUnratedReservations())
             {
                 UnratedReservations.Add(reservation);
             }
 
             AccommodationGuestRatings.Clear();
-            foreach (var rating in _AccommodationGuestRatingRepository.GetAll())
+            foreach (var rating in AccommodationGuestRatingService.GetAllRatings())
             {
                 AccommodationGuestRatings.Add(rating);
             }
-
-            MessageBox.Show("Rating has been created successfully!");
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

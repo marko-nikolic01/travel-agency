@@ -29,7 +29,7 @@ namespace TravelAgency.Services
             AccommodationOwnerRatingRepository = Injector.Injector.CreateInstance<IAccommodationOwnerRatingRepository>();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
-            AccommodationRepository.LinkImages(AccommodationPhotoRepository.GetAll());
+            AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             AccommodationReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
             AccommodationOwnerRatingRepository.LinkReservations(AccommodationReservationRepository.GetAll());
         }
@@ -57,6 +57,23 @@ namespace TravelAgency.Services
             averageRating /= ratings.Count;
 
             return averageRating;
+        }
+
+        public void SetSuperOwners()
+        {
+            foreach (var user in UserRepository.GetOwners())
+            {
+                if (IsSuperOwner(user))
+                {
+                    user.IsSuperOwner = true;
+                }
+                else
+                {
+                    user.IsSuperOwner = false;
+                }
+            }
+
+            UserRepository.UpdateSuperOwners();
         }
     }
 }
