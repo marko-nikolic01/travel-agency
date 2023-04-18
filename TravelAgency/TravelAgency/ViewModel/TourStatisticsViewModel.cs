@@ -22,9 +22,10 @@ namespace TravelAgency.ViewModel
         public Model.User ActiveGuide { get; set; }
         public ObservableCollection<string> Years { get; set; }
         public TourOccurrenceAttendanceService AttendanceService { get; set; }
-        public StatisticsButtonCommand RightCommand { get; set; }
-        public StatisticsButtonCommand LeftCommand { get; set; }
-        public StatisticsButtonCommand ViewCommand { get; set; }
+        public ButtonCommandNoParameter RightCommand { get; set; }
+        public ButtonCommandNoParameter LeftCommand { get; set; }
+        public ButtonCommandNoParameter ViewCommand { get; set; }
+        public ButtonCommand<Window> HomeCommand { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
 
@@ -48,13 +49,13 @@ namespace TravelAgency.ViewModel
                 {
                     DisplayTour = TourOccurrenceService.GetMostVisitedAllTime(ActiveGuide.Id);
                 }
-                CurrentPhoto = DisplayTour.Tour.Photos[0];
-                KeyPoints = "";
-                foreach (KeyPoint keyPoint in DisplayTour.KeyPoints)
+                if(DisplayTour != null)
                 {
-                    KeyPoints += keyPoint.Name += ", ";
+
+                    CurrentPhoto = DisplayTour.Tour.Photos[0];
+                    KeyPoints = DisplayTour.GetKeyPointsString();
+                    GuestsNumber = AttendanceService.GetGuestsNumberByTour(DisplayTour.Id);
                 }
-                GuestsNumber = AttendanceService.GetGuestsNumberByTour(DisplayTour.Id);
                 selectedYear = value;
                 OnPropertyChanged();
             }
@@ -101,9 +102,10 @@ namespace TravelAgency.ViewModel
             ActiveGuide = userService.GetById(id);
             FillOptions();
             FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));
-            RightCommand = new StatisticsButtonCommand(ShowNextPhoto);
-            LeftCommand = new StatisticsButtonCommand(ShowPreviousPhoto);
-            ViewCommand = new StatisticsButtonCommand(ViewDetails);
+            RightCommand = new ButtonCommandNoParameter(ShowNextPhoto);
+            LeftCommand = new ButtonCommandNoParameter(ShowPreviousPhoto);
+            ViewCommand = new ButtonCommandNoParameter(ViewDetails);
+            HomeCommand = new ButtonCommand<Window>(ShowHome);
         }
         private void FillOptions()
         {
@@ -121,7 +123,12 @@ namespace TravelAgency.ViewModel
             tourStatisticsDetailsView.DataContext = viewModel;
             tourStatisticsDetailsView.ShowDialog();
         }
-
+        private void ShowHome(Window window)
+        {
+            GuideMain guideMain = new GuideMain(ActiveGuide);
+            guideMain.Show();
+            window.Close();
+        }
         private void ShowNextPhoto()
         {
             for (int i = 0; i < displayTour.Tour.Photos.Count; i++)

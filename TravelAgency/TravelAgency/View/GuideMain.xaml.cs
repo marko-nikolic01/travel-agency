@@ -43,10 +43,10 @@ namespace TravelAgency.View
             Close();
         }
 
-        private void GuestReviews_Click(object sender, RoutedEventArgs e)
+        private void GuestRatings_Click(object sender, RoutedEventArgs e)
         {
-            TourReviews tourReviews = new TourReviews(ActiveGuide);
-            tourReviews.Show();
+            TourRatingsView tourRatings = new TourRatingsView(ActiveGuide);
+            tourRatings.Show();
             Close();
         }
 
@@ -54,6 +54,12 @@ namespace TravelAgency.View
         {
             TourStatistics tourStatistics = new TourStatistics(ActiveGuide.Id);
             tourStatistics.Show();
+            Close();
+        }
+
+        private void SignOut_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
             Close();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using TravelAgency.RepositoryInterfaces;
@@ -25,12 +26,12 @@ namespace TravelAgency.Services
             int result = 0;
             UserRepository userRepository = new UserRepository();
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
-            foreach(var guestId in guests)
+            foreach (var guestId in guests)
             {
                 var guest = userRepository.GetUsers().Find(g => g.Id == guestId);
-                if(guest != null)
+                if (guest != null)
                 {
-                    if(DateTime.Now.Year - guest.BirthDay.Year < 18)
+                    if (DateTime.Now.Year - guest.BirthDay.Year < 18)
                     {
                         result++;
                     }
@@ -76,6 +77,33 @@ namespace TravelAgency.Services
             return result;
         }
 
+
+        public TourOccurrenceAttendance GetAttendance(int guestId)
+        {
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in IAttendanceRepository.GetAll())
+            {
+                if (tourOccurrenceAttendance.GuestId == guestId && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.NotAnsweredYet
+                    && tourOccurrenceAttendance.KeyPointId != -1)
+                {
+                    return tourOccurrenceAttendance;
+                }
+            }
+            return null;
+        }
+
+        public void SaveAnswer(bool accepted, TourOccurrenceAttendance attendance)
+        {
+            if (accepted)
+            {
+                attendance.ResponseStatus = ResponseStatus.Accepted;
+            }
+            else
+            {
+                attendance.ResponseStatus = ResponseStatus.Declined;
+            }
+            IAttendanceRepository.UpdateTourOccurrenceAttendaces(attendance);
+   
+        }
         public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id)
         {
             return IAttendanceRepository.GetByTourOccurrenceId(id);
@@ -84,6 +112,11 @@ namespace TravelAgency.Services
         public void SaveOrUpdate(TourOccurrenceAttendance tourOccurrenceAttendance)
         {
             IAttendanceRepository.SaveOrUpdate(tourOccurrenceAttendance);
+        }
+
+        public TourOccurrenceAttendance GetByTourOccurrenceIdAndGuestId(int TourOccurrenceId, int GuestId)
+        {
+            return IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(TourOccurrenceId, GuestId);
         }
     }
 }

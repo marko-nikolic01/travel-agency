@@ -49,12 +49,9 @@ namespace TravelAgency.View
             int guideLanguage;
             int interesting;
             string additionalComment;
-            string s1 = knowledgeCb.Text;
-            string s2 = languageCb.Text;
-            string s3 = interestingCb.Text;
-            guideKnowledge = int.Parse(s1);
-            guideLanguage = int.Parse(s2);
-            interesting = int.Parse(s3);
+            guideKnowledge = int.Parse(knowledgeCb.Text);
+            guideLanguage = int.Parse(languageCb.Text);
+            interesting = int.Parse(interestingCb.Text);
             additionalComment = commentTb.Text;
             TourRating tourRating = new TourRating(currentGuestId, tourOccurrence.Id, guideKnowledge, guideLanguage, interesting, additionalComment, null);
             TourRating savedTourRating = tourRatingRepository.Save(tourRating);
@@ -84,6 +81,10 @@ namespace TravelAgency.View
                 photo.TourRatingId = id;
                 tourRatingPhotoRepository.Save(photo);
             }
+        }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

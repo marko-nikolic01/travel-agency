@@ -35,19 +35,25 @@
 35|10|keopsova piramida|False
 36|10|neka treca piramida|False
 37|10|nazad u grad na reku nil|False
-38|11|prvaPiramida|False
-39|11|keopsova piramida|False
+38|11|prvaPiramida|True
+39|11|keopsova piramida|True
 40|11|neka treca piramida|False
-41|11|nazad u grad na reku nil|False
+41|11|nazad u grad na reku nil|True
 42|12|oki|False
 43|12|koki|False
 44|13|oki|False
 45|13|koki|False
 46|14|dzungla|True
 47|14|auu|True
-48|15|dzungla|False
-49|15|auu|False
+48|15|dzungla|True
+49|15|auu|True
 50|16|ff|False
 51|16|fff|False
-52|17|fd|False
-53|17|juy|False
+52|17|fd|True
+53|17|juy|True
+54|18|morava|True
+55|18|mrsac|True
+56|18|zica|True
+57|19|morava|False
+58|19|mrsac|False
+59|19|zica|False

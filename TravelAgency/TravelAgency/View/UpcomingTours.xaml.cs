@@ -41,6 +41,11 @@ namespace TravelAgency.View
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            if(SelectedTourOccurrence.DateTime < DateTime.Now.AddDays(2))
+            {
+                MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours");
+                return;
+            }
             if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 TourOccurrenceService.CancelTour(SelectedTourOccurrence, ActiveGuide.Id);
@@ -62,9 +67,15 @@ namespace TravelAgency.View
             createTour.ShowDialog();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Home_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
+            new GuideMain(ActiveGuide).Show();
+            Close();
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            new GuideMain(ActiveGuide).Show();
             Close();
         }
     }

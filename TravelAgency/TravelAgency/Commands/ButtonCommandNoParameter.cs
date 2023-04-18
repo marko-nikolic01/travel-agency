@@ -8,7 +8,7 @@ using TravelAgency.ViewModel;
 
 namespace TravelAgency.Commands
 {
-    public class StatisticsButtonCommand : ICommand
+    public class ButtonCommandNoParameter : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public Action _onClick;
@@ -23,7 +23,7 @@ namespace TravelAgency.Commands
             _onClick();
         }
 
-        public StatisticsButtonCommand(Action onClick)
+        public ButtonCommandNoParameter(Action onClick)
         {
             _onClick = onClick;
         }

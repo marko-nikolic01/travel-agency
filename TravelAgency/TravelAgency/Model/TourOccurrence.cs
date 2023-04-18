@@ -102,5 +102,19 @@ namespace TravelAgency.Model
             ActiveKeyPointId = int.Parse(values[6]);
             IsDeleted = bool.Parse(values[7]);
         }
+
+        public string GetKeyPointsString()
+        {
+            string result = "";
+            foreach (var keyPoint in KeyPoints)
+            {
+                result = result + keyPoint.Name;
+                if (KeyPoints[KeyPoints.Count - 1] != keyPoint)
+                {
+                    result = result + ", ";
+                }
+            }
+            return result;
+        }
     }
 }
