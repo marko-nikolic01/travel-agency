@@ -28,36 +28,9 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
         }
 
-        public List<Accommodation> GetAccommodationsSortedBySuperOwner()
+        public List<Accommodation> GetAccommodations()
         {
-            return SortBySuperOwnersFirst(AccommodationRepository.GetAll());
-        }
-
-        public List<Accommodation> GetFilteredAccommodations(AccommodationSearchFilter filter)
-        {
-            return SortBySuperOwnersFirst(AccommodationRepository.GetFiltered(filter));
-        }
-
-        public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
-        {
-            var a = new List<Accommodation>(accommodations);
-            List<Accommodation> sortedAccommodations = new List<Accommodation>();
-
-            foreach (var accommodation in accommodations)
-            {
-                if (accommodation.Owner.IsSuperOwner)
-                {
-                    sortedAccommodations.Add(accommodation);
-                    a.Remove(accommodation);
-                }
-            }
-
-            foreach (var accommodation in a)
-            {
-                sortedAccommodations.Add(accommodation);
-            }
-
-            return sortedAccommodations;
+            return AccommodationRepository.GetAll();
         }
 
         public void CreateNew(Accommodation newAccommodation)

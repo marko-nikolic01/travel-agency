@@ -76,7 +76,7 @@ namespace TravelAgency.Services
             UserRepository.UpdateSuperOwners();
         }
 
-        public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
+        public IEnumerable<Accommodation> SortBySuperOwnersFirst(IEnumerable<Accommodation> accommodations)
         {
             var a = new List<Accommodation>(accommodations);
             List<Accommodation> sortedAccommodations = new List<Accommodation>();

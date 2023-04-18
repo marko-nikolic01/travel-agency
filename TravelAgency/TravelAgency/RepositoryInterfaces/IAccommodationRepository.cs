@@ -11,7 +11,6 @@ namespace TravelAgency.RepositoryInterfaces
     {
         public List<Accommodation> GetAll();
         public Accommodation Save(Accommodation accommodation);
-        public List<Accommodation> GetFiltered(AccommodationSearchFilter filter);
         public int NextId();
         public List<Accommodation> GetByOwner(User owner);
         public void LinkOwners(List<User> owners);

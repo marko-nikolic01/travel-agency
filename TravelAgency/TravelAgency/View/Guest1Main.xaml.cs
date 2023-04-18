@@ -30,6 +30,7 @@ namespace TravelAgency.View
         public AccommodationReservationService ReservationService { get; set; }
         public AccommodationReservationMoveService ReservationMoveService { get; set; }
         public AccommodationService AccommodationService { get; set; }
+        public AccommodationSearchService SearchService { get; set; }
         public LocationService LocationService { get; set; }
         public AccommodationOwnerRatingService RatingService { get; set; }
         public SuperOwnerService SuperOwnerService { get; set; }
@@ -61,11 +62,13 @@ namespace TravelAgency.View
             LocationService = new LocationService();
             RatingService = new AccommodationOwnerRatingService();
             SuperOwnerService = new SuperOwnerService();
+            SearchService = new AccommodationSearchService();
 
             SuperOwnerService.SetSuperOwners();
 
             Guest = guest;
-            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodationsSortedBySuperOwner());
+            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodations());
+            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
             Reservations = new ObservableCollection<AccommodationReservation>(ReservationService.GetByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(RatingService.GetUnratedReservationsByGuest(Guest));
@@ -157,12 +160,16 @@ namespace TravelAgency.View
             int dayNumberFilter = dayNumberUpDown.Value.Value;
             AccommodationSearchFilter filter = new AccommodationSearchFilter(nameFilter, countryFilter, cityFilter, typeFilter, guestNumberFilter, dayNumberFilter);
 
-            accommodationsDataGrid.ItemsSource = AccommodationService.GetFilteredAccommodations(filter);
+            Accommodations = new ObservableCollection<Accommodation>(SearchService.Search(filter));
+            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
+            accommodationsDataGrid.ItemsSource = Accommodations;
         }
 
         private void CancelSearch(object sender, RoutedEventArgs e)
         {
-            accommodationsDataGrid.ItemsSource = AccommodationService.GetAccommodationsSortedBySuperOwner();
+            Accommodations = new ObservableCollection<Accommodation>(SearchService.CancelSearch());
+            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
+            accommodationsDataGrid.ItemsSource = Accommodations;
             nameTextBox.Text = "";
             countryComboBox.SelectedItem = 0;
             SelectedCountry = Cities[0];
