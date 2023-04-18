@@ -59,5 +59,11 @@ namespace TravelAgency.View
         {
             Close();
         }
+
+        private void AddPhoto(object sender, RoutedEventArgs e)
+        {
+            AccommodationRatingPhoto photo = new AccommodationRatingPhoto();
+            Rating.Photos.Add(photo);
+        }
     }
 }

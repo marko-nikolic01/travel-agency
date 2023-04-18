@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
@@ -26,6 +27,11 @@ namespace TravelAgency.View
     /// </summary>
     public partial class Guest1Main : Window
     {
+        public AccommodationReservationService ReservationService { get; set; }
+        public AccommodationReservationMoveService ReservationMoveService { get; set; }
+        public AccommodationService AccommodationService { get; set; }
+        public LocationService LocationService { get; set; }
+
         public User Guest { get; set; }
 
         public UserRepository userRepository;
@@ -56,6 +62,11 @@ namespace TravelAgency.View
             this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
+            ReservationMoveService = new AccommodationReservationMoveService();
+            ReservationService = new AccommodationReservationService();
+            AccommodationService = new AccommodationService();
+            LocationService = new LocationService();
+
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
@@ -67,14 +78,21 @@ namespace TravelAgency.View
             accommodationOwnerRatingRepository.SetSuperOwners(userRepository);
 
             Guest = guest;
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
-            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetNotCanceledByGuest(Guest));
-            ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
+            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodationsSortedBySuperOwner());
+            Reservations = new ObservableCollection<AccommodationReservation>(ReservationService.GetByGuest(Guest));
+            ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
 
-            Countries = locationRepository.GetAllCountries();
+            Countries = LocationService.GetCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
+
+            if (ReservationMoveService.NotifyGuestOnStatusChange(Guest))
+            {
+                string message = "There was a status change of your move request(s)";
+                System.Windows.MessageBox.Show(message);
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,11 +125,11 @@ namespace TravelAgency.View
         {
             if (SelectedCountry != "Not specified")
             {
-                Cities = locationRepository.GetCitiesByCountry(SelectedCountry);
+                Cities = LocationService.GetCitiesByCountry(SelectedCountry);
             }
             else
             {
-                Cities = locationRepository.GetAllCities();
+                Cities = LocationService.GetCities();
             }
 
             Cities.Insert(0, "Not specified");
@@ -152,12 +170,12 @@ namespace TravelAgency.View
             int dayNumberFilter = dayNumberUpDown.Value.Value;
             AccommodationSearchFilter filter = new AccommodationSearchFilter(nameFilter, countryFilter, cityFilter, typeFilter, guestNumberFilter, dayNumberFilter);
 
-            accommodationsDataGrid.ItemsSource = accommodationRepository.Search(filter);
+            accommodationsDataGrid.ItemsSource = AccommodationService.GetFilteredAccommodations(filter);
         }
 
         private void CancelSearch(object sender, RoutedEventArgs e)
         {
-            accommodationsDataGrid.ItemsSource = accommodationRepository.GetAllSortedBySuperOwnersFirst();
+            accommodationsDataGrid.ItemsSource = AccommodationService.GetAccommodationsSortedBySuperOwner();
             nameTextBox.Text = "";
             countryComboBox.SelectedItem = 0;
             SelectedCountry = Cities[0];
@@ -175,7 +193,7 @@ namespace TravelAgency.View
         {
             if (SelectedAccommodation != null)
             {
-                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation, accommodationReservationRepository);
+                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation);
                 accommodationReservationWindow.Show();
             }
             else
@@ -187,7 +205,7 @@ namespace TravelAgency.View
 
         private void CancelReservation(object sender, RoutedEventArgs e)
         {
-            if (accommodationReservationRepository.CancelReservation(SelectedReservation))
+            if (ReservationService.CancelReservation(SelectedReservation))
             {
                 Reservations.Remove(SelectedReservation);
             }
@@ -202,7 +220,7 @@ namespace TravelAgency.View
         {
             if (SelectedReservation != null)
             {
-                AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(accommodationReservationRepository, SelectedReservation, accommodationReservationMoveRequestRepository);
+                AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(SelectedReservation);
                 moveRequestWindow.ShowDialog();
             }
             else 

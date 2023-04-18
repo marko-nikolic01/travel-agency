@@ -108,22 +108,22 @@ namespace TravelAgency.Repository
             return accommodation;
         }
 
-        public List<Accommodation> Search(AccommodationSearchFilter filter)
+        public List<Accommodation> GetFiltered(AccommodationSearchFilter filter)
         {
             List<Accommodation> searchedAccommodations = GetAll();
-            searchedAccommodations = SerachByName(filter.NameFilter, searchedAccommodations);
-            searchedAccommodations = SerachByCountry(filter.CountryFilter, searchedAccommodations);
-            searchedAccommodations = SerachByCity(filter.CityFilter, searchedAccommodations);
-            searchedAccommodations = SerachByType(filter.TypeFilter, searchedAccommodations);
-            searchedAccommodations = SerachByGuestNumber(filter.GuestNumberFilter, searchedAccommodations);
-            searchedAccommodations = SerachByDayNumber(filter.DayNumberFilter, searchedAccommodations);
+            searchedAccommodations = FilterByName(filter.NameFilter, searchedAccommodations);
+            searchedAccommodations = FilterByCountry(filter.CountryFilter, searchedAccommodations);
+            searchedAccommodations = FilterByCity(filter.CityFilter, searchedAccommodations);
+            searchedAccommodations = FilterByType(filter.TypeFilter, searchedAccommodations);
+            searchedAccommodations = FilterByGuestNumber(filter.GuestNumberFilter, searchedAccommodations);
+            searchedAccommodations = FilterByDayNumber(filter.DayNumberFilter, searchedAccommodations);
 
             searchedAccommodations = SortBySuperOwnersFirst(searchedAccommodations);
 
             return searchedAccommodations;
         }
 
-        public List<Accommodation> SerachByName(string nameFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByName(string nameFilter, List<Accommodation> accommodations)
         {
             if (nameFilter != "")
             {
@@ -132,7 +132,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> SerachByCountry(string countryFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByCountry(string countryFilter, List<Accommodation> accommodations)
         {
             if (countryFilter != "Not specified")
             {
@@ -141,7 +141,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> SerachByCity(string cityFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByCity(string cityFilter, List<Accommodation> accommodations)
         {
             if (cityFilter != "Not specified")
             {
@@ -150,7 +150,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> SerachByType(string typeFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByType(string typeFilter, List<Accommodation> accommodations)
         {
             switch (typeFilter)
             {
@@ -164,7 +164,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> SerachByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
         {
             if (guestNumberFilter > 0)
             {
@@ -173,7 +173,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> SerachByDayNumber(int DayFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
         {
             if (DayFilter > 0)
             {

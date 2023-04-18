@@ -17,6 +17,7 @@ namespace TravelAgency.Services
         public IAccommodationReservationRepository ReservationRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
+        public ILocationRepository LocationRepository { get; set; }
 
         public AccommodationReservationMoveService()
         {
@@ -24,10 +25,17 @@ namespace TravelAgency.Services
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
+            LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
             MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
+        }
+
+        public List<AccommodationReservationMoveRequest> GetRequestsByGuest(User guest)
+        {
+            return MoveRequestRepository.GetAllByGuest(guest);
         }
 
         public bool CreateMoveRequest(AccommodationReservationMoveRequest moveRequest)
@@ -39,6 +47,20 @@ namespace TravelAgency.Services
             }
 
             return false;
+        }
+
+        public bool NotifyGuestOnStatusChange(User guest)
+        {
+            bool notify = false;
+            foreach (AccommodationReservationMoveRequest moveRequest in GetRequestsByGuest(guest))
+            {
+                if (moveRequest.StatusChanged)
+                {
+                    MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, false);
+                    notify = true;
+                }
+            }
+            return notify;
         }
 
         public void AcceptMoveRequest(AccommodationReservationMoveRequest moveRequest)
