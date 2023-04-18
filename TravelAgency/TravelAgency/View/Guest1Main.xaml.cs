@@ -70,7 +70,7 @@ namespace TravelAgency.View
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
             Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
-            Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByUser(Guest)));
+            Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
