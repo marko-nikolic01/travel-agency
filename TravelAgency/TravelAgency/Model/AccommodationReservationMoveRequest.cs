@@ -50,7 +50,7 @@ namespace TravelAgency.Model
             DateSpan = new DateSpan();
         }
 
-        public AccommodationReservationMoveRequest(AccommodationReservation reservation)
+        public AccommodationReservationMoveRequest(AccommodationReservation reservation, DateSpan dateSpan)
         {
             Id = -1;
             ReservationId = reservation.Id;
@@ -58,6 +58,7 @@ namespace TravelAgency.Model
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
+            DateSpan = dateSpan;
         }
 
         public string[] ToCSV()
@@ -99,13 +100,17 @@ namespace TravelAgency.Model
                     {
                         return "* Select a date span";
                     }
+                    else if (DateSpan.StartDate.CompareTo(Reservation.DateSpan.StartDate) == 0)
+                    {
+                        return "* Date span for new date must be different from old date span";
+                    }
                 }
 
                 return null;
             }
         }
 
-        private readonly string[] _validatedProperties = { "NumberOfGuests", "DateSpan" };
+        private readonly string[] _validatedProperties = {"DateSpan" };
 
         public bool IsValid
         {

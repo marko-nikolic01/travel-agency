@@ -23,6 +23,20 @@ namespace TravelAgency.Services
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
+            AccommodationRepository.LinkOwners(UserRepository.GetOwners());
+            ReservationRepository.LinkGuests(UserRepository.GetUsers());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
+        }
+
+        public bool CreateMoveRequest(AccommodationReservationMoveRequest moveRequest)
+        {
+            if(moveRequest.IsValid)
+            {
+                MoveRequestRepository.Save(moveRequest);
+                return true;
+            }
+            return false;
         }
 
 
