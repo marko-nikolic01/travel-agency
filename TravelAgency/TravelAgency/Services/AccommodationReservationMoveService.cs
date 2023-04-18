@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
-using TravelAgency.Model;
-using TravelAgency.Repository;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Repositories;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Services
@@ -93,9 +93,9 @@ namespace TravelAgency.Services
 
         private bool AreDateSpansOverlapping(DateSpan dateSpan1, DateSpan dateSpan2)
         {
-            return (dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.StartDate.CompareTo(dateSpan2.EndDate) <= 0 ||
+            return dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.StartDate.CompareTo(dateSpan2.EndDate) <= 0 ||
                      dateSpan1.EndDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) <= 0 ||
-                     dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) <= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) >= 0);
+                     dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) <= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) >= 0;
         }
 
         public bool CanReservationBeMoved(AccommodationReservationMoveRequest moveRequest)

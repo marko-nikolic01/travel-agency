@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Model;
-using TravelAgency.Repository;
+using TravelAgency.Domain.Models;
+using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
     public class TourRequestService
     {
         private LocationRepository locationRepository;
-        public TourRequestService() 
+        public TourRequestService()
         {
             locationRepository = new LocationRepository();
         }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Model;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
@@ -77,7 +77,7 @@ namespace TravelAgency.Services
 
         private bool IsActive(AccommodationReservation accommodationReservation)
         {
-            return (DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber) < 0;
+            return DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber < 0;
         }
 
         private bool IsRated(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)

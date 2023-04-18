@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Model;
+using TravelAgency.Domain.Models;
 using TravelAgency.Injector;
 using TravelAgency.Observer;
-using TravelAgency.Repository;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Repositories;
 using System.Globalization;
 using System.Windows.Controls;
 using TravelAgency.Serializer;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
@@ -52,7 +53,7 @@ namespace TravelAgency.Services
         }
         private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
         {
-            foreach(var tourReservation in reservationRepository.GetTourReservations())
+            foreach (var tourReservation in reservationRepository.GetTourReservations())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
                 if (tourOccurrence != null)
@@ -120,7 +121,8 @@ namespace TravelAgency.Services
             TourOccurrence mostVisited = ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId)[0];
             foreach (var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId))
             {
-                if(ITourOccurrenceAttendanceRepository.GetCountForTour(tourOccurrence.Id) > ITourOccurrenceAttendanceRepository.GetCountForTour(mostVisited.Id)){
+                if (ITourOccurrenceAttendanceRepository.GetCountForTour(tourOccurrence.Id) > ITourOccurrenceAttendanceRepository.GetCountForTour(mostVisited.Id))
+                {
                     mostVisited = tourOccurrence;
                 }
             }
@@ -129,7 +131,7 @@ namespace TravelAgency.Services
 
         public TourOccurrence GetMostVisitedByYear(int guideId, int year)
         {
-            if(ITourOccurrenceRepository.GetFinishedOccurrencesForGuideByYear(guideId, year).Count == 0)
+            if (ITourOccurrenceRepository.GetFinishedOccurrencesForGuideByYear(guideId, year).Count == 0)
             {
                 return null;
             }
@@ -254,7 +256,7 @@ namespace TravelAgency.Services
                         result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
                         return result;
                     }
-                    else if(ITourReservationRepository.IsTourReserved(guestId, occurrence.Id))
+                    else if (ITourReservationRepository.IsTourReserved(guestId, occurrence.Id))
                     {
                         result = BuildActiveTourString(occurrence);
                         result += "\nStatus: haven't arrived yet";
