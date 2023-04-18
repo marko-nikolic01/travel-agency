@@ -22,22 +22,18 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationMoveRequestManagingWindow : Window
     {
-        public AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository { get; set; }
-        public AccommodationReservationRepository accommodationReservationRepository { get; set; }
 
         public User LoggedInUser { get; set; }
         public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
 
         public AccommodationReservationMoveService moveReqestService { get; set; }
 
-        public AccommodationReservationMoveRequestManagingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository, AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository, AccommodationReservationMoveRequest selectedMoveRequest)
+        public AccommodationReservationMoveRequestManagingWindow(User loggedInUser, AccommodationReservationMoveRequest selectedMoveRequest)
         {
             InitializeComponent();
             DataContext = this;
 
             LoggedInUser = loggedInUser;
-            this.accommodationReservationMoveRequestRepository = accommodationReservationMoveRequestRepository;
-            this.accommodationReservationRepository = accommodationReservationRepository;
             SelectedMoveRequest = selectedMoveRequest;
 
             moveReqestService = new AccommodationReservationMoveService();
@@ -47,9 +43,7 @@ namespace TravelAgency.View
 
         private void SetAvailability()
         {
-            var isAvailable = accommodationReservationRepository.CanResevationBeMoved(SelectedMoveRequest);
-
-            if (isAvailable)
+            if (moveReqestService.CanResevationBeMoved(SelectedMoveRequest))
             {
                 AvailabilityTextBlock.Text = "Available";
             }

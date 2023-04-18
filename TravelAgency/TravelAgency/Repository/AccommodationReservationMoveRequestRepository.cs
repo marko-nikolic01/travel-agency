@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
-using TravelAgency.View;
 
 namespace TravelAgency.Repository
 {
@@ -152,6 +149,12 @@ namespace TravelAgency.Repository
         public void UpdateStatus(AccommodationReservationMoveRequest moveRequest, AccommodationReservationMoveRequestStatus status)
         {
             moveRequest.Status = status;
+            _serializer.ToCSV(FilePath, _moveRequests);
+        }
+
+        public void UpdateStatusChangedFlag(AccommodationReservationMoveRequest moveRequest, bool status)
+        {
+            moveRequest.StatusChanged = status;
             _serializer.ToCSV(FilePath, _moveRequests);
         }
     }

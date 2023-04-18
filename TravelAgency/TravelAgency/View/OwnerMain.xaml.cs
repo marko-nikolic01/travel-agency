@@ -51,6 +51,8 @@ namespace TravelAgency.View
 
             LoggedInUser = user;
 
+            moveReqestService = new AccommodationReservationMoveService();
+
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
@@ -62,9 +64,7 @@ namespace TravelAgency.View
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByOwner(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
-            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetWaitingByOwner(LoggedInUser));
-
-            moveReqestService = new AccommodationReservationMoveService();
+            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(moveReqestService.GetWaitingMoveRequestsByOwner(LoggedInUser));
 
             ShowNotifications();
             SetSuperOwner();
@@ -121,7 +121,7 @@ namespace TravelAgency.View
             }
             else
             {
-                AccommodationReservationMoveRequestManagingWindow accommodationReservationMoveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, accommodationReservationRepository, accommodationReservationMoveRequestRepository, SelectedMoveRequest);
+                AccommodationReservationMoveRequestManagingWindow accommodationReservationMoveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, SelectedMoveRequest);
                 accommodationReservationMoveRequestManagingWindow.Show();
             }
         }
