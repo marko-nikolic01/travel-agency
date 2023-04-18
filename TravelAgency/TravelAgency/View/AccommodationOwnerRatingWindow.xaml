@@ -21,6 +21,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Accommodation cleanliness:</Label>
         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Accommodation comfort:</Label>
@@ -28,6 +30,7 @@
         <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Owner corectness:</Label>
         <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Owner responsiveness:</Label>
         <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Comment:</Label>
+        <Label Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Photos:</Label>
         <xctk:IntegerUpDown Name="cleanlinessNumberUpDown" Grid.Row="0" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
         <xctk:IntegerUpDown Name="comfortNumberUpDown" Grid.Row="1" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
@@ -38,8 +41,10 @@
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
         <xctk:IntegerUpDown Name="responsivenessNumberUpDown" Grid.Row="4" Grid.Column="1" DefaultValue="1" Value="1" Minimum="1" Maximum="5" Height="30" Background="LightGray"
                                 VerticalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <TextBox Name="commentTextBox" Grid.Row="5" Grid.RowSpan="2" Grid.Column="1" Height="100" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
-        <Button Grid.Row="7" Grid.Column="0" Height="30" Width="100" Click="RateAccommodationOwner">Rate</Button>
-        <Button Grid.Row="7" Grid.Column="1" Height="30" Width="100" Click="Cancel">Cancel</Button>
+        <TextBox Name="commentTextBox" Grid.Row="5" Grid.RowSpan="2" Grid.Column="1" Height="70" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+        <TextBox Name="photoTextBox" Grid.Row="7" Grid.RowSpan="2" Grid.Column="1" Height="70" VerticalAlignment="Top" Background="LightGray" VerticalContentAlignment="Center"></TextBox>
+        <Button Grid.Row="7" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Bottom" Click="AddPhoto">+</Button>
+        <Button Grid.Row="9" Grid.Column="0" Height="30" Width="100" Click="RateAccommodationOwner">Rate</Button>
+        <Button Grid.Row="9" Grid.Column="1" Height="30" Width="100" Click="Cancel">Cancel</Button>
     </Grid>
 </Window>
