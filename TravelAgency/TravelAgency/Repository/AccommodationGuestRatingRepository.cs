@@ -21,11 +21,6 @@ namespace TravelAgency.Repository
             accommodationGuestRatings = serializer.FromCSV(FilePath);
         }
 
-        public AccommodationGuestRatingRepository(List<AccommodationReservation> reservations) : this()
-        {
-            LinkReservations(reservations);
-        }
-
         public void LinkReservations(List<AccommodationReservation> reservations)
         {
             foreach (var accommodationGuestRating in accommodationGuestRatings)

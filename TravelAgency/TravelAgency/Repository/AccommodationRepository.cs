@@ -95,11 +95,6 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public Accommodation GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Accommodation Save(Accommodation accommodation)
         {
             accommodation.Id = NextId();
@@ -123,7 +118,7 @@ namespace TravelAgency.Repository
             return searchedAccommodations;
         }
 
-        public List<Accommodation> FilterByName(string nameFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByName(string nameFilter, List<Accommodation> accommodations)
         {
             if (nameFilter != "")
             {
@@ -132,7 +127,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> FilterByCountry(string countryFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByCountry(string countryFilter, List<Accommodation> accommodations)
         {
             if (countryFilter != "Not specified")
             {
@@ -141,7 +136,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> FilterByCity(string cityFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByCity(string cityFilter, List<Accommodation> accommodations)
         {
             if (cityFilter != "Not specified")
             {
@@ -150,7 +145,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> FilterByType(string typeFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByType(string typeFilter, List<Accommodation> accommodations)
         {
             switch (typeFilter)
             {
@@ -164,7 +159,7 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
         {
             if (guestNumberFilter > 0)
             {
@@ -173,18 +168,13 @@ namespace TravelAgency.Repository
             return accommodations;
         }
 
-        public List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
+        private List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
         {
             if (DayFilter > 0)
             {
                 return accommodations.Where(accommodation => DayFilter >= accommodation.MinDays).ToList();
             }
             return accommodations;
-        }
-
-        public List<Accommodation> GetAllSortedBySuperOwnersFirst()
-        {
-            return SortBySuperOwnersFirst(accommodations);
         }
 
         public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
