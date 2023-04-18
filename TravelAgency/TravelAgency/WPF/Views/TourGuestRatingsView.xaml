@@ -34,7 +34,7 @@
                     </Menu.ItemsPanel>
                     <MenuItem>
                         <MenuItem.Icon>
-                            <Image Stretch="Fill" Source="../Resources/Images/ThreeLineMenu.jpg"></Image>
+                            <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Guest reviews" FontSize="20"></MenuItem>
@@ -77,7 +77,7 @@
                                     <Label Grid.Row="5" Content="Additional comment: "></Label>
                                     <Image Source="{Binding CurrentPhoto.Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
                                     <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" HorizontalAlignment="Right">
-                                        <Image Source="../Resources/Images/RightArrow.png"></Image>
+                                        <Image Source="/Resources/Images/RightArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">
                                                 <Setter Property="CornerRadius" Value="20"/>
@@ -85,7 +85,7 @@
                                         </Button.Resources>
                                     </Button>
                                     <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left">
-                                        <Image Source="../Resources/Images/LeftArrow.png"></Image>
+                                        <Image Source="/Resources/Images/LeftArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">
                                                 <Setter Property="CornerRadius" Value="20"/>

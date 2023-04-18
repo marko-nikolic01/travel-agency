@@ -46,7 +46,7 @@
                 </Menu.ItemsPanel>
                 <MenuItem>
                     <MenuItem.Icon>
-                        <Image Stretch="Fill" Source="../Resources/Images/ThreeLineMenu.jpg"></Image>
+                        <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Tour statistics" FontSize="20"></MenuItem>
@@ -87,7 +87,7 @@
             <TextBlock Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=GuestsNumber}"></TextBlock>
             <Image Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Source="{Binding CurrentPhoto.Link}" Grid.Column="4" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0 0 10 0"></Image>
             <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="5" Tag="{Binding}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20">
-                <Image Source="../Resources/Images/RightArrow.png"></Image>
+                <Image Source="/Resources/Images/RightArrow.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="20"/>
@@ -95,7 +95,7 @@
                 </Button.Resources>
             </Button>
             <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="4" Tag="{Binding}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" >
-                <Image Source="../Resources/Images/LeftArrow.png"></Image>
+                <Image Source="/Resources/Images/LeftArrow.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="20"/>
@@ -121,7 +121,7 @@
             <TextBlock Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="2" TextWrapping="Wrap" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=KeyPoints, Mode=OneWay}"></TextBlock>
             <Label Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Margin="5 0 0 0" Grid.Row="5" Content="Date:" Grid.ColumnSpan="2"></Label>
             <TextBlock Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=DisplayTour.DateTime, StringFormat=dd-MM-yyyy, Mode=OneWay}"></TextBlock>
-            <Image Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" Grid.ColumnSpan="4" Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNullConverter}}" Source="../Resources/Images/noTours.png"></Image>
+            <Image Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" Grid.ColumnSpan="4" Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNullConverter}}" Source="/Resources/Images/noTours.png"></Image>
         </Grid>
         <DataGrid Grid.Row="14" Grid.ColumnSpan="7" Grid.RowSpan="2" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -143,10 +143,10 @@
             <Separator VerticalAlignment="Top"></Separator>
             <DockPanel Margin="0 3 0 0">
                 <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Command="{Binding Path=HomeCommand}">
-                    <Image Width="40" Height="35" Source="../Resources/Images/back.png"></Image>
+                    <Image Width="40" Height="35" Source="/Resources/Images/back.png"></Image>
                 </Button>
                 <Button Width="40" Height="35" Margin="135 0 0 0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Command="{Binding Path=HomeCommand}">
-                    <Image Source="../Resources/Images/home.png" Width="40" Height="35"></Image>
+                    <Image Source="/Resources/Images/home.png" Width="40" Height="35"></Image>
                 </Button>
                 <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
             </DockPanel>

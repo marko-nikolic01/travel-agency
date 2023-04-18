@@ -49,7 +49,7 @@
                 </Menu.ItemsPanel>
                 <MenuItem>
                     <MenuItem.Icon>
-                        <Image Stretch="Fill" Source="../Resources/Images/ThreeLineMenu.jpg"></Image>
+                        <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Tour statistics" FontSize="20"></MenuItem>

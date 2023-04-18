@@ -39,7 +39,7 @@
                     </Menu.ItemsPanel>
                     <MenuItem>
                         <MenuItem.Icon>
-                            <Image Stretch="Fill" Source="../Resources/Images/ThreeLineMenu.jpg"></Image>
+                            <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Home" FontSize="20"></MenuItem>
@@ -61,7 +61,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Todays tours" FontSize="25" Margin="30,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
                     <Button Grid.Column="3" Height="40" Width="40" Margin="0,0,20,0" HorizontalAlignment="Right" Click="TodaysTours_Click">
-                        <Image Source="../Resources/Images/ArrowUpRight.png"></Image>
+                        <Image Source="/Resources/Images/ArrowUpRight.png"></Image>
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="20"/>
@@ -80,7 +80,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Upcoming tours" FontSize="25" Margin="30,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
                     <Button Grid.Column="3" Height="40" Width="40" Margin="0,0,20,0" HorizontalAlignment="Right" Click="UpcomingTours_Click">
-                        <Image Source="../Resources/Images/ArrowUpRight.png"></Image>
+                        <Image Source="/Resources/Images/ArrowUpRight.png"></Image>
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="20"/>
@@ -99,7 +99,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Guest reviews" FontSize="25" Margin="30,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
                     <Button Grid.Column="3" Height="40" Width="40" Margin="0,0,20,0" HorizontalAlignment="Right" Click="GuestRatings_Click">
-                        <Image Source="../Resources/Images/ArrowUpRight.png"></Image>
+                        <Image Source="/Resources/Images/ArrowUpRight.png"></Image>
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="20"/>
@@ -118,7 +118,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Tour statistics" FontSize="25" Margin="30,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="3"></Label>
                     <Button Grid.Column="3" Height="40" Width="40" Margin="0,0,20,0" HorizontalAlignment="Right" Click="TourStatistics_Click">
-                        <Image Source="../Resources/Images/ArrowUpRight.png"></Image>
+                        <Image Source="/Resources/Images/ArrowUpRight.png"></Image>
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="20"/>

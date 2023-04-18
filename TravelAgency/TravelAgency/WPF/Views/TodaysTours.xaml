@@ -39,7 +39,7 @@
                 </Menu.ItemsPanel>
                 <MenuItem>
                     <MenuItem.Icon>
-                        <Image Stretch="Fill" Source="../Resources/Images/ThreeLineMenu.jpg"></Image>
+                        <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Upcoming tours" FontSize="20"></MenuItem>
@@ -132,10 +132,10 @@
             <Separator VerticalAlignment="Top"></Separator>
             <DockPanel Margin="0 3 0 0">
                 <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left" Click="Back_Click">
-                    <Image Width="40" Height="35" Source="../Resources/Images/back.png"></Image>
+                    <Image Width="40" Height="35" Source="/Resources/Images/back.png"></Image>
                 </Button>
                 <Button Width="40" Height="35" Margin="135 0 0 0" Click="Home_Click">
-                    <Image Source="../Resources/Images/home.png" Width="40" Height="35"></Image>
+                    <Image Source="/Resources/Images/home.png" Width="40" Height="35"></Image>
                 </Button>
                 <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
             </DockPanel>

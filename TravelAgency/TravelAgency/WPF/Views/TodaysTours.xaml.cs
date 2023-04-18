@@ -140,7 +140,7 @@ namespace TravelAgency.WPF.Views
             foreach (TourOccurrenceAttendance attendance in TourOccurrenceAttendanceService.GetByTourOccurrenceId(SelectedTourOccurrence.Id))
             {
                 User guest = Guests.ToList().Find(g => g.Id == attendance.GuestId);
-                if (guest != null && attendance.KeyPointId != -1)
+                if (guest != null && attendance.ResponseStatus == ResponseStatus.Accepted)
                 {
                     Guests.Remove(guest);
                 }
