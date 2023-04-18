@@ -46,11 +46,13 @@ namespace TravelAgency.Services
             ReservationRepository.UpdateDateSpan(moveRequest.Reservation, moveRequest.DateSpan);
             DeleteOverlappingReservations(moveRequest.Reservation);
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.ACCEPTED);
+            MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, true);
         }
 
         public void RejectMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.REJECTED);
+            MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, true);
         }
 
         private void DeleteOverlappingReservations(AccommodationReservation reservation)
@@ -72,6 +74,29 @@ namespace TravelAgency.Services
             return (dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.StartDate.CompareTo(dateSpan2.EndDate) <= 0 ||
                      dateSpan1.EndDate.CompareTo(dateSpan2.StartDate) >= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) <= 0 ||
                      dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) <= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) >= 0);
+        }
+
+        public bool CanResevationBeMoved(AccommodationReservationMoveRequest moveRequest)
+        {
+            foreach (var reservation in ReservationRepository.GetAll())
+            {
+                if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId)
+                {
+                    if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId &&
+                        AreDateSpansOverlapping(moveRequest.DateSpan, reservation.DateSpan) &&
+                        reservation != moveRequest.Reservation)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public List<AccommodationReservationMoveRequest> GetWaitingMoveRequestsByOwner(User owner)
+        {
+            return MoveRequestRepository.GetAll().FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
         }
     }
 }

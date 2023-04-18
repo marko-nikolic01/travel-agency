@@ -406,7 +406,7 @@ namespace TravelAgency.Repository
             if (!IsDeadlineOverdue(reservation))
             {
                 reservation.Canceled = true;
-                SaveAll(_accommodationReservations);
+                UpdateCancelationStatus(reservation, true);
                 return true;
             }
             return false;
@@ -456,6 +456,12 @@ namespace TravelAgency.Repository
             }
 
             return reservations;
+        }
+
+        public void UpdateCancelationStatus(AccommodationReservation reservation, bool canceled)
+        {
+            reservation.Canceled = canceled;
+            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
     }
 }
