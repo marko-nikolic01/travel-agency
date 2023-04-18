@@ -32,13 +32,10 @@ namespace TravelAgency.View
 
         public User LoggedInUser { get; set; }
 
-        private readonly AccommodationReservationRepository _AccommodationReservationRepository;
-        private readonly AccommodationGuestRatingRepository _AccommodationGuestRatingRepository;
-
         public AccommodationService AccommodationService { get; set; }
         public AccommodationGuestRatingService AccommodationGuestRatingService { get; set; }
         
-        public AccommodationGuestRatingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository)
+        public AccommodationGuestRatingWindow(User loggedInUser)
         {
             InitializeComponent();
             DataContext = this;
@@ -48,11 +45,8 @@ namespace TravelAgency.View
             AccommodationService = new AccommodationService();
             AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
-            _AccommodationReservationRepository = accommodationReservationRepository;
-            _AccommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
-
-            UnratedReservations = new ObservableCollection<AccommodationReservation>(_AccommodationReservationRepository.GetUnrated(_AccommodationGuestRatingRepository.GetAll()));
-            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(_AccommodationGuestRatingRepository.GetByOwner(loggedInUser));
+            UnratedReservations = new ObservableCollection<AccommodationReservation>(AccommodationGuestRatingService.GetUnratedReservations());
+            AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(AccommodationGuestRatingService.GetByOwner(loggedInUser));
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
         }
@@ -74,7 +68,7 @@ namespace TravelAgency.View
             NewAccommodationGuestRating.Responsivenes = (int)ResponsivenesSlider.Value;
             NewAccommodationGuestRating.Comment = CommentTextBox.Text;
 
-            _AccommodationGuestRatingRepository.Save(NewAccommodationGuestRating);
+            AccommodationGuestRatingService.CreateNew(NewAccommodationGuestRating);
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
 

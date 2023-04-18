@@ -75,7 +75,7 @@ namespace TravelAgency.Services
             return 5 - DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber + accommodationReservation.DateSpan.EndDate.DayNumber;
         }
 
-        public bool IsActive(AccommodationReservation accommodationReservation)
+        private bool IsActive(AccommodationReservation accommodationReservation)
         {
             return (DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber) < 0;
         }

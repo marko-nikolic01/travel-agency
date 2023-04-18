@@ -25,7 +25,7 @@ namespace TravelAgency.Services
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
-            AccommodationRepository.LinkImages(AccommodationPhotoRepository.GetAll());
+            AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
         }
 
         public List<Accommodation> GetAccommodationsSortedBySuperOwner()
@@ -68,6 +68,11 @@ namespace TravelAgency.Services
                 photo.ObjectId = newAccommodation.Id;
             }
             AccommodationPhotoRepository.SaveAll(newAccommodation.Photos);
+        }
+
+        public List<Accommodation> GetByOwner(User owner)
+        {
+            return AccommodationRepository.GetByOwner(owner);
         }
     }
 }

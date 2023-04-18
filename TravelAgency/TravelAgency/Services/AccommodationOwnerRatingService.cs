@@ -11,7 +11,8 @@ namespace TravelAgency.Services
 {
     public class AccommodationOwnerRatingService
     {
-        public IAccommodationOwnerRatingRepository RatingRepository { get; set; }
+        public IAccommodationOwnerRatingRepository OwnerRatingRepository { get; set; }
+        public IAccommodationGuestRatingRepository GuestRatingRepository { get; set; }
         public IAccommodationRatingPhotoRepository RatingPhotoRepository { get; set; }
         public IAccommodationReservationRepository ReservationRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
@@ -21,18 +22,21 @@ namespace TravelAgency.Services
 
         public AccommodationOwnerRatingService()
         {
-            RatingRepository = Injector.Injector.CreateInstance<IAccommodationOwnerRatingRepository>();
+            OwnerRatingRepository = Injector.Injector.CreateInstance<IAccommodationOwnerRatingRepository>();
+            GuestRatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
-            RatingRepository.LinkReservations(ReservationRepository.GetAll());
+            OwnerRatingRepository.LinkReservations(ReservationRepository.GetAll());
+            GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
 
         }
 
@@ -40,7 +44,7 @@ namespace TravelAgency.Services
         {
             if (rating.IsValid)
             {
-                RatingRepository.Save(rating);
+                OwnerRatingRepository.Save(rating);
                 SavePhotos(rating);
                 return true;
             }
@@ -60,7 +64,7 @@ namespace TravelAgency.Services
         {
             List<AccommodationReservation> unratedByGuest = new List<AccommodationReservation>();
             List<AccommodationReservation> reservationsByGuest = ReservationRepository.GetAllNotCanceledByGuest(guest);
-            List<AccommodationOwnerRating> ratings = RatingRepository.GetAll();
+            List<AccommodationOwnerRating> ratings = OwnerRatingRepository.GetAll();
 
             foreach (AccommodationReservation reservation in reservationsByGuest)
             {
@@ -99,6 +103,25 @@ namespace TravelAgency.Services
                 }
             }
             return false;
+        }
+
+        public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User owner)
+        {
+            List<AccommodationOwnerRating> ownerRatings = new List<AccommodationOwnerRating>();
+
+            foreach (var guestRating in GuestRatingRepository.GetAll())
+            {
+                foreach (var ownerRating in OwnerRatingRepository.GetAll())
+                {
+                    if (ownerRating.AccommodationReservationId == guestRating.AccommodationReservationId && owner.Id == ownerRating.AccommodationReservation.Accommodation.OwnerId)
+                    {
+                        ownerRatings.Add(ownerRating);
+                        break;
+                    }
+                }
+            }
+
+            return ownerRatings;
         }
     }
 }
