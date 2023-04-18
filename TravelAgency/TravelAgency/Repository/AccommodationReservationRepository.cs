@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationReservationRepository : IRepository<AccommodationReservation>
+    public class AccommodationReservationRepository : IAccommodationReservationRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationReservations.csv";
 
@@ -77,7 +78,7 @@ namespace TravelAgency.Repository
             return _accommodationReservations;
         }
 
-        public List<AccommodationReservation> GetAllNotCanceledByGuest(User guest)
+        public List<AccommodationReservation> GetNotCanceledByGuest(User guest)
         {
             List<AccommodationReservation> reservations = new List<AccommodationReservation>();
             foreach (AccommodationReservation reservation in _accommodationReservations)
@@ -131,7 +132,7 @@ namespace TravelAgency.Repository
             return 5 - DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber + accommodationReservation.DateSpan.EndDate.DayNumber;
         }
 
-        public bool ReservationIsActive(AccommodationReservation accommodationReservation)
+        public bool IsActive(AccommodationReservation accommodationReservation)
         {
             return (DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber) < 0;
         }
@@ -155,7 +156,7 @@ namespace TravelAgency.Repository
         private bool IsValidForRating(AccommodationReservation accommodationReservation, IEnumerable<AccommodationGuestRating> accommodationGuestRatings)
         {
             return CalculateDaysLeftForRating(accommodationReservation) >= 1 &&
-                !ReservationIsActive(accommodationReservation) &&
+                !IsActive(accommodationReservation) &&
                 !IsRated(accommodationReservation, accommodationGuestRatings) &&
                 !accommodationReservation.Canceled;
         }
@@ -431,6 +432,21 @@ namespace TravelAgency.Repository
                     CancelReservation(_reservation);
                 }
             }
+        }
+
+        public List<AccommodationReservation> GetByAccommodation(Accommodation accommodation)
+        {
+            List<AccommodationReservation> reservations = new List<AccommodationReservation>();
+
+            foreach (AccommodationReservation reservation in _accommodationReservations)
+            {
+                if (reservation.AccommodationId == accommodation.Id)
+                {
+                    reservations.Add(reservation);
+                }
+            }
+
+            return reservations;
         }
     }
 }
