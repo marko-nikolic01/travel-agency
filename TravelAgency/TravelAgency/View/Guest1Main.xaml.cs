@@ -32,17 +32,9 @@ namespace TravelAgency.View
         public AccommodationService AccommodationService { get; set; }
         public LocationService LocationService { get; set; }
         public AccommodationOwnerRatingService RatingService { get; set; }
+        public SuperOwnerService SuperOwnerService { get; set; }
 
         public User Guest { get; set; }
-
-        public UserRepository userRepository;
-        public AccommodationRepository accommodationRepository;
-        public LocationRepository locationRepository;
-        public AccommodationPhotoRepository imageRepository;
-        public AccommodationReservationRepository accommodationReservationRepository;
-        public AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
-        public AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
-
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public static ObservableCollection<AccommodationReservation> Reservations { get; set; }
         public static ObservableCollection<AccommodationReservationMoveRequest> ReservationMoveRequests { get; set; }
@@ -68,16 +60,9 @@ namespace TravelAgency.View
             AccommodationService = new AccommodationService();
             LocationService = new LocationService();
             RatingService = new AccommodationOwnerRatingService();
+            SuperOwnerService = new SuperOwnerService();
 
-            userRepository = new UserRepository();
-            locationRepository = new LocationRepository();
-            imageRepository = new AccommodationPhotoRepository();
-            accommodationRepository = new AccommodationRepository(userRepository.GetUsers(), locationRepository.GetAll(), imageRepository.GetAll());
-            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository.GetAll(), userRepository.GetUsers());
-            accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
-
-            accommodationOwnerRatingRepository.SetSuperOwners(userRepository);
+            SuperOwnerService.SetSuperOwners();
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodationsSortedBySuperOwner());

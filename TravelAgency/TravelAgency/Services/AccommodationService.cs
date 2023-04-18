@@ -25,7 +25,7 @@ namespace TravelAgency.Services
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
-            AccommodationRepository.LinkImages(AccommodationPhotoRepository.GetAll());
+            AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
         }
 
         public List<Accommodation> GetAccommodationsSortedBySuperOwner()
