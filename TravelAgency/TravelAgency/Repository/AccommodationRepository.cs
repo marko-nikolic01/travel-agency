@@ -19,11 +19,21 @@ namespace TravelAgency.Repository
 
         private List<Accommodation> accommodations;
 
-        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository)
+        public AccommodationRepository()
         {
             serializer = new Serializer<Accommodation>();
             accommodations = serializer.FromCSV(FilePath);
+        }
 
+        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository) : this()
+        {
+            LinkOwners(userRepository);
+            LinkLocations(locationRepository);
+            LinkImages(imageRepository);
+        }
+
+        public void LinkOwners(UserRepository userRepository)
+        {
             foreach (Accommodation accommodation in accommodations)
             {
                 foreach (User user in userRepository.GetUsers())
@@ -34,6 +44,13 @@ namespace TravelAgency.Repository
                         break;
                     }
                 }
+            }
+        }
+
+        public void LinkLocations(ILocationRepository locationRepository)
+        {
+            foreach (Accommodation accommodation in accommodations)
+            {
                 foreach (Location location in locationRepository.GetAll())
                 {
                     if (accommodation.LocationId == location.Id)
@@ -42,8 +59,14 @@ namespace TravelAgency.Repository
                         break;
                     }
                 }
+            }
+        }
 
-                foreach (AccommodationPhoto image in imageRepository.GetAll())
+        public void LinkImages(IAccommodationPhotoRepository photoRepository)
+        {
+            foreach (Accommodation accommodation in accommodations)
+            {
+                foreach (AccommodationPhoto image in photoRepository.GetAll())
                 {
                     if (accommodation.Id == image.ObjectId)
                     {
