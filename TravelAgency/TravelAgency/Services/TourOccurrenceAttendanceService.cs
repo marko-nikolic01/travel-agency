@@ -26,12 +26,12 @@ namespace TravelAgency.Services
             int result = 0;
             UserRepository userRepository = new UserRepository();
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
-            foreach(var guestId in guests)
+            foreach (var guestId in guests)
             {
                 var guest = userRepository.GetUsers().Find(g => g.Id == guestId);
-                if(guest != null)
+                if (guest != null)
                 {
-                    if(DateTime.Now.Year - guest.BirthDay.Year < 18)
+                    if (DateTime.Now.Year - guest.BirthDay.Year < 18)
                     {
                         result++;
                     }
@@ -80,7 +80,7 @@ namespace TravelAgency.Services
 
         public TourOccurrenceAttendance GetAttendance(int guestId)
         {
-            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in ITourOccurrenceAttendanceRepository.GetAll())
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in IAttendanceRepository.GetAll())
             {
                 if (tourOccurrenceAttendance.GuestId == guestId && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.NotAnsweredYet
                     && tourOccurrenceAttendance.KeyPointId != -1)
@@ -101,8 +101,9 @@ namespace TravelAgency.Services
             {
                 attendance.ResponseStatus = ResponseStatus.Declined;
             }
-            ITourOccurrenceAttendanceRepository.UpdateTourOccurrenceAttendaces(attendance);
-
+            IAttendanceRepository.UpdateTourOccurrenceAttendaces(attendance);
+   
+        }
         public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id)
         {
             return IAttendanceRepository.GetByTourOccurrenceId(id);
