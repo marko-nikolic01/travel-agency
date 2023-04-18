@@ -17,6 +17,6 @@ namespace TravelAgency.RepositoryInterfaces
         public List<Accommodation> GetByOwner(User owner);
         public void LinkOwners(List<User> owners);
         public void LinkLocations(List<Location> locations);
-        public void LinkImages(List<AccommodationPhoto> photos);
+        public void LinkPhotos(List<AccommodationPhoto> photos);
     }
 }

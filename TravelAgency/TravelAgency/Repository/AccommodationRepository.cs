@@ -29,7 +29,7 @@ namespace TravelAgency.Repository
         {
             LinkOwners(users);
             LinkLocations(locations);
-            LinkImages(photos);
+            LinkPhotos(photos);
         }
 
         public void LinkOwners(List<User> owners)
@@ -62,15 +62,15 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void LinkImages(List<AccommodationPhoto> photos)
+        public void LinkPhotos(List<AccommodationPhoto> photos)
         {
             foreach (Accommodation accommodation in accommodations)
             {
-                foreach (AccommodationPhoto image in photos)
+                foreach (AccommodationPhoto photo in photos)
                 {
-                    if (accommodation.Id == image.ObjectId)
+                    if (accommodation.Id == photo.ObjectId)
                     {
-                        accommodation.Photos.Add(image);
+                        accommodation.Photos.Add(photo);
                     }
                 }
             }

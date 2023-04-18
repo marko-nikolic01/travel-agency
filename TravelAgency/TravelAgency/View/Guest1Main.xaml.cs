@@ -31,6 +31,7 @@ namespace TravelAgency.View
         public AccommodationReservationMoveService ReservationMoveService { get; set; }
         public AccommodationService AccommodationService { get; set; }
         public LocationService LocationService { get; set; }
+        public AccommodationOwnerRatingService RatingService { get; set; }
 
         public User Guest { get; set; }
 
@@ -66,6 +67,7 @@ namespace TravelAgency.View
             ReservationService = new AccommodationReservationService();
             AccommodationService = new AccommodationService();
             LocationService = new LocationService();
+            RatingService = new AccommodationOwnerRatingService();
 
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
@@ -81,7 +83,7 @@ namespace TravelAgency.View
             Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodationsSortedBySuperOwner());
             Reservations = new ObservableCollection<AccommodationReservation>(ReservationService.GetByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
-            Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
+            Stays = new ObservableCollection<AccommodationReservation>(RatingService.GetUnratedReservationsByGuest(Guest));
 
             Countries = LocationService.GetCountries();
             Countries.Insert(0, "Not specified");
@@ -234,7 +236,7 @@ namespace TravelAgency.View
         {
             if (SelectedStay != null)
             {
-                AccommodationOwnerRatingWindow accommodationOwnerRatingWindow = new AccommodationOwnerRatingWindow(accommodationOwnerRatingRepository, SelectedStay);
+                AccommodationOwnerRatingWindow accommodationOwnerRatingWindow = new AccommodationOwnerRatingWindow(SelectedStay);
                 accommodationOwnerRatingWindow.Show();
             }
             else

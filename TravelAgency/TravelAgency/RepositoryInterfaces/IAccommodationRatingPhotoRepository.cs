@@ -11,8 +11,6 @@ namespace TravelAgency.RepositoryInterfaces
     {
         public List<AccommodationRatingPhoto> GetAll();
 
-        public AccommodationRatingPhoto GetById(int id);
-
         public int NextId();
 
         public AccommodationRatingPhoto Save(AccommodationRatingPhoto photo);
