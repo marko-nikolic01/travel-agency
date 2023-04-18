@@ -430,7 +430,6 @@ namespace TravelAgency.Repository
                     AreDateSpansOverlapping(reservation.DateSpan, _reservation.DateSpan))
                 {
                     CancelReservation(_reservation);
-                    MessageBox.Show("izbriso");
                 }
             }
         }

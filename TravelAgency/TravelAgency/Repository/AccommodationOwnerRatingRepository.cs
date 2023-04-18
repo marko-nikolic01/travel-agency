@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationOwnerRatingRepository : IRepository<AccommodationOwnerRating>
+    public class AccommodationOwnerRatingRepository : IAccommodationOwnerRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationOwnerRatings.csv";
         private readonly Serializer<AccommodationOwnerRating> serializer;
@@ -32,21 +33,6 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void Delete(AccommodationOwnerRating entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AccommodationOwnerRating> GetAll()
         {
             return accommodationOwnerRatings;
@@ -57,31 +43,9 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
-        public int NextId()
+        public List<AccommodationOwnerRating> GetByOwner(User owner)
         {
-            if (accommodationOwnerRatings.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationOwnerRatings.Max(c => c.Id) + 1;
-        }
-
-        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
-        {
-            entity.Id = NextId();
-            accommodationOwnerRatings.Add(entity);
-            serializer.ToCSV(FilePath, accommodationOwnerRatings);
-            return entity;
-        }
-
-        public void SaveAll(IEnumerable<AccommodationOwnerRating> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<AccommodationOwnerRating> GetByUser(User user)
-        {
-            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.GuestId == user.Id);
+            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == owner.Id);
         }
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
@@ -103,13 +67,32 @@ namespace TravelAgency.Repository
             return ownerRatings;
         }
 
-        public double GetAverageRatingForOwner(User user)
+        public int NextId()
         {
-            var ratings = GetByUser(user);
+            if (accommodationOwnerRatings.Count < 1)
+            {
+                return 1;
+            }
+            return accommodationOwnerRatings.Max(c => c.Id) + 1;
+        }
+
+        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
+        {
+            entity.Id = NextId();
+            accommodationOwnerRatings.Add(entity);
+            serializer.ToCSV(FilePath, accommodationOwnerRatings);
+            return entity;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------
+
+        public double GetAverageRatingForOwner(User owner)
+        {
+            var ratings = GetByOwner(owner);
             double averageRating = 0;
             foreach (var rating in ratings)
             {
-                double currentRating = (rating.AccommodationCleanliness +
+                double currentRating = (double)(rating.AccommodationCleanliness +
                                        rating.AccommodationComfort +
                                        rating.AccommodationLocation +
                                        rating.OwnerCorrectness +
@@ -122,9 +105,9 @@ namespace TravelAgency.Repository
             return averageRating;
         }
 
-        public bool IsSuperOwner(User user)
+        public bool IsSuperOwner(User owner)
         {
-            return GetByUser(user).Count >= 1 && GetAverageRatingForOwner(user) >= 4.5;
+            return GetByOwner(owner).Count >= 1 && GetAverageRatingForOwner(owner) >= 4.5;
         }
 
         public void SetSuperOwners(UserRepository userRepository)

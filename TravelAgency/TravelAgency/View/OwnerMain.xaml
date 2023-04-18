@@ -75,14 +75,18 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="Super-owner:"/>
-                    <Label Grid.Column="1" x:Name="SuperOwnerLabel"/>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Super-owner:"/>
+                    <Label Grid.Row="0"  Grid.Column="1" x:Name="SuperOwnerLabel"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Average rating:"/>
+                    <Label Grid.Row="1" Grid.Column="1" x:Name="AverageRatingLabel"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Move requests">

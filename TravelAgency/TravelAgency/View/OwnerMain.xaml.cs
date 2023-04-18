@@ -91,6 +91,7 @@ namespace TravelAgency.View
 
         private void SetSuperOwner()
         {
+            AverageRatingLabel.Content = accommodationOwnerRatingRepository.GetAverageRatingForOwner(LoggedInUser).ToString();
             if (accommodationOwnerRatingRepository.IsSuperOwner(LoggedInUser)) {
                 SuperOwnerLabel.Content = "Yes";
             }
