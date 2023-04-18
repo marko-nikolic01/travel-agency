@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Model;
 using TravelAgency.Repository;
 using TravelAgency.RepositoryInterfaces;
 
@@ -31,6 +32,17 @@ namespace TravelAgency.Services
             return LocationRepository.GetCitiesByCountry(country);
         }
 
+        public Location GetLocationForCountryAndCity(string country, string city)
+        {
+            foreach (Location location in LocationRepository.GetAll())
+            {
+                if (location.Country == country && location.City == city)
+                {
+                    return location;
+                }
+            }
 
+            return null;
+        }
     }
 }

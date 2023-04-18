@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -33,6 +34,8 @@ namespace TravelAgency.View
 
         private readonly AccommodationReservationRepository _AccommodationReservationRepository;
         private readonly AccommodationGuestRatingRepository _AccommodationGuestRatingRepository;
+
+        public AccommodationService AccommodationService { get; set; }
         
         public AccommodationGuestRatingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository)
         {
@@ -40,6 +43,8 @@ namespace TravelAgency.View
             DataContext = this;
 
             LoggedInUser = loggedInUser;
+
+            AccommodationService = new AccommodationService();
 
             _AccommodationReservationRepository = accommodationReservationRepository;
             _AccommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());

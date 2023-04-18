@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.RepositoryInterfaces;
+using TravelAgency.View;
 
 namespace TravelAgency.Services
 {
@@ -13,14 +14,18 @@ namespace TravelAgency.Services
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
         public ILocationRepository LocationRepository { get; set; }
+        public IAccommodationPhotoRepository AccommodationPhotoRepository { get; set; }
 
         public AccommodationService()
         {
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
+
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
+            AccommodationRepository.LinkImages(AccommodationPhotoRepository.GetAll());
         }
 
         public List<Accommodation> GetAccommodationsSortedBySuperOwner()
@@ -53,6 +58,16 @@ namespace TravelAgency.Services
             }
 
             return sortedAccommodations;
+        }
+
+        public void CreateNew(Accommodation newAccommodation)
+        {
+            AccommodationRepository.Save(newAccommodation);
+            foreach (var photo in newAccommodation.Photos)
+            {
+                photo.ObjectId = newAccommodation.Id;
+            }
+            AccommodationPhotoRepository.SaveAll(newAccommodation.Photos);
         }
     }
 }

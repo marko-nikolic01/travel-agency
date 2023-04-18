@@ -13,6 +13,7 @@ namespace TravelAgency.Services
         public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
         public ITourReservationRepository ITourReservationRepository { get; set; }
         public IUserRepository IUserRepository { get; set; }
+
         public UserService()
         {
             ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();
@@ -23,6 +24,11 @@ namespace TravelAgency.Services
         public User GetById(int id)
         {
             return IUserRepository.GetById(id);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return IUserRepository.GetUsers();
         }
     }
 }

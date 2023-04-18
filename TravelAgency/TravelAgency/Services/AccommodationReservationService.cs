@@ -14,6 +14,7 @@ namespace TravelAgency.Services
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
         public ILocationRepository LocationRepository { get; set; }
+        public IAccommodationGuestRatingRepository GuestRatingRepository { get; set; }
 
         public AccommodationReservationService()
         {
@@ -21,10 +22,13 @@ namespace TravelAgency.Services
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            GuestRatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
+
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
         }
 
         public List<AccommodationReservation> GetByGuest(User guest)
