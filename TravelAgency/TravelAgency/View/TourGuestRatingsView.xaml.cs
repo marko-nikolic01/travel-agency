@@ -14,20 +14,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
     /// <summary>
-    /// Interaction logic for TourReviews.xaml
+    /// Interaction logic for TourGuestReviews.xaml
     /// </summary>
-    public partial class TourReviews : Window
+    public partial class TourGuestRatingsView : Window
     {
-        
-        public TourReviews(User activeGuide)
+        public TourGuestRatingsView()
         {
             InitializeComponent();
-            DataContext = new TourReviewsViewModel(activeGuide.Id);
         }
+
     }
 }

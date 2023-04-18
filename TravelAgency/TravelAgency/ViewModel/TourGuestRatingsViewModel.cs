@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelAgency.Commands;
 using TravelAgency.Model;
@@ -13,16 +14,15 @@ using TravelAgency.View;
 
 namespace TravelAgency.ViewModel
 {
-    public class TourGuestReviewsViewModel
+    public class TourGuestRatingsViewModel
     {
         public ObservableCollection<TourDetailsViewModel> TourReviews { get; set; }
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
-
-        public TourGuestReviewsViewModel(int id)
+        public TourGuestRatingsViewModel(int id)
         {
-            TourReviewService tourReviewService = new TourReviewService();
+            TourRatingService tourReviewService = new TourRatingService();
             TourReviews = new ObservableCollection<TourDetailsViewModel>(tourReviewService.getTourReviews(id));
             ReportCommand = new ButtonCommand<TourDetailsViewModel>(ReportNotValid);
             RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
@@ -32,10 +32,9 @@ namespace TravelAgency.ViewModel
         private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
             tourReviewViewModel.TourRating.IsValid = false;
-            TourReviewService tourReviewService = new TourReviewService();
+            TourRatingService tourReviewService = new TourRatingService();
             tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
         }
-
         private void ShowNextPhoto(TourDetailsViewModel tourReviewViewModel)
         {
             for (int i = 0; i < tourReviewViewModel.TourRating.PhotoUrls.Count; i++)

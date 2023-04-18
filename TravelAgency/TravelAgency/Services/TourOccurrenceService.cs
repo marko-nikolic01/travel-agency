@@ -129,6 +129,10 @@ namespace TravelAgency.Services
 
         public TourOccurrence GetMostVisitedByYear(int guideId, int year)
         {
+            if(ITourOccurrenceRepository.GetFinishedOccurrencesForGuideByYear(guideId, year).Count == 0)
+            {
+                return null;
+            }
             TourOccurrence mostVisited = ITourOccurrenceRepository.GetFinishedOccurrencesForGuideByYear(guideId, year)[0];
             foreach (var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuideByYear(guideId, year))
             {

@@ -33,7 +33,7 @@ namespace TravelAgency.ViewModel
             int used = voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
             SeriesCollectionVouchers.Add(new PieSeries{ Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) } });
             int notUsed = attendanceService.GetGuestsNumberByTour(tourOccurrence.Id) - voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
-            SeriesCollectionVouchers.Add(new PieSeries{ Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) } });
+            SeriesCollectionVouchers.Add(new PieSeries{ Title = "Not used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) } });
             GuestsUsedVoucher = (double)used / attendanceService.GetGuestsNumberByTour(SelectedTourOccurrence.Id);
             GuestsNotUsedVoucher = (1 - GuestsUsedVoucher);
             SeriesCollectionAges = new SeriesCollection{ new ColumnSeries{Values = new ChartValues<int> { GuestsUnder18, Guests18to50, GestsAbove50}} };

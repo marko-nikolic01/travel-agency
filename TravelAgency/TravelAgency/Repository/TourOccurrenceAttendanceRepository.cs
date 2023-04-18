@@ -67,7 +67,7 @@ namespace TravelAgency.Repository
             List<int> result = new List<int>();
             foreach (TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
             {
-                if (tourOccurrenceAttendance.TourOccurrenceId == id)
+                if (tourOccurrenceAttendance.TourOccurrenceId == id && tourOccurrenceAttendance.ResponseStatus == ResponseStatus.Accepted)
                 {
                     result.Add(tourOccurrenceAttendance.GuestId);
                 }
@@ -107,7 +107,7 @@ namespace TravelAgency.Repository
             int count = 0;
             foreach(TourOccurrenceAttendance attendance in tourOccurrenceAttendances)
             {
-                if(attendance.TourOccurrenceId == id)
+                if(attendance.TourOccurrenceId == id && attendance.ResponseStatus == ResponseStatus.Accepted)
                 {
                     count++;
                 }
