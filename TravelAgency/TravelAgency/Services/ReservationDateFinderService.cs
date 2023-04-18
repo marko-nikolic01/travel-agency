@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Injector;
 using TravelAgency.Model;
 using TravelAgency.RepositoryInterfaces;
 
@@ -22,16 +23,12 @@ namespace TravelAgency.Services
             _startDateIterator = DateOnly.FromDateTime(DateTime.Now);
             _endDateIterator = DateOnly.FromDateTime(DateTime.Now);
             _iterationStopperDate = DateOnly.FromDateTime(DateTime.Now);
+            ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
         }
 
         public void SetReservationLength(int length)
         {
             _reservationLength = length;
-        }
-
-        public void RefreshRepository(IAccommodationReservationRepository reservationRepository)
-        {
-            ReservationRepository = reservationRepository;
         }
 
         private void PrepareDateIterators(DateTime startDateIterator, DateTime endDateIterator, DateTime iterationStopperDate)

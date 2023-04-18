@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.View
@@ -26,6 +27,8 @@ namespace TravelAgency.View
     /// </summary>
     public partial class Guest1Main : Window
     {
+        public AccommodationReservationMoveService ReservationMoveService { get; set; }
+
         public User Guest { get; set; }
 
         public UserRepository userRepository;
@@ -56,6 +59,8 @@ namespace TravelAgency.View
             this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight * 0.9);
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
+            ReservationMoveService = new AccommodationReservationMoveService();
+
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
@@ -69,12 +74,19 @@ namespace TravelAgency.View
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
             Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetNotCanceledByGuest(Guest));
-            ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
+            ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
 
             Countries = locationRepository.GetAllCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
+
+            if (ReservationMoveService.NotifyGuestOnStatusChange(Guest))
+            {
+                string message = "There was a status change of your move request(s)";
+                System.Windows.MessageBox.Show(message);
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -202,7 +214,7 @@ namespace TravelAgency.View
         {
             if (SelectedReservation != null)
             {
-                AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(accommodationReservationRepository, SelectedReservation, accommodationReservationMoveRequestRepository);
+                AccommodationReservationMoveRequestWindow moveRequestWindow = new AccommodationReservationMoveRequestWindow(SelectedReservation);
                 moveRequestWindow.ShowDialog();
             }
             else 
