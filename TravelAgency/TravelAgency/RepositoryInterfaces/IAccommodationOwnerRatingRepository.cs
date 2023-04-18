@@ -20,5 +20,7 @@ namespace TravelAgency.RepositoryInterfaces
         public int NextId();
 
         public AccommodationOwnerRating Save(AccommodationOwnerRating rating);
+
+        public void LinkReservations(List<AccommodationReservation> reservations)
     }
 }
