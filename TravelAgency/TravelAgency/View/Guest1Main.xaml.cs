@@ -30,6 +30,7 @@ namespace TravelAgency.View
         public AccommodationReservationService ReservationService { get; set; }
         public AccommodationReservationMoveService ReservationMoveService { get; set; }
         public AccommodationService AccommodationService { get; set; }
+        public LocationService LocationService { get; set; }
 
         public User Guest { get; set; }
 
@@ -64,6 +65,7 @@ namespace TravelAgency.View
             ReservationMoveService = new AccommodationReservationMoveService();
             ReservationService = new AccommodationReservationService();
             AccommodationService = new AccommodationService();
+            LocationService = new LocationService();
 
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
@@ -81,7 +83,7 @@ namespace TravelAgency.View
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
 
-            Countries = locationRepository.GetAllCountries();
+            Countries = LocationService.GetCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
 
@@ -123,11 +125,11 @@ namespace TravelAgency.View
         {
             if (SelectedCountry != "Not specified")
             {
-                Cities = locationRepository.GetCitiesByCountry(SelectedCountry);
+                Cities = LocationService.GetCitiesByCountry(SelectedCountry);
             }
             else
             {
-                Cities = locationRepository.GetAllCities();
+                Cities = LocationService.GetCities();
             }
 
             Cities.Insert(0, "Not specified");
