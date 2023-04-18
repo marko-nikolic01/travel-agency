@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationOwnerRatingRepository : IRepository<AccommodationOwnerRating>
+    public class AccommodationOwnerRatingRepository : IAccommodationOwnerRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationOwnerRatings.csv";
         private readonly Serializer<AccommodationOwnerRating> serializer;
@@ -32,49 +33,12 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void Delete(AccommodationOwnerRating entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AccommodationOwnerRating> GetAll()
         {
             return accommodationOwnerRatings;
         }
 
         public AccommodationOwnerRating GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int NextId()
-        {
-            if (accommodationOwnerRatings.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationOwnerRatings.Max(c => c.Id) + 1;
-        }
-
-        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
-        {
-            entity.Id = NextId();
-            accommodationOwnerRatings.Add(entity);
-            serializer.ToCSV(FilePath, accommodationOwnerRatings);
-            return entity;
-        }
-
-        public void SaveAll(IEnumerable<AccommodationOwnerRating> entities)
         {
             throw new NotImplementedException();
         }
@@ -102,6 +66,25 @@ namespace TravelAgency.Repository
 
             return ownerRatings;
         }
+
+        public int NextId()
+        {
+            if (accommodationOwnerRatings.Count < 1)
+            {
+                return 1;
+            }
+            return accommodationOwnerRatings.Max(c => c.Id) + 1;
+        }
+
+        public AccommodationOwnerRating Save(AccommodationOwnerRating entity)
+        {
+            entity.Id = NextId();
+            accommodationOwnerRatings.Add(entity);
+            serializer.ToCSV(FilePath, accommodationOwnerRatings);
+            return entity;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------
 
         public double GetAverageRatingForOwner(User owner)
         {

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationReservationMoveRequestRepository : IRepository<AccommodationReservationMoveRequest>
+    public class AccommodationReservationMoveRequestRepository : IAccommodationReservationMoveRequestRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationReservationMoveRequests.csv";
         private readonly Serializer<AccommodationReservationMoveRequest> _serializer;
@@ -31,27 +32,22 @@ namespace TravelAgency.Repository
                 }
             }
         }
-
-        public void Delete(AccommodationReservationMoveRequest entity)
-        {
-            DeleteById(entity.Id);
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            AccommodationReservationMoveRequest moveRequest = _moveRequests.Find(mr => mr.Id == id);
-            _moveRequests.Remove(moveRequest);
-            _serializer.ToCSV(FilePath, _moveRequests);
-        }
-
+        
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             return _moveRequests;
+        }
+
+        public AccommodationReservationMoveRequest GetById(int id)
+        {
+            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
+            {
+                if (moveRequest.Id == id)
+                {
+                    return moveRequest; ;
+                }
+            }
+            return null;
         }
 
         public List<AccommodationReservationMoveRequest> GetAllByGuest(User guest)
@@ -65,18 +61,6 @@ namespace TravelAgency.Repository
                 }
             }
             return moveRequests;
-        }
-
-        public AccommodationReservationMoveRequest GetById(int id)
-        {
-            foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
-            {
-                if (moveRequest.Id == id)
-                {
-                    return moveRequest; ;
-                }
-            }
-            return null;
         }
 
         public int NextId()
@@ -98,10 +82,24 @@ namespace TravelAgency.Repository
             return moveRequest;
         }
 
-        public void SaveAll(IEnumerable<AccommodationReservationMoveRequest> entities)
+        //-----------------------------------------------------------------------------------------------------------------------------------------------
+        public void Delete(AccommodationReservationMoveRequest entity)
+        {
+            DeleteById(entity.Id);
+        }
+
+        public void DeleteAll()
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteById(int id)
+        {
+            AccommodationReservationMoveRequest moveRequest = _moveRequests.Find(mr => mr.Id == id);
+            _moveRequests.Remove(moveRequest);
+            _serializer.ToCSV(FilePath, _moveRequests);
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------
 
         public bool NotifyStatusChange()
         {

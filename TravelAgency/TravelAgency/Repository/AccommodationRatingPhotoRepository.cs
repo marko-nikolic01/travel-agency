@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationRatingPhotoRepository : IRepository<AccommodationRatingPhoto>
+    public class AccommodationRatingPhotoRepository : IAccommodationRatingPhotoRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationRatingPhotos.csv";
 
@@ -22,15 +23,6 @@ namespace TravelAgency.Repository
             accommodationPhotos = serializer.FromCSV(FilePath);
         }
 
-        public int NextId()
-        {
-            if (accommodationPhotos.Count < 1)
-            {
-                return 1;
-            }
-            return accommodationPhotos.Max(c => c.Id) + 1;
-        }
-
         public List<AccommodationRatingPhoto> GetAll()
         {
             return accommodationPhotos;
@@ -39,6 +31,15 @@ namespace TravelAgency.Repository
         public AccommodationRatingPhoto GetById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public int NextId()
+        {
+            if (accommodationPhotos.Count < 1)
+            {
+                return 1;
+            }
+            return accommodationPhotos.Max(c => c.Id) + 1;
         }
 
         public AccommodationRatingPhoto Save(AccommodationRatingPhoto image)
@@ -55,21 +56,6 @@ namespace TravelAgency.Repository
             {
                 Save(entity);
             }
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(AccommodationRatingPhoto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }
