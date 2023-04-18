@@ -43,7 +43,11 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Home" FontSize="20"></MenuItem>
-                    <MenuItem Header="⋮" FontSize="20" HorizontalAlignment="Right"></MenuItem>
+                    <MenuItem Header="⋮" FontSize="20" HorizontalAlignment="Right">
+                        <Menu>
+                            <MenuItem Header="Sign out" Click="SignOut_Click"></MenuItem>
+                        </Menu>
+                    </MenuItem>
                 </Menu>
             </StackPanel>
             <Label Content="WELCOME" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelAgency.Commands;
 using TravelAgency.Model;
@@ -19,7 +20,6 @@ namespace TravelAgency.ViewModel
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
-
         public TourGuestRatingsViewModel(int id)
         {
             TourRatingService tourReviewService = new TourRatingService();
@@ -35,7 +35,6 @@ namespace TravelAgency.ViewModel
             TourRatingService tourReviewService = new TourRatingService();
             tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
         }
-
         private void ShowNextPhoto(TourDetailsViewModel tourReviewViewModel)
         {
             for (int i = 0; i < tourReviewViewModel.TourRating.PhotoUrls.Count; i++)
