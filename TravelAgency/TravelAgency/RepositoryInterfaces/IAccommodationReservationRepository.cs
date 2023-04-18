@@ -9,6 +9,8 @@ namespace TravelAgency.RepositoryInterfaces
 {
     public interface IAccommodationReservationRepository
     {
+        public void LinkAccommodations(List<Accommodation> accommodations);
+        public void LinkGuests(List<User> guests);
         public List<AccommodationReservation> GetAll();
         public void Delete(AccommodationReservation reservation);
         public List<AccommodationReservation> GetNotCanceledByGuest(User guest);

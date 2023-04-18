@@ -9,6 +9,7 @@ namespace TravelAgency.RepositoryInterfaces
 {
     public interface IAccommodationReservationMoveRequestRepository
     {
+        public void LinkReservations(List<AccommodationReservation> reservations);
         public List<AccommodationReservationMoveRequest> GetAll();
 
         public AccommodationReservationMoveRequest GetById(int id);

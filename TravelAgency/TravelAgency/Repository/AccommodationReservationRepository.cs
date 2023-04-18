@@ -46,6 +46,7 @@ namespace TravelAgency.Repository
                     if (accommodationReservation.AccommodationId == accommodation.Id)
                     {
                         accommodationReservation.Accommodation = accommodation;
+                        break;
                     }
                 }
             }
@@ -60,6 +61,7 @@ namespace TravelAgency.Repository
                     if (accommodationReservation.GuestId == guest.Id)
                     {
                         accommodationReservation.Guest = guest;
+                        break;
                     }
                 }
             }

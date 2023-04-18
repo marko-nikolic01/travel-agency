@@ -35,6 +35,7 @@ namespace TravelAgency.Repository
                     if (moveRequest.ReservationId == reservation.Id)
                     {
                         moveRequest.Reservation = reservation;
+                        break;
                     }
                 }
             }
