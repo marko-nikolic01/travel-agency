@@ -19,17 +19,21 @@ namespace TravelAgency.Repository
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
             _moveRequests = _serializer.FromCSV(FilePath);
-            /*
+        }
+
+        public void LinkReservations(List<AccommodationReservation> reservations)
+        {
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
-                foreach (AccommodationReservation reservation in accommodationReservationRepository.GetAll())
+                foreach (AccommodationReservation reservation in reservations)
                 {
                     if (moveRequest.ReservationId == reservation.Id)
                     {
                         moveRequest.Reservation = reservation;
+                        break;
                     }
                 }
-            }*/
+            }
         }
         
         public List<AccommodationReservationMoveRequest> GetAll()

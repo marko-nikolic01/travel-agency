@@ -29,23 +29,33 @@ namespace TravelAgency.Repository
             _serializer = new Serializer<AccommodationReservation>();
             _accommodationReservations = _serializer.FromCSV(FilePath);
             _reservationLength = 1;
+        }
 
-
+        public void LinkAccommodations(List<Accommodation> accommodations)
+        {
             foreach (AccommodationReservation accommodationReservation in _accommodationReservations)
             {
-                foreach (Accommodation accommodation in accommodationRepository.GetAll())
+                foreach (Accommodation accommodation in accommodations)
                 {
                     if (accommodationReservation.AccommodationId == accommodation.Id)
                     {
                         accommodationReservation.Accommodation = accommodation;
+                        break;
                     }
                 }
+            }
+        }
 
-                foreach (User user in userRepository.GetUsers())
+        public void LinkGuests(List<User> guests)
+        {
+            foreach (AccommodationReservation accommodationReservation in _accommodationReservations)
+            {
+                foreach (User guest in guests)
                 {
-                    if (accommodationReservation.GuestId == user.Id)
+                    if (accommodationReservation.GuestId == guest.Id)
                     {
-                        accommodationReservation.Guest = user;
+                        accommodationReservation.Guest = guest;
+                        break;
                     }
                 }
             }
