@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using TravelAgency.Services;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -22,27 +23,20 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationMoveRequestManagingWindow : Window
     {
-        public User LoggedInUser { get; set; }
-        public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
+        public AccommodationReservationMoveRequestViewModel MoveRequestViewModel { get; set; }
 
-        public AccommodationReservationMoveService moveReqestService { get; set; }
-
-        public AccommodationReservationMoveRequestManagingWindow(User loggedInUser, AccommodationReservationMoveRequest selectedMoveRequest)
+        public AccommodationReservationMoveRequestManagingWindow(AccommodationReservationMoveRequest selectedMoveRequest)
         {
             InitializeComponent();
-            DataContext = this;
-
-            LoggedInUser = loggedInUser;
-            SelectedMoveRequest = selectedMoveRequest;
-
-            moveReqestService = new AccommodationReservationMoveService();
+            MoveRequestViewModel = new AccommodationReservationMoveRequestViewModel(selectedMoveRequest);
+            DataContext = MoveRequestViewModel;
 
             SetAvailability();
         }
 
         private void SetAvailability()
         {
-            if (moveReqestService.CanResevationBeMoved(SelectedMoveRequest))
+            if (MoveRequestViewModel.CanSelectedReservationBeMoved())
             {
                 AvailabilityTextBlock.Text = "Available";
             }
@@ -54,9 +48,7 @@ namespace TravelAgency.View
 
         private void AcceptMoveRequest_Click(object sender, RoutedEventArgs e)
         {
-            moveReqestService.AcceptMoveRequest(SelectedMoveRequest);
-
-            OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
+            MoveRequestViewModel.AcceptSelectedMoveRequest();
 
             Close();
         }
@@ -70,9 +62,7 @@ namespace TravelAgency.View
             }
             else
             {
-                moveReqestService.RejectMoveRequest(SelectedMoveRequest);
-
-                OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
+                MoveRequestViewModel.RejectSelectedMoveRequest();
 
                 Close();
             }

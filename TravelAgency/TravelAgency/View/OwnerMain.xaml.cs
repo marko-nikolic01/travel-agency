@@ -116,7 +116,7 @@ namespace TravelAgency.View
             }
             else
             {
-                AccommodationReservationMoveRequestManagingWindow moveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, SelectedMoveRequest);
+                AccommodationReservationMoveRequestManagingWindow moveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(SelectedMoveRequest);
                 moveRequestManagingWindow.Show();
             }
         }

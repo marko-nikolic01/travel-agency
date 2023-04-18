@@ -98,7 +98,7 @@ namespace TravelAgency.Services
                      dateSpan1.StartDate.CompareTo(dateSpan2.StartDate) <= 0 && dateSpan1.EndDate.CompareTo(dateSpan2.EndDate) >= 0);
         }
 
-        public bool CanResevationBeMoved(AccommodationReservationMoveRequest moveRequest)
+        public bool CanReservationBeMoved(AccommodationReservationMoveRequest moveRequest)
         {
             foreach (var reservation in ReservationRepository.GetAll())
             {
