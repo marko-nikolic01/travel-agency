@@ -401,11 +401,11 @@ namespace TravelAgency.Repository
         }
 
 
-        public bool CancelReservation(AccommodationReservation accommodationReservation)
+        public bool CancelReservation(AccommodationReservation reservation)
         {
-            if (!IsDeadlineOverdue(accommodationReservation))
+            if (!IsDeadlineOverdue(reservation))
             {
-                accommodationReservation.Canceled = true;
+                reservation.Canceled = true;
                 SaveAll(_accommodationReservations);
                 return true;
             }

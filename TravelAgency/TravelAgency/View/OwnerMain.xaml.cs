@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -41,6 +42,8 @@ namespace TravelAgency.View
         private readonly AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
         private readonly AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
 
+        public AccommodationReservationMoveService moveReqestService { get; set; } 
+
         public OwnerMain(User user)
         {
             InitializeComponent();
@@ -51,15 +54,17 @@ namespace TravelAgency.View
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
-            accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
-            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
+            accommodationRepository = new AccommodationRepository(userRepository.GetUsers(), locationRepository.GetAll(), imageRepository.GetAll());
+            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository.GetAll(), userRepository.GetUsers());
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
 
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
+            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByOwner(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
             AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetWaitingByOwner(LoggedInUser));
+
+            moveReqestService = new AccommodationReservationMoveService();
 
             ShowNotifications();
             SetSuperOwner();

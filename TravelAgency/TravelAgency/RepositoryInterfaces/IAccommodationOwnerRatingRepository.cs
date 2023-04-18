@@ -21,6 +21,6 @@ namespace TravelAgency.RepositoryInterfaces
 
         public AccommodationOwnerRating Save(AccommodationOwnerRating rating);
 
-        public void LinkReservations(List<AccommodationReservation> reservations)
+        public void LinkReservations(List<AccommodationReservation> reservations);
     }
 }
