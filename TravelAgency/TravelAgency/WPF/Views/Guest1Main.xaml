@@ -32,7 +32,7 @@
             </Grid.ColumnDefinitions>
             <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="DarkGray" BorderThickness="0 1 0 0"></Border>
             <Border VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="125" Height="175" BorderThickness="2" BorderBrush="Black">
-                <Image Height="175" Width="125" Stretch="Fill" Source="../Resources/Images/ProfilePicture.jpg"></Image>
+                <Image Height="175" Width="125" Stretch="Fill" Source="../../Resources/Images/ProfilePicture.jpg"></Image>
             </Border>
             <Label Grid.Row="2" Grid.Column="0">Name:</Label>
             <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Content="{Binding Guest.Username}"></Label>
