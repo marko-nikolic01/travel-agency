@@ -9,20 +9,28 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationGuestRatingRepository : IAccommodationGuestRating
+    public class AccommodationGuestRatingRepository : IAccommodationGuestRatingRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationGuestRatings.csv";
         private readonly Serializer<AccommodationGuestRating> serializer;
         private List<AccommodationGuestRating> accommodationGuestRatings;
 
-        public AccommodationGuestRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        public AccommodationGuestRatingRepository()
         {
             serializer = new Serializer<AccommodationGuestRating>();
             accommodationGuestRatings = serializer.FromCSV(FilePath);
+        }
 
+        public AccommodationGuestRatingRepository(IAccommodationReservationRepository reservationRepository) : this()
+        {
+            LinkReservations(reservationRepository);
+        }
+
+        public void LinkReservations(IAccommodationReservationRepository reservationRepository)
+        {
             foreach (var accommodationGuestRating in accommodationGuestRatings)
             {
-                foreach (var accommodationReservation in accommodationReservations)
+                foreach (var accommodationReservation in reservationRepository.GetAll())
                 {
                     if (accommodationGuestRating.AccommodationReservationId == accommodationReservation.Id)
                     {

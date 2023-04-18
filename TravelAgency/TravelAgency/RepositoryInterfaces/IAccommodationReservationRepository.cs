@@ -15,5 +15,6 @@ namespace TravelAgency.RepositoryInterfaces
         public int NextId();
         public AccommodationReservation Save(AccommodationReservation reservation);
         public bool IsActive(AccommodationReservation reservation);
+        public List<AccommodationReservation> GetByAccommodation(Accommodation accommodation);
     }
 }

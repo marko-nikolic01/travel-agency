@@ -7,11 +7,10 @@ using TravelAgency.Model;
 
 namespace TravelAgency.RepositoryInterfaces
 {
-    public interface IAccommodationGuestRating
+    public interface IAccommodationGuestRatingRepository
     {
         public List<AccommodationGuestRating> GetAll();
         public AccommodationGuestRating Save(AccommodationGuestRating rating);
-        public AccommodationGuestRating GetById(int id);
         public int NextId();
         public List<AccommodationGuestRating> GetByOwner(User owner);
     }

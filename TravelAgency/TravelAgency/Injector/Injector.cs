@@ -21,6 +21,7 @@ namespace TravelAgency.Injector
         { typeof(ITourReservationRepository), new TourReservationRepository() },
         { typeof(ILocationRepository), new LocationRepository() },
         { typeof(ITourOccurrenceAttendanceRepository), new TourOccurrenceAttendanceRepository() },
+            {typeof(IAccommodationRepository), new AccommodationRepository() }
         // Add more implementations here
     };
 
