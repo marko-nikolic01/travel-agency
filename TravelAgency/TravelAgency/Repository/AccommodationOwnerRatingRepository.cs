@@ -86,26 +86,5 @@ namespace TravelAgency.Repository
             serializer.ToCSV(FilePath, accommodationOwnerRatings);
             return entity;
         }
-
-        //-----------------------------------------------------------------------------------------------------------------------------------------------
-
-        public double GetAverageRatingForOwner(User owner)
-        {
-            var ratings = GetByOwner(owner);
-            double averageRating = 0;
-            foreach (var rating in ratings)
-            {
-                double currentRating = (double)(rating.AccommodationCleanliness +
-                                       rating.AccommodationComfort +
-                                       rating.AccommodationLocation +
-                                       rating.OwnerCorrectness +
-                                       rating.OwnerResponsiveness) / 5;
-                averageRating += currentRating;
-            }
-
-            averageRating /= ratings.Count;
-
-            return averageRating;
-        }
     }
 }
