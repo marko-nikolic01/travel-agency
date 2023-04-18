@@ -17,6 +17,7 @@ namespace TravelAgency.Services
         public IAccommodationReservationRepository ReservationRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
+        public ILocationRepository LocationRepository { get; set; }
 
         public AccommodationReservationMoveService()
         {
@@ -24,6 +25,8 @@ namespace TravelAgency.Services
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
+            LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
@@ -53,7 +56,7 @@ namespace TravelAgency.Services
             {
                 if (moveRequest.StatusChanged)
                 {
-                    moveRequest.StatusChanged = false;
+                    MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, false);
                     notify = true;
                 }
             }

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -17,9 +18,11 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationReservationWindow : Window, IDataErrorInfo, INotifyPropertyChanged
     {
+        public AccommodationReservationService ReservationService { get; set; }
+        public ReservationDateFinderService DateFinderService { get; set; }
+
         public User Guest { get; set; }
         public Accommodation Accommodation { get; set; }
-        public AccommodationReservationRepository accommodationReservationRepository;
         public AccommodationReservation Reservation { get; set; }
         private int _dayNumber;
         private DateTime _firstDate;
@@ -76,14 +79,15 @@ namespace TravelAgency.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AccommodationReservationWindow(User guest, Accommodation accommodation, AccommodationReservationRepository accommodationReservationRepository)
+        public AccommodationReservationWindow(User guest, Accommodation accommodation)
         {
             InitializeComponent();
             this.DataContext = this;
             this.Height = 600;
             this.Width = 1000;
 
-            this.accommodationReservationRepository = accommodationReservationRepository;
+            ReservationService = new AccommodationReservationService();
+            DateFinderService = new ReservationDateFinderService();
 
             Guest = guest;
             Accommodation = accommodation;
@@ -157,13 +161,13 @@ namespace TravelAgency.View
         {
             if (this.IsValid)
             {
-                accommodationReservationRepository.SetReservationLength(DayNumber);
-                AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesInsideDateRange(FirstDate, LastDate, Accommodation.Id));
+                DateFinderService.SetReservationLength(DayNumber);
+                AvailableDateSpans = new ObservableCollection<DateSpan>(DateFinderService.FindAvailableDatesInsideDateRange(FirstDate, LastDate, Accommodation));
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 if (AvailableDateSpans.Count == 0)
                 {
-                    AvailableDateSpans = new ObservableCollection<DateSpan>(accommodationReservationRepository.FindAvailableDatesOutsideDateRange(FirstDate, LastDate, Accommodation.Id));
+                    AvailableDateSpans = new ObservableCollection<DateSpan>(DateFinderService.FindAvailableDatesOutsideDateRange(FirstDate, LastDate, Accommodation));
                     dateSpansDataGrid.ItemsSource = AvailableDateSpans;
                     System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
                 }
@@ -311,7 +315,7 @@ namespace TravelAgency.View
         {
             if (Reservation.IsValid)
             {
-                accommodationReservationRepository.Save(Reservation);
+                ReservationService.CreateReservation(Reservation);
                 Guest1Main.Reservations.Add(Reservation);
                 Close();
             }

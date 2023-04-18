@@ -27,6 +27,7 @@ namespace TravelAgency.View
     /// </summary>
     public partial class Guest1Main : Window
     {
+        public AccommodationReservationService ReservationService { get; set; }
         public AccommodationReservationMoveService ReservationMoveService { get; set; }
 
         public User Guest { get; set; }
@@ -60,6 +61,7 @@ namespace TravelAgency.View
             this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth * 0.9);
 
             ReservationMoveService = new AccommodationReservationMoveService();
+            ReservationService = new AccommodationReservationService();
 
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
@@ -73,7 +75,7 @@ namespace TravelAgency.View
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
-            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetNotCanceledByGuest(Guest));
+            Reservations = new ObservableCollection<AccommodationReservation>(ReservationService.GetByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByOwner(Guest)));
 
@@ -187,7 +189,7 @@ namespace TravelAgency.View
         {
             if (SelectedAccommodation != null)
             {
-                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation, accommodationReservationRepository);
+                AccommodationReservationWindow accommodationReservationWindow = new AccommodationReservationWindow(Guest, SelectedAccommodation);
                 accommodationReservationWindow.Show();
             }
             else
@@ -199,7 +201,7 @@ namespace TravelAgency.View
 
         private void CancelReservation(object sender, RoutedEventArgs e)
         {
-            if (accommodationReservationRepository.CancelReservation(SelectedReservation))
+            if (ReservationService.CancelReservation(SelectedReservation))
             {
                 Reservations.Remove(SelectedReservation);
             }
