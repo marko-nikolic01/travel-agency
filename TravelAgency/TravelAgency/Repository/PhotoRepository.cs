@@ -42,6 +42,17 @@ namespace TravelAgency.Repository
             _serializer.ToCSV(FilePath, photos);
             return photo;
         }
-
+        public List<Photo> GetByTour(int id)
+        {
+            List<Photo> result = new List<Photo>();
+            foreach (Photo p in photos)
+            {
+                if (p.TourId == id)
+                {
+                    result.Add(p);
+                }
+            }
+            return result;
+        }
     }
 }

@@ -79,9 +79,9 @@ namespace TravelAgency.Repository
             throw new NotImplementedException();
         }
 
-        public List<AccommodationOwnerRating> GetByUser(User user)
+        public List<AccommodationOwnerRating> GetByOwner(User owner)
         {
-            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == user.Id);
+            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == owner.Id);
         }
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
@@ -103,13 +103,13 @@ namespace TravelAgency.Repository
             return ownerRatings;
         }
 
-        public double GetAverageRatingForOwner(User user)
+        public double GetAverageRatingForOwner(User owner)
         {
-            var ratings = GetByUser(user);
+            var ratings = GetByOwner(owner);
             double averageRating = 0;
             foreach (var rating in ratings)
             {
-                double currentRating = (rating.AccommodationCleanliness +
+                double currentRating = (double)(rating.AccommodationCleanliness +
                                        rating.AccommodationComfort +
                                        rating.AccommodationLocation +
                                        rating.OwnerCorrectness +
@@ -122,9 +122,9 @@ namespace TravelAgency.Repository
             return averageRating;
         }
 
-        public bool IsSuperOwner(User user)
+        public bool IsSuperOwner(User owner)
         {
-            return GetByUser(user).Count >= 1 && GetAverageRatingForOwner(user) >= 4.5;
+            return GetByOwner(owner).Count >= 1 && GetAverageRatingForOwner(owner) >= 4.5;
         }
 
         public void SetSuperOwners(UserRepository userRepository)

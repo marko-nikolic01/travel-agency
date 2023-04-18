@@ -17,7 +17,7 @@ namespace TravelAgency.Model
     public class AccommodationReservation : ISerializable, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int AccomodationId { get; set; }
+        public int AccommodationId { get; set; }
         public Accommodation Accommodation { get; set; }
         public int GuestId { get; set; }
         public User Guest { get; set; }
@@ -62,7 +62,7 @@ namespace TravelAgency.Model
         public AccommodationReservation()
         {
             Id = -1;
-            AccomodationId = -1;
+            AccommodationId = -1;
             GuestId = -1;
             NumberOfGuests = -1;
             DateSpan = new DateSpan();
@@ -72,7 +72,7 @@ namespace TravelAgency.Model
         public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateSpan dateSpan)
         {
             Id = id;
-            AccomodationId = accommodationId;
+            AccommodationId = accommodationId;
             GuestId = guestId;
             NumberOfGuests = numberOfGuests;
             DateSpan = dateSpan;
@@ -82,7 +82,7 @@ namespace TravelAgency.Model
         public AccommodationReservation(int accommodationId, Accommodation accommodation, int guestId, User guest)
         {
             Id = -1;
-            AccomodationId = accommodationId;
+            AccommodationId = accommodationId;
             Accommodation = accommodation;
             GuestId = guestId;
             Guest = guest;
@@ -95,7 +95,7 @@ namespace TravelAgency.Model
             string[] csvValues =
             {
                 Id.ToString(),
-                AccomodationId.ToString(),
+                AccommodationId.ToString(),
                 GuestId.ToString(),
                 NumberOfGuests.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
@@ -108,7 +108,7 @@ namespace TravelAgency.Model
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            AccomodationId = Convert.ToInt32(values[1]);
+            AccommodationId = Convert.ToInt32(values[1]);
             GuestId = Convert.ToInt32(values[2]);
             NumberOfGuests = Convert.ToInt32(values[3]);
             DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");

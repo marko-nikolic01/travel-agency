@@ -24,6 +24,9 @@ namespace TravelAgency.View
     {
         public static ObservableCollection<Accommodation> Accommodations { get; set; }
         public static ObservableCollection<AccommodationOwnerRating> AccommodationOwnerRatings { get; set; }
+        public static ObservableCollection<AccommodationReservationMoveRequest> AccommodationReservationMoveRequests { get; set; }
+
+        public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
 
         public Accommodation? SelectedAccommodation { get; set; }
 
@@ -36,6 +39,7 @@ namespace TravelAgency.View
         private readonly AccommodationReservationRepository accommodationReservationRepository;
         private readonly AccommodationGuestRatingRepository accommodationGuestRatingRepository;
         private readonly AccommodationOwnerRatingRepository accommodationOwnerRatingRepository;
+        private readonly AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository;
 
         public OwnerMain(User user)
         {
@@ -51,9 +55,11 @@ namespace TravelAgency.View
             accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
             accommodationGuestRatingRepository = new AccommodationGuestRatingRepository(accommodationReservationRepository.GetAll());
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetByUser(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(accommodationOwnerRatingRepository.GetRatingsVisibleToOwner(user, accommodationGuestRatingRepository.GetAll()));
+            AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetWaitingByOwner(LoggedInUser));
 
             ShowNotifications();
             SetSuperOwner();
@@ -85,6 +91,7 @@ namespace TravelAgency.View
 
         private void SetSuperOwner()
         {
+            AverageRatingLabel.Content = accommodationOwnerRatingRepository.GetAverageRatingForOwner(LoggedInUser).ToString();
             if (accommodationOwnerRatingRepository.IsSuperOwner(LoggedInUser)) {
                 SuperOwnerLabel.Content = "Yes";
             }
@@ -99,6 +106,19 @@ namespace TravelAgency.View
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
+        }
+
+        private void OpenReviewAccommodationReservationMoveRequestWindow_click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedMoveRequest == null)
+            {
+                MessageBox.Show("Select a move request.");
+            }
+            else
+            {
+                AccommodationReservationMoveRequestManagingWindow accommodationReservationMoveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(LoggedInUser, accommodationReservationRepository, accommodationReservationMoveRequestRepository, SelectedMoveRequest);
+                accommodationReservationMoveRequestManagingWindow.Show();
+            }
         }
     }
 }

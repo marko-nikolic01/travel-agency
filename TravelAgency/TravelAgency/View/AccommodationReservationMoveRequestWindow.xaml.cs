@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -97,7 +98,7 @@ namespace TravelAgency.View
             Reservation = reservation;
             MoveRequest = new AccommodationReservationMoveRequest(Reservation);
 
-            DayNumber = Reservation.DateSpan.EndDate.DayNumber - Reservation.DateSpan.StartDate.DayNumber;
+            DayNumber = Reservation.DateSpan.EndDate.DayNumber - Reservation.DateSpan.StartDate.DayNumber + 1;
             FirstDate = DateTime.Now.Date;
             LastDate = DateTime.Now.Date;
             AvailableDateSpans = new ObservableCollection<DateSpan>();
@@ -169,9 +170,6 @@ namespace TravelAgency.View
                 dateSpansDataGrid.ItemsSource = AvailableDateSpans;
 
                 dateSpansDataGrid.Visibility = Visibility.Visible;
-                guestsLabel.Visibility = Visibility.Visible;
-                guestsNumberUpDown.Visibility = Visibility.Visible;
-                guestsNumberUpDown.Value = 1;
                 makeReservationButton.Visibility = Visibility.Visible;
             }
             else
@@ -194,11 +192,11 @@ namespace TravelAgency.View
                     }
                     else if (DayNumber == 0)
                     {
-                        return "* Number of guests is required";
+                        return "* Number of days is required";
                     }
                     else if (DayNumber < Reservation.Accommodation.MinDays)
                     {
-                        return "* Number of guests is smaller than allowed";
+                        return "* Number of days is smaller than allowed";
                     }
                 }
                 else if (columnName == "FirstDate")
@@ -309,6 +307,7 @@ namespace TravelAgency.View
             if (MoveRequest.DateSpan != null)
             {
                 moveRequestRepository.Save(MoveRequest);
+                Guest1Main.ReservationMoveRequests.Add(MoveRequest);
                 Close();
             }
             else

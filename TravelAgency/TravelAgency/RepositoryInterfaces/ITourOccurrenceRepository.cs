@@ -13,7 +13,7 @@ namespace TravelAgency.RepositoryInterfaces
     public interface ITourOccurrenceRepository
     {
         public List<TourOccurrence> GetAll();
-        public List<TourOccurrence> GetTodays(User activeGuide);
+        public List<TourOccurrence> GetTodays(int activeGuideId);
 
         public List<TourOccurrence> GetUpcomings(int activeGuideId);
 

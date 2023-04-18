@@ -13,5 +13,6 @@ namespace TravelAgency.RepositoryInterfaces
         public List<Photo> GetAll();
 
         public Photo Save(Photo photo);
+        public List<Photo> GetByTour(int id);
     }
 }

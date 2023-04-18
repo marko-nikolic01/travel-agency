@@ -71,6 +71,17 @@ namespace TravelAgency.Repository
             KeyPoint keyPoint = keyPoints.Find(x => x.Id == id);
             return keyPoint;
         }
-
+        public List<KeyPoint> GetByTourOccurrence(int id)
+        {
+            List<KeyPoint> result = new List<KeyPoint>();
+            foreach(KeyPoint k in keyPoints)
+            {
+                if(k.TourOccurrenceId == id)
+                {
+                    result.Add(k);
+                }
+            }
+            return result;
+        }
     }
 }

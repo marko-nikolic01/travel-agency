@@ -28,7 +28,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <DataGrid Grid.Row="0" Grid.Column="0"
                               ItemsSource="{Binding Accommodations}"
                               SelectedItem="{Binding Path=SelectedAccommodation}"
@@ -44,7 +44,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                
+
             </TabItem>
             <TabItem Header="Guest ratings">
                 <Grid>
@@ -75,17 +75,49 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="Super-owner:"/>
-                    <Label Grid.Column="1" x:Name="SuperOwnerLabel"/>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Super-owner:"/>
+                    <Label Grid.Row="0"  Grid.Column="1" x:Name="SuperOwnerLabel"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Average rating:"/>
+                    <Label Grid.Row="1" Grid.Column="1" x:Name="AverageRatingLabel"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Move requests">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.Column="0"
+                              ItemsSource="{Binding AccommodationReservationMoveRequests}"
+                              SelectedItem="{Binding SelectedMoveRequest}"
+                              IsReadOnly="True" SelectionMode="Single"
+                              AutoGenerateColumns="False" HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Accommodation" Width="1.5*" Binding="{Binding Reservation.Accommodation.Name}" />
+                            <DataGridTextColumn Header="Old Start Date" Width="1.5*" Binding="{Binding Reservation.DateSpan.StartDate}"/>
+                            <DataGridTextColumn Header="Old End Date" Width="1.5*" Binding="{Binding Reservation.DateSpan.EndDate}"/>
+                            <DataGridTextColumn Header="New Start Date" Width="2*" Binding="{Binding DateSpan.StartDate}"/>
+                            <DataGridTextColumn Header="New End Date" Width="2*" Binding="{Binding DateSpan.EndDate}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Grid.Row="1" Grid.Column="0"
+                            Content="Review request"
+                            Click="OpenReviewAccommodationReservationMoveRequestWindow_click"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        
     </DockPanel>
 </Window>
