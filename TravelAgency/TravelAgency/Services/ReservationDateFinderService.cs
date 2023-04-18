@@ -29,7 +29,7 @@ namespace TravelAgency.Services
             _reservationLength = length;
         }
 
-        public void SetReservationRepository(IAccommodationReservationRepository reservationRepository)
+        public void RefreshRepository(IAccommodationReservationRepository reservationRepository)
         {
             ReservationRepository = reservationRepository;
         }

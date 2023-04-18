@@ -30,6 +30,11 @@ namespace TravelAgency.Services
             MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
         }
 
+        public List<AccommodationReservationMoveRequest> GetRequestsByGuest(User guest)
+        {
+            return MoveRequestRepository.GetAllByGuest(guest);
+        }
+
         public bool CreateMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             if (moveRequest.IsValid)
@@ -41,16 +46,32 @@ namespace TravelAgency.Services
             return false;
         }
 
+        public bool NotifyGuestOnStatusChange(User guest)
+        {
+            bool notify = false;
+            foreach (AccommodationReservationMoveRequest moveRequest in GetRequestsByGuest(guest))
+            {
+                if (moveRequest.StatusChanged)
+                {
+                    moveRequest.StatusChanged = false;
+                    notify = true;
+                }
+            }
+            return notify;
+        }
+
         public void AcceptMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             ReservationRepository.UpdateDateSpan(moveRequest.Reservation, moveRequest.DateSpan);
             DeleteOverlappingReservations(moveRequest.Reservation);
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.ACCEPTED);
+            moveRequest.StatusChanged = true;
         }
 
         public void RejectMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.REJECTED);
+            moveRequest.StatusChanged = true;
         }
 
         private void DeleteOverlappingReservations(AccommodationReservation reservation)
