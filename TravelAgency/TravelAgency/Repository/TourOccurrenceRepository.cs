@@ -116,12 +116,12 @@ namespace TravelAgency.Repository
         {
             return tourOccurrences;
         }
-        public List<TourOccurrence> GetTodays(User activeGuide)
+        public List<TourOccurrence> GetTodays(int activeGuideId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
             foreach (TourOccurrence tourOccurrence in tourOccurrences)
             {
-                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date) && tourOccurrence.GuideId == activeGuide.Id && tourOccurrence.IsDeleted == false)
+                if (tourOccurrence.DateTime.Date.Equals(DateTime.Now.Date) && tourOccurrence.GuideId == activeGuideId && tourOccurrence.IsDeleted == false)
                 {
                     result.Add(tourOccurrence);
                 }

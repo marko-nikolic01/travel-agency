@@ -68,5 +68,6 @@ namespace TravelAgency.Repository
         {
             return _users.FindAll(u => u.Role == Roles.Owner);
         }
+        
     }
 }

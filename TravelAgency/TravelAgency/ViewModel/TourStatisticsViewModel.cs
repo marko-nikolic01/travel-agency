@@ -11,7 +11,6 @@ using System.Windows;
 using TravelAgency.Commands;
 using TravelAgency.Model;
 using TravelAgency.Observer;
-using TravelAgency.Repository;
 using TravelAgency.Services;
 using TravelAgency.View;
 
@@ -22,9 +21,20 @@ namespace TravelAgency.ViewModel
         public ObservableCollection<TourOccurrence> FinishedTours { get; set; }
         public Model.User ActiveGuide { get; set; }
         public ObservableCollection<string> Years { get; set; }
-        public TourOccurrenceRepository TourOccurrenceRepository { get; set; }
+        public TourOccurrenceAttendanceService AttendanceService { get; set; }
+        public StatisticsButtonCommand RightCommand { get; set; }
+        public StatisticsButtonCommand LeftCommand { get; set; }
+        public StatisticsButtonCommand ViewCommand { get; set; }
+        public TourOccurrence SelectedTourOccurrence { get; set; }
+        public TourOccurrenceService TourOccurrenceService { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private string selectedYear;
+        private Photo currentPhoto;
+        private TourOccurrence displayTour;
+        private int guestsNumber;
+        private string keyPoints;
         public string SelectedYear
         {
             get { return selectedYear; }
@@ -49,7 +59,6 @@ namespace TravelAgency.ViewModel
                 OnPropertyChanged();
             }
         }
-        private TourOccurrence displayTour;
         public TourOccurrence DisplayTour
         {
             get { return displayTour; }
@@ -59,8 +68,6 @@ namespace TravelAgency.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        private Photo currentPhoto;
         public Photo CurrentPhoto
         {
             get { return currentPhoto; }
@@ -70,9 +77,6 @@ namespace TravelAgency.ViewModel
                 OnPropertyChanged();
             }
         }
-        TourOccurrenceService TourOccurrenceService { get; set; }
-
-        private string keyPoints;
         public string KeyPoints
         {
             get { return keyPoints; }
@@ -81,8 +85,6 @@ namespace TravelAgency.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        private int guestsNumber;
         public int GuestsNumber
         {
             get { return guestsNumber; }
@@ -91,42 +93,27 @@ namespace TravelAgency.ViewModel
                 OnPropertyChanged();
                 }
         }
-        public TourOccurrenceAttendanceService AttendanceService { get; set; }
-        public StatisticsButtonCommand RightCommand { get; set; }
-        public StatisticsButtonCommand LeftCommand { get; set; }
-        public StatisticsButtonCommand ViewCommand { get; set; }
-        public TourOccurrence SelectedTourOccurrence { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public TourStatisticsViewModel(int id)
         {
-            UserRepository userRepository = new UserRepository();
-            ActiveGuide = userRepository.GetById(id);
             TourOccurrenceService = new TourOccurrenceService();
             AttendanceService = new TourOccurrenceAttendanceService();
+            UserService userService = new UserService();
+            ActiveGuide = userService.GetById(id);
             FillOptions();
             FinishedTours = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetFinishedOccurrencesForGuide(ActiveGuide.Id));
             RightCommand = new StatisticsButtonCommand(ShowNextPhoto);
             LeftCommand = new StatisticsButtonCommand(ShowPreviousPhoto);
             ViewCommand = new StatisticsButtonCommand(ViewDetails);
         }
-
         private void FillOptions()
         {
-            Years = new ObservableCollection<string>();
-            Years.Add("ALL TIME");
-            Years.Add("2023");
-            Years.Add("2022");
-            Years.Add("2021");
-            Years.Add("2020");
-            Years.Add("2019");
+            Years = new ObservableCollection<string>() { "ALL TIME", "2023", "2022", "2021", "2020", "2019" };
             SelectedYear = Years[0];
         }
-
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public void ViewDetails()
         {
             TourStatisticsDetailsViewModel viewModel = new TourStatisticsDetailsViewModel(SelectedTourOccurrence);

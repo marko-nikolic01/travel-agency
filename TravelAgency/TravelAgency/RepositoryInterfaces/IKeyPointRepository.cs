@@ -14,5 +14,6 @@ namespace TravelAgency.RepositoryInterfaces
         public KeyPoint Save(KeyPoint keyPoint);
         public void UpdateKeyPoint(KeyPoint keyPoint);
         public KeyPoint GetById(int id);
+        public List<KeyPoint> GetByTourOccurrence(int id);
     }
 }
