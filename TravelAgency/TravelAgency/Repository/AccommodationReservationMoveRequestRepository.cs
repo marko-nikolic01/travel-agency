@@ -19,19 +19,27 @@ namespace TravelAgency.Repository
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
             _moveRequests = _serializer.FromCSV(FilePath);
-            /*
+        }
+
+        public AccommodationReservationMoveRequestRepository(List<AccommodationReservation> reservations) : this()
+        {
+            LinkReservations(reservations);
+        }
+
+        public void LinkReservations(List<AccommodationReservation> reservations)
+        {
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
-                foreach (AccommodationReservation reservation in accommodationReservationRepository.GetAll())
+                foreach (AccommodationReservation reservation in reservations)
                 {
                     if (moveRequest.ReservationId == reservation.Id)
                     {
                         moveRequest.Reservation = reservation;
                     }
                 }
-            }*/
+            }
         }
-        
+
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             return _moveRequests;
@@ -64,7 +72,6 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            _moveRequests = _serializer.FromCSV(FilePath);
             if (_moveRequests.Count < 1)
             {
                 return 1;
@@ -75,7 +82,6 @@ namespace TravelAgency.Repository
         public AccommodationReservationMoveRequest Save(AccommodationReservationMoveRequest moveRequest)
         {
             moveRequest.Id = NextId();
-            _moveRequests = _serializer.FromCSV(FilePath);
             _moveRequests.Add(moveRequest);
             _serializer.ToCSV(FilePath, _moveRequests);
             return moveRequest;
