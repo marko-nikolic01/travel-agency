@@ -8,7 +8,7 @@ using TravelAgency.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
-    public class DateFinderService
+    public class ReservationDateFinderService
     {
         private int _reservationLength;
         private DateOnly _startDateIterator;
@@ -16,7 +16,7 @@ namespace TravelAgency.Services
         private DateOnly _iterationStopperDate;
         public IAccommodationReservationRepository ReservationRepository { get; set; }
 
-        public DateFinderService()
+        public ReservationDateFinderService()
         {
             _reservationLength = 1;
             _startDateIterator = DateOnly.FromDateTime(DateTime.Now);
