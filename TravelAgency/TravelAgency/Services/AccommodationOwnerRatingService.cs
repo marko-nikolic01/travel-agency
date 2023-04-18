@@ -29,6 +29,7 @@ namespace TravelAgency.Services
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            RatingPhotoRepository = Injector.Injector.CreateInstance<IAccommodationRatingPhotoRepository>();
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());

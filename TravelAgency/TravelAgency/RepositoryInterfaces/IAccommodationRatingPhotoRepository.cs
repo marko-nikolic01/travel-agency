@@ -15,6 +15,6 @@ namespace TravelAgency.RepositoryInterfaces
 
         public AccommodationRatingPhoto Save(AccommodationRatingPhoto photo);
 
-        public void SaveAll(IEnumerable<AccommodationRatingPhoto> photos);
+        public void SaveAll(List<AccommodationRatingPhoto> photos);
     }
 }

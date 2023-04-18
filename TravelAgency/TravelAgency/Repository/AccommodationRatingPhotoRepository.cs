@@ -37,19 +37,19 @@ namespace TravelAgency.Repository
             return accommodationPhotos.Max(c => c.Id) + 1;
         }
 
-        public AccommodationRatingPhoto Save(AccommodationRatingPhoto image)
+        public AccommodationRatingPhoto Save(AccommodationRatingPhoto photo)
         {
-            image.Id = NextId();
-            accommodationPhotos.Add(image);
+            photo.Id = NextId();
+            accommodationPhotos.Add(photo);
             serializer.ToCSV(FilePath, accommodationPhotos);
-            return image;
+            return photo;
         }
 
-        public void SaveAll(IEnumerable<AccommodationRatingPhoto> entities)
+        public void SaveAll(List<AccommodationRatingPhoto> photos)
         {
-            foreach (var entity in entities)
+            foreach (AccommodationRatingPhoto photo in photos)
             {
-                Save(entity);
+                Save(photo);
             }
         }
     }

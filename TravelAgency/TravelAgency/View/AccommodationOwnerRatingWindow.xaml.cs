@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
 using TravelAgency.Services;
+using TravelAgency.ViewModel;
 
 namespace TravelAgency.View
 {
@@ -22,31 +23,26 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationOwnerRatingWindow : Window
     {
-        public AccommodationOwnerRatingService RatingService { get; set; }
-        public AccommodationReservation Stay { get; set; }
-        public AccommodationOwnerRating Rating { get; set; }
+        public AccommodationOwnerRatingViewModel ViewModel { get; set; }
         public AccommodationOwnerRatingWindow(AccommodationReservation stay)
         {
             InitializeComponent();
-            RatingService = new AccommodationOwnerRatingService();
+            ViewModel = new AccommodationOwnerRatingViewModel(stay);
+            this.DataContext = ViewModel;
 
-            Stay = stay;
-            Rating = new AccommodationOwnerRating(Stay);
-
+            cleanlinessNumberUpDown.Value = 1;
+            comfortNumberUpDown.Value = 1;
+            locationNumberUpDown.Value = 1;
+            corectnessNumberUpDown.Value = 1;
+            responsivenessNumberUpDown.Value = 1;
+            commentTextBox.Text = "";
+            photoTextBox.Text = "";
         }
 
         private void RateAccommodationOwner(object sender, RoutedEventArgs e)
         {
-            Rating.AccommodationCleanliness = Convert.ToInt32(cleanlinessNumberUpDown.Value);
-            Rating.AccommodationComfort = Convert.ToInt32(comfortNumberUpDown.Value);
-            Rating.AccommodationLocation = Convert.ToInt32(locationNumberUpDown.Value);
-            Rating.OwnerCorrectness = Convert.ToInt32(corectnessNumberUpDown.Value);
-            Rating.OwnerResponsiveness = Convert.ToInt32(responsivenessNumberUpDown.Value);
-            Rating.Comment = commentTextBox.Text;
-            if (Rating.IsValid)
+            if (ViewModel.RateAccommodationOwner())
             {
-                RatingService.CreateRating(Rating);
-                Guest1Main.Stays.Remove(Stay);
                 Close();
             }
             else
@@ -63,8 +59,7 @@ namespace TravelAgency.View
 
         private void AddPhoto(object sender, RoutedEventArgs e)
         {
-            AccommodationRatingPhoto photo = new AccommodationRatingPhoto(photoTextBox.Text);
-            Rating.Photos.Add(photo);
+            ViewModel.AddPhoto();
             photoTextBox.Clear();
         }
     }
