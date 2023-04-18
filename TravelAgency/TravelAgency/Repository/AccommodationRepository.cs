@@ -25,18 +25,18 @@ namespace TravelAgency.Repository
             accommodations = serializer.FromCSV(FilePath);
         }
 
-        public AccommodationRepository(UserRepository userRepository, LocationRepository locationRepository, AccommodationPhotoRepository imageRepository) : this()
+        public AccommodationRepository(List<User> users, List<Location> locations, List<AccommodationPhoto> photos) : this()
         {
-            LinkOwners(userRepository);
-            LinkLocations(locationRepository);
-            LinkImages(imageRepository);
+            LinkOwners(users);
+            LinkLocations(locations);
+            LinkImages(photos);
         }
 
-        public void LinkOwners(UserRepository userRepository)
+        public void LinkOwners(List<User> owners)
         {
             foreach (Accommodation accommodation in accommodations)
             {
-                foreach (User user in userRepository.GetUsers())
+                foreach (User user in owners)
                 {
                     if (accommodation.OwnerId == user.Id)
                     {
@@ -47,11 +47,11 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void LinkLocations(ILocationRepository locationRepository)
+        public void LinkLocations(List<Location> locations)
         {
             foreach (Accommodation accommodation in accommodations)
             {
-                foreach (Location location in locationRepository.GetAll())
+                foreach (Location location in locations)
                 {
                     if (accommodation.LocationId == location.Id)
                     {
@@ -62,11 +62,11 @@ namespace TravelAgency.Repository
             }
         }
 
-        public void LinkImages(IAccommodationPhotoRepository photoRepository)
+        public void LinkImages(List<AccommodationPhoto> photos)
         {
             foreach (Accommodation accommodation in accommodations)
             {
-                foreach (AccommodationPhoto image in photoRepository.GetAll())
+                foreach (AccommodationPhoto image in photos)
                 {
                     if (accommodation.Id == image.ObjectId)
                     {

@@ -20,17 +20,25 @@ namespace TravelAgency.Repository
         {
             serializer = new Serializer<AccommodationOwnerRating>();
             accommodationOwnerRatings = serializer.FromCSV(FilePath);
-            /*
+        }
+
+        public AccommodationOwnerRatingRepository(List<AccommodationReservation> reservations) : this()
+        {
+            LinkReservations(reservations);
+        }
+
+        public void LinkReservations(List<AccommodationReservation> reservations)
+        {
             foreach (var accommodationOwnerRating in accommodationOwnerRatings)
             {
-                foreach (var accommodationReservation in accommodationReservations)
+                foreach (var accommodationReservation in reservations)
                 {
                     if (accommodationOwnerRating.AccommodationReservationId == accommodationReservation.Id)
                     {
                         accommodationOwnerRating.AccommodationReservation = accommodationReservation;
                     }
                 }
-            }*/
+            }
         }
 
         public List<AccommodationOwnerRating> GetAll()

@@ -13,5 +13,6 @@ namespace TravelAgency.RepositoryInterfaces
         public AccommodationGuestRating Save(AccommodationGuestRating rating);
         public int NextId();
         public List<AccommodationGuestRating> GetByOwner(User owner);
+        public void LinkReservations(List<AccommodationReservation> reservations);
     }
 }

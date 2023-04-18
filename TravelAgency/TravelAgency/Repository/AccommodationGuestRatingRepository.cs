@@ -21,16 +21,16 @@ namespace TravelAgency.Repository
             accommodationGuestRatings = serializer.FromCSV(FilePath);
         }
 
-        public AccommodationGuestRatingRepository(IAccommodationReservationRepository reservationRepository) : this()
+        public AccommodationGuestRatingRepository(List<AccommodationReservation> reservations) : this()
         {
-            LinkReservations(reservationRepository);
+            LinkReservations(reservations);
         }
 
-        public void LinkReservations(IAccommodationReservationRepository reservationRepository)
+        public void LinkReservations(List<AccommodationReservation> reservations)
         {
             foreach (var accommodationGuestRating in accommodationGuestRatings)
             {
-                foreach (var accommodationReservation in reservationRepository.GetAll())
+                foreach (var accommodationReservation in reservations)
                 {
                     if (accommodationGuestRating.AccommodationReservationId == accommodationReservation.Id)
                     {
