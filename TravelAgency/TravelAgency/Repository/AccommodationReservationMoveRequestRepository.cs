@@ -15,12 +15,11 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationReservationMoveRequest> _serializer;
         private List<AccommodationReservationMoveRequest> _moveRequests;
 
-        public AccommodationReservationMoveRequestRepository(AccommodationReservationRepository accommodationReservationRepository)
+        public AccommodationReservationMoveRequestRepository()
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
-
             _moveRequests = _serializer.FromCSV(FilePath);
-
+            /*
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
                 foreach (AccommodationReservation reservation in accommodationReservationRepository.GetAll())
@@ -30,7 +29,7 @@ namespace TravelAgency.Repository
                         moveRequest.Reservation = reservation;
                     }
                 }
-            }
+            }*/
         }
         
         public List<AccommodationReservationMoveRequest> GetAll()

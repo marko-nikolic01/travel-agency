@@ -7,7 +7,7 @@ using TravelAgency.Model;
 
 namespace TravelAgency.RepositoryInterfaces
 {
-    internal interface IAccommodationRatingPhotoRepository
+    public interface IAccommodationRatingPhotoRepository
     {
         public List<AccommodationRatingPhoto> GetAll();
 

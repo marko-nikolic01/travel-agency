@@ -16,11 +16,11 @@ namespace TravelAgency.Repository
         private readonly Serializer<AccommodationOwnerRating> serializer;
         private List<AccommodationOwnerRating> accommodationOwnerRatings;
 
-        public AccommodationOwnerRatingRepository(IEnumerable<AccommodationReservation> accommodationReservations)
+        public AccommodationOwnerRatingRepository()
         {
             serializer = new Serializer<AccommodationOwnerRating>();
             accommodationOwnerRatings = serializer.FromCSV(FilePath);
-
+            /*
             foreach (var accommodationOwnerRating in accommodationOwnerRatings)
             {
                 foreach (var accommodationReservation in accommodationReservations)
@@ -30,7 +30,7 @@ namespace TravelAgency.Repository
                         accommodationOwnerRating.AccommodationReservation = accommodationReservation;
                     }
                 }
-            }
+            }*/
         }
 
         public List<AccommodationOwnerRating> GetAll()

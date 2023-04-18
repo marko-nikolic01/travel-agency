@@ -7,7 +7,7 @@ using TravelAgency.Model;
 
 namespace TravelAgency.RepositoryInterfaces
 {
-    internal interface IAccommodationReservationMoveRequestRepository
+    public interface IAccommodationReservationMoveRequestRepository
     {
         public List<AccommodationReservationMoveRequest> GetAll();
 
