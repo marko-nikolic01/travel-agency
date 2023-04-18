@@ -12,18 +12,24 @@ namespace TravelAgency.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
-        { typeof(IVoucherRepository), new VoucherRepository() },
-        { typeof(ITourOccurrenceRepository), new TourOccurrenceRepository() },
-        { typeof(IUserRepository), new UserRepository() },
-        { typeof(IPhotoRepository), new PhotoRepository() },
-        { typeof(IKeyPointRepository), new KeyPointRepository() },
-        { typeof(ITourRepository), new TourRepository() },
-        { typeof(ITourReservationRepository), new TourReservationRepository() },
-        { typeof(ILocationRepository), new LocationRepository() },
-        { typeof(ITourOccurrenceAttendanceRepository), new TourOccurrenceAttendanceRepository() },
-            {typeof(IAccommodationRepository), new AccommodationRepository() }
+            { typeof(IVoucherRepository), new VoucherRepository() },
+            { typeof(ITourOccurrenceRepository), new TourOccurrenceRepository() },
+            { typeof(IUserRepository), new UserRepository() },
+            { typeof(IPhotoRepository), new PhotoRepository() },
+            { typeof(IKeyPointRepository), new KeyPointRepository() },
+            { typeof(ITourRepository), new TourRepository() },
+            { typeof(ITourReservationRepository), new TourReservationRepository() },
+            { typeof(ILocationRepository), new LocationRepository() },
+            { typeof(ITourOccurrenceAttendanceRepository), new TourOccurrenceAttendanceRepository() },
+            { typeof(IAccommodationRepository), new AccommodationRepository() },
+            { typeof(IAccommodationGuestRatingRepository), new AccommodationGuestRatingRepository() },
+            { typeof(IAccommodationOwnerRatingRepository), new AccommodationOwnerRatingRepository() },
+            { typeof(IAccommodationPhotoRepository), new AccommodationPhotoRepository() },
+            { typeof(IAccommodationRatingPhotoRepository), new AccommodationRatingPhotoRepository() },
+            { typeof(IAccommodationReservationMoveRequestRepository), new AccommodationReservationMoveRequestRepository() },
+            { typeof(IAccommodationReservationRepository), new AccommodationReservationMoveRequestRepository() },
         // Add more implementations here
-    };
+        };
 
         public static T CreateInstance<T>()
         {
