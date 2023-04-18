@@ -31,6 +31,13 @@ namespace TravelAgency.Services
         }
         private void LinkRatingPhoto()
         {
+            foreach (TourRating tourRating in ITourRatingRepository.GetAll())
+            {
+                if (tourRating.PhotoUrls != null)
+                {
+                    tourRating.PhotoUrls.Clear();
+                }
+            }
             foreach (TourRatingPhoto tourRatingPhoto in ITourRatingPhotoRepository.GetAll())
             {
                 TourRating tourRating = ITourRatingRepository.GetAll().Find(t => t.Id == tourRatingPhoto.TourRatingId);
@@ -54,7 +61,14 @@ namespace TravelAgency.Services
             }
             return tourReviews;
         }
-
+        public TourRating SaveTourRating(TourRating tourRating)
+        {
+            return ITourRatingRepository.Save(tourRating);
+        }
+        public void SaveTourRatingPhoto(TourRatingPhoto tourRatingPhoto)
+        {
+            ITourRatingPhotoRepository.Save(tourRatingPhoto);
+        }
         public void UpdateTourRatingIsValid(TourRating tourRating)
         {
             ITourRatingRepository.UpdateIsValid(tourRating);

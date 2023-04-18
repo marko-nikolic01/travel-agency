@@ -46,13 +46,13 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Width="170">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Resources/Images/IconBell.png" Height="25" Width="25"/>
+                        <Image Source="../../Resources/Images/IconBell.png" Height="25" Width="25"/>
                         <TextBlock Margin="10 0">Notifications</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Width="140" ToolTip="asfadg" Name="HelpButton" Click="HelpButton_Click">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Resources/Images/HelpImage.png" Height="25" Width="25"/>
+                        <Image Source="../../Resources/Images/HelpImage.png" Height="25" Width="25"/>
                         <TextBlock Margin="10 0">Help</TextBlock>
                     </StackPanel>
                 </Button>

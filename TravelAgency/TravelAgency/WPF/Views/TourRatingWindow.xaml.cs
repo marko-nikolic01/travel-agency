@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
+using TravelAgency.Services;
 
 namespace TravelAgency.WPF.Views
 {
@@ -23,11 +24,12 @@ namespace TravelAgency.WPF.Views
     {
         private int currentGuestId;
         private TourOccurrence tourOccurrence;
-        private TourRatingRepository tourRatingRepository;
+        //private TourRatingRepository tourRatingRepository;
+        private TourRatingService tourRatingService;
         public TourRatingWindow(TourOccurrence selectedTourOccurrence, int currentGuestId)
         {
             InitializeComponent();
-            tourRatingRepository = new TourRatingRepository();
+            tourRatingService = new TourRatingService();
             this.currentGuestId = currentGuestId;
             descriptionLabel.Content = selectedTourOccurrence.Tour.Name+ " in " +selectedTourOccurrence.Tour.Location.Country+
                 ", "+selectedTourOccurrence.Tour.Location.City+ ". "+ selectedTourOccurrence.Tour.Description;
@@ -54,7 +56,7 @@ namespace TravelAgency.WPF.Views
             interesting = int.Parse(interestingCb.Text);
             additionalComment = commentTb.Text;
             TourRating tourRating = new TourRating(currentGuestId, tourOccurrence.Id, guideKnowledge, guideLanguage, interesting, additionalComment, null);
-            TourRating savedTourRating = tourRatingRepository.Save(tourRating);
+            TourRating savedTourRating = tourRatingService.SaveTourRating(tourRating);
             savePhotos(savedTourRating.Id);
             Close();
         }
@@ -73,13 +75,12 @@ namespace TravelAgency.WPF.Views
         }
         private void savePhotos(int id)
         {
-            TourRatingPhotoRepository tourRatingPhotoRepository = new TourRatingPhotoRepository();
             for (int i = 0; i < urlsList.Items.Count; i++)
             {
                 TourRatingPhoto photo = new TourRatingPhoto();
                 photo.Link = urlsList.Items.GetItemAt(i).ToString();
                 photo.TourRatingId = id;
-                tourRatingPhotoRepository.Save(photo);
+                tourRatingService.SaveTourRatingPhoto(photo);
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)

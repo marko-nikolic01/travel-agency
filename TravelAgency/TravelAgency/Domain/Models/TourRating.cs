@@ -17,7 +17,7 @@ namespace TravelAgency.Domain.Models
         public int GuideLanguage { get; set; }
         public int Interesting { get; set; }
         public string? AdditionalComment { get; set; }
-        public List<TourRatingPhoto> PhotoUrls { get; set; }
+        public List<TourRatingPhoto>? PhotoUrls { get; set; }
 
         private bool isValid;
 
@@ -50,6 +50,7 @@ namespace TravelAgency.Domain.Models
             AdditionalComment = additionalComment;
             PhotoUrls = photoUrls;
             IsValid = true;
+            PhotoUrls = new List<TourRatingPhoto>();
         }
 
         public TourRating()
