@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationPhotoRepository : IRepository<AccommodationPhoto>
+    public class AccommodationPhotoRepository : IAccommodationPhotoRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodationPhotos.csv";
 
@@ -36,16 +37,6 @@ namespace TravelAgency.Repository
             return accommodationPhotos;
         }
 
-        List<AccommodationPhoto> IRepository<AccommodationPhoto>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public AccommodationPhoto GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public AccommodationPhoto Save(AccommodationPhoto image)
         {
             image.Id = NextId();
@@ -54,27 +45,12 @@ namespace TravelAgency.Repository
             return image;
         }
 
-        public void SaveAll(IEnumerable<AccommodationPhoto> entities)
+        public void SaveAll(List<AccommodationPhoto> entities)
         {
             foreach (var entity in entities)
             {
                 Save(entity);
             }
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(AccommodationPhoto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }

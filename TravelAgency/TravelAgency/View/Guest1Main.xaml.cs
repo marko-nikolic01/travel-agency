@@ -68,7 +68,7 @@ namespace TravelAgency.View
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAllSortedBySuperOwnersFirst());
-            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetAllNotCanceledByGuest(Guest));
+            Reservations = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetNotCanceledByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(accommodationReservationMoveRequestRepository.GetAllByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(accommodationReservationRepository.GetUnrated2(accommodationOwnerRatingRepository.GetByUser(Guest)));
 

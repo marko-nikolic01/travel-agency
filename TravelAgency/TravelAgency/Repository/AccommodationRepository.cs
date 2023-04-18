@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using TravelAgency.Model;
+using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repository
 {
-    public class AccommodationRepository : IRepository<Accommodation>
+    public class AccommodationRepository : IAccommodationRepository
     {
         private const string FilePath = "../../../Resources/Data/accommodations.csv";
 
@@ -61,19 +62,14 @@ namespace TravelAgency.Repository
             return accommodations.Max(c => c.Id) + 1;
         }
 
-        public List<Accommodation> GetByUser(User user)
+        public List<Accommodation> GetByOwner(User owner)
         {
-            return accommodations.FindAll(c => c.OwnerId == user.Id);
+            return accommodations.FindAll(c => c.OwnerId == owner.Id);
         }
 
         public List<Accommodation> GetAll()
         {
             return accommodations;
-        }
-
-        List<Accommodation> IRepository<Accommodation>.GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public Accommodation GetById(int id)
@@ -87,26 +83,6 @@ namespace TravelAgency.Repository
             accommodations.Add(accommodation);
             serializer.ToCSV(FilePath, accommodations);
             return accommodation;
-        }
-
-        public void SaveAll(IEnumerable<Accommodation> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Accommodation entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
         }
 
         public List<Accommodation> Search(AccommodationSearchFilter filter)
