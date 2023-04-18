@@ -28,11 +28,6 @@ namespace TravelAgency.Repository
             return accommodationPhotos;
         }
 
-        public AccommodationRatingPhoto GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public int NextId()
         {
             if (accommodationPhotos.Count < 1)

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -21,13 +22,13 @@ namespace TravelAgency.View
     /// </summary>
     public partial class AccommodationOwnerRatingWindow : Window
     {
+        public AccommodationOwnerRatingService RatingService { get; set; }
         public AccommodationReservation Stay { get; set; }
         public AccommodationOwnerRating Rating { get; set; }
-        public AccommodationOwnerRatingRepository ratingRepository;
-        public AccommodationOwnerRatingWindow(AccommodationOwnerRatingRepository ratingRepository, AccommodationReservation stay)
+        public AccommodationOwnerRatingWindow(AccommodationReservation stay)
         {
             InitializeComponent();
-            this.ratingRepository = ratingRepository;
+            RatingService = new AccommodationOwnerRatingService();
 
             Stay = stay;
             Rating = new AccommodationOwnerRating(Stay);
@@ -44,7 +45,7 @@ namespace TravelAgency.View
             Rating.Comment = commentTextBox.Text;
             if (Rating.IsValid)
             {
-                ratingRepository.Save(Rating);
+                RatingService.CreateRating(Rating);
                 Guest1Main.Stays.Remove(Stay);
                 Close();
             }

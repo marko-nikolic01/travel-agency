@@ -33,7 +33,7 @@ namespace TravelAgency.Services
 
         public List<AccommodationReservation> GetByGuest(User guest)
         {
-            return ReservationRepository.GetNotCanceledByGuest(guest);
+            return ReservationRepository.GetFutureNotCanceledByGuest(guest);
         }
 
         public bool CreateReservation(AccommodationReservation reservation)
