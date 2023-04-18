@@ -50,7 +50,7 @@ namespace TravelAgency.Model
             DateSpan = new DateSpan();
         }
 
-        public AccommodationReservationMoveRequest(AccommodationReservation reservation, DateSpan dateSpan)
+        public AccommodationReservationMoveRequest(AccommodationReservation reservation)
         {
             Id = -1;
             ReservationId = reservation.Id;
@@ -58,7 +58,6 @@ namespace TravelAgency.Model
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
-            DateSpan = dateSpan;
         }
 
         public string[] ToCSV()

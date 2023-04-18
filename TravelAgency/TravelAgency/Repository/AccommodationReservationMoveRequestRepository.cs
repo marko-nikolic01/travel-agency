@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TravelAgency.Model;
 using TravelAgency.RepositoryInterfaces;
 using TravelAgency.Serializer;
+using TravelAgency.View;
 
 namespace TravelAgency.Repository
 {
@@ -19,6 +20,11 @@ namespace TravelAgency.Repository
         {
             _serializer = new Serializer<AccommodationReservationMoveRequest>();
             _moveRequests = _serializer.FromCSV(FilePath);
+        }
+
+        public AccommodationReservationMoveRequestRepository(List<AccommodationReservation> reservations) : this()
+        {
+            LinkReservations(reservations);
         }
 
         public void LinkReservations(List<AccommodationReservation> reservations)
@@ -35,7 +41,7 @@ namespace TravelAgency.Repository
                 }
             }
         }
-        
+
         public List<AccommodationReservationMoveRequest> GetAll()
         {
             return _moveRequests;
@@ -68,7 +74,6 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            _moveRequests = _serializer.FromCSV(FilePath);
             if (_moveRequests.Count < 1)
             {
                 return 1;
@@ -79,7 +84,6 @@ namespace TravelAgency.Repository
         public AccommodationReservationMoveRequest Save(AccommodationReservationMoveRequest moveRequest)
         {
             moveRequest.Id = NextId();
-            _moveRequests = _serializer.FromCSV(FilePath);
             _moveRequests.Add(moveRequest);
             _serializer.ToCSV(FilePath, _moveRequests);
             return moveRequest;
@@ -131,6 +135,24 @@ namespace TravelAgency.Repository
         public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
         {
             return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
+        }
+
+        public void AcceptMoveRequest(AccommodationReservationMoveRequest moveRequest)
+        {
+            moveRequest.Status = AccommodationReservationMoveRequestStatus.ACCEPTED;
+            _serializer.ToCSV(FilePath, _moveRequests);
+        }
+
+        public void RejectMoveRequest(AccommodationReservationMoveRequest moveRequest)
+        {
+            moveRequest.Status = AccommodationReservationMoveRequestStatus.REJECTED;
+            _serializer.ToCSV(FilePath, _moveRequests);
+        }
+
+        public void UpdateStatus(AccommodationReservationMoveRequest moveRequest, AccommodationReservationMoveRequestStatus status)
+        {
+            moveRequest.Status = status;
+            _serializer.ToCSV(FilePath, _moveRequests);
         }
     }
 }

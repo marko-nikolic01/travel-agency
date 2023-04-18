@@ -21,5 +21,7 @@ namespace TravelAgency.RepositoryInterfaces
         public int NextId();
 
         public AccommodationReservationMoveRequest Save(AccommodationReservationMoveRequest moveRequest);
+
+        public void UpdateStatus(AccommodationReservationMoveRequest moveRequest, AccommodationReservationMoveRequestStatus status);
     }
 }

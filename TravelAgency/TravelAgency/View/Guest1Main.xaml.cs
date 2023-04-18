@@ -59,10 +59,10 @@ namespace TravelAgency.View
             userRepository = new UserRepository();
             locationRepository = new LocationRepository();
             imageRepository = new AccommodationPhotoRepository();
-            accommodationRepository = new AccommodationRepository(userRepository, locationRepository, imageRepository);
-            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository, userRepository);
+            accommodationRepository = new AccommodationRepository(userRepository.GetUsers(), locationRepository.GetAll(), imageRepository.GetAll());
+            accommodationReservationRepository = new AccommodationReservationRepository(accommodationRepository.GetAll(), userRepository.GetUsers());
             accommodationOwnerRatingRepository = new AccommodationOwnerRatingRepository(accommodationReservationRepository.GetAll());
-            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository);
+            accommodationReservationMoveRequestRepository = new AccommodationReservationMoveRequestRepository(accommodationReservationRepository.GetAll());
 
             accommodationOwnerRatingRepository.SetSuperOwners(userRepository);
 

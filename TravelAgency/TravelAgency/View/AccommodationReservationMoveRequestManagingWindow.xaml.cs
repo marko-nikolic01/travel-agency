@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Model;
 using TravelAgency.Repository;
+using TravelAgency.Services;
 
 namespace TravelAgency.View
 {
@@ -27,6 +28,8 @@ namespace TravelAgency.View
         public User LoggedInUser { get; set; }
         public AccommodationReservationMoveRequest SelectedMoveRequest { get; set; }
 
+        public AccommodationReservationMoveService moveReqestService { get; set; }
+
         public AccommodationReservationMoveRequestManagingWindow(User loggedInUser, AccommodationReservationRepository accommodationReservationRepository, AccommodationReservationMoveRequestRepository accommodationReservationMoveRequestRepository, AccommodationReservationMoveRequest selectedMoveRequest)
         {
             InitializeComponent();
@@ -36,6 +39,8 @@ namespace TravelAgency.View
             this.accommodationReservationMoveRequestRepository = accommodationReservationMoveRequestRepository;
             this.accommodationReservationRepository = accommodationReservationRepository;
             SelectedMoveRequest = selectedMoveRequest;
+
+            moveReqestService = new AccommodationReservationMoveService();
 
             SetAvailability();
         }
@@ -56,14 +61,9 @@ namespace TravelAgency.View
 
         private void AcceptMoveRequest_Click(object sender, RoutedEventArgs e)
         {
-            accommodationReservationMoveRequestRepository.Delete(SelectedMoveRequest);
-            SelectedMoveRequest.Status = AccommodationReservationMoveRequestStatus.ACCEPTED;
-            accommodationReservationMoveRequestRepository.Save(SelectedMoveRequest);
+            moveReqestService.AcceptMoveRequest(SelectedMoveRequest);
+
             OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
-
-            accommodationReservationRepository.UpdateDateSpan(SelectedMoveRequest.Reservation, SelectedMoveRequest.DateSpan);
-
-            accommodationReservationRepository.DeleteOverlappingReservations(SelectedMoveRequest.Reservation);
 
             Close();
         }
@@ -77,11 +77,10 @@ namespace TravelAgency.View
             }
             else
             {
-                accommodationReservationMoveRequestRepository.Delete(SelectedMoveRequest);
-                SelectedMoveRequest.Status = AccommodationReservationMoveRequestStatus.REJECTED;
-                SelectedMoveRequest.RejectionExplanation = ExplanationTextBox.Text;
-                accommodationReservationMoveRequestRepository.Save(SelectedMoveRequest);
+                moveReqestService.RejectMoveRequest(SelectedMoveRequest);
+
                 OwnerMain.AccommodationReservationMoveRequests.Remove(SelectedMoveRequest);
+
                 Close();
             }
         }

@@ -18,5 +18,7 @@ namespace TravelAgency.RepositoryInterfaces
         public AccommodationReservation Save(AccommodationReservation reservation);
         public bool IsActive(AccommodationReservation reservation);
         public List<AccommodationReservation> GetByAccommodation(Accommodation accommodation);
+        public void UpdateDateSpan(AccommodationReservation reservation, DateSpan dateSpan);
+        public bool CancelReservation(AccommodationReservation reservation);
     }
 }

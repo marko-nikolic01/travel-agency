@@ -24,11 +24,17 @@ namespace TravelAgency.Repository
         private DateOnly _endDateIterator;
         private DateOnly _iterationStopperDate;
 
-        public AccommodationReservationRepository(AccommodationRepository accommodationRepository, UserRepository userRepository)
+        public AccommodationReservationRepository()
         {
             _serializer = new Serializer<AccommodationReservation>();
             _accommodationReservations = _serializer.FromCSV(FilePath);
             _reservationLength = 1;
+        }
+        
+        public AccommodationReservationRepository(List<Accommodation> accommodations, List<User> guests) : this()
+        {
+            LinkAccommodations(accommodations);
+            LinkGuests(guests);
         }
 
         public void LinkAccommodations(List<Accommodation> accommodations)
@@ -66,21 +72,16 @@ namespace TravelAgency.Repository
             _reservationLength = length;
         }
 
-        public void Delete(AccommodationReservation accommodationReservation)
+        public void Delete(AccommodationReservation reservation)
         {
-            DeleteById(accommodationReservation.Id);
+            AccommodationReservation r = _accommodationReservations.Find(ar => ar.Id == reservation.Id);
+            _accommodationReservations.Remove(r);
+            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
 
         public void DeleteAll()
         {
             throw new NotImplementedException();            
-        }
-
-        public void DeleteById(int id)
-        {
-            AccommodationReservation reservation = _accommodationReservations.Find(ar => ar.Id == id);
-            _accommodationReservations.Remove(reservation);
-            _serializer.ToCSV(FilePath, _accommodationReservations);
         }
 
         public List<AccommodationReservation> GetAll()
@@ -115,7 +116,6 @@ namespace TravelAgency.Repository
 
         public int NextId()
         {
-            _accommodationReservations = _serializer.FromCSV(FilePath);
             if (_accommodationReservations.Count < 1)
             {
                 return 1;
@@ -126,7 +126,6 @@ namespace TravelAgency.Repository
         public AccommodationReservation Save(AccommodationReservation accommodationReservation)
         {
             accommodationReservation.Id = NextId();
-            _accommodationReservations = _serializer.FromCSV(FilePath);
             _accommodationReservations.Add(accommodationReservation);
             _serializer.ToCSV(FilePath, _accommodationReservations);
             return accommodationReservation;
@@ -134,7 +133,7 @@ namespace TravelAgency.Repository
 
         public void SaveAll(IEnumerable<AccommodationReservation> entities)
         {
-            _serializer.ToCSV(FilePath, _accommodationReservations);
+            foreach (AccommodationReservation entity in entities) { Save(entity); }
         }
 
         public int CalculateDaysLeftForRating(AccommodationReservation accommodationReservation)
@@ -402,11 +401,11 @@ namespace TravelAgency.Repository
         }
 
 
-        public bool CancelReservation(AccommodationReservation accommodationReservation)
+        public bool CancelReservation(AccommodationReservation reservation)
         {
-            if (!IsDeadlineOverdue(accommodationReservation))
+            if (!IsDeadlineOverdue(reservation))
             {
-                accommodationReservation.Canceled = true;
+                reservation.Canceled = true;
                 SaveAll(_accommodationReservations);
                 return true;
             }
