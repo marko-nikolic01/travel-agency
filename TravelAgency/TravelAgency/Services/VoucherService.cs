@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Model;
-using TravelAgency.Repository;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
@@ -14,7 +14,7 @@ namespace TravelAgency.Services
         private IVoucherRepository IVoucherRepository;
         private ITourOccurrenceAttendanceRepository IAttendanceRepository { get; set; }
 
-        public VoucherService() 
+        public VoucherService()
         {
             IVoucherRepository = Injector.Injector.CreateInstance<IVoucherRepository>();
             IAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
@@ -55,11 +55,11 @@ namespace TravelAgency.Services
             foreach (var voucher in vouchers)
             {
                 var attendance = IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(tourOccurrenceId, voucher.GuestId);
-                if(attendance == null)
+                if (attendance == null)
                 {
                     result--;
                 }
-                else if(attendance.ResponseStatus != ResponseStatus.Accepted)
+                else if (attendance.ResponseStatus != ResponseStatus.Accepted)
                 {
                     result--;
                 }

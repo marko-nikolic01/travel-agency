@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TravelAgency.Model;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {

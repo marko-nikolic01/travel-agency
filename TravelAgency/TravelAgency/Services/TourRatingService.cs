@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Model;
-using TravelAgency.Repository;
-using TravelAgency.RepositoryInterfaces;
-using TravelAgency.View;
-using TravelAgency.ViewModel;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Repositories;
+using TravelAgency.WPF.Views;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.Services
 {
@@ -42,7 +42,7 @@ namespace TravelAgency.Services
         }
         public List<TourDetailsViewModel> getTourReviews(int id)
         {
-            List <TourDetailsViewModel> tourReviews = new List <TourDetailsViewModel> ();
+            List<TourDetailsViewModel> tourReviews = new List<TourDetailsViewModel>();
             foreach (TourRating rating in ITourRatingRepository.GetRatingsByTourOccurrenceId(id))
             {
                 TourDetailsViewModel tourReviewViewModel = new TourDetailsViewModel(rating);

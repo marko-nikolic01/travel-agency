@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
-using TravelAgency.Model;
-using TravelAgency.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
@@ -134,7 +134,7 @@ namespace TravelAgency.Services
             {
                 foreach (AccommodationReservation reservation in ReservationRepository.GetByAccommodation(accommodation))
                 {
-                    bool isDateAvailable = (dateIterator.CompareTo(reservation.DateSpan.StartDate) < 0) || (dateIterator.CompareTo(reservation.DateSpan.EndDate) > 0);
+                    bool isDateAvailable = dateIterator.CompareTo(reservation.DateSpan.StartDate) < 0 || dateIterator.CompareTo(reservation.DateSpan.EndDate) > 0;
                     if (!isDateAvailable) return false;
                 }
                 dateIterator = dateIterator.AddDays(1);
@@ -143,6 +143,6 @@ namespace TravelAgency.Services
             return true;
         }
 
-        
+
     }
 }

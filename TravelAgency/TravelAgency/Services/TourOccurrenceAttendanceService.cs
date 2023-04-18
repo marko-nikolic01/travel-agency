@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TravelAgency.Model;
-using TravelAgency.Repository;
-using TravelAgency.RepositoryInterfaces;
+using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
@@ -102,7 +102,7 @@ namespace TravelAgency.Services
                 attendance.ResponseStatus = ResponseStatus.Declined;
             }
             IAttendanceRepository.UpdateTourOccurrenceAttendaces(attendance);
-   
+
         }
         public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id)
         {

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TravelAgency.Services;
-using TravelAgency.View;
-using TravelAgency.ViewModel;
+using TravelAgency.WPF.Views;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.Commands
 {
