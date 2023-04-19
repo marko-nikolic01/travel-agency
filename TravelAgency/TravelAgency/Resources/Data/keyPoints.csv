@@ -1,29 +1,32 @@
-1|1|fedc|True
-2|1|ssfed|True
-3|2|fedc|True
-4|2|ssfed|True
-5|1|cs|True
-6|1|www|True
-7|1|w|True
-8|2|cs|True
-9|2|www|True
-10|2|w|True
-11|3|cdas|True
-12|3|aasx|False
-13|4|mars|True
-14|4|saturn|True
-15|4|jupiter|True
-16|5|centar|False
-17|5|jezero|False
-18|5|dvorac skenderbega|False
-19|6|centar|False
-20|6|jezero|False
-21|6|dvorac skenderbega|False
-22|7|kp|False
-23|7|xw|False
-24|8|prvaTacka|False
-25|8|drugaTacka|False
-26|8|treca|False
-27|9|prvaTacka|False
-28|9|drugaTacka|False
-29|9|treca|False
+1|1|berliner mauer|False
+2|1|brandenburger tor|False
+3|1|kudamm strasse|False
+4|2|berliner mauer|True
+5|2|brandenburger tor|True
+6|2|kudamm strasse|True
+7|3|berliner mauer|False
+8|3|brandenburger tor|False
+9|3|kudamm strasse|False
+10|4|berliner mauer|False
+11|4|brandenburger tor|False
+12|4|kudamm strasse|False
+13|5|centar|True
+14|5|luvr|True
+15|5|trijumfalna kapija|True
+16|5|toranj|True
+17|5|notr dam|True
+18|6|centar|False
+19|6|luvr|False
+20|6|trijumfalna kapija|False
+21|6|toranj|False
+22|6|notr dam|False
+23|7|centar|False
+24|7|luvr|False
+25|7|trijumfalna kapija|False
+26|7|toranj|False
+27|7|notr dam|False
+28|8|centar|False
+29|8|luvr|False
+30|8|trijumfalna kapija|False
+31|8|toranj|False
+32|8|notr dam|False
