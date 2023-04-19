@@ -53,7 +53,7 @@ namespace TravelAgency.Services
         }
         private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
         {
-            foreach (var tourReservation in reservationRepository.GetTourReservations())
+            foreach (var tourReservation in reservationRepository.GetAll())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
                 if (tourOccurrence != null)
@@ -61,7 +61,7 @@ namespace TravelAgency.Services
                     tourOccurrence.Guests.Clear();
                 }
             }
-            foreach (TourReservation tourReservation in reservationRepository.GetTourReservations())
+            foreach (TourReservation tourReservation in reservationRepository.GetAll())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
                 User guest = userRepository.GetUsers().Find(x => x.Id == tourReservation.UserId);
@@ -293,6 +293,10 @@ namespace TravelAgency.Services
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
         {
             ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+        }
+        public void SaveTourReservation(TourReservation tourReservation)
+        {
+            ITourReservationRepository.Save(tourReservation);
         }
     }
 

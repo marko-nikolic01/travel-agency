@@ -27,5 +27,10 @@ namespace TravelAgency.Services
         {
             return IUserRepository.GetUsers();
         }
+        public void SaveUser(User user)
+        {
+            IUserRepository.SaveUser(user);
+        }
+
     }
 }

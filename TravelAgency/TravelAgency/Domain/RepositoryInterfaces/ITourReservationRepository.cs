@@ -10,9 +10,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
 {
     public interface ITourReservationRepository
     {
-        public List<TourReservation> GetTourReservations();
+        public List<TourReservation> GetAll();
 
-        public void SaveTourReservation(TourReservation tourReservation);
+        public void Save(TourReservation tourReservation);
 
         public bool IsTourReserved(int guestId, int tourOccurrenceId);
     }
