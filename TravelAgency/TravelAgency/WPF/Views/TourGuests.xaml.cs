@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using TravelAgency.Domain.Models;
-using TravelAgency.Repositories;
 using TravelAgency.Services;
 using TravelAgency.WPF.ViewModels;
 
@@ -50,8 +49,7 @@ namespace TravelAgency.WPF.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         //private int numberOfGuests;
-        private UserRepository userRepository;
-        private TourReservationRepository tourReservationRepository;
+        private UserService userService;
         private TourOccurrence TourOccurrence;
         private User activeGuest;
         public TourOccurrenceService tourOccurrenceService;
@@ -60,8 +58,7 @@ namespace TravelAgency.WPF.Views
         {
             InitializeComponent();
             DataContext = this;
-            userRepository = new UserRepository();
-            tourReservationRepository = new TourReservationRepository();
+            userService = new UserService();
             TourOccurrence = tourOccurrence;
             tourOccurrenceService = new TourOccurrenceService();
             activeGuest = user;
@@ -120,11 +117,11 @@ namespace TravelAgency.WPF.Views
                 if (user == null)
                 {
                     user = new User(GuestList.Items.GetItemAt(i).ToString(), "ftn", Roles.Guest2, new DateOnly(2004, 2, 15));
-                    userRepository.SaveUser(user);
+                    userService.SaveUser(user);
                 }
                 users.Add(user);
                 tourReservation = new TourReservation(TourOccurrence.Id, user.Id);
-                tourReservationRepository.SaveTourReservation(tourReservation);
+                tourOccurrenceService.SaveTourReservation(tourReservation);
             }
             TourOccurrence.Guests.AddRange(users);
             TourOccurrence.FreeSpots -= users.Count;
@@ -134,7 +131,7 @@ namespace TravelAgency.WPF.Views
         }
         private User GetUserByName(int i)
         {
-            return userRepository.GetUsers().Find(x => (x.Username == GuestList.Items.GetItemAt(i).ToString() && x.Role == Roles.Guest2));
+            return userService.GetAllUsers().Find(x => (x.Username == GuestList.Items.GetItemAt(i).ToString() && x.Role == Roles.Guest2));
         }
 
         private void CheckSpotsNumber(int input)

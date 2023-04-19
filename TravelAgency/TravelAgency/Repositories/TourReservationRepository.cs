@@ -23,7 +23,7 @@ namespace TravelAgency.Repositories
             tourReservations = _serializer.FromCSV(FilePath);
         }
 
-        public List<TourReservation> GetTourReservations()
+        public List<TourReservation> GetAll()
         {
             return tourReservations;
         }
@@ -37,7 +37,7 @@ namespace TravelAgency.Repositories
             return tourReservations[tourReservations.Count - 1].Id + 1;
         }
 
-        public void SaveTourReservation(TourReservation tourReservation)
+        public void Save(TourReservation tourReservation)
         {
             tourReservation.Id = GetNewId();
             tourReservations.Add(tourReservation);
