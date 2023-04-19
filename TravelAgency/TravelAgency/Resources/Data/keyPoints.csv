@@ -10,11 +10,11 @@
 10|4|berliner mauer|False
 11|4|brandenburger tor|False
 12|4|kudamm strasse|False
-13|5|centar|False
-14|5|luvr|False
-15|5|trijumfalna kapija|False
-16|5|toranj|False
-17|5|notr dam|False
+13|5|centar|True
+14|5|luvr|True
+15|5|trijumfalna kapija|True
+16|5|toranj|True
+17|5|notr dam|True
 18|6|centar|False
 19|6|luvr|False
 20|6|trijumfalna kapija|False
