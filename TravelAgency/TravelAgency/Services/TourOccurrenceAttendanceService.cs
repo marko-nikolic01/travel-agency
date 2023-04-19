@@ -32,7 +32,15 @@ namespace TravelAgency.Services
                 var guest = IUserRepository.GetUsers().Find(g => g.Id == guestId);
                 if (guest != null)
                 {
-                    if (DateTime.Now.Year - guest.BirthDay.Year < 18)
+                    if (DateTime.Now.Date.Year - guest.BirthDay.Year < 18)
+                    {
+                        result++;
+                    }
+                    else if ((DateTime.Now.Year == guest.BirthDay.AddYears(18).Year && DateTime.Now.Month < guest.BirthDay.Month))
+                    {
+                        result++;
+                    }
+                    else if ((DateTime.Now.Year == guest.BirthDay.AddYears(18).Year) && DateTime.Now.Month == guest.BirthDay.Month && DateTime.Now.Day < guest.BirthDay.Day)
                     {
                         result++;
                     }
@@ -43,21 +51,8 @@ namespace TravelAgency.Services
 
         public int GetGuest18to50(int id)
         {
-            int result = 0;
-            
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
-            foreach (var guestId in guests)
-            {
-                var guest = IUserRepository.GetUsers().Find(g => g.Id == guestId);
-                if (guest != null)
-                {
-                    if (DateTime.Now.Year - guest.BirthDay.Year > 18 && DateTime.Now.Year - guest.BirthDay.Year < 50)
-                    {
-                        result++;
-                    }
-                }
-            }
-            return result;
+            return guests.Count - GetGuestsUnder18(id) - GetGuestsAbove50(id);
         }
         public int GetGuestsAbove50(int id)
         {
@@ -69,6 +64,14 @@ namespace TravelAgency.Services
                 if (guest != null)
                 {
                     if (DateTime.Now.Year - guest.BirthDay.Year > 50)
+                    {
+                        result++;
+                    }
+                    else if ((DateTime.Now.Year == guest.BirthDay.AddYears(50).Year && DateTime.Now.Month > guest.BirthDay.Month))
+                    {
+                        result++;
+                    }
+                    else if ((DateTime.Now.Year == guest.BirthDay.AddYears(50).Year) && DateTime.Now.Month == guest.BirthDay.Month && DateTime.Now.Day > guest.BirthDay.Day)
                     {
                         result++;
                     }
