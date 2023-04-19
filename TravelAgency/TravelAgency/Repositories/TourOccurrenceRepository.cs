@@ -25,25 +25,6 @@ namespace TravelAgency.Repositories
             observers = new List<IObserver>();
         }
 
-        public TourOccurrenceRepository(TourRepository tourRepository)
-        {
-            _serializer = new Serializer<TourOccurrence>();
-            tourOccurrences = _serializer.FromCSV(FilePath);
-            LinkTourOccurrences(tourRepository);
-        }
-
-        private void LinkTourOccurrences(TourRepository tourRepository)
-        {
-            foreach (TourOccurrence tourOccurrence in tourOccurrences)
-            {
-                Tour tour = tourRepository.GetAll().Find(t => t.Id == tourOccurrence.TourId);
-                if (tour != null)
-                {
-                    tourOccurrence.Tour = tour;
-                }
-            }
-        }
-
         public int NextId()
         {
             if (tourOccurrences.Count == 0)

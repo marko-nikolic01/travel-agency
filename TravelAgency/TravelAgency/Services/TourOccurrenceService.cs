@@ -118,6 +118,10 @@ namespace TravelAgency.Services
 
         public TourOccurrence GetMostVisitedAllTime(int guideId)
         {
+            if (ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId).Count == 0)
+            {
+                return null;
+            }
             TourOccurrence mostVisited = ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId)[0];
             foreach (var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId))
             {

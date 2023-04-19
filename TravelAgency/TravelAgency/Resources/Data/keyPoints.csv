@@ -1,61 +1,32 @@
-1|1|prvT|False
-2|1|drugT|False
-3|1|triT|False
-4|2|prvT|False
-5|2|drugT|False
-6|2|triT|False
-7|3|prvT|False
-8|3|drugT|False
-9|3|triT|False
-10|4|tackica1|True
-11|4|tackica2|True
-12|4|tackica3|True
-13|4|tackica4|True
-14|5|tackica1|True
-15|5|tackica2|True
-16|5|tackica3|True
-17|5|tackica4|True
-18|6|tackica1|False
-19|6|tackica2|False
-20|6|tackica3|False
-21|6|tackica4|False
-22|7|tackica1|False
-23|7|tackica2|False
-24|7|tackica3|False
-25|7|tackica4|False
-26|8|prvaPiramida|True
-27|8|keopsova piramida|True
-28|8|neka treca piramida|True
-29|8|nazad u grad na reku nil|True
-30|9|prvaPiramida|True
-31|9|keopsova piramida|True
-32|9|neka treca piramida|True
-33|9|nazad u grad na reku nil|True
-34|10|prvaPiramida|False
-35|10|keopsova piramida|False
-36|10|neka treca piramida|False
-37|10|nazad u grad na reku nil|False
-38|11|prvaPiramida|True
-39|11|keopsova piramida|True
-40|11|neka treca piramida|False
-41|11|nazad u grad na reku nil|True
-42|12|oki|False
-43|12|koki|False
-44|13|oki|False
-45|13|koki|False
-46|14|dzungla|True
-47|14|auu|True
-48|15|dzungla|True
-49|15|auu|True
-50|16|ff|False
-51|16|fff|False
-52|17|fd|True
-53|17|juy|True
-54|18|morava|True
-55|18|mrsac|True
-56|18|zica|True
-57|19|morava|False
-58|19|mrsac|False
-59|19|zica|False
-60|20|dds|True
-61|20|ssxsxs|True
+1|1|berliner mauer|False
+2|1|brandenburger tor|False
+3|1|kudamm strasse|False
+4|2|berliner mauer|True
+5|2|brandenburger tor|True
+6|2|kudamm strasse|True
+7|3|berliner mauer|False
+8|3|brandenburger tor|False
+9|3|kudamm strasse|False
+10|4|berliner mauer|False
+11|4|brandenburger tor|False
+12|4|kudamm strasse|False
+13|5|centar|False
+14|5|luvr|False
+15|5|trijumfalna kapija|False
+16|5|toranj|False
+17|5|notr dam|False
+18|6|centar|False
+19|6|luvr|False
+20|6|trijumfalna kapija|False
+21|6|toranj|False
+22|6|notr dam|False
+23|7|centar|False
+24|7|luvr|False
+25|7|trijumfalna kapija|False
+26|7|toranj|False
+27|7|notr dam|False
+28|8|centar|False
+29|8|luvr|False
+30|8|trijumfalna kapija|False
+31|8|toranj|False
+32|8|notr dam|False

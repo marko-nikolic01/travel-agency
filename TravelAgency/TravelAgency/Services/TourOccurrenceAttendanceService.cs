@@ -13,9 +13,11 @@ namespace TravelAgency.Services
     public class TourOccurrenceAttendanceService
     {
         public ITourOccurrenceAttendanceRepository IAttendanceRepository { get; set; }
+        public IUserRepository IUserRepository { get;set; }
         public TourOccurrenceAttendanceService()
         {
             IAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
+            IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
         }
         public int GetGuestsNumberByTour(int id)
         {
@@ -24,11 +26,10 @@ namespace TravelAgency.Services
         public int GetGuestsUnder18(int id)
         {
             int result = 0;
-            UserRepository userRepository = new UserRepository();
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
             foreach (var guestId in guests)
             {
-                var guest = userRepository.GetUsers().Find(g => g.Id == guestId);
+                var guest = IUserRepository.GetUsers().Find(g => g.Id == guestId);
                 if (guest != null)
                 {
                     if (DateTime.Now.Year - guest.BirthDay.Year < 18)
@@ -43,11 +44,11 @@ namespace TravelAgency.Services
         public int GetGuest18to50(int id)
         {
             int result = 0;
-            UserRepository userRepository = new UserRepository();
+            
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
             foreach (var guestId in guests)
             {
-                var guest = userRepository.GetUsers().Find(g => g.Id == guestId);
+                var guest = IUserRepository.GetUsers().Find(g => g.Id == guestId);
                 if (guest != null)
                 {
                     if (DateTime.Now.Year - guest.BirthDay.Year > 18 && DateTime.Now.Year - guest.BirthDay.Year < 50)
@@ -61,11 +62,10 @@ namespace TravelAgency.Services
         public int GetGuestsAbove50(int id)
         {
             int result = 0;
-            UserRepository userRepository = new UserRepository();
             var guests = IAttendanceRepository.GetGuestsByTourOccurrenceId(id);
             foreach (var guestId in guests)
             {
-                var guest = userRepository.GetUsers().Find(g => g.Id == guestId);
+                var guest = IUserRepository.GetUsers().Find(g => g.Id == guestId);
                 if (guest != null)
                 {
                     if (DateTime.Now.Year - guest.BirthDay.Year > 50)
