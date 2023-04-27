@@ -38,7 +38,7 @@ namespace TravelAgency.WPF.Views
 
         private void TodaysTours_Click(object sender, RoutedEventArgs e)
         {
-            TodaysTours todaysTours = new TodaysTours(ActiveGuide);
+            TodaysTours todaysTours = new TodaysTours(ActiveGuide.Id);
             todaysTours.Show();
             Close();
         }

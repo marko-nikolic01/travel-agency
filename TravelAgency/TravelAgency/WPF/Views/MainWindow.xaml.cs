@@ -67,8 +67,10 @@ namespace TravelAgency
                 {
                     if (user.Role == Roles.Guide)
                     {
-                        GuideMain guideMain = new GuideMain(user);
-                        guideMain.Show();
+                        GuideView guideView = new GuideView(user.Id);
+                        guideView.Show();
+                        //GuideMain guideMain = new GuideMain(user);
+                        //guideMain.Show();
                     }
                     else if (user.Role == Roles.Owner)
                     {
