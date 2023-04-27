@@ -13,7 +13,6 @@ namespace TravelAgency.WPF.ViewModels
     public class GuideMainViewModel
     {
         public NavigationService NavService { get; set; }
-        public RelayCommand NavigateToTeacherPageCommand { get; set; }
         public RelayCommand NavigateToCreateTourPageCommand { get; set; }
         public RelayCommand NavigateToTodaysToursPageCommand { get; set; }
         public RelayCommand NavigateToUpcommingToursPageCommand { get; set; }
@@ -24,7 +23,6 @@ namespace TravelAgency.WPF.ViewModels
         {
             ActiveGuideId = id;
             NavService = navigationService;
-            NavigateToTeacherPageCommand = new RelayCommand(Execute_NavigateToTeacherPageCommand, CanExecute_NavigateCommand);
             NavigateToCreateTourPageCommand = new RelayCommand(Execute_NavigateToCreateTourPageCommand, CanExecute_NavigateCommand);
             NavigateToTodaysToursPageCommand = new RelayCommand(Execute_NavigateToTodaysToursPageCommand, CanExecute_NavigateCommand);
             NavigateToUpcommingToursPageCommand = new RelayCommand(Execute_NavigateToUpcommingToursPageCommand, CanExecute_NavigateCommand);
@@ -55,11 +53,6 @@ namespace TravelAgency.WPF.ViewModels
         {
             Page create = new CreateTourForm(ActiveGuideId, NavService);
             NavService.Navigate(create);
-        }
-        private void Execute_NavigateToTeacherPageCommand(object obj)
-        {
-            Page nastavnici = new Page1(3);
-            NavService.Navigate(nastavnici);
         }
         private bool CanExecute_NavigateCommand(object obj)
         {
