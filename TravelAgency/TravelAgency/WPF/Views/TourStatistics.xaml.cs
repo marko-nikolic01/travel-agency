@@ -24,7 +24,7 @@ namespace TravelAgency.WPF.Views
         public TourStatistics(int activeGuideId)
         {
             InitializeComponent();
-            DataContext = new TourStatisticsViewModel(activeGuideId);
+            DataContext = new TourStatisticsViewModel(activeGuideId, null);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,23 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.Repositories;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for TourReviews.xaml
+    /// Interaction logic for TourGuestsStatisticsView.xaml
     /// </summary>
-    public partial class TourRatingsView : Window
+    public partial class TourGuestsStatisticsView : Page
     {
-        
-        public TourRatingsView(User activeGuide)
+        public TourGuestsStatisticsView(Domain.Models.TourOccurrence selectedTourOccurrence)
         {
             InitializeComponent();
-            DataContext = new TourRatingsViewModel(activeGuide.Id, null);
+            this.DataContext = new TourStatisticsDetailsViewModel(selectedTourOccurrence);
         }
     }
 }

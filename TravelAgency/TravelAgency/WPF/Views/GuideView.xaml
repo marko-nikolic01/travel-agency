@@ -19,21 +19,21 @@
                 </MenuItem.Icon>
                 <MenuItem Header="New tour" Command="{Binding NavigateToCreateTourPageCommand}"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Todays tours"></MenuItem>
-                <MenuItem Header="Upcomming tours"></MenuItem>
+                <MenuItem Header="Todays tours" Command="{Binding NavigateToTodaysToursPageCommand}"></MenuItem>
+                <MenuItem Header="Upcomming tours" Command="{Binding NavigateToUpcommingToursPageCommand}"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Tour requests"></MenuItem>
                 <MenuItem Header="Special tour requests"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Guest reviews"></MenuItem>
-                <MenuItem Header="Tour statistics"></MenuItem>
+                <MenuItem Header="Guest reviews" Command="{Binding NavigateToTourRatingsPageCommand}"></MenuItem>
+                <MenuItem Header="Tour statistics" Command="{Binding NavigateToTourStatisticsPageCommand}"></MenuItem>
                 <MenuItem Header="Requests statistics"></MenuItem>
             </MenuItem>
             <MenuItem Header="BOOK AND TRACK APP" FontSize="20"></MenuItem>
             <MenuItem Header="⋮" FontSize="25" HorizontalAlignment="Right">
                 <MenuItem FontSize="15" Header="Undo"></MenuItem>
                 <MenuItem FontSize="15" Header="My Profile"></MenuItem>
-                <MenuItem FontSize="15" Header="Log out"></MenuItem>
+                <MenuItem FontSize="15" Header="Log out" Click="MenuItem_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <StackPanel DockPanel.Dock="Bottom" Height="50">
@@ -42,7 +42,7 @@
                 <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left" Click="Back_Click">
                     <Image Width="40" Height="35" Source="/Resources/Images/back.png"></Image>
                 </Button>
-                <Button Width="40" Height="35" Margin="135 0 0 0" Command="{Binding NavigateToTeacherPageCommand}">
+                <Button Width="40" Height="35" Margin="135 0 0 0" Command="{Binding NavigateToTodaysToursPageCommand}">
                     <Image Source="/Resources/Images/home.png" Width="40" Height="35" ></Image>
                 </Button>
                 <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>

@@ -15,6 +15,10 @@ namespace TravelAgency.WPF.ViewModels
         public NavigationService NavService { get; set; }
         public RelayCommand NavigateToTeacherPageCommand { get; set; }
         public RelayCommand NavigateToCreateTourPageCommand { get; set; }
+        public RelayCommand NavigateToTodaysToursPageCommand { get; set; }
+        public RelayCommand NavigateToUpcommingToursPageCommand { get; set; }
+        public RelayCommand NavigateToTourRatingsPageCommand { get; set; }
+        public RelayCommand NavigateToTourStatisticsPageCommand { get; set; }
         public int ActiveGuideId { get; set; }
         public GuideMainViewModel(NavigationService navigationService, int id)
         {
@@ -22,11 +26,35 @@ namespace TravelAgency.WPF.ViewModels
             NavService = navigationService;
             NavigateToTeacherPageCommand = new RelayCommand(Execute_NavigateToTeacherPageCommand, CanExecute_NavigateCommand);
             NavigateToCreateTourPageCommand = new RelayCommand(Execute_NavigateToCreateTourPageCommand, CanExecute_NavigateCommand);
+            NavigateToTodaysToursPageCommand = new RelayCommand(Execute_NavigateToTodaysToursPageCommand, CanExecute_NavigateCommand);
+            NavigateToUpcommingToursPageCommand = new RelayCommand(Execute_NavigateToUpcommingToursPageCommand, CanExecute_NavigateCommand);
+            NavigateToTourRatingsPageCommand = new RelayCommand(Execute_NavigateToTourRatingsPageCommand, CanExecute_NavigateCommand);
+            NavigateToTourStatisticsPageCommand = new RelayCommand(Execute_NavigateToTourStatisticsPageCommand, CanExecute_NavigateCommand);
+        }
+        private void Execute_NavigateToTourStatisticsPageCommand(object obj)
+        {
+            Page statistics = new TourStatisticsView(ActiveGuideId, NavService);
+            NavService.Navigate(statistics);
+        }
+        private void Execute_NavigateToTourRatingsPageCommand(object obj)
+        {
+            Page ratings = new TourRatingsPageView(ActiveGuideId, NavService);
+            NavService.Navigate(ratings);
+        }
+        private void Execute_NavigateToUpcommingToursPageCommand(object obj)
+        {
+            Page tours = new UpcommingToursView(ActiveGuideId, NavService);
+            NavService.Navigate(tours);
+        }
+        private void Execute_NavigateToTodaysToursPageCommand(object obj)
+        {
+            Page tours = new TodaysToursView(ActiveGuideId);
+            NavService.Navigate(tours);
         }
         private void Execute_NavigateToCreateTourPageCommand(object obj)
         {
-            Page nastavnici = new CreateTourForm(ActiveGuideId, NavService);
-            NavService.Navigate(nastavnici);
+            Page create = new CreateTourForm(ActiveGuideId, NavService);
+            NavService.Navigate(create);
         }
         private void Execute_NavigateToTeacherPageCommand(object obj)
         {
