@@ -35,14 +35,14 @@ namespace TravelAgency.WPF.Views
         private void MyToursButton_Click(object sender, RoutedEventArgs e)
         {
             MyTours myTours = new MyTours(ActiveGuest.Id);
-            myTours.Show();
+           // myTours.Show();
             Close();
         }
         private void OfferedToursButton_Click(object sender, RoutedEventArgs e)
         {
-            Guest2Main offeredTours = new Guest2Main(ActiveGuest);
+            /*Guest2Main offeredTours = new Guest2Main(ActiveGuest);
             offeredTours.Show();
-            Close();
+            Close();*/
         }
     }
 }

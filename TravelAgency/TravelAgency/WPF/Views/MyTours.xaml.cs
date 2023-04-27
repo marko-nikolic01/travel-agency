@@ -10,14 +10,14 @@ using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
-    public partial class MyTours : Window
+    public partial class MyTours : Page
     {
         MyToursViewModel myToursViewModel;
-        public MyTours(int guestId)
+        public MyTours(int guestId=0)
         {
             InitializeComponent();
-            myToursViewModel = new MyToursViewModel(guestId);
-            DataContext = myToursViewModel;
+            /*myToursViewModel = new MyToursViewModel(guestId);
+            DataContext = myToursViewModel;*/
         }
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
