@@ -31,29 +31,29 @@ namespace TravelAgency.WPF.Views
 
         private void UpcomingTours_Click(object sender, RoutedEventArgs e)
         {
-            UpcomingTours upcomingTours = new UpcomingTours(ActiveGuide);
-            upcomingTours.Show();
+           // UpcomingTours upcomingTours = new UpcomingTours(ActiveGuide);
+           // upcomingTours.Show();
             Close();
         }
 
         private void TodaysTours_Click(object sender, RoutedEventArgs e)
         {
-            TodaysTours todaysTours = new TodaysTours(ActiveGuide);
-            todaysTours.Show();
+            //TodaysTours todaysTours = new TodaysTours(ActiveGuide.Id);
+            //todaysTours.Show();
             Close();
         }
 
         private void GuestRatings_Click(object sender, RoutedEventArgs e)
         {
-            TourRatingsView tourRatings = new TourRatingsView(ActiveGuide);
-            tourRatings.Show();
+            //TourRatingsView tourRatings = new TourRatingsView(ActiveGuide);
+            //tourRatings.Show();
             Close();
         }
 
         private void TourStatistics_Click(object sender, RoutedEventArgs e)
         {
-            TourStatistics tourStatistics = new TourStatistics(ActiveGuide.Id);
-            tourStatistics.Show();
+            //TourStatistics tourStatistics = new TourStatistics(ActiveGuide.Id);
+            //tourStatistics.Show();
             Close();
         }
 

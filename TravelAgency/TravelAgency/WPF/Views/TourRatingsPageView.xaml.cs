@@ -10,21 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for TourStatistics.xaml
+    /// Interaction logic for TourRatingsPageView.xaml
     /// </summary>
-    public partial class TourStatistics : Window
+    public partial class TourRatingsPageView : Page
     {
-        public TourStatistics(int activeGuideId)
+        public TourRatingsPageView(int id, NavigationService navService)
         {
             InitializeComponent();
-            DataContext = new TourStatisticsViewModel(activeGuideId);
+            DataContext = new TourRatingsViewModel(id, navService);
         }
     }
 }

@@ -10,18 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for TourStatisticsDetailsView.xaml
+    /// Interaction logic for TourRatingDetailsView.xaml
     /// </summary>
-    public partial class TourStatisticsDetailsView : Window
+    public partial class TourRatingDetailsView : Page
     {
-        public TourStatisticsDetailsView()
+        public TourRatingDetailsView(ViewModels.TourGuestRatingsViewModel viewModel)
         {
             InitializeComponent();
+            this.DataContext = viewModel;
         }
     }
 }
