@@ -40,7 +40,7 @@ namespace TravelAgency.WPF.ViewModels
         public string Description { get; set; }
         public DateTime MaxDate { get; set; }
         public string NumberOfGuests { get; set; }
-        private int guestId;
+        public int guestId;
         private LocationRepository locationRepository;
         public ObservableCollection<string> Countries { get; set; }
         public ObservableCollection<string> Cities { get; set; }
