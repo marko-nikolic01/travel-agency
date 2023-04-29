@@ -1,0 +1,74 @@
+﻿<Window x:Class="TravelAgency.WPF.Views.Guest2MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        mc:Ignorable="d"
+        Title="Guest2MainWindow" Height="768" Width="1024">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Offered Tours" Width="170" Command="{Binding NavigateToOfferedToursCommand}"/>
+                <Button Content="My Tours" Width="170" Command="{Binding NavigateToMyToursCommand}"/>
+                <ComboBox Width="180" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14">
+                    <ComboBoxItem Content="&lt;Requests&gt;" IsSelected="True" >
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Width="180" Height="40" Content="Requests" Command="{Binding NavigateToRequestsCommand}"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Width="180" Height="40" Content="Special Requests" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="170">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Resources/Images/IconBell.png" Height="25" Width="25"/>
+                        <TextBlock Margin="10 0">Notifications</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Width="140" ToolTip="asfadg" Name="HelpButton">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Resources/Images/HelpImage.png" Height="25" Width="25"/>
+                        <TextBlock Margin="10 0">Help</TextBlock>
+                    </StackPanel>
+                </Button>
+                <ComboBox Width="120" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14">
+                    <ComboBoxItem Content="&lt;Profile&gt;" IsSelected="True" >
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Width="120" Height="40" Content="Account" Command="{Binding NavigateToProfileCommand}"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Width="120" Height="40" Content="Sign out" Click="SignOut_Click"/>
+                    </ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <Popup IsOpen = "{Binding Path = IsHelpClicked}"    
+            PlacementTarget = "{Binding ElementName = HelpButton}"
+            AllowsTransparency = "True">
+                <Canvas Width = "250" Height = "120" Background="Azure">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Padding="10">
+                            This is window allows you to reserve tour.<LineBreak/>
+                            Choose tour from the table<LineBreak/> and click on make a reservation
+                        </TextBlock>
+                        <Button Width="80" Margin="10" FontSize="12" Content="More details" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Canvas>
+            </Popup>
+        </Grid>
+        <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="Guest2ProfileView.xaml" />
+    </Grid>
+</Window>

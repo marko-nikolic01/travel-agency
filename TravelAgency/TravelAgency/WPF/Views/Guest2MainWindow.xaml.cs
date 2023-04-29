@@ -11,23 +11,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.Repositories;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for VouchersView.xaml
+    /// Interaction logic for Guest2MainWindow.xaml
     /// </summary>
-    public partial class VouchersView : Page
+    public partial class Guest2MainWindow : Window
     {
-        VoucherViewModel voucherViewModel;
-        public VouchersView(int guestId)
+        public Guest2MainViewModel ViewModel { get; set; }
+        public Guest2MainWindow(int guestId)
         {
             InitializeComponent();
-            voucherViewModel = new VoucherViewModel(guestId);
-            this.DataContext = voucherViewModel;
+            ViewModel = new Guest2MainViewModel(this.frame.NavigationService, guestId);
+            this.DataContext = ViewModel;
+        }
+        private void SignOut_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

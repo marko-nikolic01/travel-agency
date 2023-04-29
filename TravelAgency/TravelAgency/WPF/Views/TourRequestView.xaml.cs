@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
 
 namespace TravelAgency.WPF.Views
 {
-    public partial class TourRequestView : Window
+    public partial class TourRequestView : Page
     {
         private int guestId;
         public ObservableCollection<TourRequest> MadeRequests { get; set; }
