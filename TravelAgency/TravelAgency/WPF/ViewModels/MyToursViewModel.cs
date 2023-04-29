@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using TravelAgency.Domain.Models;
+using TravelAgency.Repositories;
 using TravelAgency.Services;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -16,6 +19,18 @@ namespace TravelAgency.WPF.ViewModels
             currentGuestId = guestId;
             TourOccurrences = tourOccurrenceService.GetFinishedOccurrencesForGuest(currentGuestId);
             ActiveTourString = tourOccurrenceService.GetActiveTour(currentGuestId);
+        }
+        public bool CanTourBeRated()
+        {
+            TourRatingService ratingService = new TourRatingService();
+            if (SelectedTourOccurrence != null)
+            {
+                if (ratingService.IsTourNotRated(currentGuestId, SelectedTourOccurrence.Id))
+                    return true;
+                else
+                    return false;
+            }
+            return false;
         }
     }
 }

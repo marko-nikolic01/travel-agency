@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="MyTours" Height="768" Width="1024">
+        Title="MyTours" d:DesignHeight="768" d:DesignWidth="1024">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />

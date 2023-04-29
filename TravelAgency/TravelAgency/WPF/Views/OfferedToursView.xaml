@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="Guest2Main" Height="768" Width="1024">
+        Title="Guest2Main" d:DesignHeight="768" d:DesignWidth="1024">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -46,18 +46,18 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.Column="0" Margin="0 20" HorizontalContentAlignment="Center">Search:</Label>
             <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">Country</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="1" Text="{Binding Country}" x:Name="tbCountry" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="1" Text="{Binding Country, UpdateSourceTrigger=PropertyChanged}" x:Name="tbCountry" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Center">City</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="2" x:Name="tbCity" Text="{Binding City}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="2" x:Name="tbCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Center">Duration</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="4" HorizontalContentAlignment="Center">Language</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Guests</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
 
         </Grid>
-        <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" AutoGenerateColumns="False"
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
                   SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Height="NaN" Margin="0,182,0,8" Grid.RowSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Tour.Name}"></DataGridTextColumn>
@@ -94,7 +94,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="Reserve_Click">Make a reservation</Button>
+            <Button Grid.Column="0" Width="374" Height="43" Click="ReserveTour_Click">Make a reservation</Button>
             <Button Grid.Column="1" Width="374" Height="43" Click="Vouchers_Click" Content="My vouchers"/>
         </Grid>
     </Grid>

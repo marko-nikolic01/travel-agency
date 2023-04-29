@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 using TravelAgency.Services;
-using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -23,9 +18,17 @@ namespace TravelAgency.WPF.ViewModels
         private string city;
         private string country;
         private string guests;
+        private ObservableCollection<TourOccurrence> occurrences;
         TourOccurrenceService occurrenceService;
-        public static ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
-        public static ObservableCollection<TourOccurrence> FilteredTourOccurrences { get; set; }
+        public ObservableCollection<TourOccurrence> TourOccurrences
+        {
+            get { return occurrences; }
+            set
+            {
+                occurrences = value;
+                OnPropertyChanged();
+            }
+        }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public ButtonCommandNoParameter ReserveTourCommand { get; set; }
 
@@ -79,40 +82,41 @@ namespace TravelAgency.WPF.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        private int currentGuestId;
+        public int currentGuestId;
         public OfferedToursViewModel(int id)
         {
             occurrenceService = new TourOccurrenceService();
             TourOccurrences = new ObservableCollection<TourOccurrence>(occurrenceService.GetOfferedTours());
-            ReserveTourCommand = new ButtonCommandNoParameter(ReserveTour);
             currentGuestId = id;
-            occurrenceService.Subscribe(this);            
+            occurrenceService.Subscribe(this);
+            
         }
-        private void ReserveTour()
+        public bool CanTourBeReserved()
         {
             TourReservationService reservationService = new TourReservationService();
             if (SelectedTourOccurrence == null)
             {
                 MessageBox.Show("You must choose a tour.");
+                return false;
             }
             else if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
             {
                 /*AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location, ActiveGuest, TourOccurrenceRepository);
                 alternativeTours.Show();*/
+                return false;
             }
             else if (reservationService.IsTourReserved(currentGuestId, SelectedTourOccurrence.Id))
             {
                 MessageBox.Show("You already have reservation for this tour.");
+                return false;
             }
             else
-            {
-                /*TourGuests tourGuests = new TourGuests(SelectedTourOccurrence, ActiveGuest);
-                tourGuests.Show();*/
-            }
+                return true;
         }
         public void Search()
         {
-            if (City != "" || Country != "" || Language != "" || Duration != "" || Guests != "")
+            ConvertFromNullToEmptyString();
+            if (IsTextBoxEmpty(City) || IsTextBoxEmpty(Country) || IsTextBoxEmpty(Language) || IsTextBoxEmpty(Duration) || IsTextBoxEmpty(Guests))
             {
                 if (!IsValid())
                 {
@@ -154,15 +158,29 @@ namespace TravelAgency.WPF.ViewModels
                 numOfGuests = int.Parse(Guests);
             else
                 numOfGuests = 0;
-            TourOccurrences = (ObservableCollection<TourOccurrence>)toursList.Where(x => (x.Tour.Location.City.ToLower().Contains(City) || tbCityEmpty) &&
+            toursList = toursList.Where(x => (x.Tour.Location.City.ToLower().Contains(City) || tbCityEmpty) &&
                                         (x.Tour.Location.Country.ToLower().Contains(Country) || tbCountryEmpty) &&
                                         (x.Tour.Language.ToLower().Contains(Language) || tbLanguageEmpty) &&
                                         (x.Tour.Duration.ToString().Contains(Duration) || tbDurEmpty) &&
-                                        ((x.Tour.MaxGuestNumber - x.Guests.Count) >= numOfGuests));
+                                        ((x.Tour.MaxGuestNumber - x.Guests.Count) >= numOfGuests)).ToList();
+            TourOccurrences = new ObservableCollection<TourOccurrence>(toursList);
         }
         private bool IsTextBoxEmpty(string text)
         {
-            return text == null;
+            return text == "";
+        }
+        private void ConvertFromNullToEmptyString()
+        {
+            if (City == null)
+                City = "";
+            if (Country == null)
+                Country = "";
+            if (Language == null)
+                Language = "";
+            if (Duration == null)
+                Duration = "";
+            if (Guests == null)
+                guests = "";
         }
         public void Update()
         {

@@ -21,11 +21,16 @@ namespace TravelAgency.WPF.Views
     public partial class Guest2MainWindow : Window
     {
         public Guest2MainViewModel ViewModel { get; set; }
-        public Guest2MainWindow()
+        public Guest2MainWindow(int guestId)
         {
             InitializeComponent();
-            ViewModel = new Guest2MainViewModel(this.frame.NavigationService);
+            ViewModel = new Guest2MainViewModel(this.frame.NavigationService, guestId);
             this.DataContext = ViewModel;
+        }
+        private void SignOut_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
         }
     }
 }

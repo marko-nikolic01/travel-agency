@@ -73,5 +73,9 @@ namespace TravelAgency.Services
         {
             ITourRatingRepository.UpdateIsValid(tourRating);
         }
+        public bool IsTourNotRated(int guestId, int occurrenceId)
+        {
+            return ITourRatingRepository.IsTourNotRated(guestId, occurrenceId);
+        }
     }
 }

@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
         Title="Guest2MainWindow" Height="768" Width="1024">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="54"></RowDefinition>
@@ -19,7 +24,7 @@
                     <ComboBoxItem Content="&lt;Requests&gt;" IsSelected="True" >
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Width="180" Height="40" Content="Requests"/>
+                        <Button Width="180" Height="40" Content="Requests" Command="{Binding NavigateToRequestsCommand}"/>
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <Button Width="180" Height="40" Content="Special Requests" />
@@ -43,10 +48,10 @@
                     <ComboBoxItem Content="&lt;Profile&gt;" IsSelected="True" >
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Width="120" Height="40" Content="Account"/>
+                        <Button Width="120" Height="40" Content="Account" Command="{Binding NavigateToProfileCommand}"/>
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Width="120" Height="40" Content="Sign out"/>
+                        <Button Width="120" Height="40" Content="Sign out" Click="SignOut_Click"/>
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
@@ -64,6 +69,6 @@
                 </Canvas>
             </Popup>
         </Grid>
-        <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="MyTour.xaml" />
+        <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="Guest2ProfileView.xaml" />
     </Grid>
 </Window>

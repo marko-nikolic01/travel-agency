@@ -1,12 +1,12 @@
-﻿<Window x:Class="TravelAgency.WPF.Views.TourRequestView"
+﻿<Page x:Class="TravelAgency.WPF.Views.TourRequestView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="TourRequestWindow" Height="768" Width="1024" ResizeMode="NoResize">
-    <Window.Resources>
+        Title="TourRequestWindow" Height="768" Width="1024" >
+    <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
         </Style>
@@ -16,30 +16,18 @@
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="20" />
         </Style>
-    </Window.Resources>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54"></RowDefinition>
             <RowDefinition Height="140"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Offered Tours" Width="180"/>
-                <Button Content="My Tours" Width="180" />
-                <ComboBox Width="180">
-                </ComboBox>
-                <Button Content="Notifications" Width="180"/>
-                <Button Content="Help" Width="180"/>
-                <ComboBox Width="120">
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1">
             <Label Margin="20" FontSize="24" Content="Tour requests"></Label>
         </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
+        <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
                 <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>
@@ -51,7 +39,7 @@
                 <DataGridTextColumn Header="GivenDate" Binding="{Binding GivenDate}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -60,4 +48,4 @@
             <Button Grid.Column="1" Width="374" Height="43" Content="Show statistics"/>
         </Grid>
     </Grid>
-</Window>
+</Page>
