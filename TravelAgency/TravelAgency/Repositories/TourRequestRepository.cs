@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Observer;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Repositories
 {
-    public class TourRequestRepository
+    public class TourRequestRepository : ITourRequestRepository
     {
         private const string FilePath = "../../../Resources/Data/tourRequests.csv";
         private readonly Serializer<TourRequest> _serializer;

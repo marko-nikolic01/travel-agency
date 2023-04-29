@@ -4,29 +4,57 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
     public class TourRequestService
     {
-        private LocationRepository locationRepository;
+        private ILocationRepository ILocationRepository;
+        private ITourRequestRepository ITourRequestRepository;
         public TourRequestService()
         {
-            locationRepository = new LocationRepository();
+            ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
+            LinkRequestLocation();
+        }
+
+        private void LinkRequestLocation()
+        {
+            foreach (var request in ITourRequestRepository.GetAll())
+            {
+                Location location = ILocationRepository.GetAll().Find(l => l.Id == request.LocationId);
+                if (location != null)
+                {
+                    request.Location = location;
+                }
+            }
+        }
+        public List<TourRequest> GetPendings()
+        {
+            List<TourRequest> pendings = new List<TourRequest>();
+            foreach (var request in ITourRequestRepository.GetAll())
+            {
+                if(request.Status == RequestStatus.Pending)
+                {
+                    pendings.Add(request);
+                }
+            }
+            return pendings;
         }
         public List<string> getCountries()
         {
-            return locationRepository.GetAllCountries();
+            return ILocationRepository.GetAllCountries();
         }
         public List<string> getCities(string country)
         {
-            return locationRepository.GetCitiesByCountry(country);
+            return ILocationRepository.GetCitiesByCountry(country);
         }
 
         public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateTime minDate, DateTime maxDate, string description, int guestId)
         {
-            Location location = locationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
+            Location location = ILocationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
             TourRequest request = new TourRequest();
             if (request.Valid(language, numberOfGuests))
             {

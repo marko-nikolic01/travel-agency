@@ -1,0 +1,58 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.TourRequestBookingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="TourRequestBookingView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="350"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Separator Grid.Row="5" Grid.ColumnSpan="4"></Separator>
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Location">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="Location.City"/>
+                            <Binding Path="Location.Country"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Date" Width="*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:dd/MM/yyyy} - {1:dd/MM/yyyy}">
+                            <Binding Path="MinDate" />
+                            <Binding Path="MaxDate"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Accept">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="Book" Margin="5" Content="Book" Command="{Binding Path= DataContext.BookCommand, RelativeSource={RelativeSource AncestorType=Page}}" ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
