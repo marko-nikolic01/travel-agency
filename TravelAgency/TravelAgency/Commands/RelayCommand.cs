@@ -7,7 +7,6 @@ using System.Windows.Input;
 
 namespace TravelAgency.Commands
 {
-    //pomocna klasa uzeta sa gima
     public class RelayCommand : ICommand
     {
         readonly Action<object> _execute;
@@ -16,8 +15,6 @@ namespace TravelAgency.Commands
         public RelayCommand(Action<object> execute) : this(execute, null) { }
         public RelayCommand(Action<Object> execute, Predicate<object> canExecute)
         {
-            if (execute == null)
-                throw new Exception("execute");
             _execute = execute;
             _canExecute = canExecute;
         }

@@ -1,8 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
@@ -10,18 +21,20 @@ using TravelAgency.Services;
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for CreateTour.xaml
+    /// Interaction logic for CreateTourForm.xaml
     /// </summary>
-    public partial class CreateTour : Window
+    public partial class CreateTourForm : Page
     {
         public Tour NewTour { get; set; }
         public User ActiveGuide { get; set; }
+        public NavigationService NavService { get; set; }
+
         public TourOccurrenceService TourOccurrenceService { get; set; }
-        public CreateTour(User activeGuide)
+        public CreateTourForm(int id, NavigationService navService)
         {
             InitializeComponent();
             DataContext = this;
-            ActiveGuide = activeGuide;
+            ActiveGuide = new UserService().GetById(id);
             NewTour = new Tour();
             TourOccurrenceService = new TourOccurrenceService();
             InitializeComboboxes();
@@ -31,6 +44,8 @@ namespace TravelAgency.WPF.Views
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
             Thread.CurrentThread.CurrentCulture = ci;
+
+            NavService = navService;
         }
 
         private void InitializeComboboxes()
@@ -83,7 +98,8 @@ namespace TravelAgency.WPF.Views
             }
             ProcessInputs(NewTour);
             SaveTours();
-            Close();
+            Page tours = new TodaysToursView(ActiveGuide.Id);
+            NavService.Navigate(tours);
         }
 
         private void SaveTours()
@@ -183,7 +199,7 @@ namespace TravelAgency.WPF.Views
 
         private void DateCalendar_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(DateCalendar.SelectedDate == DateTime.Now.Date)
+            if (DateCalendar.SelectedDate == DateTime.Now.Date)
             {
                 Time.StartTime = DateTime.Now.TimeOfDay;
             }

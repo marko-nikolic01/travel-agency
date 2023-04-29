@@ -1,17 +1,18 @@
-﻿<Window x:Class="TravelAgency.WPF.Views.TourStatistics"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:conv="clr-namespace:TravelAgency.Converters"
-        xmlns:local="clr-namespace:TravelAgency.WPF.Views"
-        mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen" Height="750" Width="430">
+﻿<Page x:Class="TravelAgency.WPF.Views.TourStatisticsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views" xmlns:conv="clr-namespace:TravelAgency.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="TourStatisticsView">
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -37,22 +38,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="7">
-            <Menu Height="35">
-                <Menu.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <DockPanel HorizontalAlignment="Stretch"/>
-                    </ItemsPanelTemplate>
-                </Menu.ItemsPanel>
-                <MenuItem>
-                    <MenuItem.Icon>
-                        <Image Stretch="Fill" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Tour statistics" FontSize="20"></MenuItem>
-                <MenuItem Header="⋮" FontSize="20" HorizontalAlignment="Right"></MenuItem>
-            </Menu>
-        </StackPanel>
+        
         <Label Content="The most visited tour" Grid.Row="2" Grid.ColumnSpan="4" FontSize="20"></Label>
         <ComboBox Grid.Row="2" Grid.Column="3" Margin="5" Grid.ColumnSpan="2" ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}"></ComboBox>
         <Grid Grid.Row="3" Grid.ColumnSpan="6" Grid.RowSpan="10">
@@ -86,7 +72,7 @@
             <Label Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Margin="5 0 0 0" Grid.Row="1" Content="Number of guests:" Grid.ColumnSpan="2"></Label>
             <TextBlock Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=GuestsNumber}"></TextBlock>
             <Image Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Source="{Binding CurrentPhoto.Link}" Grid.Column="4" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0 0 10 0"></Image>
-            <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="5" Tag="{Binding}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20">
+            <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="5" Tag="{Binding}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20">
                 <Image Source="/Resources/Images/RightArrow.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -94,7 +80,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="4" Tag="{Binding}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Height="20" Width="20" >
+            <Button Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="5" Grid.Column="4" Tag="{Binding}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20" >
                 <Image Source="/Resources/Images/LeftArrow.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -131,25 +117,12 @@
                 <DataGridTemplateColumn Header="Statistics">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" ></Button>
+                            <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Page}}" ></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.ColumnSpan="6" Grid.Row="17">
-            <StackPanel.Resources>
-            </StackPanel.Resources>
-            <Separator VerticalAlignment="Top"></Separator>
-            <DockPanel Margin="0 3 0 0">
-                <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Command="{Binding Path=HomeCommand}">
-                    <Image Width="40" Height="35" Source="/Resources/Images/back.png"></Image>
-                </Button>
-                <Button Width="40" Height="35" Margin="135 0 0 0" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Command="{Binding Path=HomeCommand}">
-                    <Image Source="/Resources/Images/home.png" Width="40" Height="35"></Image>
-                </Button>
-                <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
-            </DockPanel>
-        </StackPanel>
+        
     </Grid>
-</Window>
+</Page>

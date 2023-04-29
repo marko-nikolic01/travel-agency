@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,36 +11,39 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for UpcomingTours.xaml
+    /// Interaction logic for UpcommingToursView.xaml
     /// </summary>
-    public partial class UpcomingTours : Window, IObserver
+    public partial class UpcommingToursView : Page, IObserver
     {
         public Domain.Models.User ActiveGuide { get; set; }
         public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence? SelectedTourOccurrence { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
-        public UpcomingTours(Domain.Models.User activeGuide)
+        public NavigationService NavService { get; set; }
+
+        public UpcommingToursView(int id, NavigationService navService)
         {
             InitializeComponent();
             DataContext = this;
-            ActiveGuide = activeGuide;
+            ActiveGuide = new UserService().GetById(id);
             TourOccurrenceService = new TourOccurrenceService();
             TourOccurrenceService.Subscribe(this);
             TourOccurrences = new ObservableCollection<TourOccurrence>(TourOccurrenceService.GetUpcomingToursForGuide(ActiveGuide.Id));
+            NavService = navService;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            if(SelectedTourOccurrence.DateTime < DateTime.Now.AddDays(2))
+            if (SelectedTourOccurrence.DateTime < DateTime.Now.AddDays(2))
             {
                 MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours");
                 return;
@@ -63,20 +65,8 @@ namespace TravelAgency.WPF.Views
 
         private void NewTour_Click(object sender, RoutedEventArgs e)
         {
-            CreateTour createTour = new CreateTour(ActiveGuide);
-            createTour.ShowDialog();
-        }
-
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            new GuideMain(ActiveGuide).Show();
-            Close();
-        }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            new GuideMain(ActiveGuide).Show();
-            Close();
+            Page create = new CreateTourForm(ActiveGuide.Id, NavService);
+            NavService.Navigate(create);
         }
     }
 }

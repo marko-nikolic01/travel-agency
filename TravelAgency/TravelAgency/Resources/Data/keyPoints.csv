@@ -7,9 +7,9 @@
 7|3|berliner mauer|False
 8|3|brandenburger tor|False
 9|3|kudamm strasse|False
-10|4|berliner mauer|False
-11|4|brandenburger tor|False
-12|4|kudamm strasse|False
+10|4|berliner mauer|True
+11|4|brandenburger tor|True
+12|4|kudamm strasse|True
 13|5|centar|True
 14|5|luvr|True
 15|5|trijumfalna kapija|True
@@ -30,3 +30,11 @@
 30|8|trijumfalna kapija|False
 31|8|toranj|False
 32|8|notr dam|False
+33|9|3r|False
+34|9|vv|False
+35|10|prvos|False
+36|10|drugos|False
+37|11|prvos|False
+38|11|drugos|False
+39|12|cd|False
+40|12|bg|False

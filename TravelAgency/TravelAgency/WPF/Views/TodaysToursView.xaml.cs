@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,18 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for GuideMain.xaml
+    /// Interaction logic for TodaysToursView.xaml
     /// </summary>
-    public partial class TodaysTours : Window, IObserver
+    public partial class TodaysToursView : Page, IObserver
     {
         public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public ObservableCollection<User> Guests { get; set; }
@@ -39,12 +37,11 @@ namespace TravelAgency.WPF.Views
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public TourOccurrenceAttendanceService TourOccurrenceAttendanceService { get; set; }
         public KeyPointService KeyPointService { get; set; }
-
-        public TodaysTours(User user)
+        public TodaysToursView(int id)
         {
             InitializeComponent();
             DataContext = this;
-            ActiveGuide = user;
+            ActiveGuide = new UserService().GetById(id);
             KeyPointService = new KeyPointService();
             TourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
             TourOccurrenceService = new TourOccurrenceService();
@@ -55,7 +52,6 @@ namespace TravelAgency.WPF.Views
             GuestKeyPointIdPairs = new Dictionary<User, int>();
             ShadowFinishedTourOccurrences();
         }
-
         private void ShadowFinishedTourOccurrences()
         {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
@@ -65,7 +61,7 @@ namespace TravelAgency.WPF.Views
                     tourOccurrence.ToShadow = 1;
                     tourOccurrence.ToDisplay = 0;
                 }
-                if(tourOccurrence.CurrentState == CurrentState.Started)
+                if (tourOccurrence.CurrentState == CurrentState.Started)
                 {
                     SelectedTourOccurrence = tourOccurrence;
                     StartTour();
@@ -82,12 +78,11 @@ namespace TravelAgency.WPF.Views
             }
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-            Close();
         }
         public void Update()
         {
             TourOccurrences.Clear();
-            foreach(TourOccurrence tourOccurrence in TourOccurrenceService.GetTodays(ActiveGuide.Id))
+            foreach (TourOccurrence tourOccurrence in TourOccurrenceService.GetTodays(ActiveGuide.Id))
             {
                 TourOccurrences.Add(tourOccurrence);
             }
@@ -241,12 +236,10 @@ namespace TravelAgency.WPF.Views
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             new GuideMain(ActiveGuide).Show();
-            Close();
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             new GuideMain(ActiveGuide).Show();
-            Close();
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
@@ -18,30 +20,26 @@ namespace TravelAgency.WPF.ViewModels
         public ObservableCollection<TourOccurrence> TourOccurrences { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public ButtonCommandNoParameter ViewCommand { get; set; }
-        public ButtonCommand<Window> HomeCommand { get; set; }
         public User ActiveGuide { get; set; }
+        public NavigationService NavService { get; set; }
 
-        public TourRatingsViewModel(int activeGuideId)
+        public TourRatingsViewModel(int activeGuideId, System.Windows.Navigation.NavigationService navService)
         {
             UserService userService = new UserService();
             ActiveGuide = userService.GetById(activeGuideId);
             TourOccurrenceService tourOccurrenceService = new TourOccurrenceService();
             TourOccurrences = new ObservableCollection<TourOccurrence>(tourOccurrenceService.GetFinishedOccurrencesForGuide(activeGuideId));
             ViewCommand = new ButtonCommandNoParameter(ViewDetails);
-            HomeCommand = new ButtonCommand<Window>(ShowHome);
-        }
-        private void ShowHome(Window window)
-        {
-            GuideMain guideMain = new GuideMain(ActiveGuide);
-            guideMain.Show();
-            window.Close();
+            NavService = navService;
         }
         public void ViewDetails()
         {
             TourGuestRatingsViewModel viewModel = new TourGuestRatingsViewModel(SelectedTourOccurrence.Id);
-            TourGuestRatingsView view = new TourGuestRatingsView();
-            view.DataContext = viewModel;
-            view.ShowDialog();
+            //TourGuestRatingsView view = new TourGuestRatingsView();
+            //view.DataContext = viewModel;
+            //view.ShowDialog();
+            Page details = new TourRatingDetailsView(viewModel);
+            NavService.Navigate(details);
         }
     }
 }
