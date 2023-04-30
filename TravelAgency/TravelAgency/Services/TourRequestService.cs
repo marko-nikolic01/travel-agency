@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Observer;
 using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
@@ -13,21 +14,36 @@ namespace TravelAgency.Services
     {
         public ILocationRepository ILocationRepository { get; set; }
         public ITourRequestRepository ITourRequestRepository { get; set; }
+        
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
-            LinkLocationToRequests();
+            LinkRequestLocation();
         }
-        private void LinkLocationToRequests()
+
+        private void LinkRequestLocation()
         {
-            foreach(TourRequest request in ITourRequestRepository.GetAll()) 
+            foreach (var request in ITourRequestRepository.GetAll())
             {
-                if (request.Location == null) 
+                Location location = ILocationRepository.GetAll().Find(l => l.Id == request.LocationId);
+                if (location != null)
                 {
-                    request.Location = ILocationRepository.GetByID(request.LocationId);
+                    request.Location = location;
                 }
             }
+        }
+        public List<TourRequest> GetPendings()
+        {
+            List<TourRequest> pendings = new List<TourRequest>();
+            foreach (var request in ITourRequestRepository.GetAll())
+            {
+                if(request.Status == RequestStatus.Pending)
+                {
+                    pendings.Add(request);
+                }
+            }
+            return pendings;
         }
         public List<string> getCountries()
         {
@@ -58,6 +74,15 @@ namespace TravelAgency.Services
                 return true;
             }
             return false;
+        }
+
+        public void Subscribe(IObserver observer)
+        {
+            ITourRequestRepository.Subscribe(observer);
+        }
+        public void UpdateRequestStatus(TourRequest request)
+        {
+            ITourRequestRepository.UpdateRequestStatus(request);
         }
     }
 }

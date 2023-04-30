@@ -22,7 +22,7 @@
                 <MenuItem Header="Todays tours" Command="{Binding NavigateToTodaysToursPageCommand}"></MenuItem>
                 <MenuItem Header="Upcomming tours" Command="{Binding NavigateToUpcommingToursPageCommand}"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Tour requests"></MenuItem>
+                <MenuItem Header="Tour requests" Command="{Binding NavigateToRequestsPageCommand}"></MenuItem>
                 <MenuItem Header="Special tour requests"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Guest reviews" Command="{Binding NavigateToTourRatingsPageCommand}"></MenuItem>
