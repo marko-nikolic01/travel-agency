@@ -19,7 +19,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateRequestStatus(TourRequest request);
         public List<TourRequest> GetRequestsByGuestId(int id);
         public int NextId();
-        public TourRequest Save(TourRequest tourRequest);
 
     }
 }
