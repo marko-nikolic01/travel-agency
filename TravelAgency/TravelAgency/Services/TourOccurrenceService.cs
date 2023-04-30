@@ -298,6 +298,26 @@ namespace TravelAgency.Services
         {
             ITourReservationRepository.Save(tourReservation);
         }
+
+        public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId)
+        {
+            Tour newTour = new Tour();
+            newTour.Language = request.Language;
+            newTour.Description = request.Description;
+            newTour.MaxGuestNumber = request.GuestNumber;
+            newTour.LocationId = request.LocationId;
+            newTour.Location = request.Location;
+            newTour.Duration = 2;
+            ITourRepository.Save(newTour);
+            TourOccurrence tourOccurrence = new TourOccurrence();
+            tourOccurrence.TourId = newTour.Id;
+            tourOccurrence.Tour = newTour;
+            tourOccurrence.DateTime = dateTime;
+            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
+            ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, IUserRepository.GetById(GuideId));
+            SaveKeyPoint( "prva k. tacka", tourOccurrence);
+            SaveKeyPoint( "druga k. tacka", tourOccurrence);
+        }
     }
 
 }

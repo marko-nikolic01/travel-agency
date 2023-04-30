@@ -1,0 +1,48 @@
+﻿<Window x:Class="TravelAgency.WPF.ViewModels.AcceptTourRequestDialogue"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.WPF.ViewModels" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Height="400" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="Number of guests:"></Label>
+        <TextBlock Text="{Binding TourRequest.GuestNumber}" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0"></TextBlock>
+        <Label Grid.Row="1" Content="Location:"></Label>
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}, {1}">
+                    <Binding Path="TourRequest.Location.City"/>
+                    <Binding Path="TourRequest.Location.Country"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <Label Grid.Row="2" Content="Language:"></Label>
+        <TextBlock Margin="0 0 5 0" Text="{Binding TourRequest.Language}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
+        <Label Grid.Row="3" Content="Description:"></Label>
+        <TextBlock Margin="0 0 5 0" Grid.RowSpan="2" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
+        <Separator Grid.Row="4" Grid.ColumnSpan="2"></Separator>
+        <Label Content="Choose date: " Grid.Row="5"></Label>
+        <Label Content="Choose time: " Grid.Row="6"></Label>
+        <DatePicker Grid.Row="5" Grid.Column="1" Name="DateCalendar" Margin="10" DisplayDateEnd="{Binding TourRequest.MaxDate}" DisplayDateStart="{Binding Path=TourRequest.MinDate}" SelectedDate="{Binding Path=SelectedDate}" ></DatePicker>
+        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="6" Grid.Column="1" Margin="10" Name="Time" StartTime="{Binding Path=StartTime}" EndTime="{Binding Path=EndTime}" Value="{Binding Path=SelectedTime}">
+        </xctk:TimePicker>
+        <Button Grid.Row="7" Grid.Column="0" Width="100" Margin="10" Content="Confirm" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Command="{Binding Path=ConfirmCommand}"></Button>
+        <Button Grid.Row="7" Grid.Column="1" Width="100" Margin="10" Content="Cancel"></Button>
+    </Grid>
+</Window>

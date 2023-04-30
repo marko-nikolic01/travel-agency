@@ -19,9 +19,10 @@ namespace TravelAgency.WPF.ViewModels
     /// </summary>
     public partial class AcceptTourRequestDialogue : Window
     {
-        public AcceptTourRequestDialogue(Domain.Models.TourRequest selectedRequest)
+        public AcceptTourRequestDialogue(Domain.Models.TourRequest selectedRequest, int id)
         {
             InitializeComponent();
+            this.DataContext = new AcceptTourRequestViewModel(selectedRequest, id);
         }
     }
 }

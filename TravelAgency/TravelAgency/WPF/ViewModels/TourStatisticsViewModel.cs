@@ -27,7 +27,6 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter RightCommand { get; set; }
         public ButtonCommandNoParameter LeftCommand { get; set; }
         public ButtonCommandNoParameter ViewCommand { get; set; }
-        public ButtonCommand<Window> HomeCommand { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public NavigationService NavService { get; set; }

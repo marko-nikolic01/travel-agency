@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Observer;
 using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
@@ -70,6 +71,15 @@ namespace TravelAgency.Services
                 return true;
             }
             return false;
+        }
+
+        public void Subscribe(IObserver observer)
+        {
+            ITourRequestRepository.Subscribe(observer);
+        }
+        public void UpdateRequestStatus(TourRequest request)
+        {
+            ITourRequestRepository.UpdateRequestStatus(request);
         }
     }
 }
