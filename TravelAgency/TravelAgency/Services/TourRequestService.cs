@@ -14,11 +14,13 @@ namespace TravelAgency.Services
     {
         public ILocationRepository ILocationRepository { get; set; }
         public ITourRequestRepository ITourRequestRepository { get; set; }
+        public IRequestAcceptedNotificationRepository IRequestAcceptedNotificationRepository { get; set; }
         
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
+            IRequestAcceptedNotificationRepository = Injector.Injector.CreateInstance<IRequestAcceptedNotificationRepository>();
             LinkRequestLocation();
         }
 
@@ -83,6 +85,10 @@ namespace TravelAgency.Services
         public void UpdateRequestStatus(TourRequest request)
         {
             ITourRequestRepository.UpdateRequestStatus(request);
+        }
+        public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
+        {
+            IRequestAcceptedNotificationRepository.Save(requestAcceptedNotification);
         }
     }
 }

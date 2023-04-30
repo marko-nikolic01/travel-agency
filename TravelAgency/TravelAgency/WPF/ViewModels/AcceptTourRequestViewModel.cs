@@ -92,6 +92,7 @@ namespace TravelAgency.WPF.ViewModels
             DateTime concreteDateTime = DateTime.ParseExact(dateTime, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
             TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id);
             TourRequestService.UpdateRequestStatus(TourRequest);
+            TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false));
             window.Close();
         }
 
