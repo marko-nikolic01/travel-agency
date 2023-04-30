@@ -67,5 +67,18 @@ namespace TravelAgency.Repositories
             _serializer.ToCSV(FilePath, tourRequests);
             NotifyObservers();
         }
+
+        public List<TourRequest> GetRequestsByGuestId(int id)
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest tourRequest in tourRequests)
+            {
+                if (tourRequest.GuestId == id)
+                {
+                    result.Add(tourRequest);
+                }
+            }
+            return result;
+        }
     }
 }

@@ -12,8 +12,9 @@ namespace TravelAgency.Services
 {
     public class TourRequestService
     {
-        private ILocationRepository ILocationRepository;
-        private ITourRequestRepository ITourRequestRepository;
+        public ILocationRepository ILocationRepository { get; set; }
+        public ITourRequestRepository ITourRequestRepository { get; set; }
+        
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
@@ -52,7 +53,10 @@ namespace TravelAgency.Services
         {
             return ILocationRepository.GetCitiesByCountry(country);
         }
-
+        public List<TourRequest> GetRequestsByGuestId(int id)
+        {
+            return ITourRequestRepository.GetRequestsByGuestId(id);
+        }
         public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateTime minDate, DateTime maxDate, string description, int guestId)
         {
             Location location = ILocationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
@@ -66,8 +70,7 @@ namespace TravelAgency.Services
                 request.Description = description;
                 request.GuestId = guestId;
                 request.Status = RequestStatus.Pending;
-                TourRequestRepository repository = new TourRequestRepository();
-                repository.Save(request);
+                ITourRequestRepository.Save(request);
                 return true;
             }
             return false;
