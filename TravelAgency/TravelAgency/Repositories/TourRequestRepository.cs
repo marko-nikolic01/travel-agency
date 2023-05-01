@@ -80,5 +80,56 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+        public int GetCountForYear(string year)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(year))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        public int GetCountForYearByLanguage(string year, string selectedLanguage)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(year) && r.Language.Equals(selectedLanguage))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        public int GetCountForYearByCountry(string year, string selectedCountry)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(year) && r.Location.Country.Equals(selectedCountry))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        public int GetCountForYearByCountryCity(string year, string selectedCountry, string city)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(year) && r.Location.City.Equals(city) && r.Location.Country.Equals(selectedCountry))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
     }
 }
