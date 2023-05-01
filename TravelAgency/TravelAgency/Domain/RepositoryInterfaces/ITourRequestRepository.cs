@@ -19,6 +19,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateRequestStatus(TourRequest request);
         public List<TourRequest> GetRequestsByGuestId(int id);
         public int NextId();
-
+        public int GetCountForYear(string year);
+        int GetCountForYearByLanguage(string year, string selectedLanguage);
+        int GetCountForYearByCountry(string year, string selectedCountry);
+        int GetCountForYearByCountryCity(string year, string selectedCountry, string city);
     }
 }

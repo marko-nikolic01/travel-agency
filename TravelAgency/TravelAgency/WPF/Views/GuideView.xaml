@@ -27,7 +27,7 @@
                 <Separator></Separator>
                 <MenuItem Header="Guest reviews" Command="{Binding NavigateToTourRatingsPageCommand}"></MenuItem>
                 <MenuItem Header="Tour statistics" Command="{Binding NavigateToTourStatisticsPageCommand}"></MenuItem>
-                <MenuItem Header="Requests statistics"></MenuItem>
+                <MenuItem Header="Requests statistics" Command="{Binding NavigateToRequestStatisticsPageCommand}"></MenuItem>
             </MenuItem>
             <MenuItem Header="BOOK AND TRACK APP" FontSize="20"></MenuItem>
             <MenuItem Header="⋮" FontSize="25" HorizontalAlignment="Right">
