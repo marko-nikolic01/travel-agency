@@ -299,7 +299,6 @@ namespace TravelAgency.Services
         {
             ITourReservationRepository.Save(tourReservation);
         }
-
         public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId)
         {
             Tour newTour = new Tour();

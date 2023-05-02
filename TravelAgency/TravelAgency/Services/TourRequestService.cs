@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace TravelAgency.Services
     {
         public ILocationRepository ILocationRepository { get; set; }
         public ITourRequestRepository ITourRequestRepository { get; set; }
+        public IRequestAcceptedNotificationRepository IRequestAcceptedNotificationRepository { get; set; }
         
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
+            IRequestAcceptedNotificationRepository = Injector.Injector.CreateInstance<IRequestAcceptedNotificationRepository>();
             LinkRequestLocation();
         }
 
@@ -81,6 +84,98 @@ namespace TravelAgency.Services
         public void UpdateRequestStatus(TourRequest request)
         {
             ITourRequestRepository.UpdateRequestStatus(request);
+        }
+        public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
+        {
+            IRequestAcceptedNotificationRepository.Save(requestAcceptedNotification);
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> GetYearStatistics(List<string> years)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            foreach (var year in years)
+            {
+                if(year == years[0])
+                {
+                    continue;
+                }
+                result.Add(new KeyValuePair<string, int>(year, ITourRequestRepository.GetCountForYear(year)));
+            }
+            return result;
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>>? GetYearLanguageStatistics(List<string> years, string selectedLanguage)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            foreach (var year in years)
+            {
+                if (year == years[0])
+                {
+                    continue;
+                }
+                result.Add(new KeyValuePair<string, int>(year, ITourRequestRepository.GetCountForYearByLanguage(year, selectedLanguage)));
+            }
+            return result;
+        }
+        public List<string> GetUniqueLanguages()
+        {
+            HashSet<string> uniqueLanguages = new HashSet<string>();
+            foreach (var r in ITourRequestRepository.GetAll())
+            {
+                uniqueLanguages.Add(r.Language);
+            }
+            return uniqueLanguages.ToList<string>();
+        }
+
+        public List<string> GetUniqueCountries()
+        {
+            HashSet<string> uniqueCountries = new HashSet<string>();
+            foreach (var r in ITourRequestRepository.GetAll())
+            {
+                uniqueCountries.Add(r.Location.Country);
+            }
+            return uniqueCountries.ToList<string>();
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> GetYearCountryStatistics(List<string> years, string selectedCountry)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            foreach (var year in years)
+            {
+                if (year == years[0])
+                {
+                    continue;
+                }
+                result.Add(new KeyValuePair<string, int>(year, ITourRequestRepository.GetCountForYearByCountry(year, selectedCountry)));
+            }
+            return result;
+        }
+
+        public List<string> GetUniqueCitiesByCountry(string country)
+        {
+            HashSet<string> uniqueCities = new HashSet<string>();
+            foreach (var r in ITourRequestRepository.GetAll())
+            {
+                if (r.Location.Country.Equals(country))
+                {
+                uniqueCities.Add(r.Location.City);
+                }
+            }
+            return uniqueCities.ToList<string>();
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> GetYearCityCountryStatistics(List<string> years, string selectedCountry, string city)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            foreach (var year in years)
+            {
+                if (year == years[0])
+                {
+                    continue;
+                }
+                result.Add(new KeyValuePair<string, int>(year, ITourRequestRepository.GetCountForYearByCountryCity(year, selectedCountry, city)));
+            }
+            return result;
         }
     }
 }
