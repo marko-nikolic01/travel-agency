@@ -23,16 +23,15 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="190"/>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="350"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <Label Content="Offered tours" FontSize="24" Margin="29,10,-29,126" Grid.Row="1"/>
-        <Grid Grid.Row="0" Margin="0 40">
+        <Label Content="Offered tours" FontSize="24" Margin="20 20 0 0" Grid.Row="0"/>
+        <Grid Grid.Row="1" Margin="0 30">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -44,21 +43,21 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="1" Grid.Column="0" Margin="0 20" HorizontalContentAlignment="Center">Search:</Label>
+            <Label Grid.Row="1" Grid.Column="0" Margin="0" HorizontalContentAlignment="Center">Search:</Label>
             <Label Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center">Country</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="1" Text="{Binding Country, UpdateSourceTrigger=PropertyChanged}" x:Name="tbCountry" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="1" Text="{Binding Country, UpdateSourceTrigger=PropertyChanged}" x:Name="tbCountry" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Center">City</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="2" x:Name="tbCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="2" x:Name="tbCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Center">Duration</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="4" HorizontalContentAlignment="Center">Language</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Guests</Label>
-            <TextBox Margin="10,15,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
+            <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
 
         </Grid>
-        <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
-                  SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Height="NaN" Margin="0,182,0,8" Grid.RowSpan="2">
+        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=TourOccurrences, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
+                  SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Height="NaN" Margin="0" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Tour.Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
@@ -89,7 +88,7 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>

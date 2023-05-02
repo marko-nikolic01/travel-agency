@@ -39,8 +39,9 @@
             <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
                  SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Guide" Binding="{Binding Guide.Username}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
+                <DataGridTextColumn Header="City" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Date and time" Binding="{Binding DateTime}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Duration (hours)" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>

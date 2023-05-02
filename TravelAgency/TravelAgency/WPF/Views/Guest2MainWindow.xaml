@@ -32,9 +32,9 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Width="170">
+                <Button Width="170" Command="{Binding NavigateToNotificationsCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../Resources/Images/IconBell.png" Height="25" Width="25"/>
+                        <Image Source="{Binding NotificationsImageSource}" Height="25" Width="25"/>
                         <TextBlock Margin="10 0">Notifications</TextBlock>
                     </StackPanel>
                 </Button>

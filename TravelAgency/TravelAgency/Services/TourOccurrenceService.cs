@@ -41,9 +41,10 @@ namespace TravelAgency.Services
             LinkTourPhotos(IPhotoRepository, ITourRepository);
             LinkTourOccurrences(ITourRepository);
             LinkTourGuests(ITourReservationRepository, IUserRepository);
-            LinkKeyPoints(IKeyPointRepository);
+            LinkKeyPoints();
+            LinkTourGuide();
         }
-        private void LinkKeyPoints(IKeyPointRepository keyPointRepository)
+        private void LinkKeyPoints()
         {
             foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
             {
@@ -51,16 +52,21 @@ namespace TravelAgency.Services
                 tourOccurrence.KeyPoints.AddRange(IKeyPointRepository.GetByTourOccurrence(tourOccurrence.Id));
             }
         }
-        private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
+        private void LinkTourGuide()
         {
-            foreach (var tourReservation in reservationRepository.GetAll())
+            foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
             {
-                TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
-                if (tourOccurrence != null)
+                User user = IUserRepository.GetById(tourOccurrence.GuideId);
+                if (user != null)
                 {
-                    tourOccurrence.Guests.Clear();
+                    tourOccurrence.Guide = user;
                 }
             }
+        }
+        private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
+        {
+            foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
+                tourOccurrence.Guests.Clear();
             foreach (TourReservation tourReservation in reservationRepository.GetAll())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
@@ -253,7 +259,7 @@ namespace TravelAgency.Services
             {
                 if (occurrence.CurrentState == CurrentState.Started && occurrence.DateTime.Date.Equals(DateTime.Now.Date))
                 {
-                    TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
+                    TourOccurrenceAttendance tourAttendance = ITourOccurrenceAttendanceRepository.GetByTourOccurrenceIdAndGuestId(occurrence.Id, guestId);
                     if (tourAttendance != null)
                     {
                         result = BuildActiveTourString(occurrence);
@@ -270,7 +276,6 @@ namespace TravelAgency.Services
             }
             return result;
         }
-
         private string BuildActiveTourString(TourOccurrence occurrence)
         {
             string result;
@@ -281,10 +286,6 @@ namespace TravelAgency.Services
             return result;
         }
 
-        private TourOccurrenceAttendance FindAttendance(int currentGuestId, int id)
-        {
-            return ITourOccurrenceAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
-        }
         public List<TourOccurrence> GetTodays(int activeGuideId)
         {
             return ITourOccurrenceRepository.GetTodays(activeGuideId);
