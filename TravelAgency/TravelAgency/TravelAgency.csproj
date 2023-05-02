@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\IconBell.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
   </ItemGroup>
 
@@ -20,12 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Resource Include="Resources\Images\IconBell.png" />
 	  <Resource Include="Resources\Images\ThreeLineMenu.jpg"></Resource>
 	  <Resource Include="Resources\Images\ArrowUpRight.png"></Resource>
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>
 	  <Resource Include="Resources\Images\RightArrow.png"></Resource>
 	  <Resource Include="Resources\Images\HelpImage.png"></Resource>
-	  <Resource Include="Resources\Images\IconBell.png"></Resource>
+	  <Resource Include="Resources\Images\questionmark.png"></Resource>
+	  <Resource Include="Resources\Images\IconBelled.png"></Resource>
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
 	  <Resource Include="Resources\Images\noTours.png"></Resource>

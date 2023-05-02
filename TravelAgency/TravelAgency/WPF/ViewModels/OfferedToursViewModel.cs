@@ -18,64 +18,47 @@ namespace TravelAgency.WPF.ViewModels
         private string city;
         private string country;
         private string guests;
+        private bool helpClicked;
+        private bool dataGridClicked;
         private ObservableCollection<TourOccurrence> occurrences;
         TourOccurrenceService occurrenceService;
         public ObservableCollection<TourOccurrence> TourOccurrences
         {
             get { return occurrences; }
-            set
-            {
-                occurrences = value;
-                OnPropertyChanged();
-            }
+            set { occurrences = value; OnPropertyChanged(); }
         }
         public TourOccurrence SelectedTourOccurrence { get; set; }
-        public ButtonCommandNoParameter ReserveTourCommand { get; set; }
-
-        public string Country
+        public ButtonCommandNoParameter SearchHelpCommand { get; set; }
+        public ButtonCommandNoParameter DataGridHelpCommand { get; set; }
+        public bool SearchHelpClicked
         {
+            get { return helpClicked; }
+            set { helpClicked = value; OnPropertyChanged(); }
+        }
+        public bool DataGridHelpClicked
+        {
+            get { return dataGridClicked; }
+            set { dataGridClicked = value; OnPropertyChanged(); }
+        }
+        public string Country{
             get { return country; }
-            set
-            {
-                country = value;
-                OnPropertyChanged();
-            }
+            set { country = value; OnPropertyChanged(); }
         }
-        public string City
-        {
+        public string City{
             get { return city; }
-            set
-            {
-                city = value;
-                OnPropertyChanged();
-            }
+            set { city = value; OnPropertyChanged(); }
         }
-        public string Language
-        {
+        public string Language{
             get { return language; }
-            set
-            {
-                language = value;
-                OnPropertyChanged();
-            }
+            set { language = value; OnPropertyChanged(); }
         }
-        public string Duration
-        {
+        public string Duration{
             get { return duration; }
-            set
-            {
-                duration = value;
-                OnPropertyChanged();
-            }
+            set { duration = value; OnPropertyChanged(); }
         }
-        public string Guests
-        {
+        public string Guests{
             get { return guests; }
-            set
-            {
-                guests = value;
-                OnPropertyChanged();
-            }
+            set { guests = value; OnPropertyChanged(); }
         }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -89,7 +72,17 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrences = new ObservableCollection<TourOccurrence>(occurrenceService.GetOfferedTours());
             currentGuestId = id;
             occurrenceService.Subscribe(this);
-            
+            SearchHelpClicked = false;
+            SearchHelpCommand = new ButtonCommandNoParameter(HelpClick);
+            DataGridHelpCommand = new ButtonCommandNoParameter(DataGridClick);
+        }
+        private void HelpClick()
+        {
+            SearchHelpClicked = !SearchHelpClicked;
+        }
+        private void DataGridClick()
+        {
+            DataGridHelpClicked = !DataGridHelpClicked;
         }
         public bool CanTourBeReserved()
         {

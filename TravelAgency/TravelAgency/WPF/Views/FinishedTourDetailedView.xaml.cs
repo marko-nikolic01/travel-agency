@@ -10,32 +10,39 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
-using TravelAgency.Repositories;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
     /// Interaction logic for FinishedTourDetailedView.xaml
     /// </summary>
-    public partial class FinishedTourDetailedView : Window
+    public partial class FinishedTourDetailedView : Page
     {
-        private TourOccurrence tourOccurrence;
-        public FinishedTourDetailedView(TourOccurrence occurrence)
+        FinishedTourViewModel viewModel;
+        TourPhotosViewModel photosViewModel;
+        public FinishedTourDetailedView(TourOccurrence tourOccurrence, int guestId)
         {
+            viewModel = new FinishedTourViewModel(tourOccurrence, guestId);
+            photosViewModel = new TourPhotosViewModel(tourOccurrence.Tour.Photos);
             InitializeComponent();
-            tourOccurrence = occurrence;
-            nameLabel.Content = tourOccurrence.Tour.Name;
-            UserRepository userRepository = new UserRepository();
-            User user = userRepository.GetById(tourOccurrence.GuideId);
-            guideLabel.Content = user.Username;
-            descripitonLabel.Content = tourOccurrence.Tour.Description;
+            DataContext = viewModel;
+            img.DataContext = photosViewModel;
+            btn1.DataContext = photosViewModel;
+            btn2.DataContext = photosViewModel;
         }
-
+        private void RateTour_Click(object sender, RoutedEventArgs e)
+        {
+            TourRatingFormView ratingFormView = new TourRatingFormView(viewModel.tourOccurrence, viewModel.guestId);
+            this.NavigationService.Navigate(ratingFormView);
+        }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            MyTours myTours = new MyTours(viewModel.guestId);
+            this.NavigationService.Navigate(myTours);
         }
     }
 }

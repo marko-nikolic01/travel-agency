@@ -60,16 +60,14 @@ namespace TravelAgency.Services
         {
             return ITourRequestRepository.GetRequestsByGuestId(id);
         }
-        public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateTime minDate, DateTime maxDate, string description, int guestId)
+        public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate, string description, int guestId)
         {
             Location location = ILocationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
             TourRequest request = new TourRequest();
-            if (request.Valid(language, numberOfGuests))
+            if (request.Valid(language, numberOfGuests, minDate, maxDate))
             {
                 request.Location = location;
                 request.LocationId = location.Id;
-                request.MinDate = minDate;
-                request.MaxDate = maxDate;
                 request.Description = description;
                 request.GuestId = guestId;
                 request.Status = RequestStatus.Pending;

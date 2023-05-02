@@ -29,12 +29,8 @@ namespace TravelAgency.WPF.Views
         }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
-            FinishedTourDetailedView details = new FinishedTourDetailedView(myToursViewModel.SelectedTourOccurrence);
-            Point point = Mouse.GetPosition(this);
-            Point pointToScreen = PointToScreen(point);
-            details.Left = pointToScreen.X - 800;
-            details.Top = pointToScreen.Y - 520;
-            details.Show();
+            FinishedTourDetailedView view = new FinishedTourDetailedView(myToursViewModel.SelectedTourOccurrence, myToursViewModel.currentGuestId);
+            this.NavigationService.Navigate(view);
         }
     }
 }

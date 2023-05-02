@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using TravelAgency.Commands;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
 
@@ -11,29 +12,27 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string selectedCountry;
         private string selectedCity;
-        public string SelectedCountry
+        private bool dateHelpClicked;
+        private bool guestNumHelpClicked;
+        public bool DateHelpClicked
         {
-            get => selectedCountry;
-            set
-            {
-                if (value != selectedCountry)
-                {
-                    selectedCountry = value;
-                    OnPropertyChanged();
-                }
-            }
+            get { return dateHelpClicked; }
+            set { dateHelpClicked = value; OnPropertyChanged(); }
         }
-        public string SelectedCity
+        public bool GuestNumHelpClicked
         {
+            get { return guestNumHelpClicked; }
+            set { guestNumHelpClicked = value; OnPropertyChanged(); }
+        }
+        public ButtonCommandNoParameter GuestNumHelpCommand { get; set; }
+        public ButtonCommandNoParameter DateHelpCommand { get; set; }
+        public string SelectedCountry{
+            get => selectedCountry;
+            set{ if (value != selectedCountry) { selectedCountry = value; OnPropertyChanged(); } }
+        }
+        public string SelectedCity{
             get => selectedCity;
-            set
-            {
-                if (value != selectedCity)
-                {
-                    selectedCity = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { if (value != selectedCity) { selectedCity = value; OnPropertyChanged(); } }
         }
         public string Language { get; set; }
         public DateTime MinDate { get; set; }
@@ -58,8 +57,20 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCountry = Countries[0];
             Cities = new ObservableCollection<string>();
             guestId = id;
+            MinDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 2);
+            MaxDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 3);
+            Language = "";
+            GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
+            DateHelpCommand = new ButtonCommandNoParameter(DateClick);
         }
-
+        private void GuestNumClick()
+        {
+            GuestNumHelpClicked = !GuestNumHelpClicked;
+        }
+        private void DateClick()
+        {
+            DateHelpClicked = !DateHelpClicked;
+        }
         public void SetCitiesComboBox()
         {
             Cities.Clear();
@@ -72,7 +83,7 @@ namespace TravelAgency.WPF.ViewModels
 
         public bool SubmitRequest()
         {
-            return tourRequestService.SaveRequest(SelectedCountry, SelectedCity, Language, NumberOfGuests, MinDate, MaxDate, Description, guestId);
+            return tourRequestService.SaveRequest(SelectedCountry, SelectedCity, Language, NumberOfGuests, DateOnly.FromDateTime(MinDate), DateOnly.FromDateTime(MaxDate), Description, guestId);
         }
     }
 }

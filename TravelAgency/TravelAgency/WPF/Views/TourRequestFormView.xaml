@@ -44,6 +44,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Country" HorizontalAlignment="Left" />
                 <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="City" HorizontalAlignment="Left"/>
@@ -71,6 +72,39 @@
             <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
             <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="500" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <Grid Grid.Column="2" Grid.Row="3">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding GuestNumHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = GuestNumHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = NumGuestBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Canvas Width = "220" Height = "80" Background="Azure">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock FontSize="12" Padding="10">
+                                Here is entered maximum number<LineBreak/>of guests that could be on tour.
+                            </TextBlock>
+                        </StackPanel>
+                    </Canvas>
+                </Popup>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="4">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding DateHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = DateHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Canvas Width = "220" Height = "80" Background="Azure">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock FontSize="12" Padding="10">
+                                Here is entered date range in which<LineBreak/> tour could be held.<LineBreak/>
+                                Min date must at least 48h from now.
+                            </TextBlock>
+                        </StackPanel>
+                    </Canvas>
+                </Popup>
+            </Grid>
         </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

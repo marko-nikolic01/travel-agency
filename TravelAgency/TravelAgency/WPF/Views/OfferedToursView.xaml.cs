@@ -41,23 +41,5 @@ namespace TravelAgency.WPF.Views
             this.NavigationService.Navigate(vouchersView);
         }
 
-        /*   private void AllertIfSelectеd(User activeGuest)
-           {
-               TourOccurrenceAttendanceService tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
-               TourOccurrenceAttendance attendance;
-               if( (attendance = tourOccurrenceAttendanceService.GetAttendance(activeGuest.Id)) != null)
-               {
-                   if (MessageBox.Show("You have just been selected as present on the tour! Do you confirm?", "Notification", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                   {
-                       tourOccurrenceAttendanceService.SaveAnswer(true, attendance);
-                   }
-                   else
-                   {
-                       tourOccurrenceAttendanceService.SaveAnswer(false, attendance);
-                   }
-               }
-           }
-        */
-
     }
 }
