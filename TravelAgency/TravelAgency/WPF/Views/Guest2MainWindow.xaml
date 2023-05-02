@@ -55,19 +55,6 @@
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-            <Popup IsOpen = "{Binding Path = IsHelpClicked}"    
-            PlacementTarget = "{Binding ElementName = HelpButton}"
-            AllowsTransparency = "True">
-                <Canvas Width = "250" Height = "120" Background="Azure">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Padding="10">
-                            This is window allows you to reserve tour.<LineBreak/>
-                            Choose tour from the table<LineBreak/> and click on make a reservation
-                        </TextBlock>
-                        <Button Width="80" Margin="10" FontSize="12" Content="More details" HorizontalAlignment="Left" />
-                    </StackPanel>
-                </Canvas>
-            </Popup>
         </Grid>
         <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="Guest2ProfileView.xaml" />
     </Grid>

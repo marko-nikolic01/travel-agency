@@ -30,13 +30,42 @@
         </Grid.RowDefinitions>
        
         <StackPanel Grid.Row="0">
-            <Label Margin="20" FontSize="24" Content="Active Tour"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Margin="20" Grid.Column="0" FontSize="24" Content="Active Tour"></Label>
+                <Grid Grid.Column="1">
+                    <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="ActiveTourBtn" VerticalAlignment="Top" Command="{Binding ActiveTourHelpCommand}">
+                        <Image Source="../../Resources/Images/questionmark.png"></Image>
+                    </Button>
+                    <Popup IsOpen = "{Binding Path = ActiveTourHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = ActiveTourBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                        <Canvas Width = "250" Height = "100" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="12" Padding="10">
+                                In this section you can see if there is<LineBreak/>active tour that you have reserved.<LineBreak/>
+                                If there is active tour, you will have written<LineBreak/>
+                                what is current key point and<LineBreak/>if your presence is registered.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Popup>
+                </Grid>
+            </Grid>
             <TextBlock TextAlignment="Left" Width="auto" Height="120" Text="{Binding Path=ActiveTourString}" Margin="25 0"></TextBlock>
             <Separator/>
         </StackPanel>
         <StackPanel Grid.Row="1">
         <Label Margin="20 0" FontSize="24" Content="Finished Tours"></Label>
-            <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
+        <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
                  SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Guide" Binding="{Binding Guide.Username}"></DataGridTextColumn>
@@ -62,6 +91,26 @@
 
                 </DataGrid.Columns>
         </DataGrid>
+                <Grid Grid.Column="1">
+                    <Button Margin="10,0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding DataGridHelpCommand}">
+                        <Image Source="../../Resources/Images/questionmark.png"></Image>
+                    </Button>
+                    <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                        <Canvas Width = "290" Height = "100" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="12" Padding="10">
+                            In this table you have all the tours you've been on.<LineBreak/>
+                            You can rate the tour by selecting appropriate row<LineBreak/> 
+                            and clicking "Rate the tour" button.
+                            <LineBreak />To see more detailed view of tour,<LineBreak /> click on "More details" button
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Popup>
+                </Grid>
+            </Grid>
         </StackPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

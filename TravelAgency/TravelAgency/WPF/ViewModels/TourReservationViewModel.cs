@@ -17,7 +17,8 @@ namespace TravelAgency.WPF.ViewModels
         private string spotsLeft;
         private bool addEnabled;
         private bool submitEnabled;
-        private List<string> guestsList;
+        private bool guestsHelpClicked;
+        private bool voucherHelpClicked;
         public string TourDescription { get; set; }
         public string GuestName { get => guestName; 
                                   set{ if (value != guestName) { guestName = value; OnPropertyChanged(); }}}
@@ -30,7 +31,10 @@ namespace TravelAgency.WPF.ViewModels
                                          set { if (value != addEnabled) { addEnabled = value; OnPropertyChanged(); } } }
         public bool IsSubmitButtonEnabled { get => submitEnabled;
             set { if (value != submitEnabled) { submitEnabled = value; OnPropertyChanged(); } } }
-
+        public bool GuestsHelpClicked { get => guestsHelpClicked;
+            set { if (value != guestsHelpClicked) { guestsHelpClicked = value; OnPropertyChanged(); } } }
+        public bool VoucherHelpClicked{ get => voucherHelpClicked;
+            set { if (value != voucherHelpClicked) { voucherHelpClicked = value; OnPropertyChanged(); } } }
         public ObservableCollection<string> GuestsList { get; set; }
 
         private UserService userService;
@@ -39,6 +43,8 @@ namespace TravelAgency.WPF.ViewModels
         public string SelectedGuest { get; set; }
         public ButtonCommandNoParameter AddGuestCommand { get; set; }
         public ButtonCommandNoParameter RemoveGuestCommand { get; set; }
+        public ButtonCommandNoParameter GuestsHelpCommand { get; set; }
+        public ButtonCommandNoParameter VoucherHelpCommand { get; set; }
         private TourOccurrence tourOccurrence;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -61,6 +67,17 @@ namespace TravelAgency.WPF.ViewModels
                 ", " + tourOccurrence.Tour.Location.City + ". " + tourOccurrence.Tour.Description;
             AddGuestCommand = new ButtonCommandNoParameter(AddGuest);
             RemoveGuestCommand = new ButtonCommandNoParameter(RemoveGuest);
+            GuestsHelpCommand = new ButtonCommandNoParameter(GuestsHelpClick);
+            VoucherHelpCommand = new ButtonCommandNoParameter(VoucherHelpClick);
+        }
+
+        private void GuestsHelpClick()
+        {
+            GuestsHelpClicked = !GuestsHelpClicked;
+        }
+        private void VoucherHelpClick()
+        {
+            VoucherHelpClicked = !VoucherHelpClicked;
         }
         private void RemoveGuest()
         {
@@ -139,7 +156,7 @@ namespace TravelAgency.WPF.ViewModels
                 int spotsLeft = tourOccurrence.Tour.MaxGuestNumber - (tourOccurrence.Guests.Count + input);
                 if (spotsLeft < 0)
                 {
-                    SpotsLeft = "Not enough spots on tour";
+                    SpotsLeft = "Not enough spots\non tour";
                     IsSubmitButtonEnabled = false;
                 }
                 else

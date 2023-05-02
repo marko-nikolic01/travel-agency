@@ -25,7 +25,31 @@
         </Grid.RowDefinitions>
         
         <Grid Grid.Row="0">
-            <Label Margin="20" FontSize="24" Content="Tour requests"></Label>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="20" FontSize="24" Content="Tour requests"></Label>
+            <Grid Grid.Column="1">
+                <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="TourRequestBtn" VerticalAlignment="Top" Command="{Binding TourRequestHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = TourRequestHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = TourRequestBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Canvas Width = "290" Height = "120" Background="Azure">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock FontSize="12" Padding="10">
+                                On this page you have all requests that you made.<LineBreak/>On the begining, status of request is pending<LineBreak/>
+                                If 48h before selected date for tour, the tour<LineBreak/>
+                                 is not accepted, status of the tour will be: rejeted.<LineBreak/>
+                                If tour is accepted, in the last column "Given date"<LineBreak/>
+                                will be shown the date of tour.  
+                            </TextBlock>
+                        </StackPanel>
+                    </Canvas>
+                </Popup>
+            </Grid>
         </Grid>
         <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
             <DataGrid.Columns>

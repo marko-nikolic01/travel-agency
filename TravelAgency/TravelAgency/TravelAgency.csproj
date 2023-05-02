@@ -27,6 +27,7 @@
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>
 	  <Resource Include="Resources\Images\RightArrow.png"></Resource>
 	  <Resource Include="Resources\Images\HelpImage.png"></Resource>
+	  <Resource Include="Resources\Images\questionmark.png"></Resource>
 	  <Resource Include="Resources\Images\IconBelled.png"></Resource>
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>

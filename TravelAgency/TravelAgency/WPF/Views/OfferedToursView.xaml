@@ -35,7 +35,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
@@ -54,16 +54,34 @@
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Guests</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
-
+            <Button Margin="10,-5,10,15" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="6" x:Name="SearchHelpButton" Command="{Binding SearchHelpCommand}">
+                <Image Source="../../Resources/Images/questionmark.png"></Image>
+            </Button>
+            <Popup IsOpen = "{Binding Path = SearchHelpClicked}"    
+            PlacementTarget = "{Binding ElementName = SearchHelpButton}" Placement="Left"
+            AllowsTransparency = "True">
+                <Canvas Width = "200" Height = "80" Background="Azure">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Padding="10">
+                            Type text in the fields to filter<LineBreak/> by the appropriate criteria.<LineBreak/>
+                            Table will be filtered automatically.
+                        </TextBlock>
+                    </StackPanel>
+                </Canvas>
+            </Popup>
         </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=TourOccurrences, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        <DataGrid IsReadOnly="True" Grid.Column="0" ItemsSource="{Binding Path=TourOccurrences, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
                   SelectedItem="{Binding Path=SelectedTourOccurrence}" Name="ToursDataGrid" Height="NaN" Margin="0" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Tour.Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
                 <DataGridTextColumn Header="City" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Date and time" Binding="{Binding DateTime}"></DataGridTextColumn>
-
                 <DataGridTextColumn Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Max guests" Binding="{Binding Tour.MaxGuestNumber}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Current guests" Binding="{Binding Guests.Count}"></DataGridTextColumn>
@@ -88,6 +106,25 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+            <Grid Grid.Column="1">
+                <Button Margin="10,0,10,15" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding DataGridHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
+                PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
+                AllowsTransparency = "True">
+                    <Canvas Width = "250" Height = "100" Background="Azure">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Padding="10">
+                            Select tour by clicking on row in table,<LineBreak/>then you can reserve tour
+                            by clicking<LineBreak/> "make a reservation" button.<LineBreak/>
+                            To see tour photos click on "show photos" <LineBreak/>button in corresponding row.
+                            </TextBlock>
+                        </StackPanel>
+                    </Canvas>
+                </Popup>
+            </Grid>
+        </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>

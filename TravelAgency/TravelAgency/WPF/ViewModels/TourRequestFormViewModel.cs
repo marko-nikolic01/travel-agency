@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using TravelAgency.Commands;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
 
@@ -11,6 +12,20 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string selectedCountry;
         private string selectedCity;
+        private bool dateHelpClicked;
+        private bool guestNumHelpClicked;
+        public bool DateHelpClicked
+        {
+            get { return dateHelpClicked; }
+            set { dateHelpClicked = value; OnPropertyChanged(); }
+        }
+        public bool GuestNumHelpClicked
+        {
+            get { return guestNumHelpClicked; }
+            set { guestNumHelpClicked = value; OnPropertyChanged(); }
+        }
+        public ButtonCommandNoParameter GuestNumHelpCommand { get; set; }
+        public ButtonCommandNoParameter DateHelpCommand { get; set; }
         public string SelectedCountry
         {
             get => selectedCountry;
@@ -58,8 +73,17 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCountry = Countries[0];
             Cities = new ObservableCollection<string>();
             guestId = id;
+            GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
+            DateHelpCommand = new ButtonCommandNoParameter(DateClick);
         }
-
+        private void GuestNumClick()
+        {
+            GuestNumHelpClicked = !GuestNumHelpClicked;
+        }
+        private void DateClick()
+        {
+            DateHelpClicked = !DateHelpClicked;
+        }
         public void SetCitiesComboBox()
         {
             Cities.Clear();
