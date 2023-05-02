@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml.Linq;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Domain.Models
@@ -19,17 +13,17 @@ namespace TravelAgency.Domain.Models
         public string Description { get; set; }
         public string Language { get; set; }
         public int GuestNumber { get; set; }
-        public DateTime MinDate { get; set; }
-        public DateTime MaxDate { get; set; }
+        public DateOnly MinDate { get; set; }
+        public DateOnly MaxDate { get; set; }
         public int GuestId { get; set; }
         public User Guest { get; set; }
 
         public RequestStatus Status { get; set; }
-        public DateTime? GivenDate { get; set; }
+        public DateOnly? GivenDate { get; set; }
         public TourRequest()
         {
         }
-        public TourRequest(Location location, string description, string language, int guestNumber, DateTime minDate, DateTime maxDate, int guestId, RequestStatus status, DateTime givenDate)
+        public TourRequest(Location location, string description, string language, int guestNumber, DateOnly minDate, DateOnly maxDate, int guestId, RequestStatus status, DateOnly givenDate)
         {
             Location = location;
             Description = description;
@@ -45,7 +39,7 @@ namespace TravelAgency.Domain.Models
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), LocationId.ToString(), Description, Language, GuestNumber.ToString(),
-                                 MinDate.ToString("dd-MM-yyyy HH-mm"), MaxDate.ToString("dd-MM-yyyy HH-mm"), GuestId.ToString(),
+                                 MinDate.ToString("dd-MM-yyyy"), MaxDate.ToString("dd-MM-yyyy"), GuestId.ToString(),
                                  ((int)Status).ToString()};
             return csvValues;
         }
@@ -57,19 +51,30 @@ namespace TravelAgency.Domain.Models
             Description = values[2];
             Language = values[3];
             GuestNumber = int.Parse(values[4]);
-            MinDate = DateTime.ParseExact(values[5], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
-            MaxDate = DateTime.ParseExact(values[6], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
+            MinDate = DateOnly.ParseExact(values[5], "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            MaxDate = DateOnly.ParseExact(values[6], "dd-MM-yyyy", CultureInfo.InvariantCulture);
             GuestId = int.Parse(values[7]);
             Status = (RequestStatus)Convert.ToInt32(values[8]);
         }
 
-        public bool Valid(string language, string numberOfGuests)
+        public bool Valid(string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate)
         {
+            int deltaDays= minDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber;
             int result = 0;
-            if (language != null && int.TryParse(numberOfGuests, out result))
+            if (int.TryParse(numberOfGuests, out result))
+            {
+                if (result > 0)
+                    GuestNumber = result;
+                else
+                    return false;
+            }
+            else
+                return false;
+            if (language != "" && deltaDays > 1 && maxDate > minDate)
             {
                 Language = language;
-                GuestNumber = result;
+                MinDate = minDate;
+                MaxDate = maxDate;
                 return true;
             }
             return false;
