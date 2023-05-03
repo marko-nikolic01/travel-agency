@@ -31,6 +31,14 @@
                     </Hyperlink>
                 </Label>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 20">
+                <Label Content="{Binding RequestAcceptedString}" />
+                <Label Margin="30 0">
+                    <Hyperlink Click="ShowTours_Click">
+                        <TextBlock FontSize="20" Text="{Binding ShowToursString}"/>
+                    </Hyperlink>
+                </Label>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

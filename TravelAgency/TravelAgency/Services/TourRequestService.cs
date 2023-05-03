@@ -23,6 +23,26 @@ namespace TravelAgency.Services
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
             IRequestAcceptedNotificationRepository = Injector.Injector.CreateInstance<IRequestAcceptedNotificationRepository>();
             LinkRequestLocation();
+            CheckIfRequestsAreInvalid();
+        }
+        public List<RequestAcceptedNotification> GetNewAcceptedRequests(int guestId)
+        {
+            return IRequestAcceptedNotificationRepository.GetNewAcceptedRequests(guestId);
+        }
+        public bool NewAcceptedRequestExists(int guestId)
+        {
+            return IRequestAcceptedNotificationRepository.NewAcceptedRequestExists(guestId);
+        }
+        private void CheckIfRequestsAreInvalid()
+        {
+            int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            foreach (var request in ITourRequestRepository.GetAll())
+            {
+                if (request.MinDate.DayNumber - currentDays < 2)
+                {
+                    request.Status = RequestStatus.Invalid;
+                }
+            }
         }
 
         private void LinkRequestLocation()
@@ -88,6 +108,10 @@ namespace TravelAgency.Services
         public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
         {
             IRequestAcceptedNotificationRepository.Save(requestAcceptedNotification);
+        }
+        public void UpdateNotification(RequestAcceptedNotification requestAcceptedNotification)
+        {
+            IRequestAcceptedNotificationRepository.Update(requestAcceptedNotification);
         }
 
         public ObservableCollection<KeyValuePair<string, int>> GetYearStatistics(List<string> years)

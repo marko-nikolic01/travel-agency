@@ -13,5 +13,8 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<RequestAcceptedNotification> GetAll();
 
         public RequestAcceptedNotification Save(RequestAcceptedNotification notification);
+        public List<RequestAcceptedNotification> GetNewAcceptedRequests(int guestId);
+        public bool NewAcceptedRequestExists(int guestId);
+        public void Update(RequestAcceptedNotification notification);
     }
 }
