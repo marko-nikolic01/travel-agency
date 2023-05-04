@@ -35,7 +35,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Execute_NavigateToRequestStatisticsPageCommand(object obj)
         {
-            Page requests = new TourRequestStatisticsView();
+            Page requests = new TourRequestStatisticsView(NavService, ActiveGuideId);
             NavService.Navigate(requests);
         }
         private void Execute_NavigateToRequestsStatisticsPageCommand(object obj)
