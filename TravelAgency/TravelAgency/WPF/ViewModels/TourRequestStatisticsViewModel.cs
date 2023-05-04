@@ -7,8 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using TravelAgency.Commands;
 using TravelAgency.Services;
+using TravelAgency.WPF.Views;
 using Xceed.Wpf.Toolkit.Primitives;
 
 namespace TravelAgency.WPF.ViewModels
@@ -34,7 +38,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private ObservableCollection<string> cities;
         public ObservableCollection<string> Cities
-    {
+        {
             get { return cities; }
             set
             {
@@ -152,8 +156,15 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public TourRequestStatisticsViewModel()
+        public ButtonCommandNoParameter CreateTourForLocationCommand { get; set; }
+        public ButtonCommandNoParameter CreateTourForLanguageCommand { get; set; }
+        public NavigationService NavigationService { get; set; }
+        public int ActiveGuideId { get; set; }
+
+        public TourRequestStatisticsViewModel(System.Windows.Navigation.NavigationService navService, int activeGuideId)
         {
+            NavigationService = navService;
+            ActiveGuideId = activeGuideId;
             Cities = new ObservableCollection<string>() { "< select a city >" };
             SelectedCity = Cities[0];
             Countries = new List<string>() { "< select a country >" };
@@ -164,10 +175,25 @@ namespace TravelAgency.WPF.ViewModels
             Years = new List<string>() { "YEARS", "2023", "2022", "2021", "2020", "2019"};
             SelectedYear = Years[0];
             Languages = new List<string>(TourRequestService.GetUniqueLanguages());
-            SelectedLanguage = Languages[0];
+            if(Languages.Count > 0)
+            {
+                SelectedLanguage = Languages[0];
+            }
             YearsStatistic = TourRequestService.GetYearLanguageStatistics(Years, SelectedLanguage);
             IsLocationChecked = false;
             IsLanguageChecked = true;
+            CreateTourForLocationCommand = new ButtonCommandNoParameter(CreateTourForLocation);
+            CreateTourForLanguageCommand = new ButtonCommandNoParameter(CreateTourForLanguage);
+        }
+        public void CreateTourForLocation()
+        {
+            Page createTourPage = new CreateTourForm(ActiveGuideId, NavigationService, location : TourRequestService.GetMostRequestedLocation()) ;
+            NavigationService.Navigate(createTourPage);
+        }
+        public void CreateTourForLanguage()
+        {
+            Page createTourPage = new CreateTourForm(ActiveGuideId, NavigationService, TourRequestService.GetMostRequestedLanguage());
+            NavigationService.Navigate(createTourPage);
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

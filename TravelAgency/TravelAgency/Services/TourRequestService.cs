@@ -177,5 +177,50 @@ namespace TravelAgency.Services
             }
             return result;
         }
+
+        public string GetMostRequestedLanguage()
+        {
+            string mostVisited = "";
+            int maxCount = 0;
+            foreach (var r1 in ITourRequestRepository.GetAll())
+            {
+                int count = 0;
+                foreach(var r2 in ITourRequestRepository.GetAll())
+                {
+                    if(r1.Language == r2.Language)
+                    {
+                        count++;
+                    }
+                }
+                if(count > maxCount)
+                {
+                    maxCount = count;
+                    mostVisited = r1.Language;
+                }
+            }
+            return mostVisited;
+        }
+        public Location GetMostRequestedLocation()
+        {
+            Location mostVisited = new Location();
+            int maxCount = 0;
+            foreach (var r1 in ITourRequestRepository.GetAll())
+            {
+                int count = 0;
+                foreach (var r2 in ITourRequestRepository.GetAll())
+                {
+                    if (r1.LocationId == r2.LocationId)
+                    {
+                        count++;
+                    }
+                }
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                    mostVisited = r1.Location;
+                }
+            }
+            return mostVisited;
+        }
     }
 }
