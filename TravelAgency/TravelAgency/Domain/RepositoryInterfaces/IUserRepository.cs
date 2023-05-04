@@ -21,5 +21,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateSuperOwners();
 
         public List<User> GetOwners();
+
+        public void LogInUser(User user);
+
+        public User GetLoggedInUser();
     }
 }

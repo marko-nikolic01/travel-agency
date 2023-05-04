@@ -120,5 +120,11 @@ namespace TravelAgency.WPF.Views
                 moveRequestManagingWindow.Show();
             }
         }
+
+        private void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            OwnerWindow ownerWindow = new OwnerWindow(LoggedInUser);
+            ownerWindow.Show();
+        }
     }
 }
