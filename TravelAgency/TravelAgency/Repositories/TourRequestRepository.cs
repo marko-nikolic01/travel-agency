@@ -131,5 +131,25 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+        public List<string> GetLanguages(int guestId)
+        {
+            List<string> result = new List<string>();
+            foreach(TourRequest request in tourRequests)
+            {
+                if(request.GuestId == guestId)
+                    result.Add(request.Language);
+            }
+            return result;
+        }
+        public List<string> GetCountriesForGuest(int guestId)
+        {
+            List<string> result = new List<string>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.GuestId == guestId)
+                    result.Add(request.Location.Country);
+            }
+            return result;
+        }
     }
 }

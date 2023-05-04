@@ -69,7 +69,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Show statistics"/>
+            <Button Grid.Column="1" Width="374" Height="43" Click="ShowStatistics_Click" Content="Show statistics"/>
         </Grid>
     </Grid>
 </Page>

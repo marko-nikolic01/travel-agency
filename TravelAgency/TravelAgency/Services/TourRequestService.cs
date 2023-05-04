@@ -201,5 +201,51 @@ namespace TravelAgency.Services
             }
             return result;
         }
+        public string GetAcceptedTourPercentage(int guestId, int year = 0)
+        {
+            double accepted = 0;
+            double count = 0;
+            foreach(TourRequest request in ITourRequestRepository.GetAll())
+            {                                   //ako je year 0 onda ce se gledati all time statistika
+                if(request.GuestId == guestId && (year == 0 || request.MinDate.Year == year)) 
+                {
+                    count++;
+                    if (request.Status == RequestStatus.Accepted)
+                        accepted++;
+                }
+            }
+            if (count == 0)
+                return "0";
+            return ConvertToString((accepted / count) * 100);
+        }
+
+        public string GetAveragePeopleNumber(int guestId, int year = 0)
+        {
+            double sum = 0;
+            double count = 0;
+            foreach (TourRequest request in ITourRequestRepository.GetAll())
+            {
+                if (request.GuestId == guestId && request.Status == RequestStatus.Accepted && (year == 0 || request.MinDate.Year == year))
+                {
+                    count++;
+                    sum += request.GuestNumber;
+                }
+            }
+            if (count == 0)
+                return "0";
+            return ConvertToString(sum / count);
+        }
+        private string ConvertToString(double number)
+        {
+           return String.Format("{0:0.00}", number);
+        }
+        public List<string> GetLanguages(int guestId)
+        {
+           return ITourRequestRepository.GetLanguages(guestId);
+        }
+        public List<string> GetCountriesForGuest(int guestId)
+        {
+            return ITourRequestRepository.GetCountriesForGuest(guestId);
+        }
     }
 }

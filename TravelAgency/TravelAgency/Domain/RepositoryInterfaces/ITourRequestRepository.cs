@@ -23,5 +23,8 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         int GetCountForYearByLanguage(string year, string selectedLanguage);
         int GetCountForYearByCountry(string year, string selectedCountry);
         int GetCountForYearByCountryCity(string year, string selectedCountry, string city);
+        public List<string> GetLanguages(int guestId);
+        //kaze u specifikaciji prikazati za lokaciju da li se misli samo na drzave ili na kombinacije (drzava, grad)
+        public List<string> GetCountriesForGuest(int guestId);
     }
 }
