@@ -86,6 +86,16 @@ namespace TravelAgency.WPF.Controls.CustomControls
         public static readonly DependencyProperty NavLinkProperty =
             DependencyProperty.Register("NavLink", typeof(Uri), typeof(OwnerSidebarNavigationButton), new PropertyMetadata(null));
 
+        public ImageSource Icon
+        {
+            get { return (ImageSource)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(OwnerSidebarNavigationButton), new PropertyMetadata(null));
+
 
         static OwnerSidebarNavigationButton()
         {

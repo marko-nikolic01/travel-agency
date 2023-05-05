@@ -32,7 +32,7 @@
                        FontSize="30"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
-                       Margin="5"/>
+                       Margin="5 0 5 3"/>
         </Grid>
     </Border>
 </UserControl>

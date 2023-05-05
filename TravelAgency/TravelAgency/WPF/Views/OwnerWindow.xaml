@@ -128,19 +128,33 @@
             <Separator Grid.Row="1" Margin="10 15"/>
 
             <ListBox Grid.Row="2"
-                      x:Name="Sidebar"
-                      HorizontalContentAlignment="Stretch"
-                      BorderThickness="0"
-                      Background="Transparent"
-                      SelectionMode="Single"
-                      SelectionChanged="ListBox_SelectionChanged"
-                      BorderBrush="Transparent">
+                     x:Name="Sidebar"
+                     HorizontalContentAlignment="Stretch"
+                     BorderThickness="0"
+                     Background="Transparent"
+                     SelectionMode="Single"
+                     SelectionChanged="ListBox_SelectionChanged"
+                     BorderBrush="Transparent">
                 
-                <customcontrols:OwnerSidebarNavigationButton Text="My Profile" KeyboardShortcutText="Ctrl+P" NavLink="WPF/Pages/OwnerProfilePage.xaml"/>
-                <customcontrols:OwnerSidebarNavigationButton Text="Accommodations" KeyboardShortcutText="Ctrl+A" NavLink="WPF/Pages/OwnerAccommodationsPage.xaml"/>
-                <customcontrols:OwnerSidebarNavigationButton Text="Ratings" KeyboardShortcutText="Ctrl+T"/>
-                <customcontrols:OwnerSidebarNavigationButton Text="Reservations" KeyboardShortcutText="Ctrl+R"/>
-                <customcontrols:OwnerSidebarNavigationButton Text="Forum" KeyboardShortcutText="Ctrl+F"/>
+                <customcontrols:OwnerSidebarNavigationButton Text="My Profile" KeyboardShortcutText="Ctrl+P"
+                                                             NavLink="WPF/Pages/OwnerProfilePage.xaml"
+                                                             Icon="../../Resources/Images/NavProfile.png"/>
+                
+                <customcontrols:OwnerSidebarNavigationButton Text="Accommodations" KeyboardShortcutText="Ctrl+A"
+                                                             NavLink="WPF/Pages/OwnerAccommodationsPage.xaml"
+                                                             Icon="../../Resources/Images/NavAccommodations.png"/>
+                
+                <customcontrols:OwnerSidebarNavigationButton Text="Ratings"
+                                                             KeyboardShortcutText="Ctrl+T"
+                                                             Icon="../../Resources/Images/NavRatings.png"/>
+                
+                <customcontrols:OwnerSidebarNavigationButton Text="Reservations"
+                                                             KeyboardShortcutText="Ctrl+R"
+                                                             Icon="../../Resources/Images/NavReservations.png"/>
+                
+                <customcontrols:OwnerSidebarNavigationButton Text="Forum"
+                                                             KeyboardShortcutText="Ctrl+F"
+                                                             Icon="../../Resources/Images/NavForum.png"/>
             </ListBox>
         </Grid>
 

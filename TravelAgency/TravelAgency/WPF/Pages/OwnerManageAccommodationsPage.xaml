@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OwnerManageAccommodationsPage">
@@ -13,6 +14,8 @@
         <Style x:Key="AccommodationCardFont" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
         </Style>
+
+        <converters:AccommodationPhotoToBitmapImageConverter x:Key="imageConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -28,37 +31,44 @@
         <ListView Grid.Row="1"
                   ItemsSource="{Binding Accommodations}"
                   ScrollViewer.CanContentScroll="False"
-                  HorizontalContentAlignment="Stretch">
+                  HorizontalContentAlignment="Stretch"
+                  Margin="0 0 0 20">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1"
                             BorderBrush="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0"/>
+                            <Image Grid.Column="0"
+                                   Height="150"
+                                   Width="150"
+                                   Source="{Binding Photos[0], Converter={StaticResource imageConverter}}"
+                                   Margin="10"/>
 
-                            <Grid Grid.Column="1">
+                            <Grid Grid.Column="1"
+                                  Margin="10">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Row="0"
-                                       Text="{Binding Name}"
-                                       FontSize="20"
-                                       TextDecorations="Underline"/>
+                                           Text="{Binding Name}"
+                                           FontSize="20"
+                                           TextDecorations="Underline"
+                                           Margin="0 0 0 10"/>
 
                                 <Grid Grid.Row="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -113,24 +123,25 @@
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
-                                         Margin="2"
+                                         Margin="0 0 2 0"
                                          Background="Black"
                                          Foreground="White"
                                          Text="Back"
-                                         KeyboardShortcutText="Backspace"/>
+                                         KeyboardShortcutText="Backspace"
+                                         Click="GoBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
-                                         Margin="2"
+                                         Margin="2 0 2 0"
                                          Text="Add new accommodation"
                                          KeyboardShortcutText="Ctrl+N"/>
             
             <controls:ButtonWithShortcut Grid.Column="2"
-                                         Margin="2"
+                                         Margin="2 0 2 0"
                                          Text="Remove accommodation"
                                          KeyboardShortcutText="Delete"/>
-            
+
             <controls:ButtonWithShortcut Grid.Column="3"
-                                         Margin="2"
+                                         Margin="2 0 0 0"
                                          Text="Suggestions for managing"
                                          KeyboardShortcutText="Ctrl+Alt+S"/>
         </Grid>

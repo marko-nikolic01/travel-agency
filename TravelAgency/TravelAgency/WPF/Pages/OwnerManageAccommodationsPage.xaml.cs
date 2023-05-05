@@ -41,5 +41,10 @@ namespace TravelAgency.WPF.Pages
 
             Accommodations = new ObservableCollection<Accommodation>(accommodationService.GetByOwner(LoggedInUser));
         }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new OwnerAccommodationsPage());
+        }
     }
 }

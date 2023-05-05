@@ -11,6 +11,11 @@
   <ItemGroup>
     <None Remove="Resources\Images\IconBell.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
+    <None Remove="Resources\Images\NavAccommodations.png" />
+    <None Remove="Resources\Images\NavForum.png" />
+    <None Remove="Resources\Images\NavProfile.png" />
+    <None Remove="Resources\Images\NavRatings.png" />
+    <None Remove="Resources\Images\NavReservations.png" />
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
@@ -54,6 +59,11 @@
   <ItemGroup>
 	  <Resource Include="Resources\Images\IconBell.png" />
 	  <Resource Include="Resources\Images\ManageAccommodations.png" />
+	  <Resource Include="Resources\Images\NavAccommodations.png" />
+	  <Resource Include="Resources\Images\NavForum.png" />
+	  <Resource Include="Resources\Images\NavProfile.png" />
+	  <Resource Include="Resources\Images\NavRatings.png" />
+	  <Resource Include="Resources\Images\NavReservations.png" />
 	  <Resource Include="Resources\Images\OwnerProfilePicture.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
