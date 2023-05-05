@@ -57,8 +57,8 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCountry = Countries[0];
             Cities = new ObservableCollection<string>();
             guestId = id;
-            MinDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 2);
-            MaxDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 3);
+            MinDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 3);
+            MaxDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 4);
             Language = "";
             GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
             DateHelpCommand = new ButtonCommandNoParameter(DateClick);

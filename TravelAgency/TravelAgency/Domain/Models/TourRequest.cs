@@ -70,7 +70,7 @@ namespace TravelAgency.Domain.Models
             }
             else
                 return false;
-            if (language != "" && deltaDays > 1 && maxDate > minDate)
+            if (language != "" && deltaDays > 2 && maxDate > minDate)
             {
                 Language = language;
                 MinDate = minDate;

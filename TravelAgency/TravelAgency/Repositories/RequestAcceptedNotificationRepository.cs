@@ -42,5 +42,34 @@ namespace TravelAgency.Repositories
             _serializer.ToCSV(FilePath, notifications);
             return notification;
         }
+        public void Update(RequestAcceptedNotification notification)
+        {
+            RequestAcceptedNotification oldNotification = notifications.Find(t => t.Id == notification.Id);
+            oldNotification.IsSeen = notification.IsSeen;
+            _serializer.ToCSV(FilePath, notifications);
+        }
+        public List<RequestAcceptedNotification> GetNewAcceptedRequests(int guestId)
+        {
+            List<RequestAcceptedNotification> result = new List<RequestAcceptedNotification>();
+            foreach (RequestAcceptedNotification notification in notifications)
+            {
+                if (!notification.IsSeen && guestId == notification.GuestId)
+                {
+                    result.Add(notification);
+                }
+            }
+            return result;
+        }
+        public bool NewAcceptedRequestExists(int guestId)
+        {
+            foreach (RequestAcceptedNotification notification in notifications)
+            {
+                if (!notification.IsSeen && guestId == notification.GuestId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

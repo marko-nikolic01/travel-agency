@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,10 +32,12 @@ namespace TravelAgency.WPF.ViewModels
             get => rejectionString;
             set { if (value != rejectionString) { rejectionString = value; OnPropertyChanged(); } }
         }
-        private int currentGuestId;
+        public int currentGuestId;
         private TourOccurrenceAttendance attendance;
         TourOccurrenceAttendanceService tourOccurrenceAttendanceService;
-
+        TourRequestService tourRequestService;
+        public List<RequestAcceptedNotification> RequestAcceptedNotifications { get; set; }
+        public RequestAcceptedNotification Notification { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -47,18 +50,27 @@ namespace TravelAgency.WPF.ViewModels
             RejectionString = "";
             currentGuestId = id;
             tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
+            tourRequestService = new TourRequestService();
+            RequestAcceptedNotifications = new List<RequestAcceptedNotification>();
             AllertIfSelectеd();
+            IsSomeTourAccepted();
         }
-       private void AllertIfSelectеd()
-       {
-           if( (attendance = tourOccurrenceAttendanceService.GetAttendance(currentGuestId)) != null)
-           {
+
+        private void IsSomeTourAccepted()
+        {
+            TourRequestService requestService = new TourRequestService();
+            RequestAcceptedNotifications = requestService.GetNewAcceptedRequests(currentGuestId);
+        }
+        private void AllertIfSelectеd()
+        {
+            if( (attendance = tourOccurrenceAttendanceService.GetAttendance(currentGuestId)) != null)
+            {
                 TourPresenceString = "You have been selected as present on tour, do you confirm?";
                 ConfirmationString = "YES";
                 RejectionString = "NO";
 
             }
-       }
+        }
         public void ConfirmPresence()
         {
             if (attendance != null)
@@ -80,6 +92,13 @@ namespace TravelAgency.WPF.ViewModels
                 RejectionString = "";
                 tourOccurrenceAttendanceService.NotifyObservers();
             }
+        }
+        public void RemoveNotification()
+        {
+            Notification.IsSeen = true;
+            tourRequestService.UpdateNotification(Notification);
+            RequestAcceptedNotifications.Remove(Notification);
+            tourOccurrenceAttendanceService.NotifyObservers();
         }
     }
 }
