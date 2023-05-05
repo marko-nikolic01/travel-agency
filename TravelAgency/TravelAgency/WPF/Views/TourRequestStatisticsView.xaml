@@ -25,7 +25,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -45,5 +45,11 @@
                 <DataGridTextColumn Header="Number of requests" Binding="{Binding Path=Value}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Border Grid.Row="9" BorderBrush="Black" BorderThickness="1" Margin="5" Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="40"></Border>
+        <Label Grid.Row="9" Grid.ColumnSpan="2" Margin="18 0 18 0">
+            <TextBlock Text="Use statistics in your favour! Create a tour for the last years most requested:" FontSize="20" TextWrapping="WrapWithOverflow"></TextBlock>
+        </Label>
+        <Button Grid.Column="0" Grid.Row="10" Margin="40 10 15 10" Content="Location" FontSize="20" Command="{Binding Path=CreateTourForLocationCommand}"></Button>
+        <Button Grid.Column="1" Grid.Row="10" Margin="15 10 40 10" Content="Language" FontSize="20" Command="{Binding Path=CreateTourForLanguageCommand}"></Button>
     </Grid>
 </Page>
