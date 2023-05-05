@@ -26,5 +26,8 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<string> GetLanguages(int guestId);
         //kaze u specifikaciji prikazati za lokaciju da li se misli samo na drzave ili na kombinacije (drzava, grad)
         public List<string> GetCountriesForGuest(int guestId);
+        public int GetCountForYearByLanguageAndYear(string selectedYear, string selectedLanguage, int month);
+        int GetCountForYearByLocationAndYear(string selectedYear, string selectedCountry, string selectedCity, int month);
+        int GetCountForYearByCountryAndYear(string selectedYear, string selectedCountry, int month);
     }
 }
