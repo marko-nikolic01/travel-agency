@@ -9,7 +9,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\bell.png" />
+    <None Remove="Resources\Images\book.png" />
+    <None Remove="Resources\Images\calendar.png" />
+    <None Remove="Resources\Images\cancel.png" />
+    <None Remove="Resources\Images\chat.png" />
+    <None Remove="Resources\Images\comment.png" />
+    <None Remove="Resources\Images\exchange.png" />
+    <None Remove="Resources\Images\globe.png" />
+    <None Remove="Resources\Images\hotel.png" />
+    <None Remove="Resources\Images\house.png" />
+    <None Remove="Resources\Images\info.png" />
+    <None Remove="Resources\Images\left-arrow.png" />
+    <None Remove="Resources\Images\logout.png" />
+    <None Remove="Resources\Images\medal-ribbon.png" />
+    <None Remove="Resources\Images\next.png" />
+    <None Remove="Resources\Images\pencil.png" />
+    <None Remove="Resources\Images\phone-book.png" />
+    <None Remove="Resources\Images\plus.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
+    <None Remove="Resources\Images\report.png" />
+    <None Remove="Resources\Images\search-location.png" />
+    <None Remove="Resources\Images\search.png" />
+    <None Remove="Resources\Images\star-in-a-circle.png" />
+    <None Remove="Resources\Images\star.png" />
+    <None Remove="Resources\Images\user.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +44,33 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Resource Include="Resources\Images\bell.png" />
+	  <Resource Include="Resources\Images\book.png" />
+	  <Resource Include="Resources\Images\calendar.png" />
+	  <Resource Include="Resources\Images\cancel.png" />
+	  <Resource Include="Resources\Images\chat.png" />
+	  <Resource Include="Resources\Images\comment.png" />
+	  <Resource Include="Resources\Images\exchange.png" />
+	  <Resource Include="Resources\Images\globe.png" />
+	  <Resource Include="Resources\Images\hotel.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\house.png" />
+	  <Resource Include="Resources\Images\info.png" />
+	  <Resource Include="Resources\Images\left-arrow.png" />
+	  <Resource Include="Resources\Images\logout.png" />
+	  <Resource Include="Resources\Images\medal-ribbon.png" />
+	  <Resource Include="Resources\Images\next.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\pencil.png" />
+	  <Resource Include="Resources\Images\phone-book.png" />
+	  <Resource Include="Resources\Images\plus.png" />
+	  <Resource Include="Resources\Images\report.png" />
+	  <Resource Include="Resources\Images\search-location.png" />
+	  <Resource Include="Resources\Images\search.png" />
+	  <Resource Include="Resources\Images\star-in-a-circle.png" />
+	  <Resource Include="Resources\Images\star.png" />
 	  <Resource Include="Resources\Images\ThreeLineMenu.jpg"></Resource>
 	  <Resource Include="Resources\Images\ArrowUpRight.png"></Resource>
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>
@@ -32,6 +83,7 @@
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+      <Resource Include="Resources\Images\user.png" />
   </ItemGroup>
 
 </Project>
