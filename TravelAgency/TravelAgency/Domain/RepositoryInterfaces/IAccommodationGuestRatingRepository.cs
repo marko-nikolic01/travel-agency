@@ -14,5 +14,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public int NextId();
         public List<AccommodationGuestRating> GetByOwner(User owner);
         public void LinkReservations(List<AccommodationReservation> reservations);
+        public int GetRatingsCountByOwner(User owner);
     }
 }

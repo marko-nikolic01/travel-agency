@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
+using TravelAgency.Services;
 using TravelAgency.WPF.Views;
 
 namespace TravelAgency
@@ -28,6 +29,7 @@ namespace TravelAgency
     public partial class MainWindow : Window
     {
         private readonly UserRepository _repository;
+        private UserService _userService;
 
         private string _username;
         public string Username
@@ -55,6 +57,7 @@ namespace TravelAgency
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
+            _userService = new UserService();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -87,6 +90,7 @@ namespace TravelAgency
                         Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
                         guest2Main.Show();
                     }
+                    _userService.LogInUser(user);
                     Close();
                 }
                 else
@@ -98,7 +102,6 @@ namespace TravelAgency
             {
                 MessageBox.Show("Wrong username!");
             }
-
         }
     }
 }

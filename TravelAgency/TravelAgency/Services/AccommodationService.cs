@@ -47,5 +47,10 @@ namespace TravelAgency.Services
         {
             return AccommodationRepository.GetByOwner(owner);
         }
+
+        public int GetAccommodationsCountForOwner(User owner)
+        {
+            return GetByOwner(owner).Count();
+        }
     }
 }

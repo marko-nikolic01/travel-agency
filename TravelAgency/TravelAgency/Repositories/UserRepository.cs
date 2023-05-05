@@ -19,6 +19,7 @@ namespace TravelAgency.Repositories
         private readonly Serializer<User> _serializer;
 
         private List<User> _users;
+        private User loggedInUser;
 
         public UserRepository()
         {
@@ -69,5 +70,14 @@ namespace TravelAgency.Repositories
             return _users.FindAll(u => u.Role == Roles.Owner);
         }
 
+        public void LogInUser(User user)
+        {
+            loggedInUser = user;
+        }
+
+        public User GetLoggedInUser()
+        {
+            return loggedInUser;
+        }
     }
 }
