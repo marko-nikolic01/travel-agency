@@ -24,5 +24,10 @@ namespace TravelAgency.WPF.Pages
         {
             InitializeComponent();
         }
+
+        private void AccommodationsNavigationButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new OwnerManageAccommodationsPage());
+        }
     }
 }

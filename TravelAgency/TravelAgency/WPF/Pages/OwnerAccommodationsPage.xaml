@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="1.6*"/>
+            <RowDefinition Height="2.2*"/>
         </Grid.RowDefinitions>
 
         <controls:PageHeader Grid.Row="0" Text="Accommodations"/>
@@ -25,20 +25,24 @@
             </Grid.RowDefinitions>
 
             <controls:AccommodationsNavigationButton Grid.Row="0"
-                                                 Text="Manage Accommodations"
-                                                 KeyboardShortcutText="Ctrl+M"
-                                                 Foreground="Black"
-                                                 Background="White"/>
+                                                     Text="Manage Accommodations"
+                                                     KeyboardShortcutText="Ctrl+M"
+                                                     Icon="../../Resources/Images/ManageAccommodations.png"
+                                                     Foreground="Black"
+                                                     Background="White"
+                                                     Click="AccommodationsNavigationButton_Click"/>
             
             <controls:AccommodationsNavigationButton Grid.Row="1"
-                                                 Text="Statistics"
-                                                 KeyboardShortcutText="Ctrl+S"
-                                                 Background="White"/>
+                                                     Text="Statistics"
+                                                     Icon="../../Resources/Images/OwnerStatistics.png"
+                                                     KeyboardShortcutText="Ctrl+S"
+                                                     Background="White"/>
             
             <controls:AccommodationsNavigationButton Grid.Row="2"
-                                                 Text="Renovations"
-                                                 KeyboardShortcutText="Ctrl+Alt+R"
-                                                 Background="White"/>
+                                                     Text="Renovations"
+                                                     Icon="../../Resources/Images/Renovations.png"
+                                                     KeyboardShortcutText="Ctrl+Alt+R"
+                                                     Background="White"/>
         </Grid>
     </Grid>
 </Page>

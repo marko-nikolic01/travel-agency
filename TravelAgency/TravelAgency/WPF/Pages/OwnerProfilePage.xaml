@@ -25,7 +25,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" Source="../../Resources/Images/ProfilePicture.jpg" Height="220" Margin="0 23 20 2"/>
+            <Image Grid.Column="0" Source="../../Resources/Images/OwnerProfilePicture.png" Height="220" Margin="0 23 20 2"/>
 
             <GroupBox Grid.Column="1"
                       x:Name="PersonalInfoGroupBox"
@@ -75,14 +75,25 @@
                 <GroupBox.Header>
                     <Label FontSize="24" Content="Ratings"/>
                 </GroupBox.Header>
+                
                 <GroupBox.Content>
-                    <Grid Margin="20">
+                    <Grid Margin="12">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="0"
+                        <controls:RatingBox Grid.Row="0"
+                                            Header="Avg. rating"
+                                            Value="{Binding AverageRating}"
+                                            Margin="0 0 0 5"/>
+
+                        <controls:RatingBox Grid.Row="1"
+                                            Header="No. ratings"
+                                            Value="{Binding RatingsCount}"
+                                            Margin="0 5 0 0"/>
+
+                        <!--<Border Grid.Row="0"
                                 Background="LightGray"
                                 BorderThickness="1"
                                 BorderBrush="Black"
@@ -107,14 +118,14 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="1"
-                                               Text="Super-owner"
+                                               Text="Average rating"
                                                VerticalAlignment="Center"
                                                FontSize="18"
                                                Margin="5 0 0 0"/>
 
                                     <Image Grid.Column="0"
-                                           Height="32"
-                                           Source="../../Resources/Images/ProfilePicture.jpg"/>
+                                           Height="24"
+                                           Source="../../Resources/Images/SuperOwnerMedal.png"/>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -150,11 +161,11 @@
                                                Margin="5 0 0 0"/>
 
                                     <Image Grid.Column="0"
-                                           Height="32"
-                                           Source="../../Resources/Images/ProfilePicture.jpg"/>
+                                           Height="24"
+                                           Source="../../Resources/Images/OwnerRatingStar.png"/>
                                 </Grid>
                             </Grid>
-                        </Border>
+                        </Border>-->
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>
@@ -171,7 +182,7 @@
                               TipText="In order to become a super-owner you need to have at least 50 ratings from guests and to have an average rating of at least 9.5/10."/>
                 <controls:Tip Grid.Row="1"
                               Header="What are benefits of being a super-owner?"
-                              TipText="It is very challenging to become a super-owner, but once you achieve that status your accommodations are going to be displayed first to guests when searching for accommodations."/>
+                              TipText="It is very challenging to become a super-owner, but once you achieve that status your accommodations will displayed first to guests when they are searching for accommodations."/>
             </Grid>
         </Grid>
     </Grid>

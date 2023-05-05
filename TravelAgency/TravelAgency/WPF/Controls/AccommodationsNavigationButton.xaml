@@ -8,24 +8,27 @@
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Command="{Binding Command, ElementName=root}"
+        <Button x:Name="button"
+                Command="{Binding Command, ElementName=root}"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch"
                 Background="Transparent"
                 Width="Auto"
-                BorderThickness="0">
+                BorderThickness="0"
+                Click="Button_Click">
             <Button.Content>
-                <Border BorderThickness="1"
+                <Border BorderThickness="2"
                         BorderBrush="Black"
                         CornerRadius="5"
                         Background="{Binding Background, ElementName=root}"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        Width="Auto"
-                        Padding="10 2">
+                        Width="Auto">
 
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                          Width="Auto">
+                    <Grid VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          Width="Auto"
+                          Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
@@ -35,7 +38,9 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Content="" FontSize="14"/>
+                        <Image Grid.Column="0"
+                               Source="{Binding Icon, ElementName=root}"
+                               Width="48" Margin="0 0 15 0"/>
 
                         <TextBlock Grid.Column="1"
                                    Text="{Binding Text, ElementName=root}"

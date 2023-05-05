@@ -10,7 +10,13 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\IconBell.png" />
+    <None Remove="Resources\Images\ManageAccommodations.png" />
+    <None Remove="Resources\Images\OwnerProfilePicture.png" />
+    <None Remove="Resources\Images\OwnerRatingStar.png" />
+    <None Remove="Resources\Images\OwnerStatistics.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
+    <None Remove="Resources\Images\Renovations.png" />
+    <None Remove="Resources\Images\SuperOwnerMedal.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +28,14 @@
 
   <ItemGroup>
 	  <Resource Include="Resources\Images\IconBell.png" />
+	  <Resource Include="Resources\Images\ManageAccommodations.png" />
+	  <Resource Include="Resources\Images\OwnerProfilePicture.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\OwnerRatingStar.png" />
+	  <Resource Include="Resources\Images\OwnerStatistics.png" />
+	  <Resource Include="Resources\Images\Renovations.png" />
+	  <Resource Include="Resources\Images\SuperOwnerMedal.png" />
 	  <Resource Include="Resources\Images\ThreeLineMenu.jpg"></Resource>
 	  <Resource Include="Resources\Images\ArrowUpRight.png"></Resource>
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>

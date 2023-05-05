@@ -1,14 +1,24 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace TravelAgency.WPF.Controls
 {
     /// <summary>
-    /// Interaction logic for AccommodationsNavigationButton.xaml
+    /// Interaction logic for ButtonWithShortcut.xaml
     /// </summary>
-    public partial class AccommodationsNavigationButton : UserControl
+    public partial class ButtonWithShortcut : UserControl
     {
         public string Text
         {
@@ -16,9 +26,10 @@ namespace TravelAgency.WPF.Controls
             set { SetValue(TextProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for ButtonText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(AccommodationsNavigationButton), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("Text", typeof(string), typeof(ButtonWithShortcut), new PropertyMetadata(string.Empty));
+
 
         public string KeyboardShortcutText
         {
@@ -28,7 +39,8 @@ namespace TravelAgency.WPF.Controls
 
         // Using a DependencyProperty as the backing store for KeyboardShortcutText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty KeyboardShortcutTextProperty =
-            DependencyProperty.Register("KeyboardShortcutText", typeof(string), typeof(AccommodationsNavigationButton), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("KeyboardShortcutText", typeof(string), typeof(ButtonWithShortcut), new PropertyMetadata(string.Empty));
+
 
         public RoutedUICommand Command
         {
@@ -36,19 +48,10 @@ namespace TravelAgency.WPF.Controls
             set { SetValue(CommandProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for ButtonCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(RoutedUICommand), typeof(AccommodationsNavigationButton), new PropertyMetadata(null));
+            DependencyProperty.Register("Command", typeof(RoutedUICommand), typeof(ButtonWithShortcut), new PropertyMetadata(null));
 
-        public ImageSource Icon
-        {
-            get { return (ImageSource)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(AccommodationsNavigationButton), new PropertyMetadata(null));
 
         public new Brush Background
         {
@@ -57,8 +60,8 @@ namespace TravelAgency.WPF.Controls
         }
 
         // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(AccommodationsNavigationButton), new PropertyMetadata(Brushes.Transparent));
+        public new static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(ButtonWithShortcut), new PropertyMetadata(Brushes.White));
 
         public new Brush Foreground
         {
@@ -67,12 +70,11 @@ namespace TravelAgency.WPF.Controls
         }
 
         // Using a DependencyProperty as the backing store for Foreground.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ForegroundProperty =
-            DependencyProperty.Register("Foreground", typeof(Brush), typeof(AccommodationsNavigationButton), new PropertyMetadata(Brushes.Black));
+        public new static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(ButtonWithShortcut), new PropertyMetadata(Brushes.Black));
 
 
-
-        public AccommodationsNavigationButton()
+        public ButtonWithShortcut()
         {
             InitializeComponent();
         }
