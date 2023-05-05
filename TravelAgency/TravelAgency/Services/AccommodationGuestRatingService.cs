@@ -92,5 +92,10 @@ namespace TravelAgency.Services
 
             return false;
         }
+
+        public int GetRatingsCountByOwner(User owner)
+        {
+            return RatingRepository.GetRatingsCountByOwner(owner);
+        }
     }
 }

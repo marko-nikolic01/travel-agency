@@ -40,6 +40,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -49,10 +50,12 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Username:" FontSize="18"/>
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Date of birth:" FontSize="18"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="No. accommodations:" FontSize="18"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Ratings given:" FontSize="18"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LoggedInUser.Username}" FontSize="18"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggedInUser.BirthDay}" FontSize="18"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccommodationsCount}" FontSize="18"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RatingsGiven}" FontSize="18"/>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>
@@ -94,7 +97,7 @@
                                 <TextBlock Grid.Row="0"
                                            Text="{Binding AverageRating}"
                                            HorizontalAlignment="Center"
-                                           FontSize="35"
+                                           FontSize="30"
                                            FontWeight="Bold"/>
 
                                 <Grid Grid.Row="1" HorizontalAlignment="Center">
@@ -106,7 +109,8 @@
                                     <TextBlock Grid.Column="1"
                                                Text="Super-owner"
                                                VerticalAlignment="Center"
-                                               FontSize="24"/>
+                                               FontSize="18"
+                                               Margin="5 0 0 0"/>
 
                                     <Image Grid.Column="0"
                                            Height="32"
@@ -130,7 +134,7 @@
                                 <TextBlock Grid.Row="0"
                                            Text="{Binding RatingsCount}"
                                            HorizontalAlignment="Center"
-                                           FontSize="35"
+                                           FontSize="30"
                                            FontWeight="Bold"/>
 
                                 <Grid Grid.Row="1" HorizontalAlignment="Center">
@@ -142,7 +146,8 @@
                                     <TextBlock Grid.Column="1"
                                                Text="No. ratings"
                                                VerticalAlignment="Center"
-                                               FontSize="24"/>
+                                               FontSize="18"
+                                               Margin="5 0 0 0"/>
 
                                     <Image Grid.Column="0"
                                            Height="32"
