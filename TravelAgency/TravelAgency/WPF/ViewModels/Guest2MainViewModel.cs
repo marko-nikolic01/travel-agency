@@ -78,7 +78,8 @@ namespace TravelAgency.WPF.ViewModels
         public void Update()
         {
             TourOccurrenceAttendanceService attendanceService = new TourOccurrenceAttendanceService();
-            if (attendanceService.GetAttendance(currentGuestId) != null)
+            TourRequestService requestService = new TourRequestService();
+            if (attendanceService.GetAttendance(currentGuestId) != null || requestService.NewAcceptedRequestExists(currentGuestId))
             {
                 NotificationsImageSource = "../../Resources/Images/IconBelled.png";
             }

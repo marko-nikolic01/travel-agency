@@ -15,6 +15,17 @@ namespace TravelAgency.Domain.Models
         public int GuestNumberFilter { get; set; }
         public int DayNumberFilter { get; set; }
 
+        public AccommodationSearchFilter()
+        {
+            NameFilter = "";
+            CountryFilter = "";
+            CityFilter = "";
+            TypeFilter = "";
+            GuestNumberFilter = 0;
+            DayNumberFilter = 0;
+        }
+
+        
         public AccommodationSearchFilter(string nameFilter, string countryFilter, string cityFilter, string typeFilter, int guestNumberFilter, int dayNumberFilter)
         {
             NameFilter = nameFilter;

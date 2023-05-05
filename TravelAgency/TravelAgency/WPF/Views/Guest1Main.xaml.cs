@@ -68,7 +68,7 @@ namespace TravelAgency.WPF.Views
 
             Guest = guest;
             Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetAccommodations());
-            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
+            //Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
             Reservations = new ObservableCollection<AccommodationReservation>(ReservationService.GetByGuest(Guest));
             ReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(ReservationMoveService.GetRequestsByGuest(Guest));
             Stays = new ObservableCollection<AccommodationReservation>(RatingService.GetUnratedReservationsByGuest(Guest));
@@ -161,14 +161,14 @@ namespace TravelAgency.WPF.Views
             AccommodationSearchFilter filter = new AccommodationSearchFilter(nameFilter, countryFilter, cityFilter, typeFilter, guestNumberFilter, dayNumberFilter);
 
             Accommodations = new ObservableCollection<Accommodation>(SearchService.Search(filter));
-            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
+            //Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
             accommodationsDataGrid.ItemsSource = Accommodations;
         }
 
         private void CancelSearch(object sender, RoutedEventArgs e)
         {
             Accommodations = new ObservableCollection<Accommodation>(SearchService.CancelSearch());
-            Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
+            //Accommodations = new ObservableCollection<Accommodation>(SuperOwnerService.SortBySuperOwnersFirst(Accommodations));
             accommodationsDataGrid.ItemsSource = Accommodations;
             nameTextBox.Text = "";
             countryComboBox.SelectedItem = 0;

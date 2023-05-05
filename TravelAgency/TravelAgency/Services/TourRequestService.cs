@@ -23,6 +23,26 @@ namespace TravelAgency.Services
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
             IRequestAcceptedNotificationRepository = Injector.Injector.CreateInstance<IRequestAcceptedNotificationRepository>();
             LinkRequestLocation();
+            CheckIfRequestsAreInvalid();
+        }
+        public List<RequestAcceptedNotification> GetNewAcceptedRequests(int guestId)
+        {
+            return IRequestAcceptedNotificationRepository.GetNewAcceptedRequests(guestId);
+        }
+        public bool NewAcceptedRequestExists(int guestId)
+        {
+            return IRequestAcceptedNotificationRepository.NewAcceptedRequestExists(guestId);
+        }
+        private void CheckIfRequestsAreInvalid()
+        {
+            int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            foreach (var request in ITourRequestRepository.GetAll())
+            {
+                if (request.MinDate.DayNumber - currentDays < 2)
+                {
+                    request.Status = RequestStatus.Invalid;
+                }
+            }
         }
 
         private void LinkRequestLocation()
@@ -88,6 +108,10 @@ namespace TravelAgency.Services
         public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
         {
             IRequestAcceptedNotificationRepository.Save(requestAcceptedNotification);
+        }
+        public void UpdateNotification(RequestAcceptedNotification requestAcceptedNotification)
+        {
+            IRequestAcceptedNotificationRepository.Update(requestAcceptedNotification);
         }
 
         public ObservableCollection<KeyValuePair<string, int>> GetYearStatistics(List<string> years)
@@ -176,6 +200,53 @@ namespace TravelAgency.Services
                 result.Add(new KeyValuePair<string, int>(year, ITourRequestRepository.GetCountForYearByCountryCity(year, selectedCountry, city)));
             }
             return result;
+        }
+
+        public string GetAcceptedTourPercentage(int guestId, int year = 0)
+        {
+            double accepted = 0;
+            double count = 0;
+            foreach(TourRequest request in ITourRequestRepository.GetAll())
+            {                                   //ako je year 0 onda ce se gledati all time statistika
+                if(request.GuestId == guestId && (year == 0 || request.MinDate.Year == year)) 
+                {
+                    count++;
+                    if (request.Status == RequestStatus.Accepted)
+                        accepted++;
+                }
+            }
+            if (count == 0)
+                return "0";
+            return ConvertToString((accepted / count) * 100);
+        }
+
+        public string GetAveragePeopleNumber(int guestId, int year = 0)
+        {
+            double sum = 0;
+            double count = 0;
+            foreach (TourRequest request in ITourRequestRepository.GetAll())
+            {
+                if (request.GuestId == guestId && request.Status == RequestStatus.Accepted && (year == 0 || request.MinDate.Year == year))
+                {
+                    count++;
+                    sum += request.GuestNumber;
+                }
+            }
+            if (count == 0)
+                return "0";
+            return ConvertToString(sum / count);
+        }
+        private string ConvertToString(double number)
+        {
+           return String.Format("{0:0.00}", number);
+        }
+        public List<string> GetLanguages(int guestId)
+        {
+           return ITourRequestRepository.GetLanguages(guestId);
+        }
+        public List<string> GetCountriesForGuest(int guestId)
+        {
+            return ITourRequestRepository.GetCountriesForGuest(guestId);
         }
 
         public string GetMostRequestedLanguage()

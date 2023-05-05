@@ -19,5 +19,10 @@ namespace TravelAgency.WPF.Views
             TourRequestFormView requestFormView = new TourRequestFormView(viewModel.guestId);
             this.NavigationService.Navigate(requestFormView);
         }
+        private void ShowStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            CreatedRequestsStatistics requestsStatistics = new CreatedRequestsStatistics(viewModel.guestId);
+            this.NavigationService.Navigate(requestsStatistics);
+        }
     }
 }
