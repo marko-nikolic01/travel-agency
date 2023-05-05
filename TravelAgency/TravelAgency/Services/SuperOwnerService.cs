@@ -36,7 +36,7 @@ namespace TravelAgency.Services
 
         public bool IsSuperOwner(User owner)
         {
-            return AccommodationOwnerRatingRepository.GetByOwner(owner).Count >= 50 && GetAverageRatingForOwner(owner) >= 4.5;
+            return AccommodationOwnerRatingRepository.GetByOwner(owner).Count >= 0 && GetAverageRatingForOwner(owner) >= 4.5;
         }
 
         public double GetAverageRatingForOwner(User owner)
@@ -76,7 +76,7 @@ namespace TravelAgency.Services
             UserRepository.UpdateSuperOwners();
         }
 
-        public IEnumerable<Accommodation> SortBySuperOwnersFirst(IEnumerable<Accommodation> accommodations)
+        public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
         {
             var a = new List<Accommodation>(accommodations);
             List<Accommodation> sortedAccommodations = new List<Accommodation>();
