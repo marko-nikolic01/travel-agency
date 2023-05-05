@@ -14,6 +14,16 @@
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
         </Style>
+        <!-- stil da se ne vidi plava pozadina kod selektovanja, uzeto sa stack overflow -->
+        <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Page.Resources>
     <Grid>
         <StackPanel Orientation="Vertical" Margin="20">
@@ -31,14 +41,31 @@
                     </Hyperlink>
                 </Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10 20">
-                <Label Content="{Binding RequestAcceptedString}" />
-                <Label Margin="30 0">
-                    <Hyperlink Click="ShowTours_Click">
-                        <TextBlock FontSize="20" Text="{Binding ShowToursString}"/>
-                    </Hyperlink>
-                </Label>
-            </StackPanel>
+            <DataGrid CellStyle="{StaticResource CellStyle}" GridLinesVisibility="None" HeadersVisibility="None" AutoGenerateColumns="False" IsReadOnly="True"
+                      SelectedItem="{Binding Notification}" ItemsSource="{Binding RequestAcceptedNotifications}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="Your tour request has been accepted.  Given date:"></Label>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn FontSize="25" FontWeight="Light" Binding="{Binding DateTime, StringFormat=d}"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Margin="30 0">
+                                    <Hyperlink Click="ShowTours_Click">
+                                        <TextBlock FontSize="20" Text="CLICK HERE TO SHOW NEW TOUR"/>
+                                    </Hyperlink>
+                                </Label>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </Grid>
 </Page>

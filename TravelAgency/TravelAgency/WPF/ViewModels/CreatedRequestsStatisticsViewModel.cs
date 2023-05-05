@@ -136,8 +136,8 @@ namespace TravelAgency.WPF.ViewModels
                     Values = new ChartValues<double> { language.Count }
                 });
             }
-            BarLabels = new[] { "Language" };
-            Formatter = value => value.ToString("N");
+            BarLabels = new[] { "Languages" };
+            Formatter = value => null;
         }
         private void FillForLocations()
         {
@@ -153,8 +153,8 @@ namespace TravelAgency.WPF.ViewModels
                     Values = new ChartValues<double> { country.Count }
                 });
             }
-            BarLabelsLocation = new[] { "Location" };
-            FormatterLocation = value => value.ToString("N");
+            BarLabelsLocation = new[] { "Locations" };
+            FormatterLocation = value => null;
         }
     }
 }

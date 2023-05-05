@@ -64,10 +64,15 @@
             <lvc:CartesianChart
                 Series="{Binding SeriesCollection}" LegendLocation="Left">
                 <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="X" Labels="{Binding BarLabels}"></lvc:Axis>
+                        <lvc:Axis Labels="{Binding BarLabels}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Y" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        <lvc:Axis>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                        <lvc:Axis Title="Number of requests" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
             </Grid>
@@ -75,10 +80,15 @@
                 <lvc:CartesianChart
                 Series="{Binding SeriesCollectionLocation}" LegendLocation="Left">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="X" Labels="{Binding BarLabelsLocation}"></lvc:Axis>
+                        <lvc:Axis Labels="{Binding BarLabelsLocation}"></lvc:Axis>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Y" LabelFormatter="{Binding FormatterLocation}"></lvc:Axis>
+                        <lvc:Axis>
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                        <lvc:Axis Title="Number of requests" LabelFormatter="{Binding FormatterLocation}"></lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
             </Grid>

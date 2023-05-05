@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,22 +17,10 @@ namespace TravelAgency.WPF.ViewModels
         private string presenceString;
         private string confirmationString;
         private string rejectionString;
-        private string requestAcceptedString;
-        private string showToursString;
-        public string ShowToursString
-        {
-            get => showToursString;
-            set { if (value != showToursString) { showToursString = value; OnPropertyChanged(); } }
-        }
         public string TourPresenceString
         {
             get => presenceString;
             set { if (value != presenceString) { presenceString = value; OnPropertyChanged(); } }
-        }
-        public string RequestAcceptedString
-        {
-            get => requestAcceptedString;
-            set { if (value != requestAcceptedString) { requestAcceptedString = value; OnPropertyChanged(); } }
         }
         public string ConfirmationString
         {
@@ -47,7 +36,8 @@ namespace TravelAgency.WPF.ViewModels
         private TourOccurrenceAttendance attendance;
         TourOccurrenceAttendanceService tourOccurrenceAttendanceService;
         TourRequestService tourRequestService;
-        private List<RequestAcceptedNotification> RequestAcceptedNotifications;
+        public List<RequestAcceptedNotification> RequestAcceptedNotifications { get; set; }
+        public RequestAcceptedNotification Notification { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -58,8 +48,6 @@ namespace TravelAgency.WPF.ViewModels
             TourPresenceString = "";
             ConfirmationString = "";
             RejectionString = "";
-            RequestAcceptedString = "";
-            ShowToursString = "";
             currentGuestId = id;
             tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
             tourRequestService = new TourRequestService();
@@ -72,11 +60,6 @@ namespace TravelAgency.WPF.ViewModels
         {
             TourRequestService requestService = new TourRequestService();
             RequestAcceptedNotifications = requestService.GetNewAcceptedRequests(currentGuestId);
-            foreach(RequestAcceptedNotification notification in RequestAcceptedNotifications)
-            {
-                RequestAcceptedString = "Your tour request has been accepted";
-                ShowToursString = "CLICK HERE TO SHOW NEW TOUR";
-            }
         }
         private void AllertIfSelectеd()
         {
@@ -112,15 +95,10 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void RemoveNotification()
         {
-            if (RequestAcceptedNotifications.Count != 0)
-            {
-                RequestAcceptedNotifications[0].IsSeen = true;
-                tourRequestService.UpdateNotification(RequestAcceptedNotifications[0]);
-                RequestAcceptedString = "";
-                ShowToursString = "";
-                RequestAcceptedNotifications.Remove(RequestAcceptedNotifications[0]);
-                tourOccurrenceAttendanceService.NotifyObservers();
-            }
+            Notification.IsSeen = true;
+            tourRequestService.UpdateNotification(Notification);
+            RequestAcceptedNotifications.Remove(Notification);
+            tourOccurrenceAttendanceService.NotifyObservers();
         }
     }
 }
