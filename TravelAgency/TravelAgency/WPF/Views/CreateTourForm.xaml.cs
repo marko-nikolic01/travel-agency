@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,21 +26,96 @@ namespace TravelAgency.WPF.Views
     /// <summary>
     /// Interaction logic for CreateTourForm.xaml
     /// </summary>
-    public partial class CreateTourForm : Page
+    public partial class CreateTourForm : Page, INotifyPropertyChanged
     {
         public Tour NewTour { get; set; }
         public User ActiveGuide { get; set; }
         public NavigationService NavService { get; set; }
-
         public TourOccurrenceService TourOccurrenceService { get; set; }
-        public CreateTourForm(int id, NavigationService navService)
+        public List<string> Countries { get; set; }
+        private ObservableCollection<string> cities;
+        public ObservableCollection<string> Cities
+        {
+            get { return cities; }
+            set
+            {
+                cities = value;
+                OnPropertyChanged();
+            }
+        }
+        private string selectedCity;
+        public string SelectedCity
+        {
+            get { return selectedCity; }
+            set
+            {
+                selectedCity = value;
+                OnPropertyChanged();
+            }
+        }
+        private string selectedCountry;
+        public string SelectedCountry
+        {
+            get { return selectedCountry; }
+            set
+            {
+                if (value.Equals(Countries[0]))
+                {
+                    Cities.Clear();
+                    Cities.Add("< select a city >");
+                    IsCountrySelected = false;
+                }
+                else
+                {
+                    Cities.Clear();
+                    Cities.Add("< select a city >");
+                    foreach (var city in LocationService.GetCitiesByCountry(value))
+                    {
+                        Cities.Add(city);
+                    }
+                    IsCountrySelected = true;
+                }
+                SelectedCity = Cities[0];
+                selectedCountry = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool isCountrySelected;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public bool IsCountrySelected
+        {
+            get { return isCountrySelected; }
+            set
+            {
+                isCountrySelected = value;
+                OnPropertyChanged();
+            }
+        }
+        public LocationService LocationService { get; set; }
+        public CreateTourForm(int id, NavigationService navService, string language = null, Location location = null)
         {
             InitializeComponent();
             DataContext = this;
             ActiveGuide = new UserService().GetById(id);
+            Cities = new ObservableCollection<string>() { "< select a city >" };
+            SelectedCity = Cities[0];
+            Countries = new List<string>() { "< select a country >" };
+            SelectedCountry = Countries[0];
+            LocationService = new LocationService();
+            Countries.AddRange(LocationService.GetCountries());
             NewTour = new Tour();
+            if (language != null)
+            {
+                NewTour.Language = language;
+            }
+            if (location != null)
+            {
+                SelectedCountry = location.Country;
+                selectedCity = location.City;
+            }
             TourOccurrenceService = new TourOccurrenceService();
-            InitializeComboboxes();
 
             DateCalendar.DisplayDateStart = DateTime.Today;
             //cultureinfo from stackoverflow
@@ -47,17 +125,6 @@ namespace TravelAgency.WPF.Views
 
             NavService = navService;
         }
-
-        private void InitializeComboboxes()
-        {
-            var countries = new LocationRepository().GetAllCountries();
-            foreach (var country in countries)
-            {
-                CountryComboBox.Items.Add(country);
-            }
-            CountryComboBox.SelectedIndex = 0;
-        }
-
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(KeyPointsText.Text))
@@ -128,11 +195,7 @@ namespace TravelAgency.WPF.Views
 
         private void ProcessLocationInput(Tour newTour)
         {
-
-            var country = CountryComboBox.SelectedItem as string;
-            var city = CityComboBox.SelectedItem as string;
-
-            newTour.Location = new LocationRepository().GetLocationForCountryAndCity(country, city);
+            newTour.Location = new LocationRepository().GetLocationForCountryAndCity(SelectedCountry, SelectedCity);
             newTour.LocationId = newTour.Location.Id;
         }
 
@@ -158,14 +221,13 @@ namespace TravelAgency.WPF.Views
 
         private bool AreInputsValid()
         {
-            if (CountryComboBox.SelectedIndex == 0)
+            if (selectedCountry.Equals(Countries[0]))
             {
-                MessageBox.Show("Select a country!");
+                MessageBox.Show("Select a country");
                 return false;
             }
-            if (CityComboBox.SelectedIndex == 0)
-            {
-                MessageBox.Show("Select a city!");
+            else if (SelectedCity.Equals(Cities[0])){
+                MessageBox.Show("Select a city");
                 return false;
             }
             else if (NewTour.IsValid == false)
@@ -175,28 +237,6 @@ namespace TravelAgency.WPF.Views
             }
             return true;
         }
-
-        private void CountryChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (CountryComboBox.SelectedIndex != 0)
-            {
-                string country = (string)CountryComboBox.SelectedValue;
-                var cities = new LocationRepository().GetCitiesByCountry(country);
-                CityComboBox.Items.Clear();
-                CityComboBox.Items.Add("<Select a city>");
-                foreach (var city in cities)
-                {
-                    CityComboBox.Items.Add(city);
-                }
-                CityComboBox.SelectedIndex = 0;
-                CityComboBox.IsEnabled = true;
-            }
-            else
-            {
-                CityComboBox.IsEnabled = false;
-            }
-        }
-
         private void DateCalendar_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DateCalendar.SelectedDate == DateTime.Now.Date)
@@ -208,6 +248,10 @@ namespace TravelAgency.WPF.Views
                 TimeSpan timeSpan = (TimeSpan)DateTime.ParseExact("00:00", "HH:mm", null).TimeOfDay;
                 Time.StartTime = timeSpan;
             }
+        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
