@@ -11,6 +11,8 @@
     <Grid>
         <Grid.Resources>
             <conv:CheckedRadioConverter x:Key="CheckedRadioConverter"/>
+            <conv:VisibleYears x:Key="VisibleYears"/>
+            <conv:VisibleMonths x:Key="VisibleMonths"/>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -38,10 +40,16 @@
         <ComboBox Grid.Row="3" ItemsSource="{Binding Path=Cities}"  SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Margin="10 15 15 10" ></ComboBox>
         <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Path=Languages}" SelectedItem="{Binding Path=SelectedLanguage}" IsEnabled="{Binding ElementName=second, Path=IsChecked, Converter={StaticResource CheckedRadioConverter}}" Margin="10 15 15 10" ></ComboBox>
         <Label Grid.Row="4" Content="You can specify a year:" FontSize="16" Margin="10"></Label>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="10 15 15 10" ItemsSource="{Binding Path=Years}" SelectedItem="{Binding Path=SelectedYear, Mode=OneWay}"></ComboBox>
-        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="3" ItemsSource="{Binding Path=YearsStatistic, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True"> 
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="10 15 15 10" ItemsSource="{Binding Path=Years}" SelectedItem="{Binding Path=SelectedYear}"></ComboBox>
+        <DataGrid Visibility="{Binding Path=SelectedYear , Converter={StaticResource VisibleYears}}" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="3" ItemsSource="{Binding Path=YearsStatistic, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True"> 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Year" Binding="{Binding Path=Key}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Number of requests" Binding="{Binding Path=Value}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Visibility="{Binding Path=SelectedYear , Converter={StaticResource VisibleMonths}}" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="3" ItemsSource="{Binding Path=MonthsStatisticByYear, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Month" Binding="{Binding Path=Key}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Number of requests" Binding="{Binding Path=Value}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

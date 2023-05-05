@@ -293,5 +293,57 @@ namespace TravelAgency.Services
             }
             return mostVisited;
         }
+
+        public ObservableCollection<KeyValuePair<string, int>> GetMonthsLanguageStatistics(string selectedLanguage, string selectedYear)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            if (selectedYear.Equals("YEARS") || selectedYear==null)
+            {
+                return result;
+            }
+            string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            for ( int i = 0; i < months.Length; i++)
+            {
+                result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByLanguageAndYear(selectedYear, selectedLanguage, i+1)));
+            }
+            return result;
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> GetMonthsLocationStatistics(string selectedCountry, string selectedCity, string selectedYear)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            if (selectedCountry == null || selectedCity == null)
+            {
+                return result;
+            } 
+            else if(selectedCountry.Equals("< select a country >"))
+            {
+                return result;
+            }
+            else if(selectedCity.Equals("< select a city >"))
+            {
+                return getMonthsCountryStatistics( selectedCountry,  selectedYear);
+            }
+            else
+            {
+                string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+                for (int i = 0; i < months.Length; i++)
+                {
+                    result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByLocationAndYear(selectedYear, selectedCountry, selectedCity, i + 1)));
+                }
+                return result;
+            }
+        }
+
+        private ObservableCollection<KeyValuePair<string, int>> getMonthsCountryStatistics(string selectedCountry, string selectedYear)
+        {
+            var result = new ObservableCollection<KeyValuePair<string, int>>();
+            string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            for (int i = 0; i < months.Length; i++)
+            {
+                result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByCountryAndYear(selectedYear, selectedCountry, i + 1)));
+            }
+            return result;
+        }
     }
 }
