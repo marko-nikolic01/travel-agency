@@ -73,7 +73,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="{Binding NewTourNotificationString}"></Label>
+                                <Label Content="{Binding NotificationText}"></Label>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

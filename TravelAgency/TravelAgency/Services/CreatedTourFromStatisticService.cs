@@ -13,11 +13,24 @@ namespace TravelAgency.Services
         public INewTourNotificationRepository INewTourNotificationRepository { get; set; }
         public IUserRepository IUserRepository { get; set; }
         public ITourRequestRepository ITourRequestRepository { get; set; }
+        public ITourRepository ITourRepository { get; set; }
         public CreatedTourFromStatisticService() 
         {
             INewTourNotificationRepository = Injector.Injector.CreateInstance<INewTourNotificationRepository>();
             IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
+            ITourRepository = Injector.Injector.CreateInstance<ITourRepository>();
+            LinkTourNotifications();
+        }
+        private void LinkTourNotifications()
+        {
+            foreach(NewTourNotification notification in INewTourNotificationRepository.GetAll()) 
+            {
+                if (notification.Tour == null)
+                {
+                    notification.Tour = ITourRepository.GetById(notification.TourId);
+                }
+            }
         }
         public void MakeNotificationsForLanguage(Tour tour)
         {
@@ -70,12 +83,15 @@ namespace TravelAgency.Services
         }
         public bool NewTourNotificationExists(int guestId)
         {
-            foreach (NewTourNotification notification in INewTourNotificationRepository.GetAll())
-            {
-                if (notification.GuestId == guestId && !notification.Seen)
-                    return true;
-            }
-            return false;
+            return INewTourNotificationRepository.NewTourNotificationExists(guestId);
+        }
+        public List<NewTourNotification> GetNewTourNotifications(int guestId)
+        {
+            return INewTourNotificationRepository.GetNewTourNotifications(guestId);
+        }
+        public void UpdateNotification(NewTourNotification notification)
+        {
+            INewTourNotificationRepository.Update(notification);
         }
     }
 }

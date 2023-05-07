@@ -12,7 +12,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     public interface ITourRepository
     {
         public List<Tour> GetAll();
-
+        public Tour GetById(int id);
         public Tour Save(Tour tour);
     }
 }

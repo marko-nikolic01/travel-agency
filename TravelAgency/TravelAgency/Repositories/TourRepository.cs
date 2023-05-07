@@ -35,7 +35,10 @@ namespace TravelAgency.Repositories
         {
             return tours;
         }
-
+        public Tour GetById(int id) 
+        {
+            return tours.Find(t => t.Id == id);
+        }
         public Tour Save(Tour tour)
         {
             tour.Id = NextId();

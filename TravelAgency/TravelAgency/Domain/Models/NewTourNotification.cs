@@ -7,9 +7,10 @@ namespace TravelAgency.Domain.Models
         public int TourId { get; set; }
         public int GuestId { get; set; }
         public bool Seen { get; set; }
-        public Tour Tour;
+        public Tour Tour { get; set; }
         public bool IsForLanguage { get; set; }
         public bool IsForLocation { get; set; }
+        public string NotificationText { get; set; }
         public NewTourNotification()
         {
 
