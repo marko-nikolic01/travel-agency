@@ -67,5 +67,10 @@ namespace TravelAgency.Services
             }
             return true;
         }
+
+        public List<AccommodationReservation> GetActiveByOwner(User owner)
+        {
+            return ReservationRepository.GetActiveByOwner(owner);
+        }
     }
 }

@@ -45,8 +45,6 @@
             <Label Content="Photos of accommodation" Grid.Row="7" Grid.Column="0"/>
 
             <TextBox x:Name="AccommodationNameTextBox" Grid.Row="0" Grid.Column="1" Margin="0 10 0 10" Text="{Binding Path=NewAccommodation.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
-            <!--<TextBox x:Name="LocationCityTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding Path=NewLocation.City}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
-            <TextBox x:Name="LocationCountryTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Path=NewLocation.Country}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>-->
             <ComboBox x:Name="CityComboBox" Grid.Row="2" Grid.Column="1" Margin="0 10 0 10" SelectedIndex="0" IsEnabled="False" VirtualizingPanel.IsVirtualizing="True">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>

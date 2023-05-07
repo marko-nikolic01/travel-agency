@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <controls:PageHeader Grid.Row="0"
-                             Text="Manage accommodations"/>
+                             Text="Accommodations > Manage accommodations"/>
 
         <ListView Grid.Row="1"
                   ItemsSource="{Binding Accommodations}"

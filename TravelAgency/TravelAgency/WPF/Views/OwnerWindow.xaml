@@ -7,7 +7,9 @@
         xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
         xmlns:customcontrols="clr-namespace:TravelAgency.WPF.Controls.CustomControls"
         mc:Ignorable="d"
-        Title="OwnerWindow" Height="700" Width="1200">
+        Title="OwnerWindow"
+        Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="ListBox" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib">
             <Style.Resources>
@@ -136,21 +138,24 @@
                      SelectionChanged="ListBox_SelectionChanged"
                      BorderBrush="Transparent">
                 
-                <customcontrols:OwnerSidebarNavigationButton Text="My Profile" KeyboardShortcutText="Ctrl+P"
+                <customcontrols:OwnerSidebarNavigationButton Text="My Profile"
+                                                             KeyboardShortcutText="Ctrl+P"
                                                              NavLink="WPF/Pages/OwnerProfilePage.xaml"
                                                              Icon="../../Resources/Images/NavProfile.png"/>
                 
-                <customcontrols:OwnerSidebarNavigationButton Text="Accommodations" KeyboardShortcutText="Ctrl+A"
+                <customcontrols:OwnerSidebarNavigationButton Text="Accommodations"
+                                                             KeyboardShortcutText="Ctrl+A"
                                                              NavLink="WPF/Pages/OwnerAccommodationsPage.xaml"
                                                              Icon="../../Resources/Images/NavAccommodations.png"/>
+                
+                <customcontrols:OwnerSidebarNavigationButton Text="Reservations"
+                                                             KeyboardShortcutText="Ctrl+R"
+                                                             NavLink="WPF/Pages/OwnerReservationsPage.xaml"
+                                                             Icon="../../Resources/Images/NavReservations.png"/>
                 
                 <customcontrols:OwnerSidebarNavigationButton Text="Ratings"
                                                              KeyboardShortcutText="Ctrl+T"
                                                              Icon="../../Resources/Images/NavRatings.png"/>
-                
-                <customcontrols:OwnerSidebarNavigationButton Text="Reservations"
-                                                             KeyboardShortcutText="Ctrl+R"
-                                                             Icon="../../Resources/Images/NavReservations.png"/>
                 
                 <customcontrols:OwnerSidebarNavigationButton Text="Forum"
                                                              KeyboardShortcutText="Ctrl+F"
