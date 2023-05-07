@@ -151,5 +151,44 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+
+        public int GetCountForYearByLanguageAndYear(string selectedYear, string selectedLanguage, int month)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Language.Equals(selectedLanguage))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        public int GetCountForYearByLocationAndYear(string selectedYear, string selectedCountry, string selectedCity, int month)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Location.Country.Equals(selectedCountry) && r.Location.City.Equals(selectedCity))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        public int GetCountForYearByCountryAndYear(string selectedYear, string selectedCountry, int month)
+        {
+            int result = 0;
+            foreach (var r in tourRequests)
+            {
+                if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Location.Country.Equals(selectedCountry))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
     }
 }

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
-      Title="TourRequestBookingView">
+      Title="Tour requests">
 
     <Grid>
         <Grid.RowDefinitions>

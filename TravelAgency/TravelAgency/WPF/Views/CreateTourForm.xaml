@@ -7,7 +7,7 @@
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
-      Title="CreateTourForm">
+      Title="Create new tour">
     <Page.Resources>
         <ControlTemplate x:Key="ValidationTemplate">
             <StackPanel>

@@ -13,7 +13,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void LinkGuests(List<User> guests);
         public List<AccommodationReservation> GetAll();
         public List<AccommodationReservation> GetAllNotCanceledByGuest(User guest);
-        public List<AccommodationReservation> GetFutureNotCanceledByGuest(User guest);
         public int NextId();
         public AccommodationReservation Save(AccommodationReservation reservation);
         public bool IsActive(AccommodationReservation reservation);

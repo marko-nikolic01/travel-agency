@@ -31,7 +31,7 @@ namespace TravelAgency.WPF.Views
             ViewModel = new Guest1HomeViewModel(guest);
             this.DataContext = ViewModel;
 
-            frame.Navigate(new HomeMenuView(this));
+            frame.Navigate(new HomeMenuView(this, guest));
         }
 
         private void LoadDateTime(object sender, RoutedEventArgs e)
@@ -78,16 +78,16 @@ namespace TravelAgency.WPF.Views
             switch (selectedTab.Name)
             {
                 case "buttonHome":
-                    frame.Navigate(new HomeMenuView(this));
+                    frame.Navigate(new HomeMenuView(this, ViewModel.Guest));
                     break;
                 case "buttonAccommodationsReservations":
-                    frame.Navigate(new AccommodationsReservationsMenuView(this));
+                    frame.Navigate(new AccommodationsReservationsMenuView(this, ViewModel.Guest));
                     break;
                 case "buttonReviews":
-                    frame.Navigate(new ReviewsMenuView(this));
+                    frame.Navigate(new ReviewsMenuView(this, ViewModel.Guest));
                     break;
                 case "buttonForums":
-                    frame.Navigate(new ForumsMenuView(this));
+                    frame.Navigate(new ForumsMenuView(this, ViewModel.Guest));
                     break;
             }
         }

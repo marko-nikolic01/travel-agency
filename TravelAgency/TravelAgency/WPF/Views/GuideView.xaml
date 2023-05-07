@@ -29,7 +29,7 @@
                 <MenuItem Header="Tour statistics" Command="{Binding NavigateToTourStatisticsPageCommand}"></MenuItem>
                 <MenuItem Header="Requests statistics" Command="{Binding NavigateToRequestStatisticsPageCommand}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="BOOK AND TRACK APP" FontSize="20"></MenuItem>
+            <MenuItem Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20"></MenuItem>
             <MenuItem Header="⋮" FontSize="25" HorizontalAlignment="Right">
                 <MenuItem FontSize="15" Header="Undo"></MenuItem>
                 <MenuItem FontSize="15" Header="My Profile"></MenuItem>

@@ -31,7 +31,7 @@ namespace TravelAgency.WPF.Views
         public DateSpan SelectedDateSpan { get; set; }
         public List<BitmapImage> Photos { get; set; }
         public int currentPhotoIndex;
-        bool ShouldValidate { get; set; }
+        public bool ShouldValidate { get; set; }
 
         public int DayNumber
         {

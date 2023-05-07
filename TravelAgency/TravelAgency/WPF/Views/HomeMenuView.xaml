@@ -173,7 +173,7 @@
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/user.png"></Image>
                         <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13">Korisnički nalog</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pogledajte svoj korisnički nalog</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pogledajte svoj korisnički nalog.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
