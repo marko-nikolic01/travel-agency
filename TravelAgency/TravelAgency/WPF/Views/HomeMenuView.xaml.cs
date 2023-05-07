@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.Domain.Models;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
@@ -20,10 +22,15 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class HomeMenuView : Page
     {
+        public HomeMenuViewModel ViewModel { get; set; }
+
         private Guest1HomeView _mainWindow;
-        public HomeMenuView(Guest1HomeView guest1HomeView)
+        public HomeMenuView(Guest1HomeView guest1HomeView, User guest)
         {
             InitializeComponent();
+            ViewModel = new HomeMenuViewModel(guest);
+            this.DataContext = ViewModel;
+
             _mainWindow = guest1HomeView;
         }
 
@@ -39,15 +46,15 @@ namespace TravelAgency.WPF.Views
             {
                 case "buttonAccommodationsReservations":
                     _mainWindow.HighlightSelectedTab(_mainWindow.buttonAccommodationsReservations);
-                    this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow));
+                    this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow, ViewModel.Guest));
                     break;
                 case "buttonReviews":
                     _mainWindow.HighlightSelectedTab(_mainWindow.buttonReviews);
-                    this.NavigationService.Navigate(new ReviewsMenuView(_mainWindow));
+                    this.NavigationService.Navigate(new ReviewsMenuView(_mainWindow, ViewModel.Guest));
                     break;
                 case "buttonForums":
                     _mainWindow.HighlightSelectedTab(_mainWindow.buttonForums);
-                    this.NavigationService.Navigate(new ForumsMenuView(_mainWindow));
+                    this.NavigationService.Navigate(new ForumsMenuView(_mainWindow, ViewModel.Guest));
                     break;
             }
         }

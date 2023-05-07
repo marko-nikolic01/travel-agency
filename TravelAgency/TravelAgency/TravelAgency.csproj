@@ -21,6 +21,7 @@
     <None Remove="Resources\Images\hotel.png" />
     <None Remove="Resources\Images\house.png" />
     <None Remove="Resources\Images\info.png" />
+    <None Remove="Resources\Images\International-Travel_43678.ico" />
     <None Remove="Resources\Images\left-arrow.png" />
     <None Remove="Resources\Images\logout.png" />
     <None Remove="Resources\Images\medal-ribbon.png" />
@@ -59,6 +60,7 @@
 	  </Resource>
 	  <Resource Include="Resources\Images\house.png" />
 	  <Resource Include="Resources\Images\info.png" />
+	  <Resource Include="Resources\Images\International-Travel_43678.ico" />
 	  <Resource Include="Resources\Images\left-arrow.png" />
 	  <Resource Include="Resources\Images\logout.png" />
 	  <Resource Include="Resources\Images\medal-ribbon.png" />

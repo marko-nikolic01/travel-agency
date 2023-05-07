@@ -229,7 +229,8 @@
                     <RowDefinition Height="5"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Smeštaji</TextBlock>
-                <ListView Grid.Row="1" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding SelectedAccommodation}">
+                <ListView x:Name="listViewAccommodations" Grid.Row="1" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
+                          ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Grid.Row="1" Grid.Column="1" Width="470" Height="200">
@@ -254,8 +255,8 @@
                                     <RowDefinition Height="10"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Border Grid.RowSpan="8" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
-                                <Border  Grid.Row="1" Grid.RowSpan="6" Grid.Column="1"  BorderThickness="1" BorderBrush="Black">
-                                    <Image Stretch="Fill" Source="{Binding Path=Photos[0], Converter={StaticResource AccommodationPhotoToBitmapImageConverter}}"></Image>
+                                <Border  Grid.Row="1" Grid.RowSpan="6" Grid.Column="1"  BorderThickness="1" BorderBrush="Black" Background="#cccccc">
+                                    <Image Source="{Binding Path=Photos[0], Converter={StaticResource AccommodationPhotoToBitmapImageConverter}}"></Image>
                                 </Border>
                                 <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Name, StringFormat='Naziv: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
@@ -269,7 +270,7 @@
                                 <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter}}"></TextBlock>
                                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=MaxGuests, StringFormat='Maksimalan broj gostiju: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=MinDays, StringFormat='Minimalan broj dana: {0}'}"></TextBlock>
-                                <Button Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" >
+                                <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>

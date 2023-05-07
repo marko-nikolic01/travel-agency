@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,12 +26,12 @@ namespace TravelAgency.WPF.Views
     {
         private Guest1HomeView _mainWindow;
         public AccommodationSearchViewModel ViewModel { get; set; }
-        public AccommodationSearchView(Guest1HomeView guest1HomeView)
+        public AccommodationSearchView(Guest1HomeView guest1HomeView, User guest)
         {
             InitializeComponent();
             _mainWindow = guest1HomeView;
 
-            ViewModel = new AccommodationSearchViewModel();
+            ViewModel = new AccommodationSearchViewModel(guest);
             this.DataContext = ViewModel;
             integerUpDownGuestNumber.Value = 0;
             integerUpDownDayNumber.Value = 0;
@@ -97,7 +98,13 @@ namespace TravelAgency.WPF.Views
 
         private void NavigateBack()
         {
-            this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow));
+            this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow, ViewModel.Guest));
+        }
+
+        private void ButtonMakeReservation_Click(object sender, RoutedEventArgs e)
+        {
+            listViewAccommodations.SelectedItem = ((FrameworkElement)sender).DataContext;
+            this.NavigationService.Navigate(new AccommodationReservationView(_mainWindow, this, ViewModel.Guest, ViewModel.SelectedAccommodation));
         }
     }
 }
