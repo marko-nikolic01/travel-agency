@@ -94,11 +94,15 @@ namespace TravelAgency.WPF.Views
             }
         }
         public LocationService LocationService { get; set; }
+        private bool CreatingTourForLanguage;
+        private bool CreatingTourForLocation;
         public CreateTourForm(int id, NavigationService navService, string language = null, Location location = null)
         {
             InitializeComponent();
             DataContext = this;
             ActiveGuide = new UserService().GetById(id);
+            CreatingTourForLocation = false;
+            CreatingTourForLanguage = false;
             Cities = new ObservableCollection<string>() { "< select a city >" };
             SelectedCity = Cities[0];
             Countries = new List<string>() { "< select a country >" };
@@ -109,11 +113,13 @@ namespace TravelAgency.WPF.Views
             if (language != null)
             {
                 NewTour.Language = language;
+                CreatingTourForLanguage = true;
             }
             if (location != null)
             {
                 SelectedCountry = location.Country;
                 selectedCity = location.City;
+                CreatingTourForLocation = true;
             }
             TourOccurrenceService = new TourOccurrenceService();
 
@@ -171,7 +177,16 @@ namespace TravelAgency.WPF.Views
 
         private void SaveTours()
         {
-            TourOccurrenceService.SaveNewTours(NewTour, ListPhotos.Items, ListDateTimes.Items, ListKeyPoints.Items, ActiveGuide);
+            CreatedTourFromStatisticService service = new CreatedTourFromStatisticService();
+            Tour newTour = TourOccurrenceService.SaveNewTours(NewTour, ListPhotos.Items, ListDateTimes.Items, ListKeyPoints.Items, ActiveGuide);
+            if(CreatingTourForLanguage)
+            {
+                service.MakeNotificationsForLanguage(newTour);
+            }
+            else if(CreatingTourForLocation)
+            {
+                service.MakeNotificationsForLocation(newTour);
+            }
         }
 
         private void ProcessInputs(Tour newTour)
