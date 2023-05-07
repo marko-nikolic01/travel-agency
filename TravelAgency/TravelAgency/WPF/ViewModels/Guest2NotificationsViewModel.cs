@@ -37,7 +37,7 @@ namespace TravelAgency.WPF.ViewModels
         TourOccurrenceAttendanceService tourOccurrenceAttendanceService;
         TourRequestService tourRequestService;
         public List<RequestAcceptedNotification> RequestAcceptedNotifications { get; set; }
-        public RequestAcceptedNotification Notification { get; set; }
+        public RequestAcceptedNotification RequestNotification { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -55,7 +55,6 @@ namespace TravelAgency.WPF.ViewModels
             AllertIfSelectеd();
             IsSomeTourAccepted();
         }
-
         private void IsSomeTourAccepted()
         {
             TourRequestService requestService = new TourRequestService();

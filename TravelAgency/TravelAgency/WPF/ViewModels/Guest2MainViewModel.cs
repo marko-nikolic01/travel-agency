@@ -77,9 +77,7 @@ namespace TravelAgency.WPF.ViewModels
 
         public void Update()
         {
-            TourOccurrenceAttendanceService attendanceService = new TourOccurrenceAttendanceService();
-            TourRequestService requestService = new TourRequestService();
-            if (attendanceService.GetAttendance(currentGuestId) != null || requestService.NewAcceptedRequestExists(currentGuestId))
+            if (NotificationExists())
             {
                 NotificationsImageSource = "../../Resources/Images/IconBelled.png";
             }
@@ -87,6 +85,17 @@ namespace TravelAgency.WPF.ViewModels
             {
                 NotificationsImageSource = "../../Resources/Images/IconBell.png";
             }
+        }
+        private bool NotificationExists()
+        {
+            TourOccurrenceAttendanceService attendanceService = new TourOccurrenceAttendanceService();
+            TourRequestService requestService = new TourRequestService();
+            CreatedTourFromStatisticService service = new CreatedTourFromStatisticService();
+            if (attendanceService.GetAttendance(currentGuestId) != null || requestService.NewAcceptedRequestExists(currentGuestId) 
+                || service.NewTourNotificationExists(currentGuestId))
+                return true;
+            else
+                return false;
         }
     }
 }

@@ -10,7 +10,6 @@ using TravelAgency.Repositories;
 using System.Globalization;
 using System.Windows.Controls;
 using TravelAgency.Serializer;
-using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
@@ -182,7 +181,7 @@ namespace TravelAgency.Services
             return ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId);
         }
 
-        public void SaveNewTours(Tour newTour, ItemCollection links, ItemCollection dateTimes, ItemCollection keyPoints, User activeGuide)
+        public Tour SaveNewTours(Tour newTour, ItemCollection links, ItemCollection dateTimes, ItemCollection keyPoints, User activeGuide)
         {
             ITourRepository.Save(newTour);
             SavePhotos(newTour, links);
@@ -196,6 +195,7 @@ namespace TravelAgency.Services
                     SaveKeyPoint(keyPointItem, tourOccurrence);
                 }
             }
+            return newTour;
         }
         private void SavePhotos(Tour newTour, ItemCollection links)
         {

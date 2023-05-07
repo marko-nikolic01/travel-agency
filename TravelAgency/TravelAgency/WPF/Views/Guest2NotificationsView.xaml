@@ -42,7 +42,7 @@
                 </Label>
             </StackPanel>
             <DataGrid CellStyle="{StaticResource CellStyle}" GridLinesVisibility="None" HeadersVisibility="None" AutoGenerateColumns="False" IsReadOnly="True"
-                      SelectedItem="{Binding Notification}" ItemsSource="{Binding RequestAcceptedNotifications}">
+                      SelectedItem="{Binding RequestNotification}" ItemsSource="{Binding RequestAcceptedNotifications}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -52,6 +52,31 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn FontSize="25" FontWeight="Light" Binding="{Binding DateTime, StringFormat=d}"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Margin="30 0">
+                                    <Hyperlink Click="ShowTours_Click">
+                                        <TextBlock FontSize="20" Text="CLICK HERE TO SHOW NEW TOUR"/>
+                                    </Hyperlink>
+                                </Label>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid CellStyle="{StaticResource CellStyle}" GridLinesVisibility="None" HeadersVisibility="None" AutoGenerateColumns="False" IsReadOnly="True"
+                      SelectedItem="{Binding NewTourNotification}" ItemsSource="{Binding NewTourNotifications}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding NewTourNotificationString}"></Label>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
