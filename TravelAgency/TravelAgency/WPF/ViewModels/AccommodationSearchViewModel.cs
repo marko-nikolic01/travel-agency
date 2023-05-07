@@ -19,7 +19,7 @@ namespace TravelAgency.WPF.ViewModels
         private LocationService _locationService;
         private SuperOwnerService _superOwnerService;
 
-        //private User _guest;
+        public User Guest { get; set;}
         private ObservableCollection<Accommodation> _accommodations;
         private Accommodation _selectedAccommodation;
         private List<string> _countries;
@@ -120,7 +120,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public AccommodationSearchViewModel(/*User guest*/)
+        public AccommodationSearchViewModel(User guest)
         {
             _accommodationService = new AccommodationService();
             _searchService = new AccommodationSearchService();
@@ -128,7 +128,7 @@ namespace TravelAgency.WPF.ViewModels
             _superOwnerService = new SuperOwnerService();
 
             InitializeData();
-            //guest = guest;
+            Guest = guest;
             SearchFilter = new AccommodationSearchFilter();
         }
 

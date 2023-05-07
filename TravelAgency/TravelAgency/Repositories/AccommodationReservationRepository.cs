@@ -74,19 +74,6 @@ namespace TravelAgency.Repositories
             return reservations;
         }
 
-        public List<AccommodationReservation> GetFutureNotCanceledByGuest(User guest)
-        {
-            List<AccommodationReservation> reservations = new List<AccommodationReservation>();
-            foreach (AccommodationReservation reservation in _accommodationReservations)
-            {
-                if (reservation.Guest.Id == guest.Id && !reservation.Canceled && reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)
-                {
-                    reservations.Add(reservation);
-                }
-            }
-            return reservations;
-        }
-
         public int NextId()
         {
             if (_accommodationReservations.Count < 1)
