@@ -36,8 +36,11 @@ namespace TravelAgency.WPF.ViewModels
         private TourOccurrenceAttendance attendance;
         TourOccurrenceAttendanceService tourOccurrenceAttendanceService;
         TourRequestService tourRequestService;
+        CreatedTourFromStatisticService service;
         public List<RequestAcceptedNotification> RequestAcceptedNotifications { get; set; }
-        public RequestAcceptedNotification Notification { get; set; }
+        public List<NewTourNotification> NewTourNotifications { get; set; }
+        public RequestAcceptedNotification RequestNotification { get; set; }
+        public NewTourNotification NewTourNotification { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -51,11 +54,25 @@ namespace TravelAgency.WPF.ViewModels
             currentGuestId = id;
             tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
             tourRequestService = new TourRequestService();
+            service = new CreatedTourFromStatisticService();
             RequestAcceptedNotifications = new List<RequestAcceptedNotification>();
+            NewTourNotifications = new List<NewTourNotification>();
             AllertIfSelectеd();
             IsSomeTourAccepted();
+            GetNewToursFromStatistic();
         }
-
+        private void GetNewToursFromStatistic()
+        {
+            new TourOccurrenceService();
+            NewTourNotifications = service.GetNewTourNotifications(currentGuestId);
+            foreach(var notification in NewTourNotifications) 
+            {
+                if (notification.IsForLanguage)
+                    notification.NotificationText = "New tour has been created in " + notification.Tour.Language + "language";
+                else
+                    notification.NotificationText = "New tour has been created in " + notification.Tour.Location.Country + ", " + notification.Tour.Location.City;
+            }
+        }
         private void IsSomeTourAccepted()
         {
             TourRequestService requestService = new TourRequestService();
@@ -95,9 +112,18 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void RemoveNotification()
         {
-            Notification.IsSeen = true;
-            tourRequestService.UpdateNotification(Notification);
-            RequestAcceptedNotifications.Remove(Notification);
+            if (RequestNotification != null)
+            {
+                RequestNotification.IsSeen = true;
+                tourRequestService.UpdateNotification(RequestNotification);
+                RequestAcceptedNotifications.Remove(RequestNotification);
+            }
+            if (NewTourNotification != null) 
+            {
+                NewTourNotification.Seen = true;
+                service.UpdateNotification(NewTourNotification);
+                NewTourNotifications.Remove(NewTourNotification);
+            }
             tourOccurrenceAttendanceService.NotifyObservers();
         }
     }

@@ -10,6 +10,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
 {
     public interface IUserRepository
     {
+        public List<User> GetAll();
         public User GetByUsername(string username);
 
         public User GetById(int id);
