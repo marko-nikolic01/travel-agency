@@ -98,6 +98,15 @@
             <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1"
                                 Minimum="1"
                                 Increment="1"/>
+
+            <Grid Grid.Row="7" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="2">
