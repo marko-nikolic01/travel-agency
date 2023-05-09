@@ -16,7 +16,15 @@ namespace TravelAgency.WPF.Views
 
         private void ReserveTour_Click(object sender, RoutedEventArgs e)
         {
-            if(toursViewModel.CanTourBeReserved())
+            if(!toursViewModel.CanTourBeReserved())
+            {
+            }
+            else if(toursViewModel.TourIsFull())
+            {
+                AlternativeToursView alternativeTours = new AlternativeToursView(toursViewModel.SelectedTourOccurrence, toursViewModel.currentGuestId, this.NavigationService);
+                alternativeTours.Show();
+            }
+            else
             {
                 TourReservationView reservationView = new TourReservationView(toursViewModel.SelectedTourOccurrence, toursViewModel.currentGuestId);
                 this.NavigationService.Navigate(reservationView);

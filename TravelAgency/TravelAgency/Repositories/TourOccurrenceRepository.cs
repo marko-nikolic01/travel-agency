@@ -77,7 +77,12 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
-
+        public List<TourOccurrence> GetOfferedToursByLocation(Location location)
+        {
+            List<TourOccurrence> result = GetOffered();
+            result.RemoveAll(occurrence => !occurrence.Tour.Location.Equals(location));
+            return result;
+        }
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();

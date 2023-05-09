@@ -92,12 +92,6 @@ namespace TravelAgency.WPF.ViewModels
                 MessageBox.Show("You must choose a tour.");
                 return false;
             }
-            else if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
-            {
-                /*AlternativeTours alternativeTours = new AlternativeTours(TourOccurrences, SelectedTourOccurrence.Id, SelectedTourOccurrence.Tour.Location, ActiveGuest, TourOccurrenceRepository);
-                alternativeTours.Show();*/
-                return false;
-            }
             else if (reservationService.IsTourReserved(currentGuestId, SelectedTourOccurrence.Id))
             {
                 MessageBox.Show("You already have reservation for this tour.");
@@ -174,6 +168,13 @@ namespace TravelAgency.WPF.ViewModels
                 Duration = "";
             if (Guests == null)
                 guests = "";
+        }
+        public bool TourIsFull()
+        {
+            if (SelectedTourOccurrence.Guests.Count == SelectedTourOccurrence.Tour.MaxGuestNumber)
+                return true;
+            else
+                return false;
         }
         public void Update()
         {
