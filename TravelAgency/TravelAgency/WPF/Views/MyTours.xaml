@@ -43,15 +43,16 @@
                     <Popup IsOpen = "{Binding Path = ActiveTourHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = ActiveTourBtn}" Placement="Left"
                     AllowsTransparency = "True">
-                        <Canvas Width = "250" Height = "100" Background="Azure">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock FontSize="12" Padding="10">
-                                In this section you can see if there is<LineBreak/>active tour that you have reserved.<LineBreak/>
-                                If there is active tour, you will have written<LineBreak/>
-                                what is current key point and<LineBreak/>if your presence is registered.
-                                </TextBlock>
-                            </StackPanel>
-                        </Canvas>
+                        <Border BorderBrush="Gainsboro" BorderThickness="3">
+                            <Canvas Width = "290" Height = "100" Background="Azure">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock FontSize="14" Padding="10">
+                                Here you can see if there is active tour<LineBreak/>that you have reserved.<LineBreak/>
+                                If you have active tour, the current key point<LineBreak/>and your status in tour will be displayed.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Canvas>
+                        </Border>
                     </Popup>
                 </Grid>
             </Grid>
@@ -98,16 +99,18 @@
                     <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
                     AllowsTransparency = "True">
-                        <Canvas Width = "290" Height = "100" Background="Azure">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock FontSize="12" Padding="10">
-                            In this table you have all the tours you've been on.<LineBreak/>
-                            You can rate the tour by selecting appropriate row<LineBreak/> 
+                        <Border BorderBrush="Gainsboro" BorderThickness="3">
+                            <Canvas Width = "285" Height = "110" Background="Azure">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock FontSize="14" Padding="10">
+                            Here are all the tours you've been on.<LineBreak/>
+                            Rate the tour by selecting one from table<LineBreak/> 
                             and clicking "Rate the tour" button.
                             <LineBreak />To see more detailed view of tour,<LineBreak /> click on "More details" button
-                                </TextBlock>
-                            </StackPanel>
-                        </Canvas>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Canvas>
+                        </Border>
                     </Popup>
                 </Grid>
             </Grid>

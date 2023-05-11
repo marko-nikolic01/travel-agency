@@ -1,25 +1,59 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class TourRatingFormViewModel
+    public class TourRatingFormViewModel : INotifyPropertyChanged
     {
+        private string url;
+        private bool ratingsHelpClicked;
+        private bool photosHelpClicked;
+        private bool commentHelpClicked;
+        public bool RatingsHelpClicked
+        {
+            get { return ratingsHelpClicked; }
+            set { ratingsHelpClicked = value; OnPropertyChanged(); }
+        }
+        public bool PhotosHelpClicked
+        {
+            get { return photosHelpClicked; }
+            set { photosHelpClicked = value; OnPropertyChanged(); }
+        }
+        public bool CommentHelpClicked
+        {
+            get { return commentHelpClicked; }
+            set { commentHelpClicked = value; OnPropertyChanged(); }
+        }
         public string GuideKnowledge { get; set; }
         public string GuideLanguage { get; set; }
         public string Interesting { get; set; }
         public string AdditionalComment { get; set; }
-        public string Url { get; set; }
+        public string Url
+        {
+            get { return url; }
+            set { url = value; OnPropertyChanged(); }
+        }
         public string SelectedUrl { get; set; }
         public ObservableCollection<string> Urls { get; set; }
         public string Description { get; set; }
         private TourRatingService tourRatingService;
         public ButtonCommandNoParameter AddUrlCommand { get; set; }
         public ButtonCommandNoParameter RemoveUrlCommand { get; set; }
+        public ButtonCommandNoParameter RatingsHelpCommand { get; set; }
+        public ButtonCommandNoParameter PhotosHelpCommand { get; set; }
+        public ButtonCommandNoParameter CommentHelpCommand { get; set; }
         private int currentGuestId;
         private int occurrenceId;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public TourRatingFormViewModel(TourOccurrence occurrence, int guestId)
         {
             GuideKnowledge = "5";
@@ -31,8 +65,23 @@ namespace TravelAgency.WPF.ViewModels
             tourRatingService = new TourRatingService();
             AddUrlCommand = new ButtonCommandNoParameter(AddUrl);
             RemoveUrlCommand = new ButtonCommandNoParameter(RemoveUrl);
+            RatingsHelpCommand = new ButtonCommandNoParameter(RatingsHelpClick);
+            PhotosHelpCommand = new ButtonCommandNoParameter(PhotosHelpClick);
+            CommentHelpCommand = new ButtonCommandNoParameter(CommentHelpClick);
             currentGuestId = guestId;
             occurrenceId = occurrence.Id;
+        }
+        private void RatingsHelpClick()
+        {
+            RatingsHelpClicked = !RatingsHelpClicked;
+        }
+        private void PhotosHelpClick()
+        {
+            PhotosHelpClicked = !PhotosHelpClicked;
+        }
+        private void CommentHelpClick()
+        {
+            CommentHelpClicked = !CommentHelpClicked;
         }
         private void AddUrl()
         {

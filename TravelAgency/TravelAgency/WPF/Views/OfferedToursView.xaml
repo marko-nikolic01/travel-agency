@@ -57,18 +57,22 @@
             <Button Margin="10,-5,10,15" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="6" x:Name="SearchHelpButton" Command="{Binding SearchHelpCommand}">
                 <Image Source="../../Resources/Images/questionmark.png"></Image>
             </Button>
-            <Popup IsOpen = "{Binding Path = SearchHelpClicked}"    
+            
+            <Popup IsOpen = "{Binding Path = SearchHelpClicked}"
             PlacementTarget = "{Binding ElementName = SearchHelpButton}" Placement="Left"
             AllowsTransparency = "True">
-                <Canvas Width = "200" Height = "80" Background="Azure">
+                <Border BorderBrush="Gainsboro" BorderThickness="3">
+                <Canvas Width = "230" Height = "100" Background="Azure">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Padding="10">
-                            Type text in the fields to filter<LineBreak/> by the appropriate criteria.<LineBreak/>
-                            Table will be filtered automatically.
+                        <TextBlock Padding="10" FontSize="14">
+                            Type text in the fields in order to<LineBreak/>filter by the appropriate criteria.<LineBreak/>
+                            Table content will be filtered<LineBreak/>automatically.
                         </TextBlock>
                     </StackPanel>
                 </Canvas>
+            </Border>
             </Popup>
+            
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -113,15 +117,17 @@
                 <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
                 AllowsTransparency = "True">
-                    <Canvas Width = "250" Height = "100" Background="Azure">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                    <Canvas Width = "290" Height = "115" Background="Azure">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Padding="10">
-                            Select tour by clicking on row in table,<LineBreak/>then you can reserve tour
-                            by clicking<LineBreak/> "make a reservation" button.<LineBreak/>
-                            To see tour photos click on "show photos" <LineBreak/>button in corresponding row.
-                            </TextBlock>
-                        </StackPanel>
+                                <TextBlock Padding="10" FontSize="14">
+                            To make a reservation select tour from the<LineBreak/>table, then click
+                                    on "make a reservation"<LineBreak/>button.<LineBreak/>
+                            To see photos of tour click on "show photos" <LineBreak/>button in corresponding row.
+                                </TextBlock>
+                            </StackPanel>
                     </Canvas>
+                    </Border>
                 </Popup>
             </Grid>
         </Grid>
