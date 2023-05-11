@@ -18,6 +18,7 @@ namespace TravelAgency.WPF.ViewModels
         private bool addEnabled;
         private bool submitEnabled;
         private bool guestsHelpClicked;
+        private bool numGuestsHelpClicked;
         private bool voucherHelpClicked;
         public string TourDescription { get; set; }
         public string GuestName { get => guestName; 
@@ -33,6 +34,11 @@ namespace TravelAgency.WPF.ViewModels
             set { if (value != submitEnabled) { submitEnabled = value; OnPropertyChanged(); } } }
         public bool GuestsHelpClicked { get => guestsHelpClicked;
             set { if (value != guestsHelpClicked) { guestsHelpClicked = value; OnPropertyChanged(); } } }
+        public bool NumGuestsHelpClicked
+        {
+            get => numGuestsHelpClicked;
+            set { if (value != numGuestsHelpClicked) { numGuestsHelpClicked = value; OnPropertyChanged(); } }
+        }
         public bool VoucherHelpClicked{ get => voucherHelpClicked;
             set { if (value != voucherHelpClicked) { voucherHelpClicked = value; OnPropertyChanged(); } } }
         public ObservableCollection<string> GuestsList { get; set; }
@@ -44,6 +50,7 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter AddGuestCommand { get; set; }
         public ButtonCommandNoParameter RemoveGuestCommand { get; set; }
         public ButtonCommandNoParameter GuestsHelpCommand { get; set; }
+        public ButtonCommandNoParameter NumGuestsHelpCommand { get; set; }
         public ButtonCommandNoParameter VoucherHelpCommand { get; set; }
         private TourOccurrence tourOccurrence;
 
@@ -68,9 +75,13 @@ namespace TravelAgency.WPF.ViewModels
             AddGuestCommand = new ButtonCommandNoParameter(AddGuest);
             RemoveGuestCommand = new ButtonCommandNoParameter(RemoveGuest);
             GuestsHelpCommand = new ButtonCommandNoParameter(GuestsHelpClick);
+            NumGuestsHelpCommand = new ButtonCommandNoParameter(NumGuestsHelpClick);
             VoucherHelpCommand = new ButtonCommandNoParameter(VoucherHelpClick);
         }
-
+        private void NumGuestsHelpClick()
+        {
+            NumGuestsHelpClicked = !NumGuestsHelpClicked;
+        }
         private void GuestsHelpClick()
         {
             GuestsHelpClicked = !GuestsHelpClicked;

@@ -33,7 +33,7 @@
         <Grid Grid.Row="0">
             <StackPanel Orientation="Vertical">
                 <Label Margin="20" FontSize="24" Content="Making a reservation"></Label>
-                <Label Margin="20 0" FontSize="20" Content="Description" x:Name="descriptionLabel"></Label>
+                <Label Margin="20 0" FontSize="20" Content="{Binding TourDescription}"></Label>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -56,20 +56,21 @@
                  SelectedValue="{Binding SelectedVoucher}" 
                  DisplayMemberPath="VoucherString" />
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="VouchersBtn" VerticalAlignment="Top" Command="{Binding VoucherHelpCommand}">
+                <Button Margin="50 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="VouchersBtn" VerticalAlignment="Top" Command="{Binding VoucherHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
                 <Popup IsOpen = "{Binding Path = VoucherHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = VouchersBtn}" Placement="Left"
                 AllowsTransparency = "True">
-                    <Canvas Width = "250" Height = "100" Background="Azure">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Padding="10">
-                            Here are listed your available vouchers.<LineBreak/>To use voucher, just select one from the list
-                            <LineBreak/> If you want deselect the voucher<LineBreak/> and not use it click on deselect button
-                            </TextBlock>
-                        </StackPanel>
-                    </Canvas>
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "260" Height = "60" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Padding="10" FontSize="14">
+                            Here are all vouchers you have.<LineBreak/>To use voucher, select one from the list.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
                 </Popup>
                 <Button Content="Deselect" Width="150" Height="30" HorizontalAlignment="Left" Margin="20 10" Click="Deselect_Click"></Button>
             </StackPanel>
@@ -83,20 +84,41 @@
             <Button Grid.Column="1" Grid.Row="5" Content="Remove Guest" Width="150" Height="30" Command="{Binding RemoveGuestCommand}"></Button>
             
             <Grid Grid.Column="2" Grid.Row="4">
-                <Button Margin="10,0,10,15" Width="40" Height="40" HorizontalAlignment="Center" x:Name="GuestListBtn" VerticalAlignment="Center" Command="{Binding GuestsHelpCommand}">
+                <Button Margin="00,0,50,0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="GuestListBtn" VerticalAlignment="Center" Command="{Binding GuestsHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
                 <Popup IsOpen = "{Binding Path = GuestsHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = GuestListBtn}" Placement="Left"
                 AllowsTransparency = "True">
-                    <Canvas Width = "250" Height = "80" Background="Azure">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Padding="10">
-                            Here are listed guests which you have added to reservation.<LineBreak/>If you want to remove guest
-                            select him<LineBreak/> and click on remove guest.
-                            </TextBlock>
-                        </StackPanel>
-                    </Canvas>
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "270" Height = "80" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Padding="10" FontSize="14">
+                            Guests which will be added to reservation<LineBreak/>
+                            If you want to remove guest, select<LineBreak/>one guest and click on "Remove guest".
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="1">
+                <Button Margin="00,0,50,0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="NumGuestsBtn" VerticalAlignment="Bottom" Command="{Binding NumGuestsHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = NumGuestsHelpClicked}"    
+                PlacementTarget = "{Binding ElementName = NumGuestsBtn}" Placement="Left"
+                AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "270" Height = "90" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Padding="10" FontSize="14">
+                            Number of guests which will be added<LineBreak/>to reservation.<LineBreak/>
+                            Number must be equal to the number of<LineBreak/>guests in the guests list.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
                 </Popup>
             </Grid>
         </Grid>

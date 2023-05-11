@@ -56,7 +56,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Margin="30 0">
-                                    <Hyperlink Click="ShowTours_Click">
+                                    <Hyperlink Click="ShowAcceptedTour_Click">
                                         <TextBlock FontSize="20" Text="CLICK HERE TO SHOW NEW TOUR"/>
                                     </Hyperlink>
                                 </Label>
@@ -81,7 +81,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Margin="30 0">
-                                    <Hyperlink Click="ShowTours_Click">
+                                    <Hyperlink Click="ShowNewTour_Click">
                                         <TextBlock FontSize="20" Text="CLICK HERE TO SHOW NEW TOUR"/>
                                     </Hyperlink>
                                 </Label>

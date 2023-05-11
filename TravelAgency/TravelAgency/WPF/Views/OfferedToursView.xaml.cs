@@ -7,9 +7,9 @@ namespace TravelAgency.WPF.Views
     public partial class OfferedToursView : Page
     {
         private OfferedToursViewModel toursViewModel;
-        public OfferedToursView(int guestId)
+        public OfferedToursView(int guestId, int selectedTourOccurrenceId = -1)
         {
-            toursViewModel = new OfferedToursViewModel(guestId);
+            toursViewModel = new OfferedToursViewModel(guestId, selectedTourOccurrenceId);
             InitializeComponent();
             DataContext = toursViewModel;   
         }

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Documents;
 using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
 
@@ -11,6 +13,12 @@ namespace TravelAgency.WPF.Views
         {
             InitializeComponent();
             tourPhotosViewModel = new TourPhotosViewModel(tourOccurrence.Tour.Photos);
+            DataContext = tourPhotosViewModel;
+        }
+        public TourPhotosView(List<string> links)
+        {
+            InitializeComponent();
+            tourPhotosViewModel = new TourPhotosViewModel(links);
             DataContext = tourPhotosViewModel;
         }
     }

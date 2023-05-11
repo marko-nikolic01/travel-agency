@@ -37,17 +37,17 @@
                 <Popup IsOpen = "{Binding Path = TourRequestHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = TourRequestBtn}" Placement="Left"
                     AllowsTransparency = "True">
-                    <Canvas Width = "290" Height = "120" Background="Azure">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Padding="10">
-                                On this page you have all requests that you made.<LineBreak/>On the begining, status of request is pending<LineBreak/>
-                                If 48h before selected date for tour, the tour<LineBreak/>
-                                 is not accepted, status of the tour will be: rejeted.<LineBreak/>
-                                If tour is accepted, in the last column "Given date"<LineBreak/>
-                                will be shown the date of tour.  
-                            </TextBlock>
-                        </StackPanel>
-                    </Canvas>
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "290" Height = "100" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Here you have all requests that you made<LineBreak/>
+                                and their status.
+                                <LineBreak/>Make a new request to get the tour<LineBreak/>you want.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
                 </Popup>
             </Grid>
         </Grid>

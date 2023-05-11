@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Documents;
+using TravelAgency.Commands;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
@@ -20,6 +21,12 @@ namespace TravelAgency.WPF.ViewModels
         private string locationChartVisibility;
         private bool languageSelected;
         private bool locationSelected;
+        private bool graphHelpClicked;
+        public bool GraphHelpClicked
+        {
+            get { return graphHelpClicked; }
+            set { graphHelpClicked = value; OnPropertyChanged(); }
+        }
         public string LanguageChartVisibility
         {
             get { return languageChartVisibility; }
@@ -73,6 +80,7 @@ namespace TravelAgency.WPF.ViewModels
         public SeriesCollection SeriesCollectionLocation { get; set; }
         public string[] BarLabelsLocation { get; set; }
         public Func<double, string> FormatterLocation { get; set; }
+        public ButtonCommandNoParameter GraphHelpCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -90,6 +98,11 @@ namespace TravelAgency.WPF.ViewModels
             SetAllTimeAveragePeopleNum();
             FillOptions();
             FillChartColumns();
+            GraphHelpCommand = new ButtonCommandNoParameter(GraphClick);
+        }
+        private void GraphClick()
+        {
+            GraphHelpClicked = !GraphHelpClicked;
         }
         private void SetAllTimeAcceptance()
         {

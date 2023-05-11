@@ -79,13 +79,15 @@
                 <Popup IsOpen = "{Binding Path = GuestNumHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = NumGuestBtn}" Placement="Left"
                     AllowsTransparency = "True">
-                    <Canvas Width = "220" Height = "80" Background="Azure">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Padding="10">
-                                Here is entered maximum number<LineBreak/>of guests that could be on tour.
-                            </TextBlock>
-                        </StackPanel>
-                    </Canvas>
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "60" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Enter maximum number of<LineBreak/>guests on tour here.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
                 </Popup>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="4">
@@ -95,14 +97,34 @@
                 <Popup IsOpen = "{Binding Path = DateHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
                     AllowsTransparency = "True">
-                    <Canvas Width = "220" Height = "80" Background="Azure">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="12" Padding="10">
-                                Here is entered date range in which<LineBreak/> tour could be held.<LineBreak/>
-                                Min date must at least 48h from now.
-                            </TextBlock>
-                        </StackPanel>
-                    </Canvas>
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "90" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Enter date range in which tour<LineBreak/>could be held.<LineBreak/>
+                                Min date must at least 48h from<LineBreak/>now.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="6">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding DescriptionHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = DescriptionHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DescriptionBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "70" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Description can help guides to<LineBreak/>make the tour the way you want.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
                 </Popup>
             </Grid>
         </Grid>

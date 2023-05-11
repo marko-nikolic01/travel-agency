@@ -14,6 +14,7 @@ namespace TravelAgency.WPF.ViewModels
         private string selectedCity;
         private bool dateHelpClicked;
         private bool guestNumHelpClicked;
+        private bool descriptionHelpClicked;
         public bool DateHelpClicked
         {
             get { return dateHelpClicked; }
@@ -24,8 +25,14 @@ namespace TravelAgency.WPF.ViewModels
             get { return guestNumHelpClicked; }
             set { guestNumHelpClicked = value; OnPropertyChanged(); }
         }
+        public bool DescriptionHelpClicked
+        {
+            get { return descriptionHelpClicked; }
+            set { descriptionHelpClicked = value; OnPropertyChanged(); }
+        }
         public ButtonCommandNoParameter GuestNumHelpCommand { get; set; }
         public ButtonCommandNoParameter DateHelpCommand { get; set; }
+        public ButtonCommandNoParameter DescriptionHelpCommand { get; set; }
         public string SelectedCountry{
             get => selectedCountry;
             set{ if (value != selectedCountry) { selectedCountry = value; OnPropertyChanged(); } }
@@ -62,6 +69,7 @@ namespace TravelAgency.WPF.ViewModels
             Language = "";
             GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
             DateHelpCommand = new ButtonCommandNoParameter(DateClick);
+            DescriptionHelpCommand = new ButtonCommandNoParameter(DescriptionClick);
         }
         private void GuestNumClick()
         {
@@ -70,6 +78,10 @@ namespace TravelAgency.WPF.ViewModels
         private void DateClick()
         {
             DateHelpClicked = !DateHelpClicked;
+        }
+        private void DescriptionClick()
+        {
+            DescriptionHelpClicked = !DescriptionHelpClicked;
         }
         public void SetCitiesComboBox()
         {

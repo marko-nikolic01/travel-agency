@@ -151,6 +151,11 @@ namespace TravelAgency.Repositories
             TourOccurrence tourOccurrence = tourOccurrences.Find(t => t.Id == id);
             return tourOccurrence;
         }
+        public TourOccurrence GetByTourId(int id)
+        {
+            TourOccurrence tourOccurrence = tourOccurrences.Find(t => t.TourId == id);
+            return tourOccurrence;
+        }
 
         public void Delete(TourOccurrence tourOccurrence)
         {
