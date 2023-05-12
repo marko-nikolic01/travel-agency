@@ -290,6 +290,10 @@ namespace TravelAgency.Services
         {
             return ITourOccurrenceRepository.GetTodays(activeGuideId);
         }
+        public TourOccurrence GetByTourId(int id)
+        {
+            return ITourOccurrenceRepository.GetByTourId(id);
+        }
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
         {

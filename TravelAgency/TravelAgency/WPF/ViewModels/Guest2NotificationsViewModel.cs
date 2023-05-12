@@ -41,6 +41,7 @@ namespace TravelAgency.WPF.ViewModels
         public List<NewTourNotification> NewTourNotifications { get; set; }
         public RequestAcceptedNotification RequestNotification { get; set; }
         public NewTourNotification NewTourNotification { get; set; }
+        public int SelectedOccurrenceId;
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -110,21 +111,34 @@ namespace TravelAgency.WPF.ViewModels
                 tourOccurrenceAttendanceService.NotifyObservers();
             }
         }
-        public void RemoveNotification()
+        public void RemoveRequestNotification()
         {
             if (RequestNotification != null)
             {
+                // ovde trenutno ne mogu da dobijem koji touroccurrenceId na osnovu requesta
                 RequestNotification.IsSeen = true;
                 tourRequestService.UpdateNotification(RequestNotification);
                 RequestAcceptedNotifications.Remove(RequestNotification);
             }
-            if (NewTourNotification != null) 
+            tourOccurrenceAttendanceService.NotifyObservers();
+        }
+        public void RemoveTourNotification()
+        {
+            TourOccurrenceService occurrenceService = new TourOccurrenceService();
+            if (NewTourNotification != null)
             {
+                SelectedOccurrenceId = occurrenceService.GetByTourId(NewTourNotification.TourId).Id;
                 NewTourNotification.Seen = true;
                 service.UpdateNotification(NewTourNotification);
                 NewTourNotifications.Remove(NewTourNotification);
             }
             tourOccurrenceAttendanceService.NotifyObservers();
+        }
+        private void SetClickedTourOccurrenceId()
+        {
+            //ako je kliknuto prihvacen zahtev samo dobavim id tour occurrenca i prosledim offeredtoursu
+            //ako je kliknuto ono drugo na osnovu tourIdija dobavim tour occurrence id
+            //u offered toursu na osnovu idija samo nadjem koji je tour occurrence i stavim ga na selected
         }
     }
 }
