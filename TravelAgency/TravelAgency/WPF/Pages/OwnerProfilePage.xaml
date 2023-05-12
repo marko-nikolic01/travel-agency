@@ -1,13 +1,17 @@
-﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerProfilePage"
+﻿<UserControl x:Class="TravelAgency.WPF.Pages.OwnerProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="684" d:DesignWidth="935"
-      Title="OwnerProfilePage">
+      d:DesignHeight="684" d:DesignWidth="935">
+
+    <UserControl.DataContext>
+        <viewmodels:OwnerProfileViewModel/>
+    </UserControl.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -112,4 +116,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Page>
+</UserControl>

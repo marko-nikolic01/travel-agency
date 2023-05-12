@@ -18,7 +18,7 @@ namespace TravelAgency.WPF.Pages
     /// <summary>
     /// Interaction logic for OwnerAccommodations.xaml
     /// </summary>
-    public partial class OwnerAccommodationsPage : Page
+    public partial class OwnerAccommodationsPage : UserControl
     {
         public OwnerAccommodationsPage()
         {
@@ -27,7 +27,7 @@ namespace TravelAgency.WPF.Pages
 
         private void AccommodationsNavigationButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new OwnerManageAccommodationsPage());
+            //this.NavigationService.Navigate(new OwnerManageAccommodationsPage());
         }
     }
 }

@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.Controls.CustomControls;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
@@ -21,25 +23,43 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerWindow : Window
     {
-        public User LoggedInUser { get; set; }
-        public OwnerWindow(User loggedInUser)
+        public OwnerMainViewModel MainViewModel { get; set; }
+        public MyICommand<string> CheckRadioButtonCommand { get; private set; }
+
+        public OwnerWindow()
         {
+            CheckRadioButtonCommand = new MyICommand<string>(OnCheckRadioButton);
+
             InitializeComponent();
-            DataContext = this;
-
-            LoggedInUser = loggedInUser;
+            MainViewModel = new OwnerMainViewModel();
+            DataContext = MainViewModel;
         }
 
-        public void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnCheckRadioButton(string button)
         {
-            //var selectedItem = Sidebar.SelectedItem as OwnerSidebarNavigationButton;
-
-            //NavigationFrame.Navigate(selectedItem.NavLink);
-        }
-
-        private void ListBoxItem_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Hello!");
+            switch (button)
+            {
+                case "profile":
+                    myProfileRadioButton.IsChecked = true;
+                    MainViewModel.OnNav(button);
+                    break;
+                case "accommodations":
+                    accommodationsRadioButton.IsChecked = true;
+                    MainViewModel.OnNav(button);
+                    break;
+                case "reservations":
+                    reservationsRadioButton.IsChecked = true;
+                    MainViewModel.OnNav(button);
+                    break;
+                case "ratings":
+                    ratingsRadioButton.IsChecked = true;
+                    MainViewModel.OnNav(button);
+                    break;
+                case "forum":
+                    forumRadioButton.IsChecked = true;
+                    MainViewModel.OnNav(button);
+                    break;
+            }
         }
     }
 }

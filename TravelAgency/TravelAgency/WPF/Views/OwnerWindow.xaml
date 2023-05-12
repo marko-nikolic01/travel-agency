@@ -4,12 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
+        xmlns:pages="clr-namespace:TravelAgency.WPF.Pages"
         xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
         xmlns:customcontrols="clr-namespace:TravelAgency.WPF.Controls.CustomControls"
         mc:Ignorable="d"
+        x:Name="root"
         Title="OwnerWindow"
         Height="700" Width="1200"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:OwnerProfileViewModel}">
+            <pages:OwnerProfilePage/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodels:OwnerAccommodationsViewModel}">
+            <pages:OwnerAccommodationsPage/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding CheckRadioButtonCommand, ElementName=root}" CommandParameter="profile"/>
+        <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding CheckRadioButtonCommand, ElementName=root}" CommandParameter="accommodations"/>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding CheckRadioButtonCommand, ElementName=root}" CommandParameter="reservations"/>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding CheckRadioButtonCommand, ElementName=root}" CommandParameter="ratings"/>
+        <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding CheckRadioButtonCommand, ElementName=root}" CommandParameter="forum"/>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -33,7 +53,7 @@
 
                 <TextBlock Grid.Row="0"
                            x:Name="UsernameTextBlock"
-                           Text="{Binding LoggedInUser.Username}"
+                           Text="POPRAVITI OVDE!"
                            FontSize="16"
                            HorizontalAlignment="Center"
                            Margin="0 10 0 5"/>
@@ -86,32 +106,45 @@
                                                              Icon="../../Resources/Images/NavForum.png"
                                                              MouseDown="ListBoxItem_MouseDown"/>
             </ListBox>-->
+            
             <StackPanel Grid.Row="2">
-                <customcontrols:OwnerSidebarNavRadioButton Text="My Profile"
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="myProfileRadioButton"
+                                                           Text="My Profile"
                                                            KeyboardShortcutText="Ctrl+P"
-                                                           Icon="../../Resources/Images/NavProfile.png"/>
+                                                           Icon="../../Resources/Images/NavProfile.png"
+                                                           IsChecked="True"
+                                                           Command="{Binding NavCommand}" CommandParameter="profile"/>
 
-                <customcontrols:OwnerSidebarNavRadioButton Text="Accommodations"
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="accommodationsRadioButton"
+                                                           Text="Accommodations"
                                                            KeyboardShortcutText="Ctrl+A"
-                                                           Icon="../../Resources/Images/NavAccommodations.png"/>
+                                                           Icon="../../Resources/Images/NavAccommodations.png"
+                                                           Command="{Binding NavCommand}" CommandParameter="accommodations"/>
 
-                <customcontrols:OwnerSidebarNavRadioButton Text="Reservations"
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="reservationsRadioButton" 
+                                                           Text="Reservations"
                                                            KeyboardShortcutText="Ctrl+R"
                                                            Icon="../../Resources/Images/NavReservations.png"/>
 
-                <customcontrols:OwnerSidebarNavRadioButton Text="Ratings"
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="ratingsRadioButton"
+                                                           Text="Ratings"
                                                            KeyboardShortcutText="Ctrl+T"
                                                            Icon="../../Resources/Images/NavRatings.png"/>
 
-                <customcontrols:OwnerSidebarNavRadioButton Text="Forum"
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
+                                                           Text="Forum"
                                                            KeyboardShortcutText="Ctrl+F"
                                                            Icon="../../Resources/Images/NavForum.png"/>
             </StackPanel>
         </Grid>
 
-        <Frame Grid.Column="1"
+        <!--<Frame Grid.Column="1"
                x:Name="NavigationFrame"
                NavigationUIVisibility="Hidden"
-               Padding="30"/>
+               Padding="30"/>-->
+
+        <ContentControl Grid.Column="1"
+                        Content="{Binding CurrentViewModel}"
+                        Margin="30"/>
     </Grid>
 </Window>
