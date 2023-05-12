@@ -25,13 +25,13 @@ namespace TravelAgency.WPF.Views
     public partial class AccommodationSearchView : Page
     {
         private Guest1HomeView _mainWindow;
-        public AccommodationSearchViewModel ViewModel { get; set; }
+        public wAccommodationSearchViewModel ViewModel { get; set; }
         public AccommodationSearchView(Guest1HomeView guest1HomeView, User guest)
         {
             InitializeComponent();
             _mainWindow = guest1HomeView;
 
-            ViewModel = new AccommodationSearchViewModel(guest);
+            ViewModel = new wAccommodationSearchViewModel(guest);
             this.DataContext = ViewModel;
             integerUpDownGuestNumber.Value = 0;
             integerUpDownDayNumber.Value = 0;

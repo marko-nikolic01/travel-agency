@@ -22,13 +22,13 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class HomeMenuView : Page
     {
-        public HomeMenuViewModel ViewModel { get; set; }
+        public wHomeMenuViewModel ViewModel { get; set; }
 
         private Guest1HomeView _mainWindow;
         public HomeMenuView(Guest1HomeView guest1HomeView, User guest)
         {
             InitializeComponent();
-            ViewModel = new HomeMenuViewModel(guest);
+            ViewModel = new wHomeMenuViewModel(guest);
             this.DataContext = ViewModel;
 
             _mainWindow = guest1HomeView;

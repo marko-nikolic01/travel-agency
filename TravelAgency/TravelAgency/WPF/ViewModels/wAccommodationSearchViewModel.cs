@@ -12,7 +12,7 @@ using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class AccommodationSearchViewModel : INotifyPropertyChanged
+    public class wAccommodationSearchViewModel : INotifyPropertyChanged
     {
         private AccommodationService _accommodationService;
         private AccommodationSearchService _searchService;
@@ -120,7 +120,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public AccommodationSearchViewModel(User guest)
+        public wAccommodationSearchViewModel(User guest)
         {
             _accommodationService = new AccommodationService();
             _searchService = new AccommodationSearchService();
@@ -203,7 +203,6 @@ namespace TravelAgency.WPF.ViewModels
             SearchFilter.TypeFilter = "Not specified";
             SearchFilter.GuestNumberFilter = 0;
             SearchFilter.DayNumberFilter = 0;
-
         }
 
         public event PropertyChangedEventHandler? PropertyChanged; 
