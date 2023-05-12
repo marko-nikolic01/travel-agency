@@ -11,7 +11,7 @@ using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class AccommodationReservationsViewModel: INotifyPropertyChanged
+    public class wAccommodationReservationsViewModel: INotifyPropertyChanged
     {
         private AccommodationReservationService _reservationService;
 
@@ -45,7 +45,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public AccommodationReservationsViewModel(User guest)
+        public wAccommodationReservationsViewModel(User guest)
         {
             _reservationService = new AccommodationReservationService();
 

@@ -6,29 +6,17 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
+using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class Guest1HomeViewModel : INotifyPropertyChanged
+    public class Guest1ReviewsMenuViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private User _guest;
+        public MyICommand<string> NavCommand { get; private set; }
 
-        public User Guest
+        public Guest1ReviewsMenuViewModel(MyICommand<string> navCommand)
         {
-            get => _guest;
-            set
-            {
-                if (value != _guest)
-                {
-                    _guest = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Guest1HomeViewModel(User guest)
-        {
-            Guest = guest;
+            NavCommand = navCommand;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

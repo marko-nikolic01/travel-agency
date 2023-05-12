@@ -12,31 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for AccommodationsReservationsMenuView.xaml
+    /// Interaction logic for Guest1AccommodationsReservationsMenuView.xaml
     /// </summary>
-    public partial class AccommodationsReservationsMenuView : Page
+    public partial class Guest1AccommodationsReservationsMenuView : UserControl
     {
-        public AccommodationsReservationsMenuViewModel ViewModel { get; set; }
+        public wAccommodationsReservationsMenuViewModel ViewModel { get; set; }
         private Guest1HomeView _mainWindow;
-        public AccommodationsReservationsMenuView(Guest1HomeView guest1HomeView, User guest)
+        public Guest1AccommodationsReservationsMenuView()
         {
             InitializeComponent();
-            ViewModel = new AccommodationsReservationsMenuViewModel(guest);
-            this.DataContext = ViewModel;
 
-            _mainWindow = guest1HomeView;
+            //_mainWindow = guest1HomeView;
         }
 
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
-            this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
+            //_mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
+            //this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
         }
 
         private void ButtonNavigation_Click(object sender, RoutedEventArgs e)
@@ -46,7 +43,7 @@ namespace TravelAgency.WPF.Views
         }
 
         private void Navigate(Button selectedTab)
-        {
+        {/*
             switch (selectedTab.Name)
             {
                 case "buttonSearchAccommodations":
@@ -55,7 +52,7 @@ namespace TravelAgency.WPF.Views
                 case "buttonMyReservations":
                     this.NavigationService.Navigate(new AccommodationReservationsView(_mainWindow, ViewModel.Guest));
                     break;
-            }
+            }*/
         }
     }
 }

@@ -9,7 +9,7 @@ using TravelAgency.Domain.Models;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class ForumsMenuViewModel : INotifyPropertyChanged
+    public class wReviewsMenuViewModel : INotifyPropertyChanged
     {
         private User _guest;
 
@@ -26,7 +26,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public ForumsMenuViewModel(User guest)
+        public wReviewsMenuViewModel(User guest)
         {
             Guest = guest;
         }

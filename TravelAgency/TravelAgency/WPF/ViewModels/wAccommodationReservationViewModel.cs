@@ -13,7 +13,7 @@ using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class AccommodationReservationViewModel : INotifyPropertyChanged, IDataErrorInfo
+    public class wAccommodationReservationViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private AccommodationReservationService _reservationService;
         private ReservationDateFinderService _dateFinderService;
@@ -148,7 +148,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public AccommodationReservationViewModel(User guest, Accommodation accommodation)
+        public wAccommodationReservationViewModel(User guest, Accommodation accommodation)
         {
             _reservationService = new AccommodationReservationService();
             _dateFinderService = new ReservationDateFinderService();
