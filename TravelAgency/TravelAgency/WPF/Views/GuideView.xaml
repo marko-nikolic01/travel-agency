@@ -6,46 +6,98 @@
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Height="750" Width="430">
+    <Window.Resources>
+        <ImageBrush x:Key="BackImage" ImageSource="/Resources/Images/back.png" />
+        <ImageBrush x:Key="HomeImage" ImageSource="/Resources/Images/home.png"/>
+        <ImageBrush x:Key="ProfileImage" ImageSource="/Resources/Images/ProfilePicture.jpg"/>
+    </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Height="35">
+        <Menu DockPanel.Dock="Top" Height="35" Background="LightSlateGray">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem FontSize="15">
+            <MenuItem FontSize="22">
                 <MenuItem.Icon>
-                    <Image Height="17" Stretch="Fill" Width="20" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
+                    <Image Height="20" Stretch="UniformToFill" Width="20" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                 </MenuItem.Icon>
-                <MenuItem Header="New tour" Command="{Binding NavigateToCreateTourPageCommand}"></MenuItem>
+                <MenuItem Header="New tour" Command="{Binding NavigateToCreateTourPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Stretch="UniformToFill" Source="/Resources/Images/plus.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Todays tours" Command="{Binding NavigateToTodaysToursPageCommand}"></MenuItem>
-                <MenuItem Header="Upcomming tours" Command="{Binding NavigateToUpcommingToursPageCommand}"></MenuItem>
+                <MenuItem Header="Todays tours" Command="{Binding NavigateToTodaysToursPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/calendarCheck.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Upcomming tours" Command="{Binding NavigateToUpcommingToursPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/calendarUp.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Tour requests" Command="{Binding NavigateToRequestsPageCommand}"></MenuItem>
-                <MenuItem Header="Special tour requests"></MenuItem>
+                <MenuItem Header="Tour requests" Command="{Binding NavigateToRequestsPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/envelope.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Special tour requests">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/envelopes.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Guest reviews" Command="{Binding NavigateToTourRatingsPageCommand}"></MenuItem>
-                <MenuItem Header="Tour statistics" Command="{Binding NavigateToTourStatisticsPageCommand}"></MenuItem>
-                <MenuItem Header="Requests statistics" Command="{Binding NavigateToRequestStatisticsPageCommand}"></MenuItem>
+                <MenuItem Header="Guest reviews" Command="{Binding NavigateToTourRatingsPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/books.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Tour statistics" Command="{Binding NavigateToTourStatisticsPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Stretch="UniformToFill" Source="/Resources/Images/statistics.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Requests statistics" Command="{Binding NavigateToRequestStatisticsPageCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/graph.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20"></MenuItem>
-            <MenuItem Header="⋮" FontSize="25" HorizontalAlignment="Right">
-                <MenuItem FontSize="15" Header="Undo"></MenuItem>
-                <MenuItem FontSize="15" Header="My Profile"></MenuItem>
-                <MenuItem FontSize="15" Header="Log out" Click="MenuItem_Click"></MenuItem>
+            <MenuItem Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20">
+            </MenuItem>
+            <MenuItem Header="⋮" FontSize="22" HorizontalAlignment="Right">
+                <MenuItem  Header="Undo">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/undo.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem  Header="My Profile">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Images/ProfilePicture.jpg"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem  Header="Log out" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Stretch="UniformToFill" Source="/Resources/Images/exit.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
-        <StackPanel DockPanel.Dock="Bottom" Height="50">
+        <StackPanel DockPanel.Dock="Bottom" Height="50" Orientation="Vertical" Background="LightSlateGray">
             <Separator VerticalAlignment="Top"></Separator>
-            <DockPanel Margin="0 3 0 0">
-                <Button Width="40" Height="35" Margin="20 0 0 0" HorizontalAlignment="Left" Click="Back_Click">
-                    <Image Width="40" Height="35" Source="/Resources/Images/back.png"></Image>
+            <DockPanel Margin="0 1 0 0">
+                <Button Width="40" Height="40" HorizontalAlignment="Left" Click="Back_Click"  Margin="20 0 0 0">
+                    <Label Height="38" Width="38" Background="{StaticResource BackImage}"></Label>
                 </Button>
-                <Button Width="40" Height="35" Margin="135 0 0 0" Command="{Binding NavigateToTodaysToursPageCommand}">
-                    <Image Source="/Resources/Images/home.png" Width="40" Height="35" ></Image>
+                <Button Width="40" Height="40" Command="{Binding NavigateToTodaysToursPageCommand}" Margin="130 0 0 0">
+                    <Label Height="38" Width="38" Background="{StaticResource HomeImage}"></Label>
                 </Button>
-                <Button Width="40" Height="35" Margin="0 0 20 0"  HorizontalAlignment="Right"></Button>
+                <Button Width="40" Height="40" Command="{Binding NavigateToTodaysToursPageCommand}" Margin="0 0 20 0" HorizontalAlignment="Right">
+                    <Label Height="38" Width="38" Background="{StaticResource ProfileImage}"></Label>
+                </Button>
             </DockPanel>
         </StackPanel>
         <Frame x:Name="frame" NavigationUIVisibility="Hidden"></Frame>

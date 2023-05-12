@@ -9,10 +9,11 @@
       Title="Tour satistics">
     <Page.Resources>
         <Style TargetType="Label">
-            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
         </Style>
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
         </Style>
     </Page.Resources>
     <Grid>
@@ -71,7 +72,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="7" Margin="5" Grid.RowSpan="10"></Border>
-            <TextBlock  Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 5 0 0" FontSize="18" TextDecorations="Underline" Text="{Binding Path=DisplayTour.Tour.Name, Mode=OneWay}"></TextBlock>
+            <TextBlock  Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 5 0 0" FontSize="20" TextDecorations="Underline" FontWeight="Bold" Text="{Binding Path=DisplayTour.Tour.Name, Mode=OneWay}"></TextBlock>
             <Label Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Margin="5 0 0 0" Grid.Row="1" Content="Number of guests:" Grid.ColumnSpan="2"></Label>
             <TextBlock Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 0 10 0" Text="{Binding Path=GuestsNumber}"></TextBlock>
             <Image Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNotNullConverter}}" Source="{Binding CurrentPhoto.Link}" Grid.Column="4" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0 0 10 0"></Image>
@@ -113,12 +114,12 @@
             <Image Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" Grid.ColumnSpan="4" Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNullConverter}}" Source="/Resources/Images/noTours.png"></Image>
         </Grid>
         <Label Grid.Row="13" FontSize="20" Grid.ColumnSpan="3" Content="Finished tours"></Label>
-        <DataGrid Grid.Row="14" Grid.ColumnSpan="7" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="14" Grid.ColumnSpan="7" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14" AlternatingRowBackground="SeaShell">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Language" Binding="{Binding Path=Tour.Language}"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date" Width="*"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Statistics">
+                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date and time" Width="*"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Statistics" Width="70">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Page}}" ></Button>

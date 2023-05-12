@@ -27,15 +27,16 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Content="+" FontSize="20" Grid.Row="2" Height="40" Width="40" Click="NewTour_Click">
+            <Button FontSize="20" Grid.Row="2" Height="40" Width="40" Click="NewTour_Click">
+                <Image Source="/Resources/Images/plus.png"></Image>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="20"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Label Content="Create new tour" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-            <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
+            <Label Content="Create new tour" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="22" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+            <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14" AlternatingRowBackground="SeaShell">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                     <DataGridTextColumn  Header="Location" Width="*">

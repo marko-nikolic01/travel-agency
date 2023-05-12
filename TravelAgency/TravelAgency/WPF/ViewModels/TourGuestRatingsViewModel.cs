@@ -20,10 +20,11 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
+        public TourRatingService TourRatingService { get; set; }
         public TourGuestRatingsViewModel(int id)
         {
-            TourRatingService tourReviewService = new TourRatingService();
-            TourReviews = new ObservableCollection<TourDetailsViewModel>(tourReviewService.getTourReviews(id));
+            TourRatingService = new TourRatingService();
+            TourReviews = new ObservableCollection<TourDetailsViewModel>(TourRatingService.getTourReviews(id));
             ReportCommand = new ButtonCommand<TourDetailsViewModel>(ReportNotValid);
             RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
             LeftCommand = new ButtonCommand<TourDetailsViewModel>(ShowPreviousPhoto);
@@ -31,9 +32,16 @@ namespace TravelAgency.WPF.ViewModels
 
         private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
-            tourReviewViewModel.TourRating.IsValid = false;
-            TourRatingService tourReviewService = new TourRatingService();
-            tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            if (tourReviewViewModel.TourRating.IsValid)
+            {
+                tourReviewViewModel.TourRating.IsValid = false;
+                TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            }
+            else
+            {
+                tourReviewViewModel.TourRating.IsValid = true;
+                TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            }
         }
         private void ShowNextPhoto(TourDetailsViewModel tourReviewViewModel)
         {
