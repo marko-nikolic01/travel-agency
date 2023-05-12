@@ -106,7 +106,8 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if ((value != _selectedCity) && Cities.Contains(value))
                 {
-                    _selectedCity = value;
+                    _selectedCity = value; 
+                    
                     UpdateLocationsData(false);
                     OnPropertyChanged();
                 }
@@ -190,6 +191,7 @@ namespace TravelAgency.WPF.ViewModels
             SearchFilter.NameFilter = "";
             SelectedCountry = "Not specified";
             UpdateLocationsData(true);
+            SelectedCity = "Not specified";
             SearchFilter.TypeFilter = "Not specified";
             SearchFilter.GuestNumberFilter = 0;
             SearchFilter.DayNumberFilter = 0;
@@ -208,7 +210,7 @@ namespace TravelAgency.WPF.ViewModels
                     Cities = _locationService.GetCities();
                 }
                 Cities.Insert(0, "Not specified");
-                SelectedCity = Cities[0];
+                SelectedCity = "Not specified";
                 SearchFilter.CountryFilter = SelectedCountry;
             }
             SearchFilter.CityFilter = SelectedCity;
