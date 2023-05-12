@@ -38,7 +38,7 @@ namespace TravelAgency.Services
             int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
             foreach (var request in ITourRequestRepository.GetAll())
             {
-                if (request.MinDate.DayNumber - currentDays < 2)
+                if (request.MinDate.DayNumber - currentDays < 3)
                 {
                     request.Status = RequestStatus.Invalid;
                 }
