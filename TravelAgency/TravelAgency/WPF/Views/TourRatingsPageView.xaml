@@ -18,7 +18,6 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -28,13 +27,13 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Label Content="Finished tours" Grid.Row="2" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-            <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True">
+            <Label Content="Past tours" Grid.Row="1" Grid.ColumnSpan="2" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+            <DataGrid Grid.Row="2" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True"  FontSize="14" AlternatingRowBackground="SeaShell">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Tour.Language}" Header="Language"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date and time" Width="*"></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Reviews">
+                    <DataGridTemplateColumn Header="Reviews" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
