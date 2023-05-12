@@ -52,4 +52,52 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:OwnerSidebarNavRadioButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OwnerSidebarNavRadioButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid HorizontalAlignment="Stretch" Margin="17">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0"
+                                   Source="{TemplateBinding Icon}"
+                                   VerticalAlignment="Center"
+                                   Width="32"
+                                   Margin="0 0 15 0"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{TemplateBinding Text}"
+                                       FontSize="18"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Margin="0 0 30 0"/>
+
+                            <TextBlock Grid.Column="2"
+                                       Text="{TemplateBinding KeyboardShortcutText}"
+                                       FontSize="18"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Foreground="#999999"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Background" Value="White"/>
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

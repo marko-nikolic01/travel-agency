@@ -32,9 +32,14 @@ namespace TravelAgency.WPF.Views
 
         public void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedItem = Sidebar.SelectedItem as OwnerSidebarNavigationButton;
+            //var selectedItem = Sidebar.SelectedItem as OwnerSidebarNavigationButton;
 
-            NavigationFrame.Navigate(selectedItem.NavLink);
+            //NavigationFrame.Navigate(selectedItem.NavLink);
+        }
+
+        private void ListBoxItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Hello!");
         }
     }
 }
