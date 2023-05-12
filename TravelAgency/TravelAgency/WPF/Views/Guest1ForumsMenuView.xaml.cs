@@ -12,32 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ForumsMenuView.xaml
+    /// Interaction logic for Guest1ForumsMenuView.xaml
     /// </summary>
-    public partial class ForumsMenuView : Page
+    public partial class Guest1ForumsMenuView : UserControl
     {
-        public ForumsMenuViewModel ViewModel { get; set; }
+        public wForumsMenuViewModel ViewModel { get; set; }
         private Guest1HomeView _mainWindow;
 
-        public ForumsMenuView(Guest1HomeView guest1HomeView, User guest)
+        public Guest1ForumsMenuView()
         {
             InitializeComponent();
-            ViewModel = new ForumsMenuViewModel(guest);
-            this.DataContext = ViewModel;
 
-            _mainWindow = guest1HomeView;
+            //_mainWindow = guest1HomeView;
         }
 
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
-            this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
+            //_mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
+            //this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
         }
     }
 }

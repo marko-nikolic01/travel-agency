@@ -23,14 +23,14 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class AccommodationReservationView : Page
     {
-        public AccommodationReservationViewModel ViewModel { get; set; }
+        public wAccommodationReservationViewModel ViewModel { get; set; }
         private Guest1HomeView _mainWindow;
         private AccommodationSearchView _returnPage;
         private bool _shouldValidate;
         public AccommodationReservationView(Guest1HomeView guest1HomeView, AccommodationSearchView accommodationSearchView, User guest, Accommodation accommodation)
         {
             InitializeComponent();
-            ViewModel = new AccommodationReservationViewModel(guest, accommodation);
+            ViewModel = new wAccommodationReservationViewModel(guest, accommodation);
             this.DataContext = ViewModel;
 
             _mainWindow = guest1HomeView;

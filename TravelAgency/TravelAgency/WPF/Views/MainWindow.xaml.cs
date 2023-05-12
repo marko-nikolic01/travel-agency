@@ -82,8 +82,8 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Guest1)
                     {
-                        Guest1HomeView guest1HomeView = new Guest1HomeView(user);
-                        guest1HomeView.Show();
+                        Guest1NavigationView guest1NavigationView = new Guest1NavigationView(user);
+                        guest1NavigationView.Show();
                     }
                     else if (user.Role == Roles.Guest2)
                     {
