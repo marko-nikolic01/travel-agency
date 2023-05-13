@@ -19,6 +19,9 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1AccommodationsReservationsMenuViewModel guest1AccommodationsReservationsMenuViewModel;
         private Guest1ReviewsMenuViewModel guest1ReviewsMenuViewModel;
         private Guest1ForumsMenuViewModel guest1ForumsMenuViewModel;
+        private Guest1AccommodationSearchViewModel guest1AccommodationSearchViewModel;
+        private Guest1AccommodationReservationsViewModel guest1AccommodationReservationsViewModel;
+        private Guest1AccommodationReservationMoveRequestsViewModel guest1AccommodationReservationMoveRequestsViewModel;
         private ViewModelBase currentViewModel;
         private ViewModelBase previousViewModel;
         private string selectedTab;
@@ -97,7 +100,27 @@ namespace TravelAgency.WPF.ViewModels
                     SelectedTab = "Forums";
                     break;
                 case "guest1AccommodationSearchViewModel":
-                    CurrentViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
+                    guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
+                    CurrentViewModel = guest1AccommodationSearchViewModel;
+                    break;
+                case "guest1AccommodationReservationViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1AccommodationReservationViewModel(NavigationCommand, Guest, guest1AccommodationSearchViewModel.SelectedAccommodation);
+                    break;
+                case "guest1AccommodationReservationsViewModel":
+                    guest1AccommodationReservationsViewModel = new Guest1AccommodationReservationsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = guest1AccommodationReservationsViewModel;
+                    break;
+                case "guest1AccommodationReservationMoveViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1AccommodationReservationMoveViewModel(NavigationCommand, guest1AccommodationReservationsViewModel.SelectedReservation);
+                    break;
+                case "guest1AccommodationReservationMoveRequestsViewModel":
+                    guest1AccommodationReservationMoveRequestsViewModel = new Guest1AccommodationReservationMoveRequestsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = guest1AccommodationReservationMoveRequestsViewModel;
+                    break;
+                case "previousViewModel":
+                    CurrentViewModel = PreviousViewModel;
                     break;
             }
         }
