@@ -19,7 +19,7 @@ namespace TravelAgency.Domain.Models
         }
         public void BuildRequestString()
         {
-            SpecialTourRequestString = "Special tour request #"+SerialNumber+"; "+TourRequests.Count+" items, Status: "+Status;
+            SpecialTourRequestString = "Special tour request #"+SerialNumber+"; "+TourRequests.Count+" items; Status: "+Status;
         }
         public string[] ToCSV()
         {

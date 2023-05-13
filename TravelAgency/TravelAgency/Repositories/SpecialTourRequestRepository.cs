@@ -34,7 +34,18 @@ namespace TravelAgency.Repositories
         {
             return specialRequests;
         }
-
+        public List<SpecialTourRequest> GetByGuestId(int guestId)
+        {
+            List<SpecialTourRequest> result = new List<SpecialTourRequest>();
+            foreach(SpecialTourRequest request in specialRequests) 
+            {
+                if(request.GuestId == guestId) 
+                {
+                    result.Add(request);
+                }
+            }
+            return result;
+        }
         public SpecialTourRequest Save(SpecialTourRequest specialTourRequest)
         {
             specialTourRequest.Id = NextId();

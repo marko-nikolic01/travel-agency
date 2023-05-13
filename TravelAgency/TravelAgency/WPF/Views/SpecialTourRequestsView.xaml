@@ -8,9 +8,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024" Background="White"
       Title="SpecialTourRequestsView">
-    <!--<Page.DataContext>-->
-    <!--<local1:SpecialTourRequestsViewModel/> -->
-    <!--</Page.DataContext> -->
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
