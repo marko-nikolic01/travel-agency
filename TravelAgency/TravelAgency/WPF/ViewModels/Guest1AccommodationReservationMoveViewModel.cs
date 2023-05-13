@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
@@ -13,21 +14,18 @@ using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class Guest1AccommodationReservationViewModel : ViewModelBase ,INotifyPropertyChanged, IDataErrorInfo
+    public class Guest1AccommodationReservationMoveViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
-        private AccommodationReservationService _reservationService;
+        private AccommodationReservationMoveService _reservationMoveService;
         private ReservationDateFinderService _dateFinderService;
 
         public MyICommand<string> NavigationCommand { get; private set; }
         public MyICommand FindAvailableDatesCommand { get; private set; }
-        public MyICommand MakeReservationCommand { get; private set; }
+        public MyICommand MakeMoveRequestCommand { get; private set; }
         public MyICommand PreviousPhotoCommand { get; private set; }
         public MyICommand NextPhotoCommand { get; private set; }
 
-        public User Guest { get; set; }
-        private Accommodation _accommodation;
-        private AccommodationReservation _reservation;
-        private int _dayNumber;
+        private AccommodationReservationMoveRequest _moveRequest;
         private DateTime _firstDate;
         private DateTime _lastDate;
         private ObservableCollection<DateSpan> _availableDateSpans;
@@ -39,41 +37,14 @@ namespace TravelAgency.WPF.ViewModels
         private bool _foundDates;
         private DateTime _tomorrow { get; set; }
 
-        public Accommodation Accommodation
+        public AccommodationReservationMoveRequest MoveRequest
         {
-            get => _accommodation;
+            get => _moveRequest;
             set
             {
-                if (value != _accommodation)
+                if (value != _moveRequest)
                 {
-                    _accommodation = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public AccommodationReservation Reservation
-        {
-            get => _reservation;
-            set
-            {
-                if (value != _reservation)
-                {
-                    _reservation = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int DayNumber
-        {
-            get => _dayNumber;
-            set
-            {
-                if (value != _dayNumber)
-                {
-                    _dayNumber = value;
-                    TriggerValidationMessage();
+                    _moveRequest = value;
                     OnPropertyChanged();
                 }
             }
@@ -191,21 +162,18 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public Guest1AccommodationReservationViewModel(MyICommand<string> navigationCommand, User guest, Accommodation accommodation)
+        public Guest1AccommodationReservationMoveViewModel(MyICommand<string> navigationCommand, AccommodationReservation reservation)
         {
-            _reservationService = new AccommodationReservationService();
+            _reservationMoveService = new AccommodationReservationMoveService();
             _dateFinderService = new ReservationDateFinderService();
 
             NavigationCommand = navigationCommand;
             FindAvailableDatesCommand = new MyICommand(OnFindAvailableDates);
-            MakeReservationCommand = new MyICommand(OnMakeReservation);
+            MakeMoveRequestCommand = new MyICommand(OnMakeMoveRequest);
             PreviousPhotoCommand = new MyICommand(OnGetPreviousPhoto);
             NextPhotoCommand = new MyICommand(OnGetNextPhoto);
 
-
-            Guest = guest;
-            Accommodation = accommodation;
-            Reservation = new AccommodationReservation(accommodation.Id, accommodation, Guest.Id, Guest);
+            MoveRequest = new AccommodationReservationMoveRequest(reservation);
 
             InitializeData();
         }
@@ -214,7 +182,6 @@ namespace TravelAgency.WPF.ViewModels
         {
             InitializePhotos();
             InitializeDateSpanData();
-            Reservation.NumberOfGuests = 1;
             _shouldValidate = true;
             FoundDates = false;
             Tomorrow = DateTime.Now.Date.AddDays(1);
@@ -224,7 +191,7 @@ namespace TravelAgency.WPF.ViewModels
         private void InitializePhotos()
         {
             Photos = new List<BitmapImage>();
-            foreach (AccommodationPhoto photo in Accommodation.Photos)
+            foreach (AccommodationPhoto photo in MoveRequest.Reservation.Accommodation.Photos)
             {
                 Uri uri = new Uri(photo.Path, UriKind.RelativeOrAbsolute);
                 BitmapImage image = new BitmapImage(uri);
@@ -236,7 +203,6 @@ namespace TravelAgency.WPF.ViewModels
 
         private void InitializeDateSpanData()
         {
-            DayNumber = Accommodation.MinDays;
             FirstDate = DateTime.Now.Date.AddDays(1);
             LastDate = DateTime.Now.Date.AddDays(1);
             AvailableDateSpans = new ObservableCollection<DateSpan>();
@@ -264,26 +230,18 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (this.IsValid)
             {
-                _dateFinderService.SetReservationLength(DayNumber);
-                AvailableDateSpans = new ObservableCollection<DateSpan>(_dateFinderService.FindAvailableDatesInsideDateRange(FirstDate, LastDate, Accommodation));
+                AvailableDateSpans = new ObservableCollection<DateSpan>(_dateFinderService.FindDatesForReservationMoveRequest(FirstDate, LastDate, MoveRequest.Reservation));
 
-                if (AvailableDateSpans.Count == 0)
-                {
-                    AvailableDateSpans = new ObservableCollection<DateSpan>(_dateFinderService.FindAvailableDatesOutsideDateRange(FirstDate, LastDate, Accommodation));
-                    System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
-                }
-
-                Reservation.DateSpan = null;
-                Reservation.NumberOfGuests = 1;
+                MoveRequest.DateSpan = null;
                 FoundDates = true;
             }
         }
 
-        public void OnMakeReservation()
+        public void OnMakeMoveRequest()
         {
-            if (Reservation.IsValid)
+            if (MoveRequest.IsValid)
             {
-                _reservationService.CreateReservation(Reservation);
+                _reservationMoveService.CreateMoveRequest(MoveRequest);
                 NavigationCommand.Execute("previousViewModel");
             }
         }
@@ -304,22 +262,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             get
             {
-                if (columnName == "DayNumber")
-                {
-                    if (DayNumber < 0)
-                    {
-                        return "* Number of days can't be negative";
-                    }
-                    else if (DayNumber == 0)
-                    {
-                        return "* Number of days is required";
-                    }
-                    else if (DayNumber < Accommodation.MinDays)
-                    {
-                        return "* Number of guests is smaller than allowed";
-                    }
-                }
-                else if (columnName == "FirstDate")
+                if (columnName == "FirstDate")
                 {
                     bool isFutureDate = FirstDate.CompareTo(DateTime.Now) > 0;
 
@@ -333,7 +276,7 @@ namespace TravelAgency.WPF.ViewModels
                     {
                         return "*First date can't be after last date";
                     }
-                    else if (dateSpanLength < DayNumber)
+                    else if (dateSpanLength < MoveRequest.Reservation.DateSpan.DayCount)
                     {
                         return "*Date span can't be shorter than specified number of days";
                     }
@@ -352,7 +295,7 @@ namespace TravelAgency.WPF.ViewModels
                     {
                         return "*Last date can't be before first date";
                     }
-                    else if (dateSpanLength < DayNumber)
+                    else if (dateSpanLength < MoveRequest.Reservation.DateSpan.DayCount)
                     {
                         return "*Date span can't be shorter than specified number of days";
                     }
@@ -362,7 +305,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        private readonly string[] _validatedProperties = { "DayNumber", "FirstDate", "LastDate" };
+        private readonly string[] _validatedProperties = {"FirstDate", "LastDate" };
 
         public bool IsValid
         {

@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\accept-circular-button-outline.png" />
+    <None Remove="Resources\Images\cross-button.png" />
     <None Remove="Resources\Images\IconBell.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
@@ -47,6 +49,7 @@
     <None Remove="Resources\Images\search.png" />
     <None Remove="Resources\Images\star-in-a-circle.png" />
     <None Remove="Resources\Images\star.png" />
+    <None Remove="Resources\Images\timer.png" />
     <None Remove="Resources\Images\user.png" />
   </ItemGroup>
 
@@ -58,6 +61,8 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
+	  <Resource Include="Resources\Images\cross-button.png" />
 	  <Resource Include="Resources\Images\IconBell.png" />
 	  <Resource Include="Resources\Images\ManageAccommodations.png" />
 	  <Resource Include="Resources\Images\NavAccommodations.png" />
@@ -113,6 +118,7 @@
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+      <Resource Include="Resources\Images\timer.png" />
       <Resource Include="Resources\Images\user.png" />
   </ItemGroup>
 

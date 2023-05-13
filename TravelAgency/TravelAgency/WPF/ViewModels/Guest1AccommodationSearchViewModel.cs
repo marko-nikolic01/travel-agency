@@ -130,8 +130,8 @@ namespace TravelAgency.WPF.ViewModels
         public Guest1AccommodationSearchViewModel(MyICommand<string> navigationCommand)
         {
             NavigationCommand = navigationCommand;
-            SearchCommand = new MyICommand(Search);
-            CancelSearchCommand = new MyICommand(CancelSearch);
+            SearchCommand = new MyICommand(OnSearch);
+            CancelSearchCommand = new MyICommand(OnCancelSearch);
 
             _accommodationService = new AccommodationService();
             _searchService = new AccommodationSearchService();
@@ -176,14 +176,14 @@ namespace TravelAgency.WPF.ViewModels
             AccommodationTypes.Add("Hut");
         }
 
-        public void Search()
+        public void OnSearch()
         {
             List<Accommodation> searchedAccommodations = _searchService.Search(SearchFilter);
             searchedAccommodations = _superOwnerService.SortBySuperOwnersFirst(searchedAccommodations);
             Accommodations = new ObservableCollection<Accommodation>(searchedAccommodations);
         }
 
-        public void CancelSearch()
+        public void OnCancelSearch()
         {
             List<Accommodation> accommodations = _searchService.CancelSearch();
             accommodations = _superOwnerService.SortBySuperOwnersFirst(accommodations);

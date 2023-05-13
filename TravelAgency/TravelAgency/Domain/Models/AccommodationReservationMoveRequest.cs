@@ -60,6 +60,21 @@ namespace TravelAgency.Domain.Models
             RejectionExplanation = "";
         }
 
+        public bool CheckExpiration()
+        {
+            bool requestExpired = (Status == AccommodationReservationMoveRequestStatus.WAITING) &&
+                            ((DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0) ||
+                            (Reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0));
+            if (requestExpired)
+            {
+                Status = AccommodationReservationMoveRequestStatus.REJECTED;
+                RejectionExplanation = "Zahtev je istekao.";
+                StatusChanged = true;
+                return true;
+            }
+            return false;
+        }
+
         public string[] ToCSV()
         {
             string[] csvValues =

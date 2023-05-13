@@ -4,6 +4,7 @@ using System.Linq;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Serializer;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TravelAgency.Repositories
 {
@@ -21,6 +22,7 @@ namespace TravelAgency.Repositories
 
         public void LinkReservations(List<AccommodationReservation> reservations)
         {
+            bool shouldSave = false;
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
                 foreach (AccommodationReservation reservation in reservations)
@@ -28,9 +30,17 @@ namespace TravelAgency.Repositories
                     if (moveRequest.ReservationId == reservation.Id)
                     {
                         moveRequest.Reservation = reservation;
+                        if (moveRequest.CheckExpiration())
+                        {
+                            shouldSave = true;
+                        }
                         break;
                     }
                 }
+            }
+            if (shouldSave)
+            {
+                _serializer.ToCSV(FilePath, _moveRequests);
             }
         }
 
@@ -43,7 +53,7 @@ namespace TravelAgency.Repositories
         {
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
-                if (moveRequest.Id == id)
+                if (moveRequest.Id == id && !moveRequest.Reservation.Canceled)
                 {
                     return moveRequest; ;
                 }
@@ -56,7 +66,7 @@ namespace TravelAgency.Repositories
             List<AccommodationReservationMoveRequest> moveRequests = new List<AccommodationReservationMoveRequest>();
             foreach (AccommodationReservationMoveRequest moveRequest in _moveRequests)
             {
-                if (moveRequest.Reservation.Guest.Id == guest.Id)
+                if (moveRequest.Reservation.Guest.Id == guest.Id && !moveRequest.Reservation.Canceled)
                 {
                     moveRequests.Add(moveRequest);
                 }
@@ -66,7 +76,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
         {
-            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING);
+            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING && !mr.Reservation.Canceled);
         }
 
         public int NextId()

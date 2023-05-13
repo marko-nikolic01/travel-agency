@@ -55,12 +55,12 @@
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                Kako da rezervišem smeštaj?<LineBreak/><LineBreak/>
+                <Bold>Kako da rezervišem smeštaj?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Rezerviši"<LineBreak/>
                 možete početi sa rezervacijom.
             </TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                Kako da pretražim smeštaje?<LineBreak/><LineBreak/>
+                <Bold>Kako da pretražim smeštaje?</Bold><LineBreak/><LineBreak/>
                 Iznad podnaslova "Pretraga"<LineBreak/>
                 možete podesiti kriterijume<LineBreak/>
                 pretrage. Neke od kriterijuma<LineBreak/>
@@ -74,7 +74,7 @@
                 "Otkaži pretragu".
             </TextBlock>
             <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                Kako da se vratim nazad?<LineBreak/><LineBreak/>
+                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Nazad"<LineBreak/>
                 se vraćate na prethodni<LineBreak/>
                 prozor.
@@ -99,13 +99,13 @@
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <TextBlock x:Name="textBlockAccommodationsReservations" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}" MouseUp="TextBlockAccommodationsReservations_MouseUp">
-                    Smeštaji/Rezervacije
+                    <Bold>Smeštaji/Rezervacije</Bold>
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
-                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">Istražite i rezervišite</TextBlock>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Istražite i rezervišite</Bold></TextBlock>
             </WrapPanel>
             <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">

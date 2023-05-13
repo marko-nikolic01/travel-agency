@@ -12,18 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for Guest1AccommodationReservationView.xaml
+    /// Interaction logic for Guest1AccommodationReservationMoveView.xaml
     /// </summary>
-    public partial class Guest1AccommodationReservationView : UserControl
+    public partial class Guest1AccommodationReservationMoveView : UserControl
     {
         private bool _shouldValidate;
-        public Guest1AccommodationReservationView()
+        public Guest1AccommodationReservationMoveView()
         {
             InitializeComponent();
 
