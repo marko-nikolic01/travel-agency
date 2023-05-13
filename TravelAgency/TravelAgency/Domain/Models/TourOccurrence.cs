@@ -20,12 +20,26 @@ namespace TravelAgency.Domain.Models
         public DateTime DateTime { get; set; }
         public List<KeyPoint> KeyPoints { get; set; }
         public List<User> Guests { get; set; }
-        public CurrentState CurrentState { get; set; }
+
+        private CurrentState currentState;
+        public CurrentState CurrentState
+        {
+            get { return currentState; }
+            set 
+            {
+                if (value != currentState)
+                {
+                    currentState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public User Guide { get; set; }
         public int GuideId { get; set; }
         public int FreeSpots { get; set; }
         public int ActiveKeyPointId { get; set; }
         public string DetailedRowString { get; set; }
+        public bool IsDeleted { get; set; }
         private int toShadow;
         public int ToShadow
         {
@@ -39,22 +53,6 @@ namespace TravelAgency.Domain.Models
                 }
             }
         }
-
-        private int toDisplay;
-        public int ToDisplay
-        {
-            get => toDisplay;
-            set
-            {
-                if (value != toDisplay)
-                {
-                    toDisplay = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsDeleted { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
