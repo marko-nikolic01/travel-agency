@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using TravelAgency.Domain.Models;
+using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
 {
     public class SpecialTourRequestsViewModel
     {
         public List<SpecialTourRequest> SpecialTourRequestList { get; set; }
-        
-        public SpecialTourRequestsViewModel() 
+        SpecialTourRequestService service;
+        int currentGuestId;
+        public SpecialTourRequestsViewModel(int id) 
         {
+            currentGuestId = id;
+            service = new SpecialTourRequestService();
             Location lokacija = new Location(0, "grad", "drzava", "fulnejm");
             DateOnly date1 = new DateOnly(2020,2,2);
             DateOnly date2 = new DateOnly(2020,2,5);
@@ -35,5 +39,6 @@ namespace TravelAgency.WPF.ViewModels
             SpecialTourRequestList.Add(specialRequest1);
             SpecialTourRequestList.Add(specialRequest2);
         }
+        
     }
 }

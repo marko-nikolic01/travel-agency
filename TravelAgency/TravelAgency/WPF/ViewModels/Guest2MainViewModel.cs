@@ -49,7 +49,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateToSpecialRequestsCommand(object obj)
         {
-            Page specialRequests = new SpecialTourRequestsView();
+            Page specialRequests = new SpecialTourRequestsView(currentGuestId);
             NavService.Navigate(specialRequests);
         }
         private void Execute_NavigateToOfferedToursCommand(object obj)

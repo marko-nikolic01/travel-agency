@@ -1,10 +1,13 @@
-﻿using System;
+﻿using LiveCharts.Maps;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
+using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -47,7 +50,7 @@ namespace TravelAgency.WPF.ViewModels
         public DateTime MaxDate { get; set; }
         public string NumberOfGuests { get; set; }
         public int guestId;
-        private LocationRepository locationRepository;
+        public TourRequest TourRequest;
         public ObservableCollection<string> Countries { get; set; }
         public ObservableCollection<string> Cities { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -58,7 +61,6 @@ namespace TravelAgency.WPF.ViewModels
         private TourRequestService tourRequestService;
         public TourRequestFormViewModel(int id)
         {
-            locationRepository = new LocationRepository();
             tourRequestService = new TourRequestService();
             Countries = new ObservableCollection<string>(tourRequestService.getCountries());
             SelectedCountry = Countries[0];
@@ -93,9 +95,28 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCity = Cities[0];
         }
 
-        public bool SubmitRequest()
+        public bool SubmitRequest(int specialTourRequestId = -1)
         {
-            return tourRequestService.SaveRequest(SelectedCountry, SelectedCity, Language, NumberOfGuests, DateOnly.FromDateTime(MinDate), DateOnly.FromDateTime(MaxDate), Description, guestId);
+            return tourRequestService.SaveRequest(SelectedCountry, SelectedCity, Language, NumberOfGuests, DateOnly.FromDateTime(MinDate), DateOnly.FromDateTime(MaxDate), Description, guestId, specialTourRequestId);
+        }
+
+        public bool Valid()
+        {
+            DateOnly minDate = DateOnly.FromDateTime(MinDate);
+            int deltaDays = minDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            int result = 0;
+            if (int.TryParse(NumberOfGuests, out result))
+            {
+                if(result < 1)
+                    return false;
+            }
+            else
+                return false;
+            if (Language != "" && deltaDays > 2 && MaxDate > MinDate)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

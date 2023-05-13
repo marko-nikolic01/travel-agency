@@ -4,11 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:system="clr-namespace:System;assembly=mscorlib"
-      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views" xmlns:local1="clr-namespace:TravelAgency.WPF.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024" Background="White"
       Title="SpecialTourRequestsView">
-
+    <!--<Page.DataContext>-->
+    <!--<local1:SpecialTourRequestsViewModel/> -->
+    <!--</Page.DataContext> -->
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -16,37 +18,83 @@
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="20" />
         </Style>
-        <Style TargetType="DataGrid">
-            <Setter Property="FontSize" Value="20" />
+        <Style x:Key="FADataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#dcdedc"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="10 0"/>
         </Style>
-        <x:Array x:Key="ListViewItems"
-                 Type="{x:Type system:String}">
-            <system:String>1</system:String>
-            <system:String>2</system:String>
-            <system:String>3</system:String>
-            <system:String>4</system:String>
-        </x:Array>
-
-        <x:Array x:Key="DataGridItems"
-                 Type="{x:Type system:String}">
-            <system:String>1</system:String>
-            <system:String>2</system:String>
-            <system:String>3</system:String>
-        </x:Array>
-
-        <DataTemplate x:Key="TemplateWidthDataGrid">
+        <Style x:Key="FADataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource FADataGridColumnHeaderStyle}"/>
+        </Style>
+        
+        <DataTemplate x:Key="SpecialRequestDataTemplate">
             <StackPanel Orientation="Vertical" Margin="10">
-                <TextBlock Background="#e6e3dc" FontSize="24" Text="{Binding SpecialTourRequestString}"></TextBlock>
-            <DataGrid ItemsSource="{Binding TourRequests}"
-                       AutoGenerateColumns="False">
+                <TextBlock Background="#e6e3dc" Padding="10" FontSize="24" Text="{Binding SpecialTourRequestString}"></TextBlock>
+                <DataGrid Margin="0 0 0 0" ItemsSource="{Binding TourRequests}" 
+                       AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
+                          Style="{StaticResource FADataGridStyle}" FontSize="20">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Language" Binding="{Binding Language}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Guests" Binding="{Binding GuestNumber}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                        <DataGridTextColumn>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="150 0 0 0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="City" Binding="{Binding Location.City}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Language}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Guests" Binding="{Binding GuestNumber}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
             </DataGrid>
             </StackPanel>
@@ -85,7 +133,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView ItemTemplate="{StaticResource TemplateWidthDataGrid}"
+            <ListView ItemTemplate="{StaticResource SpecialRequestDataTemplate}"
                       ItemsSource="{Binding SpecialTourRequestList}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -100,7 +148,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Content="Create new request"/>
+            <Button Grid.Column="0" Width="374" Height="43" Click="NewRequest_Click" Content="Create new request"/>
         </Grid>
     </Grid>
 </Page>

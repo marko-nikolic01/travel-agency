@@ -15,12 +15,14 @@ namespace TravelAgency.Services
     {
         public ILocationRepository ILocationRepository { get; set; }
         public ITourRequestRepository ITourRequestRepository { get; set; }
+        public ISpecialTourRequestRepository ISpecialTourRequestRepository { get; set; }
         public IRequestAcceptedNotificationRepository IRequestAcceptedNotificationRepository { get; set; }
         
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
+            ISpecialTourRequestRepository = Injector.Injector.CreateInstance<ISpecialTourRequestRepository>();
             IRequestAcceptedNotificationRepository = Injector.Injector.CreateInstance<IRequestAcceptedNotificationRepository>();
             LinkRequestLocation();
             CheckIfRequestsAreInvalid();
@@ -80,7 +82,7 @@ namespace TravelAgency.Services
         {
             return ITourRequestRepository.GetRequestsByGuestId(id);
         }
-        public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate, string description, int guestId)
+        public bool SaveRequest(string selectedCountry, string selectedCity, string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate, string description, int guestId, int specialTourRequestId)
         {
             Location location = ILocationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
             TourRequest request = new TourRequest();
@@ -91,6 +93,7 @@ namespace TravelAgency.Services
                 request.Description = description;
                 request.GuestId = guestId;
                 request.Status = RequestStatus.Pending;
+                request.SpecialTourRequestId = specialTourRequestId;
                 ITourRequestRepository.Save(request);
                 return true;
             }

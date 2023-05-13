@@ -33,6 +33,7 @@ namespace TravelAgency.Injector
             { typeof(ITourRequestRepository), new TourRequestRepository() },
             { typeof(IRequestAcceptedNotificationRepository), new RequestAcceptedNotificationRepository() },
             { typeof(INewTourNotificationRepository), new NewTourNotificationRepository() },
+            { typeof(ISpecialTourRequestRepository), new SpecialTourRequestRepository() },
         // Add more implementations here
         };
 
