@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.Controls.CustomControls;
@@ -23,41 +24,35 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerWindow : Window
     {
-        public OwnerMainViewModel MainViewModel { get; set; }
-        public MyICommand<string> CheckRadioButtonCommand { get; private set; }
+        public MyICommand<string> NavigateCommand { get; set; }
+        public OwnerMainViewModel ViewModel { get; set; }
 
         public OwnerWindow()
         {
-            CheckRadioButtonCommand = new MyICommand<string>(OnCheckRadioButton);
-
+            NavigateCommand = new MyICommand<string>(OnNavigateCommandExecuted);
             InitializeComponent();
-            MainViewModel = new OwnerMainViewModel();
-            DataContext = MainViewModel;
+            ViewModel = new OwnerMainViewModel(NavigationFrame.NavigationService);
+            DataContext = ViewModel;
         }
 
-        private void OnCheckRadioButton(string button)
+        private void OnNavigateCommandExecuted(string button)
         {
             switch (button)
             {
                 case "profile":
                     myProfileRadioButton.IsChecked = true;
-                    MainViewModel.OnNav(button);
+                    ViewModel.NavigateToMyProfilePageCommand.Execute(null);
                     break;
                 case "accommodations":
                     accommodationsRadioButton.IsChecked = true;
-                    MainViewModel.OnNav(button);
+                    ViewModel.NavigateToAccommodationsPageCommand.Execute(null);
                     break;
                 case "reservations":
                     reservationsRadioButton.IsChecked = true;
-                    MainViewModel.OnNav(button);
+                    ViewModel.NavigateToReservationsPageCommand.Execute(null);
                     break;
-                case "ratings":
-                    ratingsRadioButton.IsChecked = true;
-                    MainViewModel.OnNav(button);
-                    break;
-                case "forum":
-                    forumRadioButton.IsChecked = true;
-                    MainViewModel.OnNav(button);
+                default:
+                    MessageBox.Show("Ne radi :(");
                     break;
             }
         }

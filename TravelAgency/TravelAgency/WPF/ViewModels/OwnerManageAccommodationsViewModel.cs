@@ -20,11 +20,8 @@ namespace TravelAgency.WPF.ViewModels
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
 
-        public MyICommand<string> NavCommand { get; set; }
-
-        public OwnerManageAccommodationsViewModel(MyICommand<string> navCommand)
+        public OwnerManageAccommodationsViewModel()
         {
-            NavCommand = navCommand;
 
             userService = new UserService();
             accommodationService = new AccommodationService();

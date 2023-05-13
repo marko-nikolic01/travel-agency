@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
 {
@@ -24,27 +25,13 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerReservationsPage : Page
     {
-        public User LoggedInUser { get; set; }
-        private UserService userService;
-        private AccommodationReservationService accommodationReservationService;
-        private AccommodationReservationMoveService accommodationReservationMoveService;
-
-        public ObservableCollection<AccommodationReservation> AccommodationReservations { get; set; }
-        public ObservableCollection<AccommodationReservationMoveRequestWithAvailabilityDTO> MoveRequests { get; set; }
+        public OwnerReservationsViewModel ViewModel { get; set; }
 
         public OwnerReservationsPage()
         {
             InitializeComponent();
-            DataContext = this;
-
-            userService = new UserService();
-            accommodationReservationService = new AccommodationReservationService();
-            accommodationReservationMoveService = new AccommodationReservationMoveService();
-
-            LoggedInUser = userService.GetLoggedInUser();
-
-            AccommodationReservations = new ObservableCollection<AccommodationReservation>(accommodationReservationService.GetActiveByOwner(LoggedInUser));
-            MoveRequests = new ObservableCollection<AccommodationReservationMoveRequestWithAvailabilityDTO>(accommodationReservationMoveService.GetMoveRequestsWithAvailability(LoggedInUser));
+            ViewModel = new OwnerReservationsViewModel();
+            DataContext = ViewModel;
         }
     }
 }

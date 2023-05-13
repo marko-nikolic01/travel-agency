@@ -3,51 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using TravelAgency.Commands;
 using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
     public class OwnerMainViewModel : ViewModelBase
     {
-		private ViewModelBase currentViewModel;
-        public ViewModelBase CurrentViewModel
+        public NavigationService NavigationService { get; set; }
+        public RelayCommand NavigateToMyProfilePageCommand { get; set; }
+        public RelayCommand NavigateToAccommodationsPageCommand { get; set; }
+        public RelayCommand NavigateToReservationsPageCommand { get; set; }
+
+        public OwnerMainViewModel(NavigationService navigationService)
         {
-            get { return currentViewModel; }
-            set
-            {
-                SetProperty(ref currentViewModel, value);
-            }
-        }
-        public MyICommand<string> NavCommand { get; private set; }
-
-        private OwnerProfileViewModel ownerProfileViewModel;
-        private OwnerAccommodationsViewModel ownerAccommodationsViewModel;
-        private OwnerManageAccommodationsViewModel ownerManageAccommodationsViewModel;
-
-        public OwnerMainViewModel()
-        {
-            NavCommand = new MyICommand<string>(OnNav);
-
-            ownerProfileViewModel = new OwnerProfileViewModel();
-            ownerAccommodationsViewModel = new OwnerAccommodationsViewModel(NavCommand);
-            ownerManageAccommodationsViewModel = new OwnerManageAccommodationsViewModel(NavCommand);
-            currentViewModel = ownerProfileViewModel;
+            NavigationService = navigationService;
+            NavigateToMyProfilePageCommand = new RelayCommand(Execute_NavigateToMyProfilePageCommand, CanExecute_NavigateCommand);
+            NavigateToAccommodationsPageCommand = new RelayCommand(Execute_NavigateToAccommodationsPageCommand, CanExecute_NavigateCommand);
+            NavigateToReservationsPageCommand = new RelayCommand(Execute_NavigateToReservationsPageCommand, CanExecute_NavigateCommand);
         }
 
-        public void OnNav(string destination)
+        private void Execute_NavigateToMyProfilePageCommand(object obj)
         {
-            switch (destination)
-            {
-                case "profile":
-                    CurrentViewModel = ownerProfileViewModel;
-                    break;
-                case "accommodations":
-                    CurrentViewModel = ownerAccommodationsViewModel;
-                    break;
-                case "manageAccommodations":
-                    CurrentViewModel = ownerManageAccommodationsViewModel;
-                    break;
-            }
+            NavigationService.Navigate(new Uri("WPF/Pages/OwnerProfilePage.xaml", UriKind.Relative));
+        }
+
+        private void Execute_NavigateToAccommodationsPageCommand(object obj)
+        {
+            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAccommodationsPage.xaml", UriKind.Relative));
+        }
+
+        private void Execute_NavigateToReservationsPageCommand(object obj)
+        {
+            NavigationService.Navigate(new Uri("WPF/Pages/OwnerReservationsPage.xaml", UriKind.Relative));
+        }
+
+        private bool CanExecute_NavigateCommand(object obj)
+        {
+            return true;
         }
     }
 }
