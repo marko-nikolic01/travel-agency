@@ -1,22 +1,30 @@
-﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerManageAccommodationsPage"
+﻿<UserControl x:Class="TravelAgency.WPF.Pages.OwnerManageAccommodationsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="OwnerManageAccommodationsPage">
+      d:DesignHeight="450" d:DesignWidth="800">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <Style x:Key="AccommodationCardFont" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
         </Style>
 
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="imageConverter"/>
-    </Page.Resources>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <viewmodels:OwnerAccommodationsViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding NavCommand}" CommandParameter="manageAccommodations"/>
+    </UserControl.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -128,7 +136,7 @@
                                          Foreground="White"
                                          Text="Back"
                                          KeyboardShortcutText="Backspace"
-                                         Click="GoBack_Click"/>
+                                         Command="{Binding NavCommand}"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Margin="2 0 2 0"
@@ -146,4 +154,4 @@
                                          KeyboardShortcutText="Ctrl+Alt+S"/>
         </Grid>
     </Grid>
-</Page>
+</UserControl>

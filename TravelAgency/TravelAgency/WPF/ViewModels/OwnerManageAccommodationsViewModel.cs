@@ -5,23 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.Pages;
 
-namespace TravelAgency.WPF.Pages
+namespace TravelAgency.WPF.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for OwnerManageAccommodationsPage.xaml
-    /// </summary>
-    public partial class OwnerManageAccommodationsPage : UserControl
+    public class OwnerManageAccommodationsViewModel : ViewModelBase
     {
         public User LoggedInUser { get; set; }
         private UserService userService;
@@ -29,10 +20,11 @@ namespace TravelAgency.WPF.Pages
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
 
-        public OwnerManageAccommodationsPage()
+        public MyICommand<string> NavCommand { get; set; }
+
+        public OwnerManageAccommodationsViewModel(MyICommand<string> navCommand)
         {
-            InitializeComponent();
-            DataContext = this;
+            NavCommand = navCommand;
 
             userService = new UserService();
             accommodationService = new AccommodationService();

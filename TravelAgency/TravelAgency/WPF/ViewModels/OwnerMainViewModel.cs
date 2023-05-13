@@ -22,13 +22,15 @@ namespace TravelAgency.WPF.ViewModels
 
         private OwnerProfileViewModel ownerProfileViewModel;
         private OwnerAccommodationsViewModel ownerAccommodationsViewModel;
+        private OwnerManageAccommodationsViewModel ownerManageAccommodationsViewModel;
 
         public OwnerMainViewModel()
         {
             NavCommand = new MyICommand<string>(OnNav);
 
             ownerProfileViewModel = new OwnerProfileViewModel();
-            ownerAccommodationsViewModel = new OwnerAccommodationsViewModel();
+            ownerAccommodationsViewModel = new OwnerAccommodationsViewModel(NavCommand);
+            ownerManageAccommodationsViewModel = new OwnerManageAccommodationsViewModel(NavCommand);
             currentViewModel = ownerProfileViewModel;
         }
 
@@ -41,6 +43,9 @@ namespace TravelAgency.WPF.ViewModels
                     break;
                 case "accommodations":
                     CurrentViewModel = ownerAccommodationsViewModel;
+                    break;
+                case "manageAccommodations":
+                    CurrentViewModel = ownerManageAccommodationsViewModel;
                     break;
             }
         }
