@@ -20,6 +20,7 @@ namespace TravelAgency.Domain.Models
 
         public RequestStatus Status { get; set; }
         public DateOnly? GivenDate { get; set; }
+        public int SpecialTourRequestId { get; set; }
         public TourRequest()
         {
         }
@@ -40,7 +41,7 @@ namespace TravelAgency.Domain.Models
         {
             string[] csvValues = { Id.ToString(), LocationId.ToString(), Description, Language, GuestNumber.ToString(),
                                  MinDate.ToString("dd-MM-yyyy"), MaxDate.ToString("dd-MM-yyyy"), GuestId.ToString(),
-                                 ((int)Status).ToString()};
+                                 ((int)Status).ToString(), SpecialTourRequestId.ToString()};
             return csvValues;
         }
 
@@ -55,6 +56,7 @@ namespace TravelAgency.Domain.Models
             MaxDate = DateOnly.ParseExact(values[6], "dd-MM-yyyy", CultureInfo.InvariantCulture);
             GuestId = int.Parse(values[7]);
             Status = (RequestStatus)Convert.ToInt32(values[8]);
+            SpecialTourRequestId = int.Parse(values[9]);
         }
 
         public bool Valid(string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate)

@@ -96,9 +96,9 @@ namespace TravelAgency.WPF.Views
         }
 
         private void ButtonMakeReservation_Click(object sender, RoutedEventArgs e)
-        {/*
+        {
             listViewAccommodations.SelectedItem = ((FrameworkElement)sender).DataContext;
-            this.NavigationService.Navigate(new AccommodationReservationView(_mainWindow, this, ViewModel.Guest, ViewModel.SelectedAccommodation));*/
+            //this.NavigationService.Navigate(new AccommodationReservationView(_mainWindow, this, ViewModel.Guest, ViewModel.SelectedAccommodation));
         }
     }
 }

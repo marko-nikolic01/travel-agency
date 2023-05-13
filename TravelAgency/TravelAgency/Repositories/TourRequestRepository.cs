@@ -190,5 +190,15 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+        public List<TourRequest> GetBySpecialRequestId(int id)
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach(TourRequest request in tourRequests)
+            {
+                if(request.SpecialTourRequestId == id)
+                    result.Add(request);
+            }
+            return result;
+        }
     }
 }

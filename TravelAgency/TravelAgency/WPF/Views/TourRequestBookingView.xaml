@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="Tour requests">
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -26,7 +26,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Separator Grid.Row="5" Grid.ColumnSpan="4"></Separator>
-        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}">
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}"  FontSize="14" AlternatingRowBackground="SeaShell">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Location">
                     <DataGridTextColumn.Binding>
@@ -39,13 +39,13 @@
                 <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Date" Width="*">
                     <DataGridTextColumn.Binding>
-                        <MultiBinding StringFormat="{}{0:dd/MM/yyyy} - {1:dd/MM/yyyy}">
+                        <MultiBinding StringFormat="{}{0:dd/MM/yy}-{1:dd/MM/yy}">
                             <Binding Path="MinDate" />
                             <Binding Path="MaxDate"/>
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Accept">
+                <DataGridTemplateColumn Header="Accept" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Name="Book" Margin="5" Content="Book" Command="{Binding Path= DataContext.BookCommand, RelativeSource={RelativeSource AncestorType=Page}}" ></Button>

@@ -27,7 +27,7 @@
                         <Button Width="180" Height="40" Content="Requests" Command="{Binding NavigateToRequestsCommand}"/>
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Width="180" Height="40" Content="Special Requests" />
+                        <Button Width="180" Height="40" Content="Special Requests" Command="{Binding NavigateToSpecialRequestsCommand}"/>
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>

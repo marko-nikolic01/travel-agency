@@ -156,7 +156,6 @@ namespace TravelAgency.Repositories
             TourOccurrence tourOccurrence = tourOccurrences.Find(t => t.TourId == id);
             return tourOccurrence;
         }
-
         public void Delete(TourOccurrence tourOccurrence)
         {
             TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
