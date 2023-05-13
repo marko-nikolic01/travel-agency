@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
@@ -123,6 +124,21 @@ namespace TravelAgency.Services
         public List<AccommodationReservationMoveRequest> GetWaitingMoveRequestsByOwner(User owner)
         {
             return MoveRequestRepository.GetWaitingByOwner(owner);
+        }
+
+        public List<AccommodationReservationMoveRequestWithAvailabilityDTO> GetMoveRequestsWithAvailability(User owner)
+        {
+            var moveRequests = GetWaitingMoveRequestsByOwner(owner);
+            List<AccommodationReservationMoveRequestWithAvailabilityDTO> dtos = new();
+
+            foreach (var moveRequest in moveRequests)
+            {
+                bool isNewDateSpanAvailable = CanReservationBeMoved(moveRequest);
+                AccommodationReservationMoveRequestWithAvailabilityDTO dto = new(moveRequest, isNewDateSpanAvailable);
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
     }
 }

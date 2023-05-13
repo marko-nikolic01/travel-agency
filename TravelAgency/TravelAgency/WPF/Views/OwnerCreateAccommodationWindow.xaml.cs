@@ -10,19 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.Services;
 
-namespace TravelAgency.WPF.Pages
+namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for OwnerProfilePage.xaml
+    /// Interaction logic for OwnerCreateAccommodationWindow.xaml
     /// </summary>
-    public partial class OwnerProfilePage : UserControl
+    public partial class OwnerCreateAccommodationWindow : Window
     {
-        public OwnerProfilePage()
+        public OwnerCreateAccommodationWindow()
         {
             InitializeComponent();
         }

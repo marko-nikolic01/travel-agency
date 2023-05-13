@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -127,6 +128,27 @@ namespace TravelAgency.Repositories
         {
             reservation.Canceled = canceled;
             _serializer.ToCSV(FilePath, _accommodationReservations);
+        }
+
+        public List<AccommodationReservation> GetByOwner(User owner)
+        {
+            return _accommodationReservations.FindAll(ar => ar.Accommodation.OwnerId == owner.Id);
+        }
+
+        public List<AccommodationReservation> GetActiveByOwner(User owner)
+        {
+            var reservations = GetByOwner(owner);
+            List<AccommodationReservation> activeReservations = new List<AccommodationReservation>();
+
+            foreach (var reservation in reservations)
+            {
+                if (IsActive(reservation))
+                {
+                    activeReservations.Add(reservation);
+                }
+            }
+
+            return activeReservations;
         }
     }
 }

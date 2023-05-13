@@ -20,5 +20,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateCancelationStatus(AccommodationReservation reservation, bool canceled);
         public void UpdateDateSpan(AccommodationReservation reservation, DateSpan dateSpan);
         public void CancelReservation(AccommodationReservation reservation);
+        public List<AccommodationReservation> GetByOwner(User owner);
+        public List<AccommodationReservation> GetActiveByOwner(User owner);
     }
 }

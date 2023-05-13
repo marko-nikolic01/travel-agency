@@ -14,7 +14,6 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="3"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -24,15 +23,15 @@
                        HorizontalAlignment="Center"
                        Margin="15 6"/>
 
-            <Rectangle Grid.Row="1"
-                       Fill="Black"/>
-
-            <TextBlock Grid.Row="2"
-                       Text="{Binding Value,ElementName=root}"
-                       FontSize="30"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"
-                       Margin="5 0 5 3"/>
+            <Border Grid.Row="1"
+                    BorderThickness="0 3 0 0"
+                    BorderBrush="Black">
+                <TextBlock Text="{Binding Value,ElementName=root}"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="5 0 5 3"/>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

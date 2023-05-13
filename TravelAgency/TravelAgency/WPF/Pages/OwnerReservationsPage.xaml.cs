@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.ViewModels;
@@ -20,16 +21,16 @@ using TravelAgency.WPF.ViewModels;
 namespace TravelAgency.WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for OwnerManageAccommodationsPage.xaml
+    /// Interaction logic for OwnerReservationsPage.xaml
     /// </summary>
-    public partial class OwnerManageAccommodationsPage : Page
+    public partial class OwnerReservationsPage : Page
     {
-        public OwnerManageAccommodationsViewModel ViewModel { get; set; }
+        public OwnerReservationsViewModel ViewModel { get; set; }
 
-        public OwnerManageAccommodationsPage()
+        public OwnerReservationsPage()
         {
             InitializeComponent();
-            ViewModel = new OwnerManageAccommodationsViewModel();
+            ViewModel = new OwnerReservationsViewModel();
             DataContext = ViewModel;
         }
     }
