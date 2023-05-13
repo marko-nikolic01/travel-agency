@@ -22,7 +22,7 @@
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Label Margin="20" FontSize="24" Content="Naslov ne znam sta da stavim"></Label>
+            <Label Margin="20" FontSize="24" Content="Finished tour"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

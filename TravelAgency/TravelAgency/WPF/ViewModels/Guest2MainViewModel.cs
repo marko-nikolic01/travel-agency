@@ -24,6 +24,7 @@ namespace TravelAgency.WPF.ViewModels
         public RelayCommand NavigateToRequestsCommand { get; set; }
         public RelayCommand NavigateToProfileCommand { get; set; }
         public RelayCommand NavigateToNotificationsCommand { get; set; }
+        public RelayCommand NavigateToSpecialRequestsCommand { get; set; }
         private int currentGuestId;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -42,9 +43,15 @@ namespace TravelAgency.WPF.ViewModels
             NavigateToRequestsCommand = new RelayCommand(Execute_NavigateToRequestsCommand, CanExecute_NavigateCommand);
             NavigateToProfileCommand = new RelayCommand(Execute_NavigateToProfileCommand, CanExecute_NavigateCommand);
             NavigateToNotificationsCommand = new RelayCommand(Execute_NavigateToNotificationsCommand, CanExecute_NavigateCommand);
+            NavigateToSpecialRequestsCommand = new RelayCommand(Execute_NavigateToSpecialRequestsCommand, CanExecute_NavigateCommand);
             currentGuestId = guestId;
         }
- 
+
+        private void Execute_NavigateToSpecialRequestsCommand(object obj)
+        {
+            Page specialRequests = new SpecialTourRequestsView(currentGuestId);
+            NavService.Navigate(specialRequests);
+        }
         private void Execute_NavigateToOfferedToursCommand(object obj)
         {
             Page OfferedTours = new OfferedToursView(currentGuestId);
