@@ -22,7 +22,12 @@ namespace TravelAgency.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            string s = (string)value;
+            if (s == "")
+            {
+                return 0;
+            }
+            return Int32.Parse(s);
         }
     }
 }
