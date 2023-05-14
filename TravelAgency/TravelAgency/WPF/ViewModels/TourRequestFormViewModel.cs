@@ -38,7 +38,7 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter DescriptionHelpCommand { get; set; }
         public string SelectedCountry{
             get => selectedCountry;
-            set{ if (value != selectedCountry) { selectedCountry = value; OnPropertyChanged(); } }
+            set{ if (value != selectedCountry) { selectedCountry = value; OnPropertyChanged(); SetCitiesComboBox(); } }
         }
         public string SelectedCity{
             get => selectedCity;
@@ -62,9 +62,9 @@ namespace TravelAgency.WPF.ViewModels
         public TourRequestFormViewModel(int id)
         {
             tourRequestService = new TourRequestService();
+            Cities = new ObservableCollection<string>();
             Countries = new ObservableCollection<string>(tourRequestService.getCountries());
             SelectedCountry = Countries[0];
-            Cities = new ObservableCollection<string>();
             guestId = id;
             MinDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 3);
             MaxDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 4);

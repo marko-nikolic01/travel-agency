@@ -19,10 +19,6 @@ namespace TravelAgency.WPF.Views
             BackButton.DataContext = viewModelIterator;
             NextButton.DataContext = viewModelIterator;
         }
-        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            viewModelIterator.GetViewModelInstance().SetCitiesComboBox();
-        }
         private void SaveRequest_Click(object sender, RoutedEventArgs e)
         {
             if (viewModelIterator.GetViewModelInstance().Valid())

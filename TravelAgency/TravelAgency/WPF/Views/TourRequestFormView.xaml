@@ -54,7 +54,7 @@
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
             <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220" SelectionChanged="Country_SelectionChanged"
+            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220"
                       ItemsSource="{Binding Countries}" 
                       SelectedItem="{Binding SelectedCountry}"
                       >
