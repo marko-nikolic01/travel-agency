@@ -29,7 +29,7 @@ namespace TravelAgency.WPF.Pages
 
         public OwnerAccommodationsPage()
         {
-            NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton, () => true) ;
+            NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton);
             InitializeComponent();
             ViewModel = new OwnerAccommodationsViewModel();
             DataContext = ViewModel;

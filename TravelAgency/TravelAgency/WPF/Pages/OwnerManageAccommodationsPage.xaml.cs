@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
@@ -24,13 +25,39 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerManageAccommodationsPage : Page
     {
+        public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand AddAccommodationCommand { get; set; }
         public OwnerManageAccommodationsViewModel ViewModel { get; set; }
 
         public OwnerManageAccommodationsPage()
         {
+            NavigateBackCommand = new MyICommand(Execute_NavigateBack);
+            AddAccommodationCommand = new MyICommand(Execute_AddAccommodation);
             InitializeComponent();
             ViewModel = new OwnerManageAccommodationsViewModel();
             DataContext = ViewModel;
+
+            Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_AddAccommodation()
+        {
+            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAddAccommodationPage.xaml", UriKind.Relative));
+        }
+
+        private void Execute_NavigateBack()
+        {
+            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAccommodationsPage.xaml", UriKind.Relative));
+        }
+
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateBack();
+        }
+
+        private void AddAccommodation_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_AddAccommodation();
         }
     }
 }

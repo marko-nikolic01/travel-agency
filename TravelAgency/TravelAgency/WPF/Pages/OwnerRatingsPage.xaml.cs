@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
 {
@@ -20,9 +21,13 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerRatingsPage : Page
     {
+        public OwnerRatingsViewModel ViewModel { get; set; }
         public OwnerRatingsPage()
         {
             InitializeComponent();
+            ViewModel = new OwnerRatingsViewModel();
+            DataContext = ViewModel;
+
             Loaded += (s, e) => Keyboard.Focus(this);
         }
     }

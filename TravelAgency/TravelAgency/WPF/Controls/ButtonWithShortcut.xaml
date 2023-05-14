@@ -27,12 +27,12 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Text="{Binding Text, ElementName=root}" FontSize="16"
-                               HorizontalAlignment="Center"
-                               Foreground="{Binding Foreground, ElementName=root}"
-                               Margin="0 0 0 10"/>
+                                   HorizontalAlignment="Center"
+                                   Foreground="{Binding Foreground, ElementName=root}"
+                                   Margin="0 0 0 5"/>
                         <TextBlock Grid.Row="1" Text="{Binding KeyboardShortcutText, ElementName=root}" FontSize="16"
-                               HorizontalAlignment="Center"
-                               Foreground="Gray"/>
+                                   HorizontalAlignment="Center"
+                                   Foreground="Gray"/>
                     </Grid>
                 </Border>
             </Button.Content>

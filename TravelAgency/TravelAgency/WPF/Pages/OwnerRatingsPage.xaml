@@ -6,9 +6,10 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="685" d:DesignWidth="900"
       Title="OwnerRatingsPage"
-      Focusable="True">
+      Focusable="True"
+      FocusVisualStyle="{x:Null}">
 
     <Page.Resources>
         <Style x:Key="h2" TargetType="TextBlock">
@@ -48,27 +49,27 @@
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
-                          ItemsSource="{Binding AccommodationReservations}"
+                          ItemsSource="{Binding OwnerRatings}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
-                                            Binding="{Binding Accommodation.Name}"
+                                            Binding="{Binding AccommodationReservation.Guest.Username}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Accommodation"
-                                            Binding="{Binding DateSpan.StartDate}"
+                                            Binding="{Binding AccommodationReservation.Accommodation.Name}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Cleanliness"
-                                            Binding="{Binding DateSpan.EndDate}"
+                                            Binding="{Binding AccommodationCleanliness}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Correctness"
-                                            Binding="{Binding Guest.Username}"
+                                            Binding="{Binding OwnerCorrectness}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="Friendliness"
-                                            Binding="{Binding NumberOfGuests}"
+                        <DataGridTextColumn Header="Responsiveness"
+                                            Binding="{Binding OwnerResponsiveness}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Comment"
-                                            Binding="{Binding NumberOfGuests}"
+                                            Binding="{Binding Comment}"
                                             Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -82,25 +83,25 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Pending ratings to rate"
+                           Text="Pending reservations to rate"
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
-                          ItemsSource="{Binding MoveRequests}"
+                          ItemsSource="{Binding Reservations}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
-                                            Binding="{Binding MoveRequest.Reservation.Accommodation.Name}"
+                                            Binding="{Binding Accommodation.Name}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Accommodation"
-                                            Binding="{Binding MoveRequest.Reservation.DateSpan.StartDate}"
+                                            Binding="{Binding DateSpan.StartDate}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Start Date"
-                                            Binding="{Binding MoveRequest.Reservation.DateSpan.EndDate}"
+                                            Binding="{Binding DateSpan.EndDate}"
                                             Width="*"/>
                         <DataGridTextColumn Header="End Date"
-                                            Binding="{Binding MoveRequest.Reservation.DateSpan.EndDate}"
+                                            Binding="{Binding DateSpan.EndDate}"
                                             Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -118,7 +119,7 @@
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Review request"
                                          KeyboardShortcutText="Enter"
-                                         Margin="0 16 16 16"/>
+                                         Margin="0 30 30 30"/>
 
             <controls:Tip Grid.Column="1"
                           Header="What are pending reservations?"
