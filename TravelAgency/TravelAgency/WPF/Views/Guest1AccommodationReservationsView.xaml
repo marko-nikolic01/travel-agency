@@ -1,0 +1,215 @@
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1AccommodationReservationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:TravelAgency.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="580" d:DesignWidth="1000"
+             Background="White">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonSmall">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonBig">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <converters:AccommodationReservationStartDateToVisibilityConverter x:Key="AccommodationReservationStartDateToVisibilityConverter"/>
+        <converters:AccommodationReservationCancelabilityToVisibilityConverter x:Key="AccommodationReservationCancelabilityToVisibilityConverter"/>
+        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
+    </UserControl.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="27"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da izmenim rezervaciju?</Bold><LineBreak/><LineBreak/>
+                Klikom na dugme "Izmeni"<LineBreak/>
+                možete nastaviti na<LineBreak/>
+                pisanje zahteva za izmenu<LineBreak/>
+                rezervacije.
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da se otkažem<LineBreak/>
+                rezervaciju?</Bold><LineBreak/><LineBreak/>
+                Klikom na dugme "Otkaži"<LineBreak/>
+                možete otkazati rezervaciju,<LineBreak/>
+                ali samo u slučaju da rok za<LineBreak/>
+                otkazivanje nije istekao.
+            </TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
+                Klikom na dugme "Nazad"<LineBreak/>
+                se vraćate na prethodni<LineBreak/>
+                prozor.
+
+            </TextBlock>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="33"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    <Bold>Smeštaji/Rezervacije</Bold>
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings></TextBlock>
+                <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Moje rezervacije</Bold></TextBlock>
+            </WrapPanel>
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="20" Source="../../Resources/Images/left-arrow.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Nazad</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListView x:Name="listViewReservations" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Reservations}" SelectedItem="{Binding SelectedReservation, Mode=TwoWay}"
+                          ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Grid.Row="1" Grid.Column="1" Width="725" Height="200">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                    <ColumnDefinition Width="160"></ColumnDefinition>
+                                    <ColumnDefinition Width="5"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="125"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="10"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Border Grid.RowSpan="8" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
+                                <Border  Grid.Row="1" Grid.RowSpan="6" Grid.Column="1"  BorderThickness="1" BorderBrush="Black" Background="#cccccc">
+                                    <Image Source="{Binding Path=Accommodation.Photos[0], Converter={StaticResource AccommodationPhotoToBitmapImageConverter}}"></Image>
+                                </Border>
+                                <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Accommodation.Name, StringFormat='Naziv: {0}'}"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Lokacija: {0}, {1}">
+                                            <Binding Path="Accommodation.Location.City" />
+                                            <Binding Path="Accommodation.Location.Country" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Accommodation.Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter}}"></TextBlock>
+                                <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=NumberOfGuests, StringFormat='Broj gostiju: {0}'}"></TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Termin: {0} - {1}">
+                                            <Binding Path="DateSpan.StartDate" />
+                                            <Binding Path="DateSpan.EndDate" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Button x:Name="buttonCancelReservation" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonCancelReservation_Click" Focusable="False"
+                                        Visibility="{Binding Path=., Converter={StaticResource AccommodationReservationCancelabilityToVisibilityConverter}}"
+                                        Command="{Binding DataContext.CancelReservationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationReservationsView}}">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/cancel.png"></Image>
+                                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Otkaži</TextBlock>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button x:Name="buttonMoveReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False"
+                                        Visibility="{Binding Path=DateSpan.StartDate, Converter={StaticResource AccommodationReservationStartDateToVisibilityConverter}}" Click="ButtonMoveReservation_Click"
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationReservationsView}}" CommandParameter="guest1AccommodationReservationMoveViewModel">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/exchange.png"></Image>
+                                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Izmeni</TextBlock>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

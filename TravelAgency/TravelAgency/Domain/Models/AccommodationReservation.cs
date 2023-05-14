@@ -137,23 +137,11 @@ namespace TravelAgency.Domain.Models
                         return "* Number of guests is bigger than allowed";
                     }
                 }
-                if (columnName == "DateSpan")
-                {
-                    if (DateSpan == null)
-                    {
-                        return "* Select a date span";
-                    }
-                    else if (DateSpan.CountDays() < Accommodation.MinDays)
-                    {
-                        return "* Date span is too short";
-                    }
-                }
-
                 return null;
             }
         }
 
-        private readonly string[] _validatedProperties = { "NumberOfGuests", "DateSpan" };
+        private readonly string[] _validatedProperties = { "NumberOfGuests"};
 
         public bool IsValid
         {

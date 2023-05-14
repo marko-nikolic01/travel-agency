@@ -4,12 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="OwnerManageAccommodationsPage">
-
+      d:DesignHeight="450" d:DesignWidth="800">
+    
     <Page.Resources>
         <Style x:Key="AccommodationCardFont" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
@@ -17,6 +17,10 @@
 
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="imageConverter"/>
     </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding NavCommand}" CommandParameter="manageAccommodations"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <controls:PageHeader Grid.Row="0"
-                             Text="Manage accommodations"/>
+                             Text="Accommodations > Manage accommodations"/>
 
         <ListView Grid.Row="1"
                   ItemsSource="{Binding Accommodations}"
@@ -128,7 +132,7 @@
                                          Foreground="White"
                                          Text="Back"
                                          KeyboardShortcutText="Backspace"
-                                         Click="GoBack_Click"/>
+                                         Command="{Binding NavCommand}"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Margin="2 0 2 0"

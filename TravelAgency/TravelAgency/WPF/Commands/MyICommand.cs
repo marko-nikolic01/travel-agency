@@ -53,6 +53,14 @@ namespace TravelAgency.WPF.Commands
                 _TargetExecuteMethod();
             }
         }
+
+        public void Execute()
+        {
+            if (_TargetExecuteMethod != null)
+            {
+                _TargetExecuteMethod();
+            }
+        }
     }
 
     public class MyICommand<T> : ICommand
@@ -99,6 +107,14 @@ namespace TravelAgency.WPF.Commands
         public event EventHandler CanExecuteChanged = delegate { };
 
         void ICommand.Execute(object parameter)
+        {
+            if (_TargetExecuteMethod != null)
+            {
+                _TargetExecuteMethod((T)parameter);
+            }
+        }
+
+        public void Execute(object parameter)
         {
             if (_TargetExecuteMethod != null)
             {

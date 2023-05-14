@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
 using TravelAgency.Domain.Models;
 using TravelAgency.WPF.Commands;
 
@@ -15,22 +17,26 @@ namespace TravelAgency.WPF.ViewModels
     {
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
-        private Guest1HomeMenuViewModel guest1HomeMenuViewModel;
-        private Guest1AccommodationsReservationsMenuViewModel guest1AccommodationsReservationsMenuViewModel;
-        private Guest1ReviewsMenuViewModel guest1ReviewsMenuViewModel;
-        private Guest1ForumsMenuViewModel guest1ForumsMenuViewModel;
-        private ViewModelBase currentViewModel;
-        private ViewModelBase previousViewModel;
-        private string selectedTab;
+        private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
+        private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
+        private Guest1ReviewsMenuViewModel _guest1ReviewsMenuViewModel;
+        private Guest1ForumsMenuViewModel _guest1ForumsMenuViewModel;
+        private Guest1AccommodationSearchViewModel _guest1AccommodationSearchViewModel;
+        private Guest1AccommodationReservationsViewModel _guest1AccommodationReservationsViewModel;
+        private Guest1AccommodationReservationMoveRequestsViewModel _guest1AccommodationReservationMoveRequestsViewModel;
+        private ViewModelBase _currentViewModel;
+        private ViewModelBase _previousViewModel;
+        private string _selectedTab;
+        private string _currentDateTime;
 
         public ViewModelBase CurrentViewModel
         {
-            get => currentViewModel;
+            get => _currentViewModel;
             set
             {
-                if (value != currentViewModel)
+                if (value != _currentViewModel)
                 {
-                    currentViewModel = value;
+                    _currentViewModel = value;
                     OnPropertyChanged();
                 }
             }
@@ -38,12 +44,12 @@ namespace TravelAgency.WPF.ViewModels
 
         public ViewModelBase PreviousViewModel
         {
-            get => previousViewModel;
+            get => _previousViewModel;
             set
             {
-                if (value != previousViewModel)
+                if (value != _previousViewModel)
                 {
-                    previousViewModel = value;
+                    _previousViewModel = value;
                     OnPropertyChanged();
                 }
             }
@@ -51,12 +57,25 @@ namespace TravelAgency.WPF.ViewModels
 
         public string SelectedTab
         {
-            get => selectedTab;
+            get => _selectedTab;
             set
             {
-                if (value != selectedTab)
+                if (value != _selectedTab)
                 {
-                    selectedTab = value;
+                    _selectedTab = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string CurrentDateTime
+        {
+            get => _currentDateTime;
+            set
+            {
+                if (value != _currentDateTime)
+                {
+                    _currentDateTime = value;
                     OnPropertyChanged();
                 }
             }
@@ -66,14 +85,13 @@ namespace TravelAgency.WPF.ViewModels
         {
             Guest = guest;
             NavigationCommand = new MyICommand<string>(OnNavigation);
-            guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
-            guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
-            guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
-            guest1ForumsMenuViewModel = new Guest1ForumsMenuViewModel(NavigationCommand);
-            CurrentViewModel = guest1HomeMenuViewModel;
+            _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
+            _guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
+            _guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
+            _guest1ForumsMenuViewModel = new Guest1ForumsMenuViewModel(NavigationCommand);
+            CurrentViewModel = _guest1HomeMenuViewModel;
             SelectedTab = "Home";
-
-
+            StartTimer();
         }
 
         public void OnNavigation(string destination)
@@ -81,25 +99,58 @@ namespace TravelAgency.WPF.ViewModels
             switch (destination)
             {
                 case "guest1HomeMenuViewModel":
-                    CurrentViewModel = guest1HomeMenuViewModel;
+                    CurrentViewModel = _guest1HomeMenuViewModel;
                     SelectedTab = "Home";
                     break;
                 case "guest1AccommodationsReservationsMenuViewModel":
-                    CurrentViewModel = guest1AccommodationsReservationsMenuViewModel;
+                    CurrentViewModel = _guest1AccommodationsReservationsMenuViewModel;
                     SelectedTab = "AccommodationsReservations";
                     break;
                 case "guest1ReviewsMenuViewModel":
-                    CurrentViewModel = guest1ReviewsMenuViewModel;
+                    CurrentViewModel = _guest1ReviewsMenuViewModel;
                     SelectedTab = "Reviews";
                     break;
                 case "guest1ForumsMenuViewModel":
-                    CurrentViewModel = guest1ForumsMenuViewModel;
+                    CurrentViewModel = _guest1ForumsMenuViewModel;
                     SelectedTab = "Forums";
                     break;
                 case "guest1AccommodationSearchViewModel":
-                    CurrentViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
+                    _guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1AccommodationSearchViewModel;
+                    break;
+                case "guest1AccommodationReservationViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1AccommodationReservationViewModel(NavigationCommand, Guest, _guest1AccommodationSearchViewModel.SelectedAccommodation);
+                    break;
+                case "guest1AccommodationReservationsViewModel":
+                    _guest1AccommodationReservationsViewModel = new Guest1AccommodationReservationsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = _guest1AccommodationReservationsViewModel;
+                    break;
+                case "guest1AccommodationReservationMoveViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1AccommodationReservationMoveViewModel(NavigationCommand, _guest1AccommodationReservationsViewModel.SelectedReservation);
+                    break;
+                case "guest1AccommodationReservationMoveRequestsViewModel":
+                    _guest1AccommodationReservationMoveRequestsViewModel = new Guest1AccommodationReservationMoveRequestsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = _guest1AccommodationReservationMoveRequestsViewModel;
+                    break;
+                case "previousViewModel":
+                    CurrentViewModel = PreviousViewModel;
                     break;
             }
+        }
+
+        private void StartTimer()
+        {
+            Timer timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += LoadCurrentDateTime;
+            timer.Start();
+        }
+
+        private void LoadCurrentDateTime(object sender, EventArgs e)
+        {
+            CurrentDateTime = DateTime.Now.ToString("dd/MM/yyyy     hh:mm:ss tt");
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

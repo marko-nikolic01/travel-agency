@@ -48,13 +48,13 @@
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                Kako da nastavim?<LineBreak/><LineBreak/>
+                <Bold>Kako da nastavim?</Bold><LineBreak/><LineBreak/>
                 Klikom na jednu od ponuđenih<LineBreak/>
                 opcija odaberite gde želite da<LineBreak/>
                 nastavite.
             </TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                Kako da se vratim nazad?<LineBreak/><LineBreak/>
+                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Nazad"<LineBreak/>
                 se vraćate na prethodni<LineBreak/>
                 prozor.
@@ -78,7 +78,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">Forumi</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Forumi</Bold></TextBlock>
             <Button Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand">
                 <Button.Content>
                     <Grid>
@@ -95,7 +95,7 @@
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/book.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13">Otvorite forum</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Otvorite forum</Bold></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Otvorite forum za diskusiju o nekoj lokaciji.</TextBlock>
                     </Grid>
                 </Button.Content>
@@ -116,7 +116,7 @@
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/phone-book.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13">Moji forumi</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Moji forumi</Bold></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pregledajte ili zatvorite neki od foruma koje ste otvorili.</TextBlock>
                     </Grid>
                 </Button.Content>
@@ -137,13 +137,13 @@
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/chat.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13">Čitajte i komentarišite</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Čitajte i komentarišite</Bold></TextBlock>
                         <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Čitajte forume koji vas zanimaju, postavite pitanja ili ostavite koristan komentar.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
-                    Command="{Binding NavCommand}" CommandParameter="guest1HomeMenuViewModel">
+            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>

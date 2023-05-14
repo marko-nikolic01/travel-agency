@@ -21,20 +21,9 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class Guest1ForumsMenuView : UserControl
     {
-        public wForumsMenuViewModel ViewModel { get; set; }
-        private Guest1HomeView _mainWindow;
-
         public Guest1ForumsMenuView()
         {
             InitializeComponent();
-
-            //_mainWindow = guest1HomeView;
-        }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {
-            //_mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
-            //this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
         }
     }
 }

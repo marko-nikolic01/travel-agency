@@ -22,83 +22,14 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class Guest1AccommodationSearchView : UserControl
     {
-        //private Guest1HomeView _mainWindow;
         public Guest1AccommodationSearchView()
         {
             InitializeComponent();
-           // _mainWindow = guest1HomeView;
-           //integerUpDownGuestNumber.Value = 0;
-           //integerUpDownDayNumber.Value = 0;
-        }
-
-        private void ComboBoxLocation_LostFocus(object sender, RoutedEventArgs e)
-        {/*
-            var comboBox = (sender as ComboBox);
-            if (comboBox.Text != "")
-            {
-                comboBox.Text = comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                comboBox.SelectedIndex = 0;
-            }*/
-        }
-
-        private void ComboBoxCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {/*
-            ViewModel.UpdateLocationsData(true);
-            comboBoxCity.ItemsSource = ViewModel.Cities;
-            comboBoxCity.SelectedItem = 0;
-            comboBoxCity.Text = ViewModel.Cities[0];*/
-        }
-
-        private void ComboBoxCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {/*
-            ViewModel.UpdateLocationsData(false);*/
-        }
-
-        private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {/*
-            var upDown = (sender as IntegerUpDown);
-            if (upDown.Value == 0)
-            {
-                upDown.Text = "";
-            */
-        }
-
-        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
-        {/*
-            ViewModel.Search();*/
-        }
-
-        private void ButtonCancelSearch_Click(object sender, RoutedEventArgs e)
-        {/*
-            ViewModel.CancelSearch();
-            textBoxName.Text = "";
-            comboBoxType.SelectedIndex = 0;
-            integerUpDownGuestNumber.Value = 0;
-            integerUpDownDayNumber.Value = 0;*/
-        }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {/*
-            NavigateBack();*/
-        }
-
-        private void TextBlockAccommodationsReservations_MouseUp(object sender, MouseButtonEventArgs e)
-        {/*
-            NavigateBack();*/
-        }
-
-        private void NavigateBack()
-        {/*
-            this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow, ViewModel.Guest));*/
         }
 
         private void ButtonMakeReservation_Click(object sender, RoutedEventArgs e)
-        {/*
+        {
             listViewAccommodations.SelectedItem = ((FrameworkElement)sender).DataContext;
-            this.NavigationService.Navigate(new AccommodationReservationView(_mainWindow, this, ViewModel.Guest, ViewModel.SelectedAccommodation));*/
         }
     }
 }

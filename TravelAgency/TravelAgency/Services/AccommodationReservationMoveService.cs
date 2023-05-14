@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
@@ -18,6 +19,7 @@ namespace TravelAgency.Services
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
         public ILocationRepository LocationRepository { get; set; }
+        public IAccommodationPhotoRepository AccommodationPhotoRepository { get; set; }
 
         public AccommodationReservationMoveService()
         {
@@ -26,8 +28,11 @@ namespace TravelAgency.Services
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
+
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
+            AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
             MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
@@ -119,6 +124,21 @@ namespace TravelAgency.Services
         public List<AccommodationReservationMoveRequest> GetWaitingMoveRequestsByOwner(User owner)
         {
             return MoveRequestRepository.GetWaitingByOwner(owner);
+        }
+
+        public List<AccommodationReservationMoveRequestWithAvailabilityDTO> GetMoveRequestsWithAvailability(User owner)
+        {
+            var moveRequests = GetWaitingMoveRequestsByOwner(owner);
+            List<AccommodationReservationMoveRequestWithAvailabilityDTO> dtos = new();
+
+            foreach (var moveRequest in moveRequests)
+            {
+                bool isNewDateSpanAvailable = CanReservationBeMoved(moveRequest);
+                AccommodationReservationMoveRequestWithAvailabilityDTO dto = new(moveRequest, isNewDateSpanAvailable);
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -56,28 +57,12 @@ namespace TravelAgency.WPF.Views
         {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
-                if (tourOccurrence.CurrentState == CurrentState.Ended)
-                {
-                    tourOccurrence.ToShadow = 1;
-                    tourOccurrence.ToDisplay = 0;
-                }
                 if (tourOccurrence.CurrentState == CurrentState.Started)
                 {
                     SelectedTourOccurrence = tourOccurrence;
                     StartTour();
                 }
             }
-        }
-        private void SignOut_Click(object sender, RoutedEventArgs e)
-        {
-            if (!StartButton.IsEnabled)
-            {
-                UpdateKeyPoints();
-
-                TourOccurrenceService.UpdateTourOccurrence(SelectedTourOccurrence);
-            }
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
         }
         public void Update()
         {
@@ -93,12 +78,11 @@ namespace TravelAgency.WPF.Views
             {
                 return;
             }
-
             StartTour();
         }
         private void StartTour()
         {
-            ModifyViewStart();
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
 
             StartTourShadowNotActive();
 
@@ -113,15 +97,36 @@ namespace TravelAgency.WPF.Views
         {
             foreach (TourOccurrence tourOccurrence in TourOccurrences)
             {
-                if (tourOccurrence == SelectedTourOccurrence)
+                if (tourOccurrence == SelectedTourOccurrence && tourOccurrence.CurrentState != CurrentState.Started)
                 {
                     tourOccurrence.CurrentState = CurrentState.Started;
                     tourOccurrence.KeyPoints[0].IsChecked = true;
+                    KeyPointService.UpdateKeyPoint(tourOccurrence.KeyPoints[0]);
+                    if (tourOccurrence.KeyPoints.Count >= 3)
+                    {
+                        tourOccurrence.KeyPoints[2].CanNotBeChecked = true;
+                    }
                     tourOccurrence.ActiveKeyPointId = tourOccurrence.KeyPoints[0].Id;
-                    continue;
                 }
-                tourOccurrence.ToDisplay = 0;
-                tourOccurrence.ToShadow = 1;
+                else if(tourOccurrence.CurrentState == CurrentState.Started)
+                {
+                    bool pastChecked = false;
+                    foreach(KeyPoint k in tourOccurrence.KeyPoints)
+                    {
+                        if (!k.IsChecked)
+                        {
+                            if (pastChecked)
+                            {
+                                k.CanNotBeChecked = true;
+                            }
+                            pastChecked = true;
+                        }
+                    }
+                }
+                else
+                {
+                    tourOccurrence.ToShadow = 1;
+                }
             }
         }
         private void LoadGuests()
@@ -150,21 +155,9 @@ namespace TravelAgency.WPF.Views
                 StartedTourKeyPoints.Add(keyPoint);
             }
         }
-        private void ModifyViewStart()
-        {
-            StartButton.IsEnabled = false;
-            StopButton.IsEnabled = true;
-
-            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-        }
         private bool CheckStartConditions()
         {
-            if (SelectedTourOccurrence == null)
-            {
-                MessageBox.Show("You have to select the tour you would like to start first!");
-                return false;
-            }
-            else if (SelectedTourOccurrence.Guests.Count == 0)
+            if (SelectedTourOccurrence.Guests.Count == 0)
             {
                 MessageBox.Show("No guests have reserved this tour, therefore it can't be started!");
                 return false;
@@ -184,6 +177,24 @@ namespace TravelAgency.WPF.Views
         {
             SelectedKeyPoint.IsChecked = true;
             SelectedTourOccurrence.ActiveKeyPointId = SelectedKeyPoint.Id;
+            KeyPointService.UpdateKeyPoint(SelectedKeyPoint);
+
+            bool pastChecked = false;
+            foreach (var k in SelectedTourOccurrence.KeyPoints)
+            {
+                if (!k.IsChecked)
+                {
+                    if (!pastChecked)
+                    {
+                        k.CanNotBeChecked = false;
+                    }
+                    else
+                    {
+                        k.CanNotBeChecked = true;
+                    }
+                    pastChecked = true;
+                }
+            }
             if (SelectedTourOccurrence.KeyPoints[SelectedTourOccurrence.KeyPoints.Count - 1].Id == SelectedKeyPoint.Id)
             {
                 EndTour();
@@ -191,15 +202,22 @@ namespace TravelAgency.WPF.Views
         }
         private void EndTour()
         {
-            ModifyViewEnd();
+            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
 
-            EndTourShadowNotActive();
+            foreach (TourOccurrence tourOccurrence in TourOccurrences)
+            {
+                if (tourOccurrence.CurrentState != CurrentState.Ended)
+                {
+                    tourOccurrence.ToShadow = 0;
+                }
+            }
+
+            SelectedTourOccurrence.CurrentState = CurrentState.Ended;
+            SelectedTourOccurrence.ToShadow = 1;
 
             Guests.Clear();
-
             UpdateKeyPoints();
-
-            TourOccurrenceService.UpdateTourOccurrence(SelectedTourOccurrence);
+            TourOccurrenceService.UpdateTourOccurrence(SelectedTourOccurrence.Id);
             MessageBox.Show("Tour ended!");
         }
         private void UpdateKeyPoints()
@@ -209,37 +227,6 @@ namespace TravelAgency.WPF.Views
             {
                 KeyPointService.UpdateKeyPoint(keyPoint);
             }
-        }
-        private void EndTourShadowNotActive()
-        {
-            foreach (TourOccurrence tourOccurrence in TourOccurrences)
-            {
-                if (tourOccurrence.CurrentState == CurrentState.Started)
-                {
-                    tourOccurrence.CurrentState = CurrentState.Ended;
-                    tourOccurrence.ToShadow = 1;
-                    tourOccurrence.ToDisplay = 0;
-                }
-                if (tourOccurrence.CurrentState != CurrentState.Ended)
-                {
-                    tourOccurrence.ToShadow = 0;
-                    tourOccurrence.ToDisplay = 1;
-                }
-            }
-        }
-        private void ModifyViewEnd()
-        {
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = false;
-            TourOccurrenceGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
-        }
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            new GuideMain(ActiveGuide).Show();
-        }
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            new GuideMain(ActiveGuide).Show();
         }
     }
 }

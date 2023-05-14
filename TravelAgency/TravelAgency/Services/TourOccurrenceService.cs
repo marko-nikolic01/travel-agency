@@ -43,6 +43,18 @@ namespace TravelAgency.Services
             {
                 tourOccurrence.KeyPoints.Clear();
                 tourOccurrence.KeyPoints.AddRange(IKeyPointRepository.GetByTourOccurrence(tourOccurrence.Id));
+                foreach(var k in tourOccurrence.KeyPoints)
+                {
+                    if (k.IsChecked && tourOccurrence.CurrentState != CurrentState.Ended)
+                    {
+                        tourOccurrence.ActiveKeyPointId = k.Id;
+                    }
+                }
+                if(tourOccurrence.ActiveKeyPointId != -1 && tourOccurrence.ActiveKeyPointId != tourOccurrence.KeyPoints[tourOccurrence.KeyPoints.Count-1].Id && tourOccurrence.CurrentState != CurrentState.Ended)
+                {
+                    tourOccurrence.CurrentState = CurrentState.Started;
+                    UpdateTourOccurrence(tourOccurrence.Id);
+                }
             }
         }
         private void LinkTourGuide()
@@ -273,9 +285,18 @@ namespace TravelAgency.Services
         {
             return ITourOccurrenceRepository.GetByTourId(id);
         }
-        public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
+        public TourOccurrence GetById(int id)
         {
-            ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+            return ITourOccurrenceRepository.GetById(id);
+        }
+
+        public void UpdateTourOccurrence(int tourOccurrenceId)
+        {
+            TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(t => t.Id == tourOccurrenceId);
+            if(tourOccurrence != null)
+            {
+                ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+            }
         }
         public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId)
         {

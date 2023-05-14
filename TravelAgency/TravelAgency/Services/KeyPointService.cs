@@ -18,7 +18,7 @@ namespace TravelAgency.Services
             IKeyPointRepository = Injector.Injector.CreateInstance<IKeyPointRepository>();
         }
 
-        internal void UpdateKeyPoint(KeyPoint keyPoint)
+        public void UpdateKeyPoint(KeyPoint keyPoint)
         {
             IKeyPointRepository.UpdateKeyPoint(keyPoint);
         }

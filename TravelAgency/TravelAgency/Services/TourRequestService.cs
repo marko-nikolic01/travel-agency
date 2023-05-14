@@ -14,7 +14,7 @@ namespace TravelAgency.Services
         public ITourRequestRepository ITourRequestRepository { get; set; }
         public ISpecialTourRequestRepository ISpecialTourRequestRepository { get; set; }
         public IRequestAcceptedNotificationRepository IRequestAcceptedNotificationRepository { get; set; }
-        
+
         public TourRequestService()
         {
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
@@ -54,7 +54,7 @@ namespace TravelAgency.Services
             List<TourRequest> pendings = new List<TourRequest>();
             foreach (var request in ITourRequestRepository.GetAll())
             {
-                if(request.Status == RequestStatus.Pending)
+                if (request.Status == RequestStatus.Pending)
                 {
                     pendings.Add(request);
                 }
@@ -107,7 +107,7 @@ namespace TravelAgency.Services
             var result = new ObservableCollection<KeyValuePair<string, int>>();
             foreach (var year in years)
             {
-                if(year == years[0])
+                if (year == years[0])
                 {
                     continue;
                 }
@@ -148,7 +148,18 @@ namespace TravelAgency.Services
             }
             return uniqueCountries.ToList<string>();
         }
-
+        public List<string> GetUniqueCountriesForPendings()
+        {
+            HashSet<string> uniqueCountries = new HashSet<string>();
+            foreach (var r in ITourRequestRepository.GetAll())
+            {
+                if (r.Status == RequestStatus.Pending)
+                {
+                    uniqueCountries.Add(r.Location.Country);
+                }
+            }
+            return uniqueCountries.ToList<string>();
+        }
         public ObservableCollection<KeyValuePair<string, int>> GetYearCountryStatistics(List<string> years, string selectedCountry)
         {
             var result = new ObservableCollection<KeyValuePair<string, int>>();
@@ -170,7 +181,19 @@ namespace TravelAgency.Services
             {
                 if (r.Location.Country.Equals(country))
                 {
-                uniqueCities.Add(r.Location.City);
+                    uniqueCities.Add(r.Location.City);
+                }
+            }
+            return uniqueCities.ToList<string>();
+        }
+        public List<string> GetUniqueCitiesByCountryForPendings(string country)
+        {
+            HashSet<string> uniqueCities = new HashSet<string>();
+            foreach (var r in ITourRequestRepository.GetAll())
+            {
+                if (r.Location.Country.Equals(country) && r.Status == RequestStatus.Pending)
+                {
+                    uniqueCities.Add(r.Location.City);
                 }
             }
             return uniqueCities.ToList<string>();
@@ -194,9 +217,9 @@ namespace TravelAgency.Services
         {
             double accepted = 0;
             double count = 0;
-            foreach(TourRequest request in ITourRequestRepository.GetAll())
+            foreach (TourRequest request in ITourRequestRepository.GetAll())
             {                                   //ako je year 0 onda ce se gledati all time statistika
-                if(request.GuestId == guestId && (year == 0 || request.MinDate.Year == year)) 
+                if (request.GuestId == guestId && (year == 0 || request.MinDate.Year == year))
                 {
                     count++;
                     if (request.Status == RequestStatus.Accepted)
@@ -226,11 +249,11 @@ namespace TravelAgency.Services
         }
         private string ConvertToString(double number)
         {
-           return String.Format("{0:0.00}", number);
+            return String.Format("{0:0.00}", number);
         }
         public List<string> GetLanguages(int guestId)
         {
-           return ITourRequestRepository.GetLanguages(guestId);
+            return ITourRequestRepository.GetLanguages(guestId);
         }
         public List<string> GetCountriesForGuest(int guestId)
         {
@@ -244,14 +267,14 @@ namespace TravelAgency.Services
             foreach (var r1 in ITourRequestRepository.GetAll())
             {
                 int count = 0;
-                foreach(var r2 in ITourRequestRepository.GetAll())
+                foreach (var r2 in ITourRequestRepository.GetAll())
                 {
-                    if(r1.Language == r2.Language)
+                    if (r1.Language == r2.Language)
                     {
                         count++;
                     }
                 }
-                if(count > maxCount)
+                if (count > maxCount)
                 {
                     maxCount = count;
                     mostVisited = r1.Language;
@@ -285,14 +308,14 @@ namespace TravelAgency.Services
         public ObservableCollection<KeyValuePair<string, int>> GetMonthsLanguageStatistics(string selectedLanguage, string selectedYear)
         {
             var result = new ObservableCollection<KeyValuePair<string, int>>();
-            if (selectedYear.Equals("YEARS") || selectedYear==null)
+            if (selectedYear.Equals("YEARS") || selectedYear == null)
             {
                 return result;
             }
             string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-            for ( int i = 0; i < months.Length; i++)
+            for (int i = 0; i < months.Length; i++)
             {
-                result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByLanguageAndYear(selectedYear, selectedLanguage, i+1)));
+                result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByLanguageAndYear(selectedYear, selectedLanguage, i + 1)));
             }
             return result;
         }
@@ -300,17 +323,21 @@ namespace TravelAgency.Services
         public ObservableCollection<KeyValuePair<string, int>> GetMonthsLocationStatistics(string selectedCountry, string selectedCity, string selectedYear)
         {
             var result = new ObservableCollection<KeyValuePair<string, int>>();
-            if (selectedCountry == null || selectedCity == null)
-            {
-                return result;
-            } 
-            else if(selectedCountry.Equals("< select a country >"))
+            if (selectedCountry == null)
             {
                 return result;
             }
-            else if(selectedCity.Equals("< select a city >"))
+            else if (selectedCountry.Equals("< select a country >"))
             {
-                return getMonthsCountryStatistics( selectedCountry,  selectedYear);
+                return result;
+            }
+            else if (selectedCity == null)
+            {
+                return getMonthsCountryStatistics(selectedCountry, selectedYear);
+            }
+            else if (selectedCity.Equals("< select a city >"))
+            {
+                return getMonthsCountryStatistics(selectedCountry, selectedYear);
             }
             else
             {

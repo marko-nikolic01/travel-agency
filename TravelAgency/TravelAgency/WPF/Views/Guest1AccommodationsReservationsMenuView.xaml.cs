@@ -21,38 +21,9 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class Guest1AccommodationsReservationsMenuView : UserControl
     {
-        public wAccommodationsReservationsMenuViewModel ViewModel { get; set; }
-        private Guest1HomeView _mainWindow;
         public Guest1AccommodationsReservationsMenuView()
         {
             InitializeComponent();
-
-            //_mainWindow = guest1HomeView;
-        }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {
-            //_mainWindow.HighlightSelectedTab(_mainWindow.buttonHome);
-            //this.NavigationService.Navigate(new HomeMenuView(_mainWindow, ViewModel.Guest));
-        }
-
-        private void ButtonNavigation_Click(object sender, RoutedEventArgs e)
-        {
-            Button selectedTab = (Button)sender;
-            Navigate(selectedTab);
-        }
-
-        private void Navigate(Button selectedTab)
-        {/*
-            switch (selectedTab.Name)
-            {
-                case "buttonSearchAccommodations":
-                    this.NavigationService.Navigate(new AccommodationSearchView(_mainWindow, ViewModel.Guest));
-                    break;
-                case "buttonMyReservations":
-                    this.NavigationService.Navigate(new AccommodationReservationsView(_mainWindow, ViewModel.Guest));
-                    break;
-            }*/
         }
     }
 }

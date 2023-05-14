@@ -123,7 +123,7 @@ namespace TravelAgency.WPF.Views
 
         private void NewWindow_Click(object sender, RoutedEventArgs e)
         {
-            OwnerWindow ownerWindow = new OwnerWindow(LoggedInUser);
+            OwnerWindow ownerWindow = new OwnerWindow();
             ownerWindow.Show();
         }
     }

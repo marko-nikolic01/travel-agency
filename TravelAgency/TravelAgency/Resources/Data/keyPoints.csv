@@ -44,11 +44,12 @@
 44|14|vdvdd|False
 45|15|sdss|False
 46|15|dffdvgdv|False
-47|16|a|False
-48|16|d|False
+47|16|a|True
+48|16|d|True
 49|17|prva k. tacka|False
 50|17|druga k. tacka|False
 51|18|prva k. tacka|False
 52|18|druga k. tacka|False
-53|19|sd|True
-54|19|xc|True
+53|19|sd|False
+54|19|xc|False
+55|16|trecess|True

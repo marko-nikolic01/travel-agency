@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
 {
@@ -23,28 +24,13 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerManageAccommodationsPage : Page
     {
-        public User LoggedInUser { get; set; }
-        private UserService userService;
-        private AccommodationService accommodationService;
-
-        public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public OwnerManageAccommodationsViewModel ViewModel { get; set; }
 
         public OwnerManageAccommodationsPage()
         {
             InitializeComponent();
-            DataContext = this;
-
-            userService = new UserService();
-            accommodationService = new AccommodationService();
-
-            LoggedInUser = userService.GetLoggedInUser();
-
-            Accommodations = new ObservableCollection<Accommodation>(accommodationService.GetByOwner(LoggedInUser));
-        }
-
-        private void GoBack_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new OwnerAccommodationsPage());
+            ViewModel = new OwnerManageAccommodationsViewModel();
+            DataContext = ViewModel;
         }
     }
 }
