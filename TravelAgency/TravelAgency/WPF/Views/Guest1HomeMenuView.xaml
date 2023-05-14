@@ -72,7 +72,7 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Početna stranica</Bold></TextBlock>
-            <Button x:Name="buttonAccommodationsReservations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click"
+            <Button x:Name="buttonAccommodationsReservations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                 <Button.Content>
                     <Grid>
@@ -94,7 +94,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonReviews" Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click"
+            <Button x:Name="buttonReviews" Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1ReviewsMenuViewModel">
                 <Button.Content>
                     <Grid>
@@ -116,7 +116,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonForums" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click"
+            <Button x:Name="buttonForums" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel">
                 <Button.Content>
                     <Grid>
@@ -138,7 +138,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonNotifications" Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click">
+            <Button x:Name="buttonNotifications" Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -159,7 +159,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonUserAccount" Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click">
+            <Button x:Name="buttonUserAccount" Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

@@ -94,7 +94,7 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-                <TextBlock x:Name="textBlockAccommodationsReservations" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}" MouseUp="TextBlockAccommodationsReservations_MouseUp">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Smeštaji/Rezervacije</Bold>
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
@@ -102,7 +102,7 @@
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Moje rezervacije</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">

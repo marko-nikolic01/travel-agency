@@ -98,7 +98,7 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-                <TextBlock x:Name="textBlockAccommodationsReservations" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}" MouseUp="TextBlockAccommodationsReservations_MouseUp">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Smeštaji/Rezervacije</Bold>
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
@@ -107,7 +107,7 @@
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Istražite i rezervišite</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -153,7 +153,7 @@
                 <TextBox x:Name="textBoxName" Grid.Row="1" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" BorderBrush="Black" Text="{Binding Path=SearchFilter.NameFilter, Mode=TwoWay}"></TextBox>
                 <ComboBox x:Name="comboBoxCountry" Grid.Row="2" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Countries}" SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.IsDeferredScrollingEnabled="True" SelectionChanged="ComboBoxCountry_SelectionChanged"  LostFocus="ComboBoxLocation_LostFocus">
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -167,7 +167,7 @@
                 </ComboBox>
                 <ComboBox x:Name="comboBoxCity" Grid.Row="3" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" Text="{Binding Path=SelectedCity, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.IsDeferredScrollingEnabled="True" SelectionChanged="ComboBoxCity_SelectionChanged" LostFocus="ComboBoxLocation_LostFocus">
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -194,10 +194,10 @@
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
                 <xctk:IntegerUpDown x:Name="integerUpDownGuestNumber" Grid.Row="5" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"
-                                VerticalContentAlignment="Center" ValueChanged="IntegerUpDown_ValueChanged"  Value="{Binding Path=SearchFilter.GuestNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.GuestNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
+                                VerticalContentAlignment="Center" Value="{Binding Path=SearchFilter.GuestNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.GuestNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
                 <xctk:IntegerUpDown x:Name="integerUpDownDayNumber" Grid.Row="6" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"
-                                VerticalContentAlignment="Center" ValueChanged="IntegerUpDown_ValueChanged" Value="{Binding Path=SearchFilter.DayNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.DayNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
-                <Button x:Name="buttonSearch" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonSearch_Click"
+                                VerticalContentAlignment="Center" Value="{Binding Path=SearchFilter.DayNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.DayNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
+                <Button x:Name="buttonSearch" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                         Command="{Binding SearchCommand}">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -211,7 +211,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonCancelSearch" Grid.Row="10" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonCancelSearch_Click"
+                <Button x:Name="buttonCancelSearch" Grid.Row="10" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                         Command="{Binding CancelSearchCommand}">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">

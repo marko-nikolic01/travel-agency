@@ -24,30 +24,5 @@ namespace TravelAgency.WPF.Views
         {
             InitializeComponent();
         }
-
-        private void ButtonCancelReservation_Click(object sender, RoutedEventArgs e)
-        {
-            //listViewReservations.SelectedItem = ((FrameworkElement)sender).DataContext;
-        }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {
-            /* NavigateBack();*/
-        }
-
-        private void TextBlockAccommodationsReservations_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            /*NavigateBack();*/
-        }
-
-        private void NavigateBack()
-        {
-            /*this.NavigationService.Navigate(new AccommodationsReservationsMenuView(_mainWindow, ViewModel.Guest));*/
-        }
-
-        private void ButtonMoveReservation_Click(object sender, RoutedEventArgs e)
-        {
-            //listViewReservations.SelectedItem = ((FrameworkElement)sender).DataContext;
-        }
     }
 }
