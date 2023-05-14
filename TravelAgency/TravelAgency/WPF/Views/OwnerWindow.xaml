@@ -99,6 +99,7 @@
                x:Name="NavigationFrame"
                Source="../Pages/OwnerProfilePage.xaml  "
                NavigationUIVisibility="Hidden"
-               Padding="30"/>
+               Padding="30"
+               Focusable="False"/>
     </Grid>
 </Window>

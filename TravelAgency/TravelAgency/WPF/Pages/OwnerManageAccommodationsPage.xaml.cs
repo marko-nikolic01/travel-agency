@@ -42,7 +42,9 @@ namespace TravelAgency.WPF.Pages
 
         private void Execute_AddAccommodation()
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAddAccommodationPage.xaml", UriKind.Relative));
+            OwnerAddAccommodationViewModel vm = new OwnerAddAccommodationViewModel(this.NavigationService);
+            OwnerAddAccommodationPage ownerAddAccommodationPage = new OwnerAddAccommodationPage(vm);
+            this.NavigationService.Navigate(ownerAddAccommodationPage);
         }
 
         private void Execute_NavigateBack()

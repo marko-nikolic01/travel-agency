@@ -18,6 +18,7 @@
         </Style>
 
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="imageConverter"/>
+        <converters:AccommodationTypeToStringConverter x:Key="typeToString"/>
     </Page.Resources>
 
     <Page.InputBindings>
@@ -101,7 +102,7 @@
                                                Style="{StaticResource AccommodationCardFont}"/>
 
                                     <TextBlock Grid.Row="0" Grid.Column="1"
-                                               Text="{Binding Type}"
+                                               Text="{Binding Type, Converter={StaticResource typeToString}}"
                                                Style="{StaticResource AccommodationCardFont}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="1"
                                                Text="{Binding Location.Country}"

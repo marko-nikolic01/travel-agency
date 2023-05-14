@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
+      xmlns:model="clr-namespace:TravelAgency.Domain.Models"
       mc:Ignorable="d" 
       d:DesignHeight="625" d:DesignWidth="840"
       x:Name="root"
@@ -34,10 +36,22 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0 0 10 0"/>    
         </Style>
+
+        <converters:EnumBooleanConverter x:Key="radioButtonConverter"/>
+
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <Rectangle Stroke="Red" StrokeThickness="1"/>
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBack,ElementName=root}"/>
+        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBack}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddPhotoCommand}"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>
     </Page.InputBindings>
     
     <Grid>
@@ -100,7 +114,9 @@
                            Style="{StaticResource formTextBlock}"/>
 
                 <TextBox Grid.Row="0" Grid.Column="1"
-                         Text="{Binding NewAccommodation.Name}"/>
+                         x:Name="nameTextBox"
+                         Text="{Binding NewAccommodation.Name,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
+                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
                 
                 <ComboBox Grid.Row="1" Grid.Column="1"
                           x:Name="CountryComboBox"
@@ -134,11 +150,13 @@
 
                     <RadioButton Content="Apartment"
                                  GroupName="AccommodationType"
-                                 IsChecked="True"/>
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.APARTMENT}}"/>
                     <RadioButton Content="House"
-                                 GroupName="AccommodationType"/>
+                                 GroupName="AccommodationType"
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HOUSE}}"/>
                     <RadioButton Content="Hut"
-                                 GroupName="AccommodationType"/>
+                                 GroupName="AccommodationType"
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HUT}}"/>
                 </StackPanel>
 
                 <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1"
@@ -157,6 +175,7 @@
                                     Increment="1"/>
 
                 <TextBox Grid.Row="7" Grid.Column="1"
+                         Text="{Binding PhotoLink,UpdateSourceTrigger=PropertyChanged}"
                          Margin="0 0 0 5"/>
 
                 <Grid Grid.Row="8" Grid.Column="1">
@@ -167,7 +186,15 @@
                     </Grid.RowDefinitions>
 
                     <ListBox Grid.Row="1"
-                             Width="255"/>
+                             Width="255"
+                             ItemsSource="{Binding Photos}"
+                             SelectedItem="{Binding SelectedPhoto}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                     <Grid Grid.Row="2"
                           Margin="0 5 0 0">
@@ -178,13 +205,15 @@
 
                         <controls:ButtonWithShortcut Grid.Column="0"
                                                      Text="Add photo"
-                                                     KeyboardShortcutText="Ctrl+A"
-                                                     Margin="0 0 2 0"/>
+                                                     KeyboardShortcutText="Ctrl+N"
+                                                     Margin="0 0 2 0"
+                                                     Click="AddPhoto_Click"/>
 
                         <controls:ButtonWithShortcut Grid.Column="1"
                                                      Text="Remove photo"
                                                      KeyboardShortcutText="Ctrl+D"
-                                                     Margin="2 0 0 0"/>
+                                                     Margin="2 0 0 0"
+                                                     Click="RemovePhoto_Click"/>
                     </Grid>
                 </Grid>
 
@@ -198,7 +227,8 @@
                     <controls:ButtonWithShortcut Grid.Column="0"
                                                  Text="Add"
                                                  Margin="0 0 2 0"
-                                                 KeyboardShortcutText="Enter"/>
+                                                 KeyboardShortcutText="Ctrl+S"
+                                                 Click="AddAccommodation_Click"/>
 
                     <controls:ButtonWithShortcut Grid.Column="1"
                                                  Margin="0 0 2 0"

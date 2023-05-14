@@ -5,16 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
+      Name="root"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OwnerReservationsPage">
+      Title="OwnerReservationsPage"
+      Style="{StaticResource pageStyle}">
 
     <Page.Resources>
         <Style x:Key="h2" TargetType="TextBlock">
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="Focusable" Value="False"/>
         </Style>
+
+        <converters:BooleanToAvailability x:Key="booleanToAvailability"/>
     </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -47,6 +57,7 @@
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
+                          x:Name="activeReservationsDataGrid"
                           ItemsSource="{Binding AccommodationReservations}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
@@ -82,6 +93,7 @@
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
+                          x:Name="requestsDataGrid"
                           ItemsSource="{Binding MoveRequests}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
@@ -105,7 +117,7 @@
                                             Binding="{Binding MoveRequest.DateSpan.EndDate}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Availability"
-                                            Binding="{Binding IsNewDateSpanAvailable}"
+                                            Binding="{Binding IsNewDateSpanAvailable, Converter={StaticResource booleanToAvailability}}"
                                             Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

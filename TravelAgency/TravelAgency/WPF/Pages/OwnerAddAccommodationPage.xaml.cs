@@ -22,27 +22,37 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerAddAccommodationPage : Page
     {
-        public MyICommand NavigateBack { get; set; }
         public OwnerAddAccommodationViewModel ViewModel { get; set; }
 
-        public OwnerAddAccommodationPage()
+        public OwnerAddAccommodationPage(OwnerAddAccommodationViewModel viewModel)
         {
-            NavigateBack = new MyICommand(Execute_NavigateBack);
             InitializeComponent();
-            ViewModel = new OwnerAddAccommodationViewModel();
+            ViewModel = viewModel;
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
-        }
 
-        private void Execute_NavigateBack()
-        {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnermanageAccommodationsPage.xaml", UriKind.Relative));
+            nameTextBox.Focus();
         }
 
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
-            Execute_NavigateBack();
+            ViewModel.NavigateBack.Execute();
+        }
+
+        private void AddPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddPhotoCommand.Execute();
+        }
+
+        private void RemovePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RemovePhotoCommand.Execute();
+        }
+
+        private void AddAccommodation_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddAccommodationCommand.Execute();
         }
     }
 }
