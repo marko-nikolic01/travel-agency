@@ -108,14 +108,14 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-                <TextBlock x:Name="textBlockAccommodationsReservations" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}" MouseUp="TextBlockAccommodationsReservations_MouseUp">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Smeštaji/Rezervacije</Bold>
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
-                <TextBlock x:Name="textBlockSerachAccommodations" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}" MouseUp="TextBlockSerachAccommodations_MouseUp">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Istražite i rezervišite</Bold>
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="previousViewModel" MouseAction="LeftClick"/>
@@ -124,7 +124,7 @@
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Rezerviši</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="previousViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -161,8 +161,8 @@
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Black" Background="#cccccc">
                     <Image Source="{Binding SelectedPhoto}"></Image>
                 </Border>
-                <Button x:Name="buttonPreviousPhoto" Grid.Row="2" Grid.Column="1" FontSize="13" Background="#cccccc" BorderBrush="Black" Click="ButtonPreviousPhoto_Click" Command="{Binding PreviousPhotoCommand}">Prethodna</Button>
-                <Button x:Name="buttonNextPhoto" Grid.Row="2" Grid.Column="2" FontSize="13" Background="#cccccc" BorderBrush="Black" Click="ButtonNextPhoto_Click" Command="{Binding NextPhotoCommand}">Sledeća</Button>
+                <Button x:Name="buttonPreviousPhoto" Grid.Row="2" Grid.Column="1" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand" Command="{Binding PreviousPhotoCommand}">Prethodna</Button>
+                <Button x:Name="buttonNextPhoto" Grid.Row="2" Grid.Column="2" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand" Command="{Binding NextPhotoCommand}">Sledeća</Button>
                 <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13" Text="{Binding Path=Accommodation.Name, StringFormat='Naziv: {0}'}"></TextBlock>
                 <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">
                     <TextBlock.Text>
@@ -207,16 +207,16 @@
                 <TextBlock x:Name="textBlockGuestNumber" Grid.Row="6" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">Broj gostiju:</TextBlock>
                 <TextBlock x:Name="textBlockAvailableDates" Grid.Row="7" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">Dostupni datumi:</TextBlock>
                 <xctk:IntegerUpDown x:Name="integerUpDownDayNumber" Grid.Row="1" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0"
-                                VerticalContentAlignment="Center" Value="{Binding Path=DayNumber, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Minimum="{Binding Accommodation.MinDays}" ValueChanged="IntegerUpDownDayNumber_ValueChanged"></xctk:IntegerUpDown>
+                                VerticalContentAlignment="Center" Value="{Binding Path=DayNumber, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Minimum="{Binding Accommodation.MinDays}"></xctk:IntegerUpDown>
                 <Border Grid.Row="2" Grid.Column="3" Height="24" Width="150" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerFirstDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" SelectedDateChanged="DatePicker_SelectedDateChanged"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                    <DatePicker x:Name="datePickerFirstDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
                         Text="{Binding Path=FirstDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}"></DatePicker>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="3" Height="24" Width="150" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerLastDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" SelectedDateChanged="DatePicker_SelectedDateChanged"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                    <DatePicker x:Name="datePickerLastDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
                         Text="{Binding Path=LastDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}"></DatePicker>
                 </Border>
-                <Button x:Name="buttonFindDates" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonFindDates_Click"
+                <Button x:Name="buttonFindDates" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                         Command="{Binding FindAvailableDatesCommand}">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
