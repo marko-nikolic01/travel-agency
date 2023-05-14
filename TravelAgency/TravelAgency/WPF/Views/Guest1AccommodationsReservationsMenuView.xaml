@@ -79,7 +79,7 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Smeštaji/Rezervacije</Bold></TextBlock>
-            <Button x:Name="buttonSearchAccommodations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click"
+            <Button x:Name="buttonSearchAccommodations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationSearchViewModel">
                 <Button.Content>
                     <Grid>
@@ -124,7 +124,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonMyReservations" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand" Click="ButtonNavigation_Click"
+            <Button x:Name="buttonMyReservations" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationsViewModel">
                 <Button.Content>
                     <Grid>
@@ -189,7 +189,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonBack_Click"
+            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">

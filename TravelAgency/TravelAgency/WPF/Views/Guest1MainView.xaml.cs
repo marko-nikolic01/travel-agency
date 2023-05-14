@@ -10,26 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
-using Xceed.Wpf.Toolkit;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for Guest1AccommodationSearchView.xaml
+    /// Interaction logic for Guest1NavigationView.xaml
     /// </summary>
-    public partial class Guest1AccommodationSearchView : UserControl
+    public partial class Guest1MainView : Window
     {
-        public Guest1AccommodationSearchView()
+        public Guest1MainView(User guest)
         {
             InitializeComponent();
+            this.DataContext = new Guest1MainViewModel(guest);
         }
 
-        private void ButtonMakeReservation_Click(object sender, RoutedEventArgs e)
+        private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
         {
-            listViewAccommodations.SelectedItem = ((FrameworkElement)sender).DataContext;
+            Close();
         }
     }
 }
