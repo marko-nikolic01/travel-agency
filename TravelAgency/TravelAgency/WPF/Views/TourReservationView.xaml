@@ -75,7 +75,7 @@
                 <Button Content="Deselect" Width="150" Height="30" HorizontalAlignment="Left" Margin="20 10" Click="Deselect_Click"></Button>
             </StackPanel>
             <Label Margin="20 0" Grid.Column="0" Grid.Row="2">Guests which will come:</Label>
-            <xctk:IntegerUpDown Margin="10" Grid.Column="1" Grid.Row="1" FontSize="20" Name="myUpDownControl" ValueChanged="TextBox_TextChanged" Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:IntegerUpDown Margin="10" Grid.Column="1" Grid.Row="1" FontSize="20" Name="myUpDownControl" Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Column="2" FontSize="20" Grid.Row="1" Text="{Binding Path=SpotsLeft}"></TextBlock>
             <TextBox Margin="10" Grid.Column="1" Grid.Row="2" Name="GuestUsernameText" Text="{Binding Path=GuestName}"></TextBox>
             <Button Grid.Column="1" Grid.Row="3" Content="Add" Width="150" Height="30" IsEnabled="{Binding IsAddButtonEnabled}" Command="{Binding AddGuestCommand}" x:Name="AddButton"></Button>

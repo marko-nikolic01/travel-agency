@@ -24,7 +24,7 @@ namespace TravelAgency.WPF.ViewModels
         public string GuestName { get => guestName; 
                                   set{ if (value != guestName) { guestName = value; OnPropertyChanged(); }}}
         public string GuestsNumber{ get => guestsNumber; 
-                                    set { if (value != guestsNumber) { guestsNumber = value; OnPropertyChanged(); } } }
+                                    set { if (value != guestsNumber) { guestsNumber = value; OnPropertyChanged(); CheckSpotsNumber(); } } }
 
         public string SpotsLeft { get => spotsLeft;
                                   set { if (value != spotsLeft) { spotsLeft = value; OnPropertyChanged(); } } }
@@ -61,7 +61,6 @@ namespace TravelAgency.WPF.ViewModels
         }
         public TourReservationViewModel(TourOccurrence occurrence, int guestId)
         {
-            GuestsNumber = "1";
             IsAddButtonEnabled = false;
             IsSubmitButtonEnabled = true;
             tourOccurrence = occurrence;
@@ -72,6 +71,7 @@ namespace TravelAgency.WPF.ViewModels
             GuestsList.Add(user.Username);
             TourDescription = tourOccurrence.Tour.Name + " in " + tourOccurrence.Tour.Location.Country +
                 ", " + tourOccurrence.Tour.Location.City + ". " + tourOccurrence.Tour.Description;
+            GuestsNumber = "1";
             AddGuestCommand = new ButtonCommandNoParameter(AddGuest);
             RemoveGuestCommand = new ButtonCommandNoParameter(RemoveGuest);
             GuestsHelpCommand = new ButtonCommandNoParameter(GuestsHelpClick);
@@ -123,30 +123,11 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void SubmitReservation()
         {
-            List<User> users = new List<User>();
-            TourReservation tourReservation;
-            User user;
-            for (int i = 0; i < GuestsList.Count; i++)
-            {
-                user = GetUserByName(i);
-                if (user == null)
-                {
-                    user = new User(GuestsList[i], "ftn", Roles.Guest2, new DateOnly(2004, 2, 15));
-                    userService.SaveUser(user);
-                }
-                users.Add(user);
-                tourReservation = new TourReservation(tourOccurrence.Id, user.Id);
-                tourOccurrenceService.SaveTourReservation(tourReservation);
-            }
-            tourOccurrence.Guests.AddRange(users);
-            tourOccurrence.FreeSpots -= users.Count;
+            TourReservationService service = new TourReservationService();
+            service.SubmitReservation(GuestsList, tourOccurrence);
             tourOccurrenceService.UpdateTour(tourOccurrence);
+        }
 
-        }
-        private User GetUserByName(int i)
-        {
-            return userService.GetAllUsers().Find(x => (x.Username == GuestsList[i] && x.Role == Roles.Guest2));
-        }
         private bool IsValid()
         {
            

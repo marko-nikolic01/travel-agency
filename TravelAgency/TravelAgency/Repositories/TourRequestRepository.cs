@@ -73,7 +73,7 @@ namespace TravelAgency.Repositories
             List<TourRequest> result = new List<TourRequest>();
             foreach (TourRequest tourRequest in tourRequests)
             {
-                if (tourRequest.GuestId == id)
+                if (tourRequest.GuestId == id && tourRequest.SpecialTourRequestId == -1)
                 {
                     result.Add(tourRequest);
                 }

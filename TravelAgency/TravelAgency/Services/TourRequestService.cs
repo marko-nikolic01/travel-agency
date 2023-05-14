@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
@@ -37,14 +34,8 @@ namespace TravelAgency.Services
         }
         private void CheckIfRequestsAreInvalid()
         {
-            int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
             foreach (var request in ITourRequestRepository.GetAll())
-            {
-                if (request.MinDate.DayNumber - currentDays < 3)
-                {
-                    request.Status = RequestStatus.Invalid;
-                }
-            }
+                request.CheckIfExpired();
         }
 
         private void LinkRequestLocation()
@@ -86,14 +77,8 @@ namespace TravelAgency.Services
         {
             Location location = ILocationRepository.GetLocationForCountryAndCity(selectedCountry, selectedCity);
             TourRequest request = new TourRequest();
-            if (request.Valid(language, numberOfGuests, minDate, maxDate))
+            if (request.MakeRequest(location, language, numberOfGuests, minDate, maxDate, description, guestId, specialTourRequestId))
             {
-                request.Location = location;
-                request.LocationId = location.Id;
-                request.Description = description;
-                request.GuestId = guestId;
-                request.Status = RequestStatus.Pending;
-                request.SpecialTourRequestId = specialTourRequestId;
                 ITourRequestRepository.Save(request);
                 return true;
             }

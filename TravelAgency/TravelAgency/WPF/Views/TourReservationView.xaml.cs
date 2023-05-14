@@ -32,10 +32,6 @@ namespace TravelAgency.WPF.Views
             OfferedToursView offeredTours = new OfferedToursView(id);
             this.NavigationService.Navigate(offeredTours);
         }
-        private void TextBox_TextChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            tourReservationViewModel.CheckSpotsNumber();
-        }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             OfferedToursView offeredTours = new OfferedToursView(id);

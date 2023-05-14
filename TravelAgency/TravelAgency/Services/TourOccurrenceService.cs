@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
-using TravelAgency.Injector;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 using System.Globalization;
 using System.Windows.Controls;
-using TravelAgency.Serializer;
 using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
@@ -166,11 +160,6 @@ namespace TravelAgency.Services
             }
             return mostVisited;
         }
-
-        public void NotifyObservers()
-        {
-            ITourOccurrenceRepository.NotifyObservers();
-        }
         public void UpdateTour(TourOccurrence tourOccurrence)
         {
             ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
@@ -274,13 +263,13 @@ namespace TravelAgency.Services
                     TourOccurrenceAttendance tourAttendance = ITourOccurrenceAttendanceRepository.GetByTourOccurrenceIdAndGuestId(occurrence.Id, guestId);
                     if (tourAttendance != null)
                     {
-                        result = BuildActiveTourString(occurrence);
+                        result = occurrence.GetActiveTourString(IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name);
                         result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
                         return result;
                     }
                     else if (ITourReservationRepository.IsTourReserved(guestId, occurrence.Id))
                     {
-                        result = BuildActiveTourString(occurrence);
+                        result = occurrence.GetActiveTourString(IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name);
                         result += "\nStatus: haven't arrived yet";
                         return result;
                     }
@@ -288,16 +277,6 @@ namespace TravelAgency.Services
             }
             return result;
         }
-        private string BuildActiveTourString(TourOccurrence occurrence)
-        {
-            string result;
-            string keyPointName = IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
-            result = "Active tour: " + occurrence.Tour.Name;
-            result += "\n" + occurrence.Tour.Description;
-            result += "\nCurrent key point: " + keyPointName;
-            return result;
-        }
-
         public List<TourOccurrence> GetTodays(int activeGuideId)
         {
             return ITourOccurrenceRepository.GetTodays(activeGuideId);
@@ -318,10 +297,6 @@ namespace TravelAgency.Services
             {
                 ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
             }
-        }
-        public void SaveTourReservation(TourReservation tourReservation)
-        {
-            ITourReservationRepository.Save(tourReservation);
         }
         public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId)
         {

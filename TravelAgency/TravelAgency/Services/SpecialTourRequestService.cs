@@ -18,6 +18,7 @@ namespace TravelAgency.Services
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
             ISpecialTourRequestRepository = Injector.Injector.CreateInstance<ISpecialTourRequestRepository>();
             LinkTourRequests();
+            UpdateSpecialRequestStatus();
         }
         private void LinkTourRequests()
         {
@@ -26,6 +27,20 @@ namespace TravelAgency.Services
                 if(specialRequest.TourRequests.Count == 0)
                 {
                     specialRequest.TourRequests = ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id);
+                }
+            }
+        }
+        private void UpdateSpecialRequestStatus()
+        {
+            foreach (SpecialTourRequest specialRequest in ISpecialTourRequestRepository.GetAll())
+            {
+                foreach(TourRequest request in specialRequest.TourRequests)
+                {
+                    if(request.Status == RequestStatus.Invalid)
+                    {
+                        specialRequest.Status = SpecialRequestStatus.Invalid;
+                        break;
+                    }
                 }
             }
         }

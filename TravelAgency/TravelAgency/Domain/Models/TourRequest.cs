@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Domain.Models
@@ -77,6 +78,28 @@ namespace TravelAgency.Domain.Models
                 Language = language;
                 MinDate = minDate;
                 MaxDate = maxDate;
+                return true;
+            }
+            return false;
+        }
+        public void CheckIfExpired()
+        {
+            int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            if (MinDate.DayNumber - currentDays < 3)
+            {
+                Status = RequestStatus.Invalid;
+            }
+        }
+        public bool MakeRequest(Location location, string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate, string description, int guestId, int specialTourRequestId)
+        {
+            if (Valid(language, numberOfGuests, minDate, maxDate))
+            {
+                Location = location;
+                LocationId = location.Id;
+                Description = description;
+                GuestId = guestId;
+                Status = RequestStatus.Pending;
+                SpecialTourRequestId = specialTourRequestId;
                 return true;
             }
             return false;
