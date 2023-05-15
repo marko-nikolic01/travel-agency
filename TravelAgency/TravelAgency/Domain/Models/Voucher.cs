@@ -12,11 +12,12 @@ namespace TravelAgency.Domain.Models
         public bool IsUsed { get; set; }
         public DateTime Deadline { get; set; }
         public int TourOccurrenceId { get; set; }
+        public int CanceledTourOccurrenceId { get; set; }
         public Voucher()
         {
         }
 
-        public Voucher(int id, int guestId, int guideId, DateTime dateTime)
+        public Voucher(int id, int guestId, int guideId, DateTime dateTime, int canceledTourOccurrenceId)
         {
             Id = id;
             GuestId = guestId;
@@ -24,6 +25,7 @@ namespace TravelAgency.Domain.Models
             IsUsed = false;
             Deadline = dateTime;
             TourOccurrenceId = -1;
+            CanceledTourOccurrenceId = canceledTourOccurrenceId;
         }
 
         public void BuildVoucherString()
@@ -32,7 +34,7 @@ namespace TravelAgency.Domain.Models
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm"), TourOccurrenceId.ToString() };
+            string[] csvValues = { Id.ToString(), GuestId.ToString(), GuideId.ToString(), IsUsed.ToString(), Deadline.ToString("dd-MM-yyyy HH-mm"), TourOccurrenceId.ToString(), CanceledTourOccurrenceId.ToString() };
             return csvValues;
         }
 
@@ -44,6 +46,7 @@ namespace TravelAgency.Domain.Models
             IsUsed = bool.Parse(values[3]);
             Deadline = DateTime.ParseExact(values[4], "dd-MM-yyyy HH-mm", CultureInfo.InvariantCulture);
             TourOccurrenceId = int.Parse(values[5]);
+            CanceledTourOccurrenceId = int.Parse(values[6]);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         Voucher Save(Voucher voucher);
         Voucher Update(Voucher voucher);
         public List<Voucher> GetByTourOccurrenceId(int id);
+        public void DeleteByCanceledTourId(int canceledTour);
     }
 }

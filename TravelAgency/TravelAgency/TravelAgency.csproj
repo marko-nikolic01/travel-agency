@@ -75,6 +75,7 @@
 	  <Resource Include="Resources\Images\calendarUp.png" />
 	  <Resource Include="Resources\Images\exit.png" />
 	  <Resource Include="Resources\Images\undo.png" />
+	  <Resource Include="Resources\Images\add.png" />
 	  <Resource Include="Resources\Images\books.png" />
 	  <Resource Include="Resources\Images\ManageAccommodations.png" />
 	  <Resource Include="Resources\Images\NavAccommodations.png" />

@@ -9,11 +9,11 @@ using System.Windows.Data;
 
 namespace TravelAgency.Converters
 {
-    public class VisibleTrueConverter : IValueConverter
+    public class NotNullTrueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.Equals(-1) ? Visibility.Visible : Visibility.Hidden;
+            return value.Equals(-1) ? false : true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
