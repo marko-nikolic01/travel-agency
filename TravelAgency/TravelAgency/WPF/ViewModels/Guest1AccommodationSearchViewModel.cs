@@ -162,8 +162,9 @@ namespace TravelAgency.WPF.ViewModels
             Countries = _locationService.GetCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
-            Cities = _locationService.GetCities();
-            Cities.Insert(0, "Not specified");
+            List<string> tempCities = _locationService.GetCities();
+            tempCities.Insert(0, "Not specified");
+            Cities = tempCities;
             SelectedCity = Cities[0];
         }
 
@@ -201,15 +202,17 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (updateCountry)
             {
+                List<string> tempCities;
                 if (SelectedCountry != "Not specified")
                 {
-                    Cities = _locationService.GetCitiesByCountry(SelectedCountry);
+                    tempCities = _locationService.GetCitiesByCountry(SelectedCountry);
                 }
                 else
                 {
-                    Cities = _locationService.GetCities();
+                    tempCities = _locationService.GetCities();
                 }
-                Cities.Insert(0, "Not specified");
+                tempCities.Insert(0, "Not specified");
+                Cities = tempCities;
                 SelectedCity = "Not specified";
                 SearchFilter.CountryFilter = SelectedCountry;
             }

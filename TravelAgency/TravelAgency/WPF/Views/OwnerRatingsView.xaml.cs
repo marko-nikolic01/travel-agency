@@ -12,19 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.Services;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for OwnerProfilePage.xaml
+    /// Interaction logic for OwnerRatingsPage.xaml
     /// </summary>
-    public partial class OwnerProfilePage : UserControl
+    public partial class OwnerRatingsView : Page
     {
-        public OwnerProfilePage()
+        public OwnerRatingsViewModel ViewModel { get; set; }
+        public OwnerRatingsView()
         {
             InitializeComponent();
+            ViewModel = new OwnerRatingsViewModel();
+            DataContext = ViewModel;
+
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

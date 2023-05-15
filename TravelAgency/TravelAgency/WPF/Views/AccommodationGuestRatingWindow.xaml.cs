@@ -45,7 +45,7 @@ namespace TravelAgency.WPF.Views
             AccommodationService = new AccommodationService();
             AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
-            UnratedReservations = new ObservableCollection<AccommodationReservation>(AccommodationGuestRatingService.GetUnratedReservations());
+            UnratedReservations = new ObservableCollection<AccommodationReservation>(AccommodationGuestRatingService.GetUnratedReservationsByOwner(loggedInUser));
             AccommodationGuestRatings = new ObservableCollection<AccommodationGuestRating>(AccommodationGuestRatingService.GetByOwner(loggedInUser));
 
             NewAccommodationGuestRating = new AccommodationGuestRating();
@@ -87,7 +87,7 @@ namespace TravelAgency.WPF.Views
         private void RefreshLists()
         {
             UnratedReservations.Clear();
-            foreach (var reservation in AccommodationGuestRatingService.GetUnratedReservations())
+            foreach (var reservation in AccommodationGuestRatingService.GetUnratedReservationsByOwner(LoggedInUser))
             {
                 UnratedReservations.Add(reservation);
             }

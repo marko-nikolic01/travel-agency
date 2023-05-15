@@ -59,7 +59,8 @@
                 <ControlTemplate TargetType="{x:Type local:OwnerSidebarNavRadioButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Focusable="False">
                         <Grid HorizontalAlignment="Stretch" Margin="17">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -71,7 +72,8 @@
                                    Source="{TemplateBinding Icon}"
                                    VerticalAlignment="Center"
                                    Width="32"
-                                   Margin="0 0 15 0"/>
+                                   Margin="0 0 15 0"
+                                   Focusable="False"/>
 
                             <TextBlock Grid.Column="1"
                                        Text="{TemplateBinding Text}"
