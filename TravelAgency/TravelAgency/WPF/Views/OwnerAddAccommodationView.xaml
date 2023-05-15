@@ -22,6 +22,7 @@
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="MaxWidth" Value="235"/>
         </Style>
         <Style TargetType="xctk:IntegerUpDown">
             <Setter Property="FontSize" Value="16"/>
@@ -123,7 +124,9 @@
                           SelectedIndex="0"
                           VirtualizingPanel.IsVirtualizing="True"
                           SelectedItem="{Binding SelectedCountry}"
-                          ItemsSource="{Binding Countries}">
+                          ItemsSource="{Binding Countries}"
+                          IsTextSearchEnabled="True"
+                          IsEditable="True">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -136,7 +139,9 @@
                           VirtualizingPanel.IsVirtualizing="True"
                           IsEnabled="{Binding IsEnabled}"
                           SelectedItem="{Binding SelectedCity}"
-                          ItemsSource="{Binding Cities}">
+                          ItemsSource="{Binding Cities}"
+                          IsTextSearchEnabled="True"
+                          IsEditable="True">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>

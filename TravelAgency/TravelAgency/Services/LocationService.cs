@@ -44,5 +44,15 @@ namespace TravelAgency.Services
 
             return null;
         }
+
+        public bool CountryExists(string country)
+        {
+            return LocationRepository.CountryExists(country);
+        }
+
+        public bool CityExists(string city)
+        {
+            return LocationRepository.CityExists(city);
+        }
     }
 }
