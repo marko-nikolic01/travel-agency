@@ -155,6 +155,19 @@ namespace TravelAgency.WPF.ViewModels
         private void Execute_AddAccommodationCommand()
         {
             NewAccommodation.Photos = Photos.ToList();
+
+            if (!locationService.CountryExists(SelectedCountry))
+            {
+                MessageBox.Show("Select a valid country.");
+                return;
+            }
+
+            if (!locationService.CityExists(SelectedCity))
+            {
+                MessageBox.Show("Select a valid city.");
+                return;
+            }
+
             NewAccommodation.Location = locationService.GetLocationForCountryAndCity(SelectedCountry, SelectedCity);
             NewAccommodation.LocationId = NewAccommodation.Location.Id;
 
