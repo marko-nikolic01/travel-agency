@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
@@ -12,6 +13,10 @@
     <UserControl.DataContext>
         <viewmodels:OwnerProfileViewModel/>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <converters:SuperOwnerBooleanToStringConverter x:Key="superOwnerConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -62,7 +67,7 @@
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggedInUser.BirthDay}" FontSize="18"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccommodationsCount}" FontSize="18"/>
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RatingsGiven}" FontSize="18"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding IsSuperOwner}" FontSize="18"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding IsSuperOwner, Converter={StaticResource superOwnerConverter}}" FontSize="18"/>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>

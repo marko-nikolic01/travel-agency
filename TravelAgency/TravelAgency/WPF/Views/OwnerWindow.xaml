@@ -15,11 +15,12 @@
         WindowStartupLocation="CenterScreen">
 
     <Window.InputBindings>
-        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="profile"/>
-        <KeyBinding Key="A" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="accommodations"/>
-        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="reservations"/>
-        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="ratings"/>
-        <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="forum"/>
+        <KeyBinding Key="D1" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="profile"/>
+        <KeyBinding Key="D2" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="accommodations"/>
+        <KeyBinding Key="D3" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="reservations"/>
+        <KeyBinding Key="D4" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="ratings"/>
+        <KeyBinding Key="D5" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="forum"/>
+        <KeyBinding Key="L" Modifiers="Ctrl+Alt" Command="{Binding LogOutCommand,ElementName=root}"/>
     </Window.InputBindings>
 
     <Grid>
@@ -35,27 +36,20 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0"
+                  Margin="0 15 0 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0"
-                           x:Name="UsernameTextBlock"
-                           Text="POPRAVITI OVDE!"
-                           FontSize="16"
-                           HorizontalAlignment="Center"
-                           Margin="0 10 0 5"/>
-
-                <controls:OwnerSidebarUserButton Grid.Row="1"
+                <controls:OwnerSidebarUserButton Grid.Row="0"
                                                  Text="Notifications"
                                                  KeyboardShortcutText="Ctrl+B"
                                                  Width="200"
                                                  Margin="0 3"/>
 
-                <controls:OwnerSidebarUserButton Grid.Row="2"
+                <controls:OwnerSidebarUserButton Grid.Row="1"
                                                  Text="Log Out"
                                                  KeyboardShortcutText="Ctrl+Alt+L"
                                                  Width="200"
@@ -67,32 +61,32 @@
             <StackPanel Grid.Row="2">
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="myProfileRadioButton"
                                                            Text="My Profile"
-                                                           KeyboardShortcutText="Ctrl+P"
+                                                           KeyboardShortcutText="Ctrl+1"
                                                            Icon="../../Resources/Images/NavProfile.png"
                                                            IsChecked="True"
                                                            Command="{Binding NavigateToMyProfilePageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="accommodationsRadioButton"
                                                            Text="Accommodations"
-                                                           KeyboardShortcutText="Ctrl+A"
+                                                           KeyboardShortcutText="Ctrl+2"
                                                            Icon="../../Resources/Images/NavAccommodations.png"
                                                            Command="{Binding NavigateToAccommodationsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="reservationsRadioButton" 
                                                            Text="Reservations"
-                                                           KeyboardShortcutText="Ctrl+R"
+                                                           KeyboardShortcutText="Ctrl+3"
                                                            Icon="../../Resources/Images/NavReservations.png"
                                                            Command="{Binding NavigateToReservationsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="ratingsRadioButton"
                                                            Text="Ratings"
-                                                           KeyboardShortcutText="Ctrl+T"
+                                                           KeyboardShortcutText="Ctrl+4"
                                                            Icon="../../Resources/Images/NavRatings.png"
                                                            Command="{Binding NavigateToRatingsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
                                                            Text="Forum"
-                                                           KeyboardShortcutText="Ctrl+F"
+                                                           KeyboardShortcutText="Ctrl+5"
                                                            Icon="../../Resources/Images/NavForum.png"/>
             </StackPanel>
         </Grid>
