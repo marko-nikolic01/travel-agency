@@ -113,13 +113,13 @@ namespace TravelAgency.Services
             }
         }
 
-        public void CancelTour(TourOccurrence SelectedTourOccurrence, int ActiveGuideId)
+        public int CancelTour(TourOccurrence SelectedTourOccurrence, int ActiveGuideId)
         {
             foreach (var guest in SelectedTourOccurrence.Guests)
             {
-                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuideId, Deadline = DateTime.Now.AddYears(1) });
+                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuideId, Deadline = DateTime.Now.AddYears(1), CanceledTourOccurrenceId = SelectedTourOccurrence.Id });
             }
-            ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
+            return ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
         }
 
         public void Subscribe(IObserver observer)
@@ -316,6 +316,12 @@ namespace TravelAgency.Services
             ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, IUserRepository.GetById(GuideId));
             SaveKeyPoint( "prva k. tacka", tourOccurrence);
             SaveKeyPoint( "druga k. tacka", tourOccurrence);
+        }
+
+        public void UndoCancelTour(int canceledTour)
+        {
+            IVoucherRepository.DeleteByCanceledTourId(canceledTour);
+            ITourOccurrenceRepository.UndoDelete(canceledTour);
         }
     }
 
