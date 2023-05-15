@@ -93,6 +93,26 @@ namespace TravelAgency.WPF.Views
                 OnPropertyChanged();
             }
         }
+        private int selectedPhoto;
+        public int SelectedPhoto
+        {
+            get { return selectedPhoto; }
+            set
+            {
+                selectedPhoto = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool photosEnabled;
+        public bool PhotosEnabled
+        {
+            get { return photosEnabled; }
+            set
+            {
+                photosEnabled = value;
+                OnPropertyChanged();
+            }
+        }
         public LocationService LocationService { get; set; }
         private bool CreatingTourForLanguage;
         private bool CreatingTourForLocation;
@@ -130,6 +150,8 @@ namespace TravelAgency.WPF.Views
             Thread.CurrentThread.CurrentCulture = ci;
 
             NavService = navService;
+            SelectedPhoto = -1;
+            PhotosEnabled = false;
         }
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
@@ -161,6 +183,31 @@ namespace TravelAgency.WPF.Views
             ListPhotos.Items.Add(ImageText.Text);
             ImageText.Clear();
             ImageText.Focus();
+            PhotosEnabled = true;
+        }
+
+        private void RemoveImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedPhoto != -1 && ListPhotos.Items.Count > 0)
+            {
+                ListPhotos.Items.RemoveAt(SelectedPhoto);
+            }
+            ImageText.Focus();
+            SelectedPhoto = -1;
+            if(ListPhotos.Items.Count == 0)
+            {
+                PhotosEnabled = false;
+            }
+        }
+        private void PreView_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> links = new List<string>();
+            foreach(var link in ListPhotos.Items)
+            {
+                links.Add(link.ToString());
+            }
+            Window window = new TourPhotosPreView(links);
+            window.ShowDialog();
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
