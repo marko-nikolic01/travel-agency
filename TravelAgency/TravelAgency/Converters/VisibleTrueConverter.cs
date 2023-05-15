@@ -13,7 +13,7 @@ namespace TravelAgency.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.Equals(-1) ? Visibility.Visible : Visibility.Hidden;
+            return value.Equals(true) ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

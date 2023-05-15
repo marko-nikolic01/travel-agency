@@ -22,13 +22,21 @@ namespace TravelAgency.WPF.ViewModels
         public int NumberOfGuests
         {
             get { return numberOfGuests; }
-            set { numberOfGuests = value; }
+            set 
+            { 
+                numberOfGuests = value;
+                OnPropertyChanged();
+            }
         }
         private string language;
         public string Language
         {
             get { return language; }
-            set { language = value; }
+            set 
+            { 
+                language = value;
+                OnPropertyChanged();
+            }
         }
         private string selectedCountry;
         public string SelectedCountry
@@ -188,6 +196,7 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCity = Cities[0];
             StartDate = null;
             EndDate = null;
+            Language = "";
             TourRequests = new ObservableCollection<TourRequest>(TourRequestService.GetPendings());
         }
         private void ShowRequest()
