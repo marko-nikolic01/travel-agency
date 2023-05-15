@@ -25,14 +25,26 @@ namespace TravelAgency.WPF.Views
     public partial class OwnerWindow : Window
     {
         public MyICommand<string> NavigateCommand { get; set; }
+        public MyICommand LogOutCommand { get; set; }
         public OwnerMainViewModel ViewModel { get; set; }
 
         public OwnerWindow()
         {
             NavigateCommand = new MyICommand<string>(OnNavigateCommandExecuted);
+            LogOutCommand = new MyICommand(Execute_LogOutCommand);
             InitializeComponent();
             ViewModel = new OwnerMainViewModel(NavigationFrame.NavigationService);
             DataContext = ViewModel;
+        }
+
+        private void Execute_LogOutCommand()
+        {
+            this.Close();
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_LogOutCommand();
         }
 
         private void OnNavigateCommandExecuted(string button)
@@ -50,6 +62,10 @@ namespace TravelAgency.WPF.Views
                 case "reservations":
                     reservationsRadioButton.IsChecked = true;
                     ViewModel.NavigateToReservationsPageCommand.Execute(null);
+                    break;
+                case "ratings":
+                    ratingsRadioButton.IsChecked = true;
+                    ViewModel.NavigateToRatingsPageCommand.Execute(null);
                     break;
                 default:
                     MessageBox.Show("Ne radi :(");

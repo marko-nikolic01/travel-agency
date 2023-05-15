@@ -151,48 +151,54 @@
                 <TextBlock Grid.Row="5" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Broj gostiju:</TextBlock>
                 <TextBlock Grid.Row="6" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Broj dana:</TextBlock>
                 <TextBox x:Name="textBoxName" Grid.Row="1" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" BorderBrush="Black" Text="{Binding Path=SearchFilter.NameFilter, Mode=TwoWay}"></TextBox>
-                <ComboBox x:Name="comboBoxCountry" Grid.Row="2" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Countries}" SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay}"
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                    <ComboBox x:Name="comboBoxCountry" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Countries}" SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.IsDeferredScrollingEnabled="True">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="Background" Value="LightGray"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <ComboBox x:Name="comboBoxCity" Grid.Row="3" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" Text="{Binding Path=SelectedCity, Mode=TwoWay}"
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                    <ComboBox x:Name="comboBoxCity" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" Text="{Binding Path=SelectedCity, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.IsDeferredScrollingEnabled="True">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="Background" Value="LightGray"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <ComboBox x:Name="comboBoxType" Grid.Row="4" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" SelectedIndex="0" SelectedItem="{Binding Path=SearchFilter.TypeFilter, Mode=TwoWay}"
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Border>
+                <Border Grid.Row="4" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                    <ComboBox x:Name="comboBoxType" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" SelectedIndex="0" SelectedItem="{Binding Path=SearchFilter.TypeFilter, Mode=TwoWay}"
                     ItemsSource="{Binding AccommodationTypes}" IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.IsDeferredScrollingEnabled="True">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="Background" Value="LightGray"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Border>
                 <xctk:IntegerUpDown x:Name="integerUpDownGuestNumber" Grid.Row="5" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"
                                 VerticalContentAlignment="Center" Value="{Binding Path=SearchFilter.GuestNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.GuestNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
                 <xctk:IntegerUpDown x:Name="integerUpDownDayNumber" Grid.Row="6" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"

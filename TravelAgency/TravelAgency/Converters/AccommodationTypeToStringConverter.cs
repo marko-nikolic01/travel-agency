@@ -17,7 +17,7 @@ namespace TravelAgency.Converters
             switch ((AccommodationType)value)
             {
                 case AccommodationType.APARTMENT:
-                    return "Appartment";
+                    return "Apartment";
                 case AccommodationType.HOUSE:
                     return "House";
                 case AccommodationType.HUT:
@@ -29,6 +29,19 @@ namespace TravelAgency.Converters
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class EnumBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.Equals(parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((bool)value) ? parameter : Binding.DoNothing;
         }
     }
 }

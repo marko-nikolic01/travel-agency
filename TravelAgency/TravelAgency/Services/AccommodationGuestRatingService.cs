@@ -46,13 +46,13 @@ namespace TravelAgency.Services
             return RatingRepository.GetByOwner(owner);
         }
 
-        public List<AccommodationReservation> GetUnratedReservations()
+        public List<AccommodationReservation> GetUnratedReservationsByOwner(User owner)
         {
             List<AccommodationReservation> unrated = new();
 
             foreach (var accommodationReservation in ReservationRepository.GetAll())
             {
-                if (IsValidForRating(accommodationReservation, RatingRepository.GetAll()))
+                if (IsValidForRating(accommodationReservation, RatingRepository.GetAll()) && accommodationReservation.Accommodation.OwnerId == owner.Id)
                 {
                     unrated.Add(accommodationReservation);
                     continue;

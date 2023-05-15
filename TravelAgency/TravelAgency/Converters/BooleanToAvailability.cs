@@ -8,11 +8,11 @@ using System.Windows.Data;
 
 namespace TravelAgency.Converters
 {
-    public class SuperOwnerBooleanToStringConverter : IValueConverter
+    public class BooleanToAvailability : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "Yes" : "No";
+            return (bool)value ? "Available" : "Not available";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -77,7 +77,7 @@ namespace TravelAgency.WPF.Views
 
         private void ShowNotifications()
         {
-            var unratedGuests = AccommodationGuestRatingService.GetUnratedReservations();
+            var unratedGuests = AccommodationGuestRatingService.GetUnratedReservationsByOwner(LoggedInUser);
 
             foreach (var unratedGuest in unratedGuests)
             {

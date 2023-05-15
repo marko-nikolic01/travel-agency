@@ -21,15 +21,15 @@ namespace TravelAgency.WPF.Pages
     /// <summary>
     /// Interaction logic for OwnerAccommodations.xaml
     /// </summary>
-    public partial class OwnerAccommodationsPage : Page
+    public partial class OwnerAccommodationsView : Page
     {
         public MyICommand NavigateToManageAccommodationsPageCommand { get; set; }
 
         public OwnerAccommodationsViewModel ViewModel { get; set; }
 
-        public OwnerAccommodationsPage()
+        public OwnerAccommodationsView()
         {
-            NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton, () => true) ;
+            NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton);
             InitializeComponent();
             ViewModel = new OwnerAccommodationsViewModel();
             DataContext = ViewModel;
@@ -43,7 +43,7 @@ namespace TravelAgency.WPF.Pages
 
         private void Execute_ManageAccommodationsNavigationButton()
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerManageAccommodationsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerManageAccommodationsView.xaml", UriKind.Relative));
         }
 
         private void AccommodationsNavigationButton_Click(object sender, RoutedEventArgs e)

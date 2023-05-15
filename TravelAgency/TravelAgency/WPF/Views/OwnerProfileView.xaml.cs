@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,22 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
-using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for OwnerManageAccommodationsPage.xaml
+    /// Interaction logic for OwnerProfilePage.xaml
     /// </summary>
-    public partial class OwnerManageAccommodationsPage : Page
+    public partial class OwnerProfileView : UserControl
     {
-        public OwnerManageAccommodationsViewModel ViewModel { get; set; }
-
-        public OwnerManageAccommodationsPage()
+        public OwnerProfileView()
         {
             InitializeComponent();
-            ViewModel = new OwnerManageAccommodationsViewModel();
-            DataContext = ViewModel;
         }
     }
 }
