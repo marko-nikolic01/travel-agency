@@ -134,11 +134,5 @@ namespace TravelAgency.WPF.ViewModels
             }
             tourOccurrenceAttendanceService.NotifyObservers();
         }
-        private void SetClickedTourOccurrenceId()
-        {
-            //ako je kliknuto prihvacen zahtev samo dobavim id tour occurrenca i prosledim offeredtoursu
-            //ako je kliknuto ono drugo na osnovu tourIdija dobavim tour occurrence id
-            //u offered toursu na osnovu idija samo nadjem koji je tour occurrence i stavim ga na selected
-        }
     }
 }

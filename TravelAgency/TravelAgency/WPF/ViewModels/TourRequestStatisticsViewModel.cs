@@ -29,10 +29,10 @@ namespace TravelAgency.WPF.ViewModels
         public bool IsCountrySelected
         {
             get { return isCountrySelected; }
-            set 
-            { 
+            set
+            {
                 isCountrySelected = value;
-                OnPropertyChanged();   
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +52,7 @@ namespace TravelAgency.WPF.ViewModels
             get { return selectedCity; }
             set
             {
-                if(YearsStatistic != null )
+                if (YearsStatistic != null)
                 {
                     if (!("< select a city >").Equals(value))
                     {
@@ -68,13 +68,13 @@ namespace TravelAgency.WPF.ViewModels
         public string SelectedCountry
         {
             get { return selectedCountry; }
-            set 
+            set
             {
-                if(value.Equals(Countries[0]))
+                if (value.Equals(Countries[0]))
                 {
                     Cities.Clear();
                     Cities.Add("< select a city >");
-                    IsCountrySelected=false;
+                    IsCountrySelected = false;
                     YearsStatistic?.Clear();
                     MonthsStatisticByYear?.Clear();
                 }
@@ -82,7 +82,7 @@ namespace TravelAgency.WPF.ViewModels
                 {
                     Cities.Clear();
                     Cities.Add("< select a city >");
-                    foreach(var city in TourRequestService.GetUniqueCitiesByCountry(value))
+                    foreach (var city in TourRequestService.GetUniqueCitiesByCountry(value))
                     {
                         Cities.Add(city);
                     }
@@ -91,7 +91,7 @@ namespace TravelAgency.WPF.ViewModels
                     YearsStatistic = TourRequestService.GetYearCountryStatistics(Years, value);
                 }
                 SelectedCity = Cities[0];
-                selectedCountry = value; 
+                selectedCountry = value;
                 OnPropertyChanged();
             }
         }
@@ -131,7 +131,7 @@ namespace TravelAgency.WPF.ViewModels
             get { return isLanguageChecked; }
             set
             {
-                if(value == true)
+                if (value == true)
                 {
                     MonthsStatisticByYear = TourRequestService.GetMonthsLanguageStatistics(SelectedLanguage, SelectedYear);
                     YearsStatistic = TourRequestService.GetYearLanguageStatistics(Years, SelectedLanguage);
@@ -151,12 +151,12 @@ namespace TravelAgency.WPF.ViewModels
                     YearsStatistic = TourRequestService.GetYearCityCountryStatistics(Years, SelectedCountry, SelectedCity);
                     MonthsStatisticByYear = TourRequestService.GetMonthsLocationStatistics(SelectedCountry, SelectedCity, SelectedYear);
                 }
-                else if(value == true && !SelectedCountry.Equals(Countries[0]))
+                else if (value == true && !SelectedCountry.Equals(Countries[0]))
                 {
                     YearsStatistic = TourRequestService.GetYearCountryStatistics(Years, SelectedCountry);
                     MonthsStatisticByYear = TourRequestService.GetMonthsLocationStatistics(SelectedCountry, SelectedCity, SelectedYear);
                 }
-                else if(value == true)
+                else if (value == true)
                 {
                     MonthsStatisticByYear.Clear();
                     YearsStatistic.Clear();
@@ -170,7 +170,7 @@ namespace TravelAgency.WPF.ViewModels
         public ObservableCollection<KeyValuePair<string, int>> YearsStatistic
         {
             get { return yearsStatistic; }
-            set 
+            set
             {
                 yearsStatistic = value;
                 OnPropertyChanged();
@@ -202,10 +202,10 @@ namespace TravelAgency.WPF.ViewModels
             LocationService = new LocationService();
             TourRequestService = new TourRequestService();
             Countries.AddRange(TourRequestService.GetUniqueCountries());
-            Years = new List<string>() { "YEARS", "2023", "2022", "2021", "2020", "2019"};
+            Years = new List<string>() { "YEARS", "2023", "2022", "2021", "2020", "2019" };
             SelectedYear = Years[0];
             Languages = new List<string>(TourRequestService.GetUniqueLanguages());
-            if(Languages.Count > 0)
+            if (Languages.Count > 0)
             {
                 SelectedLanguage = Languages[0];
             }
@@ -218,7 +218,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void CreateTourForLocation()
         {
-            Page createTourPage = new CreateTourForm(ActiveGuideId, NavigationService, location : TourRequestService.GetMostRequestedLocation()) ;
+            Page createTourPage = new CreateTourForm(ActiveGuideId, NavigationService, location: TourRequestService.GetMostRequestedLocation());
             NavigationService.Navigate(createTourPage);
         }
         public void CreateTourForLanguage()

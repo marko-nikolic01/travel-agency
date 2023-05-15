@@ -4,10 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="Tour requests">
-    
+    <Page.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+            <Setter Property="FontSize" Value="13"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -25,10 +32,24 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Label Content="Country:"></Label>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}" Margin="0 10 0 10"></ComboBox>
+        <Label Grid.Column="2" Content="City:"></Label>
+        <ComboBox Grid.Column="3" ItemsSource="{Binding Path=Cities}"  SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Margin="0 10 0 10" ></ComboBox>
+        <Label Grid.Row="1" Content="Language:"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0 10 0 10" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <Label Grid.Row="1" Grid.Column="2" Content="Guests number:"></Label>
+        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Margin="0 10 0 10" Value="{Binding Path=NumberOfGuests}"></xctk:IntegerUpDown>
+        <Label Grid.Row="2" Content="Start date:"></Label>
+        <DatePicker Grid.Row="2" Grid.Column="1" Margin="0 10 0 10" SelectedDate="{Binding StartDate}"></DatePicker>
+        <Label Grid.Row="2" Grid.Column="2" Content="End date:"></Label>
+        <DatePicker SelectedDate="{Binding EndDate}" Grid.Row="2" Grid.Column="3" Margin="0 10 0 10"></DatePicker>
+        <Button Grid.Column="3" Grid.Row="3" Margin="10 10 10 10" Content="Apply filters" Command="{Binding Path= FilterCommand}"></Button>
+        <Button Grid.Column="2" Grid.Row="3" Margin="10 10 10 10" Content="Remove filters" Command="{Binding Path= RemoveFilterCommand}"></Button>
         <Separator Grid.Row="5" Grid.ColumnSpan="4"></Separator>
-        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}"  FontSize="14" AlternatingRowBackground="SeaShell">
+        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}"  FontSize="13" AlternatingRowBackground="SeaShell">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Location">
+                <DataGridTextColumn Header="Location" Width="*">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0}, {1}">
                             <Binding Path="Location.City"/>
@@ -37,7 +58,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Date" Width="*">
+                <DataGridTextColumn  Header="Date">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0:dd/MM/yy}-{1:dd/MM/yy}">
                             <Binding Path="MinDate" />

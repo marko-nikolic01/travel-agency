@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Domain.Models
 {
@@ -112,6 +113,14 @@ namespace TravelAgency.Domain.Models
                     result = result + ", ";
                 }
             }
+            return result;
+        }
+        public string GetActiveTourString(string keyPointName)
+        {
+            string result;
+            result = "Active tour: " + Tour.Name;
+            result += "\n" + Tour.Description;
+            result += "\nCurrent key point: " + keyPointName;
             return result;
         }
     }

@@ -16,12 +16,6 @@ namespace TravelAgency.WPF.Views
             TourRequestFormViewModel = new TourRequestFormViewModel(id);
             DataContext = TourRequestFormViewModel;
         }
-
-        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            TourRequestFormViewModel.SetCitiesComboBox();
-        }
-
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             if (TourRequestFormViewModel.SubmitRequest())
