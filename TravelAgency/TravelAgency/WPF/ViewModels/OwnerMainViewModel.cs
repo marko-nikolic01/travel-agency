@@ -28,22 +28,22 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateToMyProfilePageCommand(object obj)
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerProfilePage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerProfileView.xaml", UriKind.Relative));
         }
 
         private void Execute_NavigateToAccommodationsPageCommand(object obj)
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAccommodationsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerAccommodationsView.xaml", UriKind.Relative));
         }
 
         private void Execute_NavigateToReservationsPageCommand(object obj)
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerReservationsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerReservationsView.xaml", UriKind.Relative));
         }
 
         private void Execute_NavigateToRatingsPageCommand(object obj)
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerRatingsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerRatingsView.xaml", UriKind.Relative));
         }
 
         private bool CanExecute_NavigateCommand(object obj)

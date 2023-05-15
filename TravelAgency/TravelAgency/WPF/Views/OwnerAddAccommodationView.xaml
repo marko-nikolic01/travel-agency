@@ -1,9 +1,9 @@
-﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerAddAccommodationPage"
+﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerAddAccommodationView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       xmlns:converters="clr-namespace:TravelAgency.Converters"
@@ -176,6 +176,7 @@
 
                 <TextBox Grid.Row="7" Grid.Column="1"
                          Text="{Binding PhotoLink,UpdateSourceTrigger=PropertyChanged}"
+                         
                          Margin="0 0 0 5"/>
 
                 <Grid Grid.Row="8" Grid.Column="1">
@@ -186,7 +187,7 @@
                     </Grid.RowDefinitions>
 
                     <ListBox Grid.Row="1"
-                             Width="255"
+                             Width="235"
                              ItemsSource="{Binding Photos}"
                              SelectedItem="{Binding SelectedPhoto}">
                         <ListBox.ItemTemplate>
@@ -255,7 +256,7 @@
 
                 <controls:Tip Grid.Row="1"
                               Header="How to select accommodation type?"
-                              TipText="To select an accommodation type use UP and DOWN arrow keys and press SPACE to select it."
+                              TipText="To select an accommodation type use LEFT and RIGHT arrow keys and press SPACE to select it."
                               Margin="15 5 0 5"/>
 
                 <controls:Tip Grid.Row="2"

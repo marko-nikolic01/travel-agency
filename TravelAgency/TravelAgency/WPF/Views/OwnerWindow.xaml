@@ -81,12 +81,14 @@
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="reservationsRadioButton" 
                                                            Text="Reservations"
                                                            KeyboardShortcutText="Ctrl+R"
-                                                           Icon="../../Resources/Images/NavReservations.png"/>
+                                                           Icon="../../Resources/Images/NavReservations.png"
+                                                           Command="{Binding NavigateToReservationsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="ratingsRadioButton"
                                                            Text="Ratings"
                                                            KeyboardShortcutText="Ctrl+T"
-                                                           Icon="../../Resources/Images/NavRatings.png"/>
+                                                           Icon="../../Resources/Images/NavRatings.png"
+                                                           Command="{Binding NavigateToRatingsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
                                                            Text="Forum"
@@ -97,7 +99,7 @@
 
         <Frame Grid.Column="1"
                x:Name="NavigationFrame"
-               Source="../Pages/OwnerProfilePage.xaml  "
+               Source="../Views/OwnerProfileView.xaml  "
                NavigationUIVisibility="Hidden"
                Padding="30"
                Focusable="False"/>

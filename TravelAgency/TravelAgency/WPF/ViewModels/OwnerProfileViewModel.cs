@@ -21,6 +21,7 @@ namespace TravelAgency.WPF.ViewModels
         public int RatingsCount { get; set; }
         public double AverageRating { get; set; }
         public int RatingsGiven { get; set; }
+        public bool IsSuperOwner { get; set; }
 
         public OwnerProfileViewModel()
         {
@@ -35,6 +36,7 @@ namespace TravelAgency.WPF.ViewModels
             RatingsCount = accommodationOwnerRatingService.GetRatingsCountForOwner(LoggedInUser);
             AverageRating = superOwnerService.GetAverageRatingForOwner(LoggedInUser);
             RatingsGiven = accommodationGuestRatingService.GetRatingsCountByOwner(LoggedInUser);
+            IsSuperOwner = superOwnerService.IsSuperOwner(LoggedInUser);
         }
     }
 }

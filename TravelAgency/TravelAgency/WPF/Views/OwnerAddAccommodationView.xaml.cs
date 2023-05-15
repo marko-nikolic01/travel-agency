@@ -20,11 +20,11 @@ namespace TravelAgency.WPF.Pages
     /// <summary>
     /// Interaction logic for OwnerAddAccommodationPage.xaml
     /// </summary>
-    public partial class OwnerAddAccommodationPage : Page
+    public partial class OwnerAddAccommodationView : Page
     {
         public OwnerAddAccommodationViewModel ViewModel { get; set; }
 
-        public OwnerAddAccommodationPage(OwnerAddAccommodationViewModel viewModel)
+        public OwnerAddAccommodationView(OwnerAddAccommodationViewModel viewModel)
         {
             InitializeComponent();
             ViewModel = viewModel;

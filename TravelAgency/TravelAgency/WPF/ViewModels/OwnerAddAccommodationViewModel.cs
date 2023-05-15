@@ -176,7 +176,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateBack()
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerManageAccommodationsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerManageAccommodationsView.xaml", UriKind.Relative));
         }
 
         private void Execute_RemovePhotoCommand()

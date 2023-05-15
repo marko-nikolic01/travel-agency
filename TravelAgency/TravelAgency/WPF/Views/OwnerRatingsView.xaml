@@ -1,30 +1,22 @@
-﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerReservationsPage"
+﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerRatingsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
-      xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
-      Name="root"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="OwnerReservationsPage"
-      Style="{StaticResource pageStyle}">
+      d:DesignHeight="685" d:DesignWidth="900"
+      Title="OwnerRatingsPage"
+      Focusable="True"
+      FocusVisualStyle="{x:Null}">
 
     <Page.Resources>
         <Style x:Key="h2" TargetType="TextBlock">
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
-            <Setter Property="Focusable" Value="False"/>
         </Style>
-
-        <converters:BooleanToAvailability x:Key="booleanToAvailability"/>
     </Page.Resources>
-
-    <Page.InputBindings>
-        <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
-    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -37,7 +29,7 @@
         </Grid.ColumnDefinitions>
 
         <controls:PageHeader Grid.Row="0"
-                             Text="Reservations"/>
+                             Text="Ratings"/>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -53,29 +45,31 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Active reservations"
+                           Text="My ratings"
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
-                          x:Name="activeReservationsDataGrid"
-                          ItemsSource="{Binding AccommodationReservations}"
+                          ItemsSource="{Binding OwnerRatings}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Header="Guest username"
+                                            Binding="{Binding AccommodationReservation.Guest.Username}"
+                                            Width="*"/>
                         <DataGridTextColumn Header="Accommodation"
-                                            Binding="{Binding Accommodation.Name}"
+                                            Binding="{Binding AccommodationReservation.Accommodation.Name}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="Start date"
-                                            Binding="{Binding DateSpan.StartDate}"
+                        <DataGridTextColumn Header="Cleanliness"
+                                            Binding="{Binding AccommodationCleanliness}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="End date"
-                                            Binding="{Binding DateSpan.EndDate}"
+                        <DataGridTextColumn Header="Correctness"
+                                            Binding="{Binding OwnerCorrectness}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="Guest"
-                                            Binding="{Binding Guest.Username}"
+                        <DataGridTextColumn Header="Responsiveness"
+                                            Binding="{Binding OwnerResponsiveness}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="No. guests"
-                                            Binding="{Binding NumberOfGuests}"
+                        <DataGridTextColumn Header="Comment"
+                                            Binding="{Binding Comment}"
                                             Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -89,56 +83,51 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Requests for moving reservations"
+                           Text="Pending reservations to rate"
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
-                          x:Name="requestsDataGrid"
-                          ItemsSource="{Binding MoveRequests}"
+                          ItemsSource="{Binding Reservations}"
                           AutoGenerateColumns="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Header="Guest username"
+                                            Binding="{Binding Accommodation.Name}"
+                                            Width="*"/>
                         <DataGridTextColumn Header="Accommodation"
-                                            Binding="{Binding MoveRequest.Reservation.Accommodation.Name}"
+                                            Binding="{Binding DateSpan.StartDate}"
                                             Width="*"/>
                         <DataGridTextColumn Header="Start Date"
-                                            Binding="{Binding MoveRequest.Reservation.DateSpan.StartDate}"
+                                            Binding="{Binding DateSpan.EndDate}"
                                             Width="*"/>
                         <DataGridTextColumn Header="End Date"
-                                            Binding="{Binding MoveRequest.Reservation.DateSpan.EndDate}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Guest"
-                                            Binding="{Binding MoveRequest.Reservation.Guest.Username}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="New start date"
-                                            Binding="{Binding MoveRequest.DateSpan.StartDate}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="New end date"
-                                            Binding="{Binding MoveRequest.DateSpan.EndDate}"
-                                            Width="*"/>
-                        <DataGridTextColumn Header="Availability"
-                                            Binding="{Binding IsNewDateSpanAvailable, Converter={StaticResource booleanToAvailability}}"
+                                            Binding="{Binding DateSpan.EndDate}"
                                             Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-        </Grid>        
+        </Grid>
 
         <Grid Grid.Row="2"
               Margin="0 20 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Review request"
                                          KeyboardShortcutText="Enter"
-                                         Margin="0 16 16 16"/>
+                                         Margin="0 30 30 30"/>
 
             <controls:Tip Grid.Column="1"
-                          Header="Managing move requests"
-                          TipText="Every reservation can be moved, regardless of availability of the requested date span. However, all reservations that are overlapping in that period will be cancelled."/>
+                          Header="What are pending reservations?"
+                          TipText="Pending reservations are reservations that have ended in the past 5 days and that can be rated. Be sure to rate your guests as you can only se their ratings for you if you rate them first!"/>
+            <controls:Tip Grid.Column="2"
+                          Header="How to switch between lists and select ratings?"
+                          TipText="To switch between lists use SPACE key and to select a certain row use UP and DOWN arrow keys."
+                          Margin="10 0 0 0"/>
         </Grid>
     </Grid>
 </Page>

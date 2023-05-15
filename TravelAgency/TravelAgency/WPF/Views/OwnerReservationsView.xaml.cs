@@ -24,13 +24,13 @@ namespace TravelAgency.WPF.Pages
     /// <summary>
     /// Interaction logic for OwnerReservationsPage.xaml
     /// </summary>
-    public partial class OwnerReservationsPage : Page
+    public partial class OwnerReservationsView : Page
     {
         public MyICommand FocusOtherDataGrid { get; set; }
 
         public OwnerReservationsViewModel ViewModel { get; set; }
 
-        public OwnerReservationsPage()
+        public OwnerReservationsView()
         {
             FocusOtherDataGrid = new MyICommand(Execute_FocusOtherDataGrid);
             InitializeComponent();

@@ -23,13 +23,13 @@ namespace TravelAgency.WPF.Pages
     /// <summary>
     /// Interaction logic for OwnerManageAccommodationsPage.xaml
     /// </summary>
-    public partial class OwnerManageAccommodationsPage : Page
+    public partial class OwnerManageAccommodationsView : Page
     {
         public MyICommand NavigateBackCommand { get; set; }
         public MyICommand AddAccommodationCommand { get; set; }
         public OwnerManageAccommodationsViewModel ViewModel { get; set; }
 
-        public OwnerManageAccommodationsPage()
+        public OwnerManageAccommodationsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBack);
             AddAccommodationCommand = new MyICommand(Execute_AddAccommodation);
@@ -43,13 +43,13 @@ namespace TravelAgency.WPF.Pages
         private void Execute_AddAccommodation()
         {
             OwnerAddAccommodationViewModel vm = new OwnerAddAccommodationViewModel(this.NavigationService);
-            OwnerAddAccommodationPage ownerAddAccommodationPage = new OwnerAddAccommodationPage(vm);
+            OwnerAddAccommodationView ownerAddAccommodationPage = new OwnerAddAccommodationView(vm);
             this.NavigationService.Navigate(ownerAddAccommodationPage);
         }
 
         private void Execute_NavigateBack()
         {
-            NavigationService.Navigate(new Uri("WPF/Pages/OwnerAccommodationsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerAccommodationsView.xaml", UriKind.Relative));
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
