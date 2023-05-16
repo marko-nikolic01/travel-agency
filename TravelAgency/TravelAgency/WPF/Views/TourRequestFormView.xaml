@@ -23,9 +23,10 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
             
         <Grid Grid.Row="0">
@@ -53,25 +54,26 @@
                 <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
-            <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+            <xctk:IntegerUpDown TextAlignment="Left" Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                       ItemsSource="{Binding Countries}" 
                       SelectedItem="{Binding SelectedCountry}"
                       >
                 
             </ComboBox>
-                <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+            <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                           ItemsSource="{Binding Cities}" 
                           SelectedItem="{Binding SelectedCity}"
                           >
                     
                 </ComboBox>
-                <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+                <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="320">
                 
                 </TextBox>
             <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="500" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="590" 
+                     TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Left" Text="{Binding Description}"/>
             <Grid Grid.Column="2" Grid.Row="3">
                 <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding GuestNumHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
@@ -128,13 +130,13 @@
                 </Popup>
             </Grid>
         </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Width="374" Height="43" Click="SubmitButton_Click" x:Name="SubmitButton">Submit request</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Click="Cancel_Click" Content="Cancel request"/>
+            <Button Grid.Column="0" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="SubmitButton_Click" x:Name="SubmitButton">Submit request</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="Cancel_Click" Content="Cancel request"/>
             </Grid>
         </Grid>
 </Page>

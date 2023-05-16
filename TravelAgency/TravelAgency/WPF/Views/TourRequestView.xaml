@@ -16,6 +16,21 @@
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="20" />
         </Style>
+        <Style x:Key="stil" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5 10" />
+        </Style>
+        <Style x:Key="FADataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#82dafa"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="5 0"/>
+        </Style>
+        <Style x:Key="FADataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource FADataGridColumnHeaderStyle}"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -51,25 +66,32 @@
                 </Popup>
             </Grid>
         </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="1" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Language" Binding="{Binding Language}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Guests" Binding="{Binding GuestNumber}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
-                <DataGridTextColumn Header="GivenDate" Binding="{Binding GivenDate}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Border Grid.Row="1" BorderBrush="Gainsboro" BorderThickness="3">
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False" FontSize="20"
+                  Style="{StaticResource FADataGridStyle}" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FF356CF9">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#07b9fa"/>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Country" ElementStyle="{StaticResource stil}" Binding="{Binding Location.Country}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="City" ElementStyle="{StaticResource stil}" Binding="{Binding Location.City}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Language}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Guests" ElementStyle="{StaticResource stil}" Binding="{Binding GuestNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
-            <Button Grid.Column="1" Width="374" Height="43" Click="ShowStatistics_Click" Content="Show statistics"/>
+            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
+            <Button Grid.Column="1" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="ShowStatistics_Click" Content="Show statistics"/>
         </Grid>
     </Grid>
 </Page>

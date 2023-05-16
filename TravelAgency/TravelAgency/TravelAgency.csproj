@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\accept-circular-button-outline.png" />
+    <None Remove="Resources\Images\belled.png" />
     <None Remove="Resources\Images\cross-button.png" />
-    <None Remove="Resources\Images\IconBell.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
     <None Remove="Resources\Images\NavForum.png" />
@@ -62,8 +62,8 @@
 
   <ItemGroup>
 	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
+	  <Resource Include="Resources\Images\belled.png" />
 	  <Resource Include="Resources\Images\cross-button.png" />
-	  <Resource Include="Resources\Images\IconBell.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
@@ -123,7 +123,6 @@
 	  <Resource Include="Resources\Images\RightArrow.png"></Resource>
 	  <Resource Include="Resources\Images\HelpImage.png"></Resource>
 	  <Resource Include="Resources\Images\questionmark.png"></Resource>
-	  <Resource Include="Resources\Images\IconBelled.png"></Resource>
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
 	  <Resource Include="Resources\Images\noTours.png"></Resource>

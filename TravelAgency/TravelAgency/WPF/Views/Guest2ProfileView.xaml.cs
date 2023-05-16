@@ -11,5 +11,9 @@ namespace TravelAgency.WPF.Views
         {
             InitializeComponent();
         }
+        public Guest2ProfileView(int id)
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -16,9 +16,9 @@ namespace TravelAgency.WPF.ViewModels
             new TourRequestService();
             service = new SpecialTourRequestService();
             SpecialTourRequestList = service.GetSpecialRequestForGuest(currentGuestId);
-            TitleDisplay();
+            DisplayTitle();
         }
-        private void TitleDisplay()
+        private void DisplayTitle()
         {
             int i = 1;
             foreach (SpecialTourRequest request in SpecialTourRequestList)

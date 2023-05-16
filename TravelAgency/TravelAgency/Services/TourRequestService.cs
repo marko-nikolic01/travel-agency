@@ -89,9 +89,9 @@ namespace TravelAgency.Services
         {
             ITourRequestRepository.Subscribe(observer);
         }
-        public void UpdateRequestStatus(TourRequest request)
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime)
         {
-            ITourRequestRepository.UpdateRequestStatus(request);
+            ITourRequestRepository.UpdateRequestStatus(request, givenDateTime);
         }
         public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
         {

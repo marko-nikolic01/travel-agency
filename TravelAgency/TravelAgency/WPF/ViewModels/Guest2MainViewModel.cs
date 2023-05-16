@@ -69,7 +69,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Execute_NavigateToProfileCommand(object obj)
         {
-            Page requests = new Guest2ProfileView();
+            Page requests = new Guest2ProfileView(currentGuestId);
             NavService.Navigate(requests);
         }
         private void Execute_NavigateToNotificationsCommand(object obj)
@@ -86,11 +86,11 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (NotificationExists())
             {
-                NotificationsImageSource = "../../Resources/Images/IconBelled.png";
+                NotificationsImageSource = "../../Resources/Images/belled.png";
             }
             else
             {
-                NotificationsImageSource = "../../Resources/Images/IconBell.png";
+                NotificationsImageSource = "../../Resources/Images/bell.png";
             }
         }
         private bool NotificationExists()

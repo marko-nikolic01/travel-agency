@@ -42,7 +42,7 @@
                 </Label>
             </StackPanel>
             <DataGrid CellStyle="{StaticResource CellStyle}" GridLinesVisibility="None" HeadersVisibility="None" AutoGenerateColumns="False" IsReadOnly="True"
-                      SelectedItem="{Binding RequestNotification}" ItemsSource="{Binding RequestAcceptedNotifications}">
+                      SelectedItem="{Binding RequestNotification}" ItemsSource="{Binding RequestAcceptedNotifications}" BorderBrush="{x:Null}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -68,7 +68,7 @@
             </DataGrid>
 
             <DataGrid CellStyle="{StaticResource CellStyle}" GridLinesVisibility="None" HeadersVisibility="None" AutoGenerateColumns="False" IsReadOnly="True"
-                      SelectedItem="{Binding NewTourNotification}" ItemsSource="{Binding NewTourNotifications}">
+                      SelectedItem="{Binding NewTourNotification}" ItemsSource="{Binding NewTourNotifications}" BorderBrush="{x:Null}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

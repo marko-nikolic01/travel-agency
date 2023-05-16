@@ -40,8 +40,8 @@
 40|12|bg|False
 41|13|dssdsd|True
 42|13|vdvdd|True
-43|14|dssdsd|False
-44|14|vdvdd|False
+43|14|kljucna tacka 1|True
+44|14|vdvdd|True
 45|15|sdss|False
 46|15|dffdvgdv|False
 47|16|a|True
@@ -53,3 +53,15 @@
 53|19|sd|False
 54|19|xc|False
 55|16|trecess|True
+56|20|zz|False
+57|20|top|False
+58|21|prva k. tacka|False
+59|21|druga k. tacka|False
+60|21|prva k. tacka|False
+61|21|druga k. tacka|False
+62|22|aa|True
+63|22|ss|False
+64|23|prva k. tacka|False
+65|23|druga k. tacka|False
+66|22|prva k. tacka|False
+67|22|druga k. tacka|False

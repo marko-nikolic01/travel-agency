@@ -91,7 +91,7 @@ namespace TravelAgency.WPF.ViewModels
             string dateTime = date.ToString("dd-MM-yyyy") + " " + SelectedTime.ToString("HH:mm");
             DateTime concreteDateTime = DateTime.ParseExact(dateTime, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
             TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id);
-            TourRequestService.UpdateRequestStatus(TourRequest);
+            TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime);
             TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId));
             window.Close();
         }

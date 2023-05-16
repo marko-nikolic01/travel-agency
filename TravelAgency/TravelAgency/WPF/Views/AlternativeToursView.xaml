@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="AlternativeTours" Height="550" Width="900">
+        Title="AlternativeTours" Height="550" Width="900" Background="Azure">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -56,8 +56,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="Reserve_Click">Make a reservation</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Click="Cancel_Click" Content="Exit"/>
+            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="Reserve_Click">Make a reservation</Button>
+            <Button Grid.Column="1" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="Cancel_Click" Content="Exit"/>
         </Grid>
     </Grid>
 </Window>

@@ -13,11 +13,14 @@ namespace TravelAgency.Services
 
         public ITourRequestRepository ITourRequestRepository { get; set; }
         public ISpecialTourRequestRepository ISpecialTourRequestRepository { get; set; }
+        public ILocationRepository ILocationRepository { get; set; }
         public SpecialTourRequestService() 
         {
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
             ISpecialTourRequestRepository = Injector.Injector.CreateInstance<ISpecialTourRequestRepository>();
+            ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             LinkTourRequests();
+            LinkRequestLocation();
             UpdateSpecialRequestStatus();
         }
         private void LinkTourRequests()
@@ -27,6 +30,17 @@ namespace TravelAgency.Services
                 if(specialRequest.TourRequests.Count == 0)
                 {
                     specialRequest.TourRequests = ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id);
+                }
+            }
+        }
+        private void LinkRequestLocation()
+        {
+            foreach (var request in ITourRequestRepository.GetSpecialRequests())
+            {
+                Location location = ILocationRepository.GetAll().Find(l => l.Id == request.LocationId);
+                if (location != null)
+                {
+                    request.Location = location;
                 }
             }
         }
