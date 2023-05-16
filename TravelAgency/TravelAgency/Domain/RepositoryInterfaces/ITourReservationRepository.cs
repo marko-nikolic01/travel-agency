@@ -11,6 +11,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     public interface ITourReservationRepository
     {
         public List<TourReservation> GetAll();
+        public List<TourReservation> GetAllForGuest(int guestId);
 
         public void Save(TourReservation tourReservation);
 

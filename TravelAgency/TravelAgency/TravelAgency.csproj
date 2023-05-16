@@ -58,6 +58,10 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
 
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+
+    <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.5" />
+
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="21.2.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -122,6 +126,7 @@
 	  <Resource Include="Resources\Images\LeftArrow.png"></Resource>
 	  <Resource Include="Resources\Images\RightArrow.png"></Resource>
 	  <Resource Include="Resources\Images\HelpImage.png"></Resource>
+	  <Resource Include="Resources\Images\ProfileImageGuest2.jpg"></Resource>
 	  <Resource Include="Resources\Images\questionmark.png"></Resource>
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
@@ -131,6 +136,10 @@
     </Resource>
       <Resource Include="Resources\Images\timer.png" />
       <Resource Include="Resources\Images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ReportsPDF\" />
   </ItemGroup>
 
 </Project>

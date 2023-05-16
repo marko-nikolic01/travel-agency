@@ -123,5 +123,12 @@ namespace TravelAgency.Domain.Models
             result += "\nCurrent key point: " + keyPointName;
             return result;
         }
+        public bool IsInAppropriateDateSpan(DateTime startDate, DateTime endDate)
+        {
+            if (DateTime >= startDate && DateTime <= endDate)
+                return true;
+            else
+                return false;
+        }
     }
 }

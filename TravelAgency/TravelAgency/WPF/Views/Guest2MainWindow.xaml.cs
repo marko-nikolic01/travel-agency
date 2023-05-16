@@ -24,6 +24,8 @@ namespace TravelAgency.WPF.Views
         public Guest2MainWindow(int guestId)
         {
             InitializeComponent();
+            Guest2ProfileView guest2 = new Guest2ProfileView(guestId);
+            this.frame.NavigationService.Navigate(guest2);
             ViewModel = new Guest2MainViewModel(this.frame.NavigationService, guestId);
             this.DataContext = ViewModel;
         }
