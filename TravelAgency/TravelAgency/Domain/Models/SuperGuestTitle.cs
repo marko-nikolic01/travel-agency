@@ -92,6 +92,15 @@ namespace TravelAgency.Domain.Models
             }
         }
 
+        public bool IsActive()
+        {
+            if (EndDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
