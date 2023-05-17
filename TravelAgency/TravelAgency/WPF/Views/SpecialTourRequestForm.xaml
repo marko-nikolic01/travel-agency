@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
-      d:DesignHeight="768" d:DesignWidth="1024" Background="White"
+      d:DesignHeight="768" d:DesignWidth="1024" Background="Azure"
       Title="SpecialTourRequestForm">
     <Page.Resources>
         <Style TargetType="Button">
@@ -55,23 +55,23 @@
             <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
             <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
             <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
-            <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+            <xctk:IntegerUpDown TextAlignment="Left" Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                       ItemsSource="{Binding Countries}" 
                       SelectedItem="{Binding SelectedCountry}">
 
             </ComboBox>
-            <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+            <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                           ItemsSource="{Binding Cities}" 
                           SelectedItem="{Binding SelectedCity}">
 
             </ComboBox>
-            <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
+            <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="320">
 
             </TextBox>
             <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0 0 30" Width="600" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="6" Grid.Column="1" Margin="20 0 0 30" Width="600" HorizontalAlignment="Left" Text="{Binding Description}"/>
             <Grid Grid.Column="2" Grid.Row="3">
                 <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding GuestNumHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
@@ -132,7 +132,7 @@
             <Button Height="40" Width="50" Margin="30 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" x:Name="BackButton" Click="BackButton_Click" Visibility="{Binding BackButtonVisibility}">
                 <Image Source="/Resources/Images/LeftArrow.png"></Image>
             </Button>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Save and add next tour" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="SaveRequest_Click"/>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Content="Save and add next tour" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="SaveRequest_Click"/>
             <Button Height="40" Width="50" Margin="0 0 30 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="NextButton_Click" x:Name="NextButton" Visibility="{Binding NextButtonVisibility}">
                 <Image Source="/Resources/Images/RightArrow.png"></Image>
             </Button>
@@ -142,8 +142,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" x:Name="SubmitButton" Click="SubmitRequest_Click">Submit request</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel request" Click="Cancel_Click"/>
+            <Button Grid.Column="0" Width="374" Height="43" Background="#4681f4" Foreground="White" x:Name="SubmitButton" Click="SubmitRequest_Click">Submit request</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Content="Cancel request" Click="Cancel_Click"/>
         </Grid>
     </Grid>
 </Page>

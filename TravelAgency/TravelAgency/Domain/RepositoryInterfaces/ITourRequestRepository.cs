@@ -16,7 +16,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void Subscribe(IObserver observer);
         public void Unsubscribe(IObserver observer);
         public TourRequest Save(TourRequest tourRequest);
-        public void UpdateRequestStatus(TourRequest request);
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime);
         public List<TourRequest> GetRequestsByGuestId(int id);
         public int NextId();
         public int GetCountForYear(string year);
@@ -30,5 +30,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         int GetCountForYearByLocationAndYear(string selectedYear, string selectedCountry, string selectedCity, int month);
         int GetCountForYearByCountryAndYear(string selectedYear, string selectedCountry, int month);
         public List<TourRequest> GetBySpecialRequestId(int id);
+        public List<TourRequest> GetSpecialRequests();
+        public int GetNumberOfAllRequests(int guestId);
     }
 }

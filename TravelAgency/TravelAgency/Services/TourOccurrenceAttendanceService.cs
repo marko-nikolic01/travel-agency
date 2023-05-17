@@ -121,6 +121,17 @@ namespace TravelAgency.Services
             KeyPoint keyPoint = IKeyPointRepository.GetById(attendance.KeyPointId);
             return keyPoint.Name;
         }
+        public int GetNumberOfGuestsAttendances(int guestId)
+        {
+            int number = 0;
+            List<TourOccurrenceAttendance> tourOccurrenceAttendances = IAttendanceRepository.GetByGuestId(guestId);
+            foreach(TourOccurrenceAttendance attendance in tourOccurrenceAttendances)
+            {
+                if(attendance.ResponseStatus == ResponseStatus.Accepted)
+                    number++;
+            }    
+            return number;
+        }
         public void Subscribe(IObserver observer)
         {
             IAttendanceRepository.Subscribe(observer);

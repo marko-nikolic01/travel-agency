@@ -5,10 +5,115 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="768" d:DesignWidth="1024"
+      d:DesignHeight="768" d:DesignWidth="1024" Background="Azure"
       Title="Guest2ProfileView">
-
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </Page.Resources>
     <Grid>
-        <Label>My Profile</Label>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="170"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Margin="20" FontSize="24" Content="My profile"></Label>
+        <Image Grid.Row="1" Grid.Column="0" Width="150" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40 10 0 0" Source="../../Resources/Images/ProfileImageGuest2.jpg"></Image>
+        <Label Grid.Row="2" Grid.Column="0" Margin="40 0" FontSize="24" Content="{Binding Username}"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Margin="40 10" FontSize="24" Content="Tours reserved:"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Margin="40 10" FontSize="24" Content="Tours visited:"></Label>
+        <Label Grid.Row="5" Grid.Column="0" Margin="40 10" FontSize="24" Content="Requests created:"></Label>
+        <Label Grid.Row="6" Grid.Column="0" Margin="40 10" FontSize="24" Content="Ratings given:"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Margin="40 10" FontSize="24" Content="Vouchers left:"></Label>
+        <Label Grid.Row="3" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding ReservationsNumber}"></Label>
+        <Label Grid.Row="4" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding AttendancesNumber}"></Label>
+        <Label Grid.Row="5" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding RequestsNumber}"></Label>
+        <Label Grid.Row="6" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding RatingsNumber}"></Label>
+        <Label Grid.Row="7" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding VouchersNumber}"></Label>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Label HorizontalAlignment="Right" Margin="0 0 15 0">
+                <Hyperlink Click="ChangeUsername_Click">
+                    <TextBlock FontSize="20" Text="Change username"/>
+                </Hyperlink>
+            </Label>
+            <Label HorizontalAlignment="Right" Margin="0 0 15 0">
+                <Hyperlink Click="ChangePassword_Click">
+                    <TextBlock FontSize="20" Text="Change password"/>
+                </Hyperlink>
+            </Label>
+        </StackPanel>
+        <Grid Grid.Column="2" Grid.Row="4" Margin="10 -30 0 0" Grid.RowSpan="4">
+            <GroupBox HorizontalAlignment="Left" Height="250" Width="350" BorderBrush="#213efc" BorderThickness="2">
+                <GroupBox.Header>
+                    <Label>Generate report</Label>
+                </GroupBox.Header>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">
+                        <Label Content="Start date" VerticalAlignment="Center"></Label>
+                        <DatePicker FontSize="20" Margin="10 0 0 0" Width="200" Height="40"
+                                            SelectedDate="{Binding Path=StartDate}"></DatePicker>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">
+                        <Label Content="End date " VerticalAlignment="Center"></Label>
+                        <DatePicker FontSize="20" Margin="10 0 0 0" Width="200" Height="40"
+                                            SelectedDate="{Binding Path=EndDate}"></DatePicker>
+                    </StackPanel>
+                    <Button Click="GenerateReport_Click" Background="#4681f4" Foreground="White" Content="Generate" Width="200" Margin="0 25 0 0"></Button>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+        <Grid Visibility="{Binding ChangeUsernameVisibility}" Grid.Column="2" Grid.Row="1" Margin="0 -30 0 0" Grid.RowSpan="4">
+            <GroupBox HorizontalAlignment="Left" Height="180" Width="370" BorderBrush="#213efc" BorderThickness="2">
+                <GroupBox.Header>
+                    <Label>Change username</Label>
+                </GroupBox.Header>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">
+                        <Label Content="New username:" VerticalAlignment="Center"></Label>
+                        <TextBox Margin="10 0 0 0" FontSize="20" Width="180" Text="{Binding NewUsername}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="#4681f4" Foreground="White" Content="Confirm" Width="150" Command="{Binding ConfirmUsernameCommand}" Margin="15 25 0 0"></Button>
+                        <Button Background="#4681f4" Foreground="White" Content="Exit" Command="{Binding ExitCommand}" Width="150" Margin="30 25 0 0"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+        <Grid Visibility="{Binding ChangePasswordVisibility}" Grid.Column="2" Grid.Row="1" Margin="0 -80 0 0" Grid.RowSpan="4">
+            <GroupBox HorizontalAlignment="Left" Height="250" Width="370" BorderBrush="#213efc" BorderThickness="2">
+                <GroupBox.Header>
+                    <Label>Change password</Label>
+                </GroupBox.Header>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">
+                        <Label Content="Old password:" VerticalAlignment="Center"></Label>
+                        <PasswordBox Margin="10 0 0 0" FontSize="20" Width="180" x:Name="oldPwdBox"></PasswordBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">
+                        <Label Content="New password:" VerticalAlignment="Center"></Label>
+                        <PasswordBox Margin="10 0 0 0" FontSize="20" Width="180" x:Name="newPwdBox"></PasswordBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="#4681f4" Foreground="White" Content="Confirm" Click="ConfirmPassword" Width="150" Margin="15 25 0 0"></Button>
+                        <Button Background="#4681f4" Foreground="White" Content="Exit" Command="{Binding ExitCommand}" Width="150" Margin="30 25 0 0"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Page>

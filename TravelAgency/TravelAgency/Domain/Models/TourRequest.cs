@@ -20,12 +20,13 @@ namespace TravelAgency.Domain.Models
         public User Guest { get; set; }
 
         public RequestStatus Status { get; set; }
-        public DateOnly? GivenDate { get; set; }
+        public string GivenDate { get; set; }
         public int SpecialTourRequestId { get; set; }
         public TourRequest()
         {
+            GivenDate = "/";
         }
-        public TourRequest(Location location, string description, string language, int guestNumber, DateOnly minDate, DateOnly maxDate, int guestId, RequestStatus status, DateOnly givenDate)
+        public TourRequest(Location location, string description, string language, int guestNumber, DateOnly minDate, DateOnly maxDate, int guestId, RequestStatus status)
         {
             Location = location;
             Description = description;
@@ -35,14 +36,13 @@ namespace TravelAgency.Domain.Models
             MaxDate = maxDate;
             GuestId = guestId;
             Status = status;
-            GivenDate = givenDate;
         }
-        // kako da cuvam given date?
+        // kako da cuvam given date? kao string
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), LocationId.ToString(), Description, Language, GuestNumber.ToString(),
                                  MinDate.ToString("dd-MM-yyyy"), MaxDate.ToString("dd-MM-yyyy"), GuestId.ToString(),
-                                 ((int)Status).ToString(), SpecialTourRequestId.ToString()};
+                                 ((int)Status).ToString(), SpecialTourRequestId.ToString(), GivenDate};
             return csvValues;
         }
 
@@ -58,6 +58,7 @@ namespace TravelAgency.Domain.Models
             GuestId = int.Parse(values[7]);
             Status = (RequestStatus)Convert.ToInt32(values[8]);
             SpecialTourRequestId = int.Parse(values[9]);
+            GivenDate = values[10];
         }
 
         public bool Valid(string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate)
@@ -100,6 +101,7 @@ namespace TravelAgency.Domain.Models
                 GuestId = guestId;
                 Status = RequestStatus.Pending;
                 SpecialTourRequestId = specialTourRequestId;
+                GivenDate = "/";
                 return true;
             }
             return false;

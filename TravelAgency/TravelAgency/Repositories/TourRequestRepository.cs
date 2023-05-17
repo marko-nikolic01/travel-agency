@@ -30,7 +30,13 @@ namespace TravelAgency.Repositories
 
         public List<TourRequest> GetAll()
         {
-            return tourRequests;
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.SpecialTourRequestId == -1)
+                    result.Add(request);
+            }
+            return result;
         }
 
         public TourRequest Save(TourRequest tourRequest)
@@ -59,11 +65,12 @@ namespace TravelAgency.Repositories
             }
         }
 
-        public void UpdateRequestStatus(TourRequest request)
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime)
         {
             NotifyObservers();
             TourRequest oldRequest = tourRequests.Find(t => t.Id == request.Id);
             oldRequest.Status = RequestStatus.Accepted;
+            oldRequest.GivenDate = givenDateTime.ToString("dd/MM/yyyy");
             _serializer.ToCSV(FilePath, tourRequests);
             NotifyObservers();
         }
@@ -136,7 +143,7 @@ namespace TravelAgency.Repositories
             List<string> result = new List<string>();
             foreach(TourRequest request in tourRequests)
             {
-                if(request.GuestId == guestId)
+                if(request.GuestId == guestId && request.SpecialTourRequestId == -1)
                     result.Add(request.Language);
             }
             return result;
@@ -146,7 +153,7 @@ namespace TravelAgency.Repositories
             List<string> result = new List<string>();
             foreach (TourRequest request in tourRequests)
             {
-                if (request.GuestId == guestId)
+                if (request.GuestId == guestId && request.SpecialTourRequestId == -1)
                     result.Add(request.Location.Country);
             }
             return result;
@@ -199,6 +206,24 @@ namespace TravelAgency.Repositories
                     result.Add(request);
             }
             return result;
+        }
+        public List<TourRequest> GetSpecialRequests()
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.SpecialTourRequestId != -1)
+                    result.Add(request);
+            }
+            return result;
+        }
+        public int GetNumberOfAllRequests(int guestId)
+        {
+            int number = 0;
+            foreach (TourRequest request in tourRequests)
+                if (request.GuestId == guestId)
+                    number++;
+            return number;
         }
     }
 }

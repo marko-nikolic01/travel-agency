@@ -148,7 +148,7 @@ namespace TravelAgency.WPF.ViewModels
                 int spotsLeft = tourOccurrence.Tour.MaxGuestNumber - (tourOccurrence.Guests.Count + input);
                 if (spotsLeft < 0)
                 {
-                    SpotsLeft = "Not enough spots\non tour";
+                    SpotsLeft = "Not enough\nspots on tour";
                     IsSubmitButtonEnabled = false;
                 }
                 else

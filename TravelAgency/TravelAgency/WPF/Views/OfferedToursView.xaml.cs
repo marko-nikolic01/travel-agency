@@ -48,6 +48,5 @@ namespace TravelAgency.WPF.Views
             VouchersView vouchersView = new VouchersView(toursViewModel.currentGuestId);
             this.NavigationService.Navigate(vouchersView);
         }
-
     }
 }

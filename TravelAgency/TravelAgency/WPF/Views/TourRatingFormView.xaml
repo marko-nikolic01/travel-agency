@@ -52,14 +52,15 @@
             <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Images (url)" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="3" Grid.Column="1" Margin="20 10" x:Name="urlText" HorizontalAlignment="Left" Width="500" Text="{Binding Url}"/>
             <ListBox FontSize="20" Grid.Row="4" Grid.Column="1" Width="500" HorizontalAlignment="Left" Margin="20 0 0 10" ItemsSource="{Binding Urls}" SelectedItem="{Binding SelectedUrl}"/>
-            <TextBox x:Name="commentTb" Grid.Row="5" Grid.Column="1" Margin="20 10 0 0" Width="500" HorizontalAlignment="Left" Text="{Binding AdditionalComment}"/>
+            <TextBox x:Name="commentTb" TextWrapping="Wrap" AcceptsReturn="True"
+                     Grid.Row="5" Grid.Column="1" Margin="20 10 0 0" Width="500" HorizontalAlignment="Left" Text="{Binding AdditionalComment}"/>
             <Label Grid.Row="5" Grid.Column="0" Margin="20 10" Content="Comment" HorizontalAlignment="Left"/>
-            <Button Grid.Row="3" Grid.Column="2" Content="Add image" HorizontalAlignment="Left" Margin="10 0 50 0" Height="40" Width="150" Command="{Binding AddUrlCommand}"/>
+            <Button Grid.Row="3" Background="#4681f4" Foreground="White" Grid.Column="2" Content="Add photo" HorizontalAlignment="Left" Margin="10 0 50 0" Height="30" Width="150" Command="{Binding AddUrlCommand}"/>
             <StackPanel Grid.Row="4" Grid.Column="2">
-                <Button  Content="Preview images" HorizontalAlignment="Left" Margin="10" Height="40" Width="150" Click="PreviewImages_Click"/>
-                <Button  Content="Remove image" HorizontalAlignment="Left" Margin="10 0" Height="40" Width="150" Command="{Binding RemoveUrlCommand}"/>
+                <Button  Content="Preview photos" Background="#4681f4" Foreground="White" HorizontalAlignment="Left" Margin="10" Height="30" Width="150" Click="PreviewImages_Click"/>
+                <Button  Content="Remove photo" Background="#4681f4" Foreground="White" HorizontalAlignment="Left" Margin="10 10 0 0" Height="30" Width="150" Command="{Binding RemoveUrlCommand}"/>
             </StackPanel>
-            <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220" Text="{Binding GuideKnowledge}">
+            <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20,19,0,1" Height="40" Width="220" Text="{Binding GuideKnowledge}">
                 <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="4"></ComboBoxItem>
                 <ComboBoxItem Content="3"></ComboBoxItem>
@@ -141,8 +142,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Cancel rating" Click="Close_Click"/>
+            <Button Grid.Column="0" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Content="Cancel rating" Click="Close_Click"/>
         </Grid>
     </Grid>
 </Page>
