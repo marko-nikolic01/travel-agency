@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Serializer;
@@ -98,19 +99,7 @@ namespace TravelAgency.Repositories
 
         public void Delete(AccommodationRenovation renovation)
         {
-            DeleteById(renovation.Id);
-        }
-
-        public void DeleteById(int id)
-        {
-            foreach (var renovation in renovations)
-            {
-                if (renovation.Id == id)
-                {
-                    renovations.Remove(renovation);
-                }
-            }
-
+            renovations.Remove(renovation);
             serializer.ToCSV(FilePath, renovations);
         }
     }

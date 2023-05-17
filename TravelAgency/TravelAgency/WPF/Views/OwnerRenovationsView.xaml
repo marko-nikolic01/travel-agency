@@ -20,7 +20,8 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="Return" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -120,7 +121,8 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Style="{StaticResource backButton}"
-                                         Margin="0 16 10 16"/>
+                                         Margin="0 16 10 16"
+                                         Click="GoBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"
@@ -131,7 +133,7 @@
                                          Text="Cancel renovation"
                                          KeyboardShortcutText="Delete"
                                          Margin="0 16 20 16"
-                                         Click="GoBack_Click"/>
+                                         Click="CancelRenovationButton_Click"/>
 
             <controls:Tip Grid.Column="3"
                           Header="Which renovations can be canceled?"

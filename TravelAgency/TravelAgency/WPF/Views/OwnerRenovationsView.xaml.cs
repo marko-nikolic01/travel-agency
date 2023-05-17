@@ -25,15 +25,23 @@ namespace TravelAgency.WPF.Views
         public OwnerRenovationsViewModel ViewModel { get; set; }
 
         public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand CancelRenovationCommand { get; set; }
 
         public OwnerRenovationsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
+            CancelRenovationCommand = new MyICommand(Execute_CancelRenovationCommand);
             InitializeComponent();
             ViewModel = new OwnerRenovationsViewModel(this.NavigationService);
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_CancelRenovationCommand()
+        {
+            ViewModel.CancelRenovationCommand.Execute();
+            scheduledRenovationsDataGrid.Focus();
         }
 
         private void Execute_NavigateBackCommand()
@@ -44,6 +52,11 @@ namespace TravelAgency.WPF.Views
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             Execute_NavigateBackCommand();
+        }
+
+        private void CancelRenovationButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CancelRenovationCommand.Execute();
         }
     }
 }
