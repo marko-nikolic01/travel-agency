@@ -19,19 +19,23 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 30 5"/>
         </Style>
+        
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
             <Setter Property="MaxWidth" Value="235"/>
         </Style>
+        
         <Style TargetType="xctk:IntegerUpDown">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
+        
         <Style TargetType="ComboBox">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
         </Style>
+        
         <Style TargetType="RadioButton">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -238,9 +242,7 @@
 
                     <controls:ButtonWithShortcut Grid.Column="1"
                                                  Margin="0 0 2 0"
-                                                 Background="Black"
-                                                 Foreground="White"
-                                                 Text="Back"
+                                                 Style="{StaticResource backButton}"
                                                  KeyboardShortcutText="Ctrl+Shift+Backspace"
                                                  Click="GoBack_Click"/>
                 </Grid>

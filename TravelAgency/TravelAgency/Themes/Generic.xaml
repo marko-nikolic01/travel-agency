@@ -93,6 +93,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="BorderThickness" Value="0"/>
 
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">

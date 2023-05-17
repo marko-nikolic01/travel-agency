@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for OwnerCreateAccommodationWindow.xaml
+    /// Interaction logic for OwnerScheduleRenovationView.xaml
     /// </summary>
-    public partial class OwnerCreateAccommodationWindow : Window
+    public partial class OwnerScheduleRenovationView : Page
     {
-        public OwnerCreateAccommodationWindow()
+        public OwnerScheduleRenovationView()
         {
             InitializeComponent();
         }

@@ -35,6 +35,9 @@ namespace TravelAgency.WPF.Views
             InitializeComponent();
             ViewModel = new OwnerMainViewModel(NavigationFrame.NavigationService);
             DataContext = ViewModel;
+
+            NavigationCommands.BrowseBack.InputGestures.Clear();
+            NavigationCommands.BrowseForward.InputGestures.Clear();
         }
 
         private void Execute_LogOutCommand()

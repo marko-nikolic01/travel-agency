@@ -134,10 +134,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Margin="0 0 2 0"
-                                         Background="Black"
-                                         Foreground="White"
-                                         Text="Back"
-                                         KeyboardShortcutText="Backspace"
+                                         Style="{StaticResource backButton}"
                                          Click="NavigateBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
