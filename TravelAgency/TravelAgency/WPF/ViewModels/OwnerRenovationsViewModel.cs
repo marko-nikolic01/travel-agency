@@ -58,19 +58,30 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            var result = MessageBox.Show("Are you sure you want to cancel this renovation?", "Canceling renovation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (renovationService.CanRenovationBeCancelled(SelectedScheduledRenovation))
             {
-                renovationService.CancelRenovation(SelectedScheduledRenovation);
-                UpdateScheduledRenovations();
+                var result = MessageBox.Show("Are you sure you want to cancel this renovation?", "Canceling renovation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    renovationService.CancelRenovation(SelectedScheduledRenovation);
+                    UpdateScheduledRenovations();
+                }
             }
+            else
+            {
+                MessageBox.Show("Selected renovation can't be cancelled because it's less than 5 days due.");
+            }            
         }
 
         private void UpdateScheduledRenovations()
         {
             ScheduledRenovations.Clear();
-            ScheduledRenovations = new ObservableCollection<AccommodationRenovation>(renovationService.GetScheduledRenovationsByOwner(loggedInUser));
+
+            foreach (var renovation in renovationService.GetScheduledRenovationsByOwner(loggedInUser))
+            {
+                ScheduledRenovations.Add(renovation);
+            }
         }
     }
 }

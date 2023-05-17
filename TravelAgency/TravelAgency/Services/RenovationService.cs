@@ -89,9 +89,20 @@ namespace TravelAgency.Services
             return DateOnly.FromDateTime(DateTime.Now).CompareTo(renovation.DateSpan.EndDate) < 0;
         }
 
-        public void CancelRenovation(AccommodationRenovation renovation)
+        public bool CancelRenovation(AccommodationRenovation renovation)
         {
-            RenovationRepository.Delete(renovation);
+            if (CanRenovationBeCancelled(renovation))
+            {
+                RenovationRepository.Delete(renovation);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CanRenovationBeCancelled(AccommodationRenovation renovation)
+        {
+            return  renovation.DateSpan.StartDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber > 5;
         }
     }
 }

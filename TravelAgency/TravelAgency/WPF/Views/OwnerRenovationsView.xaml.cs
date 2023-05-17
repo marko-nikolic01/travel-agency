@@ -36,6 +36,9 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+
+            scheduledRenovationsDataGrid.CommandBindings.Clear();
+            pastRenovationsDataGrid.CommandBindings.Clear();
         }
 
         private void Execute_CancelRenovationCommand()

@@ -21,7 +21,7 @@
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
         <KeyBinding Key="Return" Command="{Binding NavigateBackCommand, ElementName=root}"/>
-        <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
+        <KeyBinding Key="Delete" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
