@@ -13,6 +13,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding NavigateToManageAccommodationsPageCommand,ElementName=root}"/>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding NavigateToRenovationsPageCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -47,8 +48,9 @@
             <controls:AccommodationsNavigationButton Grid.Row="2"
                                                      Text="Renovations"
                                                      Icon="../../Resources/Images/Renovations.png"
-                                                     KeyboardShortcutText="Ctrl+Alt+R"
-                                                     Background="White"/>
+                                                     KeyboardShortcutText="Ctrl+R"
+                                                     Background="White"
+                                                     Click="RenovationsNavigationButton_Click"/>
         </Grid>
     </Grid>
 </Page>

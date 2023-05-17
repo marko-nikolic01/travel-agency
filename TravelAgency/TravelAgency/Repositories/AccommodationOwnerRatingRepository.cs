@@ -55,11 +55,6 @@ namespace TravelAgency.Repositories
             return accommodationOwnerRatings;
         }
 
-        public AccommodationOwnerRating GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AccommodationOwnerRating> GetByOwner(User owner)
         {
             return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == owner.Id);

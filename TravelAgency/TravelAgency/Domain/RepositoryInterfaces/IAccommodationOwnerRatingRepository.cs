@@ -11,8 +11,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     {
         public List<AccommodationOwnerRating> GetAll();
 
-        public AccommodationOwnerRating GetById(int id);
-
         public List<AccommodationOwnerRating> GetByOwner(User owner);
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User owner, IEnumerable<AccommodationGuestRating> guestRatings);

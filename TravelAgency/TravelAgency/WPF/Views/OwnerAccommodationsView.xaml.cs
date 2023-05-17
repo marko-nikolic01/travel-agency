@@ -24,19 +24,31 @@ namespace TravelAgency.WPF.Pages
     public partial class OwnerAccommodationsView : Page
     {
         public MyICommand NavigateToManageAccommodationsPageCommand { get; set; }
+        public MyICommand NavigateToRenovationsPageCommand { get; set; }
 
         public OwnerAccommodationsViewModel ViewModel { get; set; }
 
         public OwnerAccommodationsView()
         {
             NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton);
+            NavigateToRenovationsPageCommand = new MyICommand(Execute_RenovationsNavigationButton);
             InitializeComponent();
             ViewModel = new OwnerAccommodationsViewModel();
             DataContext = ViewModel;
             Loaded += (s, e) => Keyboard.Focus(this);
         }
 
-        private void Execute_ManageAccommodationsNavigationButton(object sender, ExecutedRoutedEventArgs e)
+        private void Execute_RenovationsNavigationButton()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerRenovationsView.xaml", UriKind.Relative));
+        }
+
+        private void RenovationsNavigationButton_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_RenovationsNavigationButton();
+        }
+
+        private void ManageAccommodationsNavigationButton_Click(object sender, ExecutedRoutedEventArgs e)
         {
             Execute_ManageAccommodationsNavigationButton();
         }

@@ -142,7 +142,5 @@ namespace TravelAgency.Services
             }
             return true;
         }
-
-
     }
 }
