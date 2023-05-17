@@ -1,17 +1,22 @@
-﻿<UserControl x:Class="TravelAgency.WPF.Pages.OwnerProfilePage"
+﻿<UserControl x:Class="TravelAgency.WPF.Pages.OwnerProfileView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TravelAgency.WPF.Pages"
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="684" d:DesignWidth="935">
+      d:DesignHeight="625" d:DesignWidth="840">
 
     <UserControl.DataContext>
         <viewmodels:OwnerProfileViewModel/>
     </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <converters:SuperOwnerBooleanToStringConverter x:Key="superOwnerConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,6 +50,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -55,11 +61,13 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Date of birth:" FontSize="18"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="No. accommodations:" FontSize="18"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Ratings given:" FontSize="18"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Superowner:" FontSize="18"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LoggedInUser.Username}" FontSize="18"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggedInUser.BirthDay}" FontSize="18"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccommodationsCount}" FontSize="18"/>
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RatingsGiven}" FontSize="18"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding IsSuperOwner, Converter={StaticResource superOwnerConverter}}" FontSize="18"/>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>

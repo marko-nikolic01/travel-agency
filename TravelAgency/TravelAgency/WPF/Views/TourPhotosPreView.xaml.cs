@@ -10,21 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.Domain.Models;
-using TravelAgency.Services;
+using TravelAgency.WPF.ViewModels;
 
-namespace TravelAgency.WPF.Pages
+namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for OwnerProfilePage.xaml
+    /// Interaction logic for TourPhotosPreView.xaml
     /// </summary>
-    public partial class OwnerProfilePage : UserControl
+    public partial class TourPhotosPreView : Window
     {
-        public OwnerProfilePage()
+        public TourPhotosPreView(List<string> links)
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            DataContext = new TourPhotosViewModel(links);
         }
     }
 }

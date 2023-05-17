@@ -6,6 +6,11 @@
              xmlns:vw="clr-namespace:TravelAgency.WPF.Views"
              StartupUri="WPF/Views/MainWindow.xaml">
     <Application.Resources>
-        
+        <ResourceDictionary>
+            <Style TargetType="Page" x:Key="pageStyle">
+                <Setter Property="Focusable" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

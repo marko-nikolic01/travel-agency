@@ -37,6 +37,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public TourOccurrence GetById(int id);
         public TourOccurrence GetByTourId(int id);
 
-        public void Delete(TourOccurrence tourOccurrence);
+        public int Delete(TourOccurrence tourOccurrence);
+        public void UndoDelete(int canceledTour);
     }
 }

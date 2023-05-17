@@ -156,17 +156,28 @@ namespace TravelAgency.Repositories
             TourOccurrence tourOccurrence = tourOccurrences.Find(t => t.TourId == id);
             return tourOccurrence;
         }
-        public void Delete(TourOccurrence tourOccurrence)
+        public int Delete(TourOccurrence tourOccurrence)
         {
             TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == tourOccurrence.Id);
             if (oldTourOccurrence == null)
             {
-                return;
+                return 0;
             }
             oldTourOccurrence.IsDeleted = true;
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
+            return oldTourOccurrence.Id;
         }
-
+        public void UndoDelete(int canceledTour)
+        {
+            TourOccurrence oldTourOccurrence = tourOccurrences.Find(t => t.Id == canceledTour);
+            if (oldTourOccurrence == null)
+            {
+                return;
+            }
+            oldTourOccurrence.IsDeleted = false;
+            _serializer.ToCSV(FilePath, tourOccurrences);
+            NotifyObservers();
+        }
     }
 }

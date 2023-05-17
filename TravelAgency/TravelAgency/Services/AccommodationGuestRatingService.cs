@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
     public class AccommodationGuestRatingService
     {
-        public IAccommodationGuestRatingRepository RatingRepository { get; set; }
+        public IAccommodationGuestRatingRepository GuestRatingRepository { get; set; }
+        public IAccommodationOwnerRatingRepository AccommodationOwnerRatingRepository { get; set; }
         public IAccommodationReservationRepository ReservationRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
@@ -18,7 +20,8 @@ namespace TravelAgency.Services
 
         public AccommodationGuestRatingService()
         {
-            RatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
+            GuestRatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
+            AccommodationOwnerRatingRepository = Injector.Injector.CreateInstance<IAccommodationOwnerRatingRepository>();
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
@@ -28,31 +31,32 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
-            RatingRepository.LinkReservations(ReservationRepository.GetAll());
+            GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
+            AccommodationOwnerRatingRepository.LinkReservations(ReservationRepository.GetAll());
         }
 
         public List<AccommodationGuestRating> GetAllRatings()
         {
-            return RatingRepository.GetAll();
+            return GuestRatingRepository.GetAll();
         }
 
         public void CreateNew(AccommodationGuestRating rating)
         {
-            RatingRepository.Save(rating);
+            GuestRatingRepository.Save(rating);
         }
 
         public List<AccommodationGuestRating> GetByOwner(User owner)
         {
-            return RatingRepository.GetByOwner(owner);
+            return GuestRatingRepository.GetByOwner(owner);
         }
 
-        public List<AccommodationReservation> GetUnratedReservations()
+        public List<AccommodationReservation> GetUnratedReservationsByOwner(User owner)
         {
             List<AccommodationReservation> unrated = new();
 
             foreach (var accommodationReservation in ReservationRepository.GetAll())
             {
-                if (IsValidForRating(accommodationReservation, RatingRepository.GetAll()))
+                if (IsValidForRating(accommodationReservation, GuestRatingRepository.GetAll()) && accommodationReservation.Accommodation.OwnerId == owner.Id)
                 {
                     unrated.Add(accommodationReservation);
                     continue;
@@ -95,7 +99,24 @@ namespace TravelAgency.Services
 
         public int GetRatingsCountByOwner(User owner)
         {
-            return RatingRepository.GetRatingsCountByOwner(owner);
+            return GuestRatingRepository.GetRatingsCountByOwner(owner);
+        }
+
+        public List<AccommodationGuestRating> GetRatingsVisibleToGuest(User guest)
+        {
+            List<AccommodationGuestRating> guestRatings = new List<AccommodationGuestRating>();
+            foreach (var ownerRating in AccommodationOwnerRatingRepository.GetAll())
+            { 
+                foreach (var guestRating in GuestRatingRepository.GetAll())
+                {
+                    if (guestRating.AccommodationReservationId == ownerRating.AccommodationReservationId && guest.Id == guestRating.AccommodationReservation.GuestId)
+                    {
+                        guestRatings.Add(guestRating);
+                        break;
+                    }
+                }
+            }
+            return guestRatings;
         }
     }
 }

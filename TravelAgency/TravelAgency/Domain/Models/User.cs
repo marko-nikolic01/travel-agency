@@ -16,6 +16,7 @@ namespace TravelAgency.Domain.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsSuperOwner { get; set; }
+        public SuperGuestTitle SuperGuestTitle { get; set; }
         public Roles Role { get; set; }
         public DateOnly BirthDay { get; set; }
         public User()
@@ -24,6 +25,7 @@ namespace TravelAgency.Domain.Models
             Username = "";
             Password = "";
             IsSuperOwner = false;
+            SuperGuestTitle = null;
         }
 
         public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
@@ -33,6 +35,12 @@ namespace TravelAgency.Domain.Models
             Role = role;
             IsSuperOwner = isSuperOwner;
             BirthDay = birthDay;
+            SuperGuestTitle = null;
+        }
+
+        public bool IsSuperGuest
+        {
+            get => (SuperGuestTitle == null ? false : true);
         }
 
         public string[] ToCSV()

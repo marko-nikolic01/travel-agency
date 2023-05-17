@@ -53,15 +53,9 @@
 53|19|sd|False
 54|19|xc|False
 55|16|trecess|True
-56|20|zz|False
-57|20|top|False
-58|21|prva k. tacka|False
-59|21|druga k. tacka|False
-60|21|prva k. tacka|False
-61|21|druga k. tacka|False
-62|22|aa|True
-63|22|ss|False
-64|23|prva k. tacka|False
-65|23|druga k. tacka|False
-66|22|prva k. tacka|False
-67|22|druga k. tacka|False
+56|23|erste|False
+57|23|zweite|False
+58|24|erste|False
+59|24|zweite|False
+60|22|erste|True
+61|22|zweite|True

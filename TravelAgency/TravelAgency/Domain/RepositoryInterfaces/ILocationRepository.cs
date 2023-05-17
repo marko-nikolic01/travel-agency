@@ -23,5 +23,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public Location GetByID(int id);
 
         public Location GetLocationForCountryAndCity(string country, string city);
+
+        public bool CountryExists(string country);
+
+        public bool CityExists(string country);
     }
 }

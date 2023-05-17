@@ -26,7 +26,21 @@ namespace TravelAgency.Repositories
             _serializer = new Serializer<User>();
             _users = _serializer.FromCSV(FilePath);
         }
-        
+
+        public void LinkSuperGuestTitles(List<SuperGuestTitle> titles) 
+        {
+            foreach (User user in _users)
+            {
+                foreach (SuperGuestTitle title in titles)
+                {
+                    if (title.GuestId == user.Id && title.IsActive())
+                    {
+                        user.SuperGuestTitle = title;
+                    }
+                }
+            }
+        }
+
         public List<User> GetAll()
         {
             return _users;

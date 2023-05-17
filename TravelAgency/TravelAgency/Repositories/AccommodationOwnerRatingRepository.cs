@@ -36,6 +36,20 @@ namespace TravelAgency.Repositories
             }
         }
 
+        public void LinkRenovationRecommendations(List<RenovationRecommendation> recommendations)
+        {
+            foreach (var accommodationOwnerRating in accommodationOwnerRatings)
+            {
+                foreach (var recommendation in recommendations)
+                {
+                    if (accommodationOwnerRating.RenovationReccommendationId == recommendation.Id)
+                    {
+                        accommodationOwnerRating.RenovationRecommendation = recommendation;
+                    }
+                }
+            }
+        }
+
         public List<AccommodationOwnerRating> GetAll()
         {
             return accommodationOwnerRatings;
@@ -85,6 +99,11 @@ namespace TravelAgency.Repositories
             accommodationOwnerRatings.Add(entity);
             serializer.ToCSV(FilePath, accommodationOwnerRatings);
             return entity;
+        }
+
+        public void SaveAll()
+        {
+            serializer.ToCSV(FilePath, accommodationOwnerRatings);
         }
     }
 }
