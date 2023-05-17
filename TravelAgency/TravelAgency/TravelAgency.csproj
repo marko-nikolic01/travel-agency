@@ -12,6 +12,7 @@
     <None Remove="Resources\Images\accept-circular-button-outline.png" />
     <None Remove="Resources\Images\belled.png" />
     <None Remove="Resources\Images\cross-button.png" />
+    <None Remove="Resources\Images\exclamation-mark.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
     <None Remove="Resources\Images\NavForum.png" />
@@ -68,6 +69,7 @@
 	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
 	  <Resource Include="Resources\Images\belled.png" />
 	  <Resource Include="Resources\Images\cross-button.png" />
+	  <Resource Include="Resources\Images\exclamation-mark.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
