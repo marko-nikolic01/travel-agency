@@ -217,5 +217,13 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+        public int GetNumberOfAllRequests(int guestId)
+        {
+            int number = 0;
+            foreach (TourRequest request in tourRequests)
+                if (request.GuestId == guestId)
+                    number++;
+            return number;
+        }
     }
 }

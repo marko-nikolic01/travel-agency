@@ -83,5 +83,22 @@ namespace TravelAgency.Repositories
         {
             return loggedInUser;
         }
+        public void UpdateNewUsername(int userId, string newUsername)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.Username = newUsername;
+            _serializer.ToCSV(FilePath, _users);
+        }
+        public void UpdateNewPassword(int userId, string newPassword)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.Password = newPassword;
+            _serializer.ToCSV(FilePath, _users);
+        }
+        public bool CheckPassword(int userId, string Password)
+        {
+            User user = _users.Find(u => u.Id == userId);
+            return user.Password == Password;
+        }
     }
 }

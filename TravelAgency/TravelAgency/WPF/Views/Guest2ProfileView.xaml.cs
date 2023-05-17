@@ -57,5 +57,17 @@ namespace TravelAgency.WPF.Views
             Guest2ReportView reportView = new Guest2ReportView();
             this.NavigationService.Navigate(reportView);
         }
+        private void ChangeUsername_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.ChangeUsername();
+        }
+        private void ChangePassword_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.ChangePassword();
+        }
+        private void ConfirmPassword(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.ConfirmNewPassword(oldPwdBox.Password, newPwdBox.Password);
+        }
     }
 }

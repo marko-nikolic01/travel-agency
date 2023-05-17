@@ -40,9 +40,14 @@ namespace TravelAgency.Services
             tourOccurrence.Guests.AddRange(users);
             tourOccurrence.FreeSpots -= users.Count;
         }
+        
         private User GetUserByName(string username)
         {
             return IUserRepository.GetAll().Find(x => (x.Username == username && x.Role == Roles.Guest2));
+        }
+        public List<TourReservation> GetForGuest(int guestId)
+        {
+            return ITourReservationRepository.GetAllForGuest(guestId);
         }
         public bool IsTourReserved(int guestId, int tourOccurrenceId)
         {

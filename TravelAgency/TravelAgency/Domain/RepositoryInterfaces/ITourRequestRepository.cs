@@ -31,5 +31,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         int GetCountForYearByCountryAndYear(string selectedYear, string selectedCountry, int month);
         public List<TourRequest> GetBySpecialRequestId(int id);
         public List<TourRequest> GetSpecialRequests();
+        public int GetNumberOfAllRequests(int guestId);
     }
 }

@@ -9,13 +9,13 @@ using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
-    public class GuestAttendanceService
+    public class GuestAttendanceForPeriodService
     {
         public ITourOccurrenceAttendanceRepository ITourOccurrenceAttendanceRepository { get; set; }
         public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
         public ITourReservationRepository ITourReservationRepository { get; set; }
         public IKeyPointRepository IKeyPointRepository { get; set; }
-        public GuestAttendanceService()
+        public GuestAttendanceForPeriodService()
         {
             ITourOccurrenceAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
             ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();

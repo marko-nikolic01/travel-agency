@@ -17,6 +17,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateTourOccurrenceAttendaces(TourOccurrenceAttendance tourOccurrenceAttendance);
 
         public List<TourOccurrenceAttendance> GetByTourOccurrenceId(int id);
+        public List<TourOccurrenceAttendance> GetByGuestId(int id);
         public List<int> GetGuestsByTourOccurrenceId(int id);
 
         public TourOccurrenceAttendance GetByTourOccurrenceIdAndGuestId(int TourOccurrenceId, int GuestId);

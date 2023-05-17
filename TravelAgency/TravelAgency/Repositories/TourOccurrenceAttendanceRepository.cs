@@ -63,6 +63,20 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+
+        public List<TourOccurrenceAttendance> GetByGuestId(int id)
+        {
+            List<TourOccurrenceAttendance> result = new List<TourOccurrenceAttendance>();
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
+            {
+                if (tourOccurrenceAttendance.GuestId == id)
+                {
+                    result.Add(tourOccurrenceAttendance);
+                }
+            }
+            return result;
+        }
+
         public List<int> GetGuestsByTourOccurrenceId(int id)
         {
             List<int> result = new List<int>();

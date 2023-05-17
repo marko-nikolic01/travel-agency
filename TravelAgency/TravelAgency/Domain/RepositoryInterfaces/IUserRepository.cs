@@ -26,5 +26,8 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void LogInUser(User user);
 
         public User GetLoggedInUser();
+        public void UpdateNewUsername(int userId, string newUsername);
+        public void UpdateNewPassword(int userId, string newPassword);
+        public bool CheckPassword(int userId, string Password);
     }
 }

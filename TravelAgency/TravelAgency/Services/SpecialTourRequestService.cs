@@ -19,11 +19,11 @@ namespace TravelAgency.Services
             ITourRequestRepository = Injector.Injector.CreateInstance<ITourRequestRepository>();
             ISpecialTourRequestRepository = Injector.Injector.CreateInstance<ISpecialTourRequestRepository>();
             ILocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
-            LinkTourRequests();
+            LinkSpecialTourRequests();
             LinkRequestLocation();
             UpdateSpecialRequestStatus();
         }
-        private void LinkTourRequests()
+        private void LinkSpecialTourRequests()
         {
             foreach(SpecialTourRequest specialRequest in ISpecialTourRequestRepository.GetAll()) 
             {
@@ -70,6 +70,10 @@ namespace TravelAgency.Services
         public List<SpecialTourRequest>? GetSpecialRequestForGuest(int guestId)
         {
             return ISpecialTourRequestRepository.GetByGuestId(guestId);
+        }
+        public int GetNumberOfAllRequests(int guestId)
+        {
+            return ITourRequestRepository.GetNumberOfAllRequests(guestId);
         }
     }
 }

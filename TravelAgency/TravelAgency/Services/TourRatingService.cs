@@ -77,5 +77,9 @@ namespace TravelAgency.Services
         {
             return ITourRatingRepository.IsTourNotRated(guestId, occurrenceId);
         }
+        public int GetNumberForGuest(int guestId)
+        {
+            return ITourRatingRepository.GetRatingsNumberByGuestId(guestId);
+        }
     }
 }
