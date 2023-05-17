@@ -34,6 +34,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public Guest2MainViewModel(NavigationService navService, int guestId)
         {
+            currentGuestId = guestId;
             TourOccurrenceAttendanceService attendanceService = new TourOccurrenceAttendanceService();
             attendanceService.Subscribe(this);
             NavService = navService;
@@ -43,7 +44,6 @@ namespace TravelAgency.WPF.ViewModels
             NavigateToProfileCommand = new RelayCommand(Execute_NavigateToProfileCommand, CanExecute_NavigateCommand);
             NavigateToNotificationsCommand = new RelayCommand(Execute_NavigateToNotificationsCommand, CanExecute_NavigateCommand);
             NavigateToSpecialRequestsCommand = new RelayCommand(Execute_NavigateToSpecialRequestsCommand, CanExecute_NavigateCommand);
-            currentGuestId = guestId;
             Update();
         }
 

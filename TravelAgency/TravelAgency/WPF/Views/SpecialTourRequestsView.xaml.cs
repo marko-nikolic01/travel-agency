@@ -21,15 +21,17 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class SpecialTourRequestsView : Page
     {
+        int id;
         public SpecialTourRequestsView(int guestId)
         {
+            id = guestId;
             InitializeComponent();
             DataContext = new SpecialTourRequestsViewModel(guestId);
         }
 
         private void NewRequest_Click(object sender, RoutedEventArgs e)
         {
-            SpecialTourRequestForm tourRequestForm = new SpecialTourRequestForm(0);
+            SpecialTourRequestForm tourRequestForm = new SpecialTourRequestForm(id);
             this.NavigationService.Navigate(tourRequestForm);
         }
     }
