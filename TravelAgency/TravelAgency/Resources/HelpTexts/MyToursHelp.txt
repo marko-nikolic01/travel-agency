@@ -1,0 +1,17 @@
+This page is divided in two sections.
+
+First, upper section is showing if there is active tour now, that you have reserved.
+
+If there is not it will be just saying "There is currently no active tour".
+
+If there is, it will show which tour is active and your status (have you arrived or not).
+
+Also it will show where is the tour at the moment, so you can see where is it if you haven't arrived yet.
+
+Second section is showing all the tours you've been on.
+
+To see more detailed view of one tour click more details button on the right side of appropriate row.
+
+To rate the tour select one tour from the table and click on rate the tour button on the bottom.
+
+Tour can be rated only once.

@@ -1,0 +1,9 @@
+Here is list of your notifications.
+
+Notifications can be about accepted tour request, or new tours that may interest you.
+
+You will get notification if guide has marked you as present on tour, and if you get new
+voucher.
+
+If there is new notification, red circle will appear in notifications button in menu,
+letting you know there is unread notification.

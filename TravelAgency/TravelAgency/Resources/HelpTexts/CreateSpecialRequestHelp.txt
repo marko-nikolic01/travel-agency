@@ -1,0 +1,15 @@
+Here you can create special tour request.
+
+To create special tour request you just need to make at least
+two ordinary request, same way as regular request is created.
+
+The only difference is that when you finish one request, you just
+click on save and add next request, and new form for new request will open.
+
+Also you can go back and forward through your requests by clicking pointing
+buttons on the left and right side.
+
+You can discard the request which are you on right now, by clicking delete this request.
+
+Once you finished click on submit request and request will be saved and showed in
+special requests page.

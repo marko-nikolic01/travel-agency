@@ -1,0 +1,16 @@
+Here is the table of all requests that you've made.
+
+Default status of request is pending.
+
+If less than 48 hours is left until date span you entered and none of the 
+guides accepted your request, request will be invalid.
+
+If some guide accept your request before this deadline, request status will be accepted.
+Guide will make tour based on your request and it will be shown the date which he took under the 
+"Given date" column.
+
+You will get notification if someone accepted your request too.
+
+To create new request click on Create request button at the bottom left.
+
+To see statistic on tour reqeusts that you've made, click on show statistics at the bottom right

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
@@ -72,6 +73,7 @@ namespace TravelAgency.WPF.ViewModels
             GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
             DateHelpCommand = new ButtonCommandNoParameter(DateClick);
             DescriptionHelpCommand = new ButtonCommandNoParameter(DescriptionClick);
+            UpdateHelpText();
         }
         private void GuestNumClick()
         {
@@ -117,6 +119,11 @@ namespace TravelAgency.WPF.ViewModels
                 return true;
             }
             return false;
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/CreateRequestHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

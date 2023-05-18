@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
@@ -70,6 +71,7 @@ namespace TravelAgency.WPF.ViewModels
             CommentHelpCommand = new ButtonCommandNoParameter(CommentHelpClick);
             currentGuestId = guestId;
             occurrenceId = occurrence.Id;
+            UpdateHelpText();
         }
         private void RatingsHelpClick()
         {
@@ -119,6 +121,11 @@ namespace TravelAgency.WPF.ViewModels
                 photo.TourRatingId = id;
                 tourRatingService.SaveTourRatingPhoto(photo);
             }
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/TourRatingHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

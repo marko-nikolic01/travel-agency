@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
@@ -77,6 +76,7 @@ namespace TravelAgency.WPF.ViewModels
             GuestsHelpCommand = new ButtonCommandNoParameter(GuestsHelpClick);
             NumGuestsHelpCommand = new ButtonCommandNoParameter(NumGuestsHelpClick);
             VoucherHelpCommand = new ButtonCommandNoParameter(VoucherHelpClick);
+            UpdateHelpText();
         }
         private void NumGuestsHelpClick()
         {
@@ -183,6 +183,11 @@ namespace TravelAgency.WPF.ViewModels
                 IsAddButtonEnabled = false;
                 IsSubmitButtonEnabled = true;
             }
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/MakeReservationHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

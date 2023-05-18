@@ -1,0 +1,19 @@
+This is form for tour reservation.
+
+To reserve one tour you need to do following things:
+
+Choose one voucher if you want by selecting it from the list.
+You can deselect it by clicking button right to the vouchers list.
+
+Enter number of guests for which you want to reserve, keep in mind that you
+can't reserve for more guests than there are free spots on tour.
+Next to field where the number of guests is entered you have many spots are left
+for the current input.
+
+Next you have to select who are concrete guests you are reservating for, if
+you are reservating for someone except yourself.
+Number of entered guests must be same to the guests number that you entered before,
+otherwise system won't allow you to submit reservation.
+
+Once you sure you have completed reservation, click on button make a reservation
+and reservation will be saved.
