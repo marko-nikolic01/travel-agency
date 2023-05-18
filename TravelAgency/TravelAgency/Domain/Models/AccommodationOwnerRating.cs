@@ -222,12 +222,19 @@ namespace TravelAgency.Domain.Models
                         return "Rating for owner responsiveness must be between 1 and 5";
                     }
                 }
+                else if (columnName == "Comment")
+                {
+                    if (Comment == "")
+                    {
+                        return "You must leave a comment";
+                    }
+                }
 
                 return null;
             }
         }
 
-        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness" };
+        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness", "Comment" };
 
         public bool IsValid
         {
