@@ -38,7 +38,7 @@
         <Label Grid.Row="3" Grid.Column="0" Margin="40 10" FontSize="24" Content="Tours reserved:"></Label>
         <Label Grid.Row="4" Grid.Column="0" Margin="40 10" FontSize="24" Content="Tours visited:"></Label>
         <Label Grid.Row="5" Grid.Column="0" Margin="40 10" FontSize="24" Content="Requests created:"></Label>
-        <Label Grid.Row="6" Grid.Column="0" Margin="40 10" FontSize="24" Content="Ratings given:"></Label>
+        <Label Grid.Row="6" Grid.Column="0" Margin="40 7" FontSize="24" Content="Ratings given:"></Label>
         <Label Grid.Row="7" Grid.Column="0" Margin="40 10" FontSize="24" Content="Vouchers left:"></Label>
         <Label Grid.Row="3" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding ReservationsNumber}"></Label>
         <Label Grid.Row="4" Grid.Column="1" Margin="0 10 0 0" FontSize="24" Content="{Binding AttendancesNumber}"></Label>
