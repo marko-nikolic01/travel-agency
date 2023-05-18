@@ -17,12 +17,12 @@ namespace TravelAgency.WPF.ViewModels
     /// <summary>
     /// Interaction logic for AcceptTourRequestDialogue.xaml
     /// </summary>
-    public partial class AcceptTourRequestDialogue : Window
+    public partial class AcceptTourRequestDialogue : Page
     {
-        public AcceptTourRequestDialogue(Domain.Models.TourRequest selectedRequest, int id)
+        public AcceptTourRequestDialogue(Domain.Models.TourRequest selectedRequest, int id, System.Windows.Navigation.NavigationService navigationService)
         {
             InitializeComponent();
-            this.DataContext = new AcceptTourRequestViewModel(selectedRequest, id);
+            this.DataContext = new AcceptTourRequestViewModel(selectedRequest, id, navigationService);
         }
     }
 }
