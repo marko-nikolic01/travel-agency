@@ -18,7 +18,11 @@ namespace TravelAgency.Domain.Models
         public DateSpan DateSpan
         {
             get { return dateSpan; }
-            set { dateSpan = value; }
+            set
+            {
+                dateSpan = value;
+                OnPropertyChanged(nameof(DateSpan));
+            }
         }
         private string description;
         public string Description

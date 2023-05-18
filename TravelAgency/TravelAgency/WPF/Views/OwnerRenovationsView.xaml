@@ -20,7 +20,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="Return" Command="{Binding ScheduleRenovationCommand, ElementName=root}"/>
         <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
     </Page.InputBindings>
 
@@ -90,8 +90,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="pastRenovationsDataGrid"
                           ItemsSource="{Binding PastRenovations}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding Accommodation.Name}"
@@ -127,7 +126,8 @@
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"
                                          KeyboardShortcutText="Enter"
-                                         Margin="0 16 10 16"/>
+                                         Margin="0 16 10 16"
+                                         Click="ScheduleRenovation_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Cancel renovation"

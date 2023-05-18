@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
@@ -20,9 +21,20 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerScheduleRenovationView : Page
     {
-        public OwnerScheduleRenovationView()
+        public OwnerScheduleRenovationViewModel ViewModel { get; set; }
+
+        public OwnerScheduleRenovationView(OwnerScheduleRenovationViewModel viewModel)
         {
             InitializeComponent();
+            ViewModel = viewModel;
+            DataContext = ViewModel;
+
+            Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void AddRenovation_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ScheduleRenovationCmd.Execute();
         }
     }
 }
