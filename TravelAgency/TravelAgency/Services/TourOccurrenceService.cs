@@ -5,6 +5,7 @@ using TravelAgency.Observer;
 using System.Globalization;
 using System.Windows.Controls;
 using TravelAgency.Domain.RepositoryInterfaces;
+using System.Collections.ObjectModel;
 
 namespace TravelAgency.Services
 {
@@ -298,7 +299,7 @@ namespace TravelAgency.Services
                 ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
             }
         }
-        public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId)
+        public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId, ObservableCollection<string> keyPoints, int duration)
         {
             Tour newTour = new Tour();
             newTour.Language = request.Language;
@@ -306,7 +307,7 @@ namespace TravelAgency.Services
             newTour.MaxGuestNumber = request.GuestNumber;
             newTour.LocationId = request.LocationId;
             newTour.Location = request.Location;
-            newTour.Duration = 2;
+            newTour.Duration = duration;
             ITourRepository.Save(newTour);
             TourOccurrence tourOccurrence = new TourOccurrence();
             tourOccurrence.TourId = newTour.Id;
@@ -314,14 +315,35 @@ namespace TravelAgency.Services
             tourOccurrence.DateTime = dateTime;
             tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
             ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, IUserRepository.GetById(GuideId));
-            SaveKeyPoint( "prva k. tacka", tourOccurrence);
-            SaveKeyPoint( "druga k. tacka", tourOccurrence);
+            foreach(string k in keyPoints)
+            {
+                SaveKeyPoint(k, tourOccurrence);
+            }
         }
 
         public void UndoCancelTour(int canceledTour)
         {
             IVoucherRepository.DeleteByCanceledTourId(canceledTour);
             ITourOccurrenceRepository.UndoDelete(canceledTour);
+        }
+
+        public bool IsGuideFree(int guideId, DateTime concreteDateTime, int duration)
+        {
+            foreach(var tourOccurrence in ITourOccurrenceRepository.GetUpcomings(guideId))
+            {
+                if(tourOccurrence.DateTime.Date == concreteDateTime.Date)
+                {
+                    if ((tourOccurrence.DateTime <= concreteDateTime) && (tourOccurrence.DateTime.AddHours(duration) >= concreteDateTime))
+                    {
+                        return false;
+                    }
+                    else if ((tourOccurrence.DateTime >= concreteDateTime) && (tourOccurrence.DateTime <= concreteDateTime.AddHours(duration)))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

@@ -21,10 +21,10 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class TourRequestBookingView : Page
     {
-        public TourRequestBookingView(int activeGuideId)
+        public TourRequestBookingView(int activeGuideId, NavigationService navigationService)
         {
             InitializeComponent();
-            this.DataContext = new TourRequestBookingViewModel(activeGuideId);
+            this.DataContext = new TourRequestBookingViewModel(activeGuideId, navigationService);
         }
     }
 }

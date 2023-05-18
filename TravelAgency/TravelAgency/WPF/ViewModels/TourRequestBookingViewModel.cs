@@ -8,7 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
@@ -137,8 +139,10 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter RemoveFilterCommand { get; set; }
         public TourRequestService TourRequestService { get; set; }
         public LocationService LocationService { get; set; }
-        public TourRequestBookingViewModel(int activeGuideId)
+        public NavigationService NavigationService { get; set; }
+        public TourRequestBookingViewModel(int activeGuideId, NavigationService navService)
         {
+            NavigationService = navService;
             ActiveGuide = new UserService().GetById(activeGuideId);
             TourRequestService = new TourRequestService();
             TourRequests = new ObservableCollection<TourRequest>(TourRequestService.GetPendings());
@@ -201,8 +205,8 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void ShowRequest()
         {
-            AcceptTourRequestDialogue acceptTourRequest = new AcceptTourRequestDialogue(SelectedRequest, ActiveGuide.Id);
-            acceptTourRequest.ShowDialog();
+            Page acceptTourRequest = new AcceptTourRequestDialogue(SelectedRequest, ActiveGuide.Id, NavigationService);
+            NavigationService.Navigate(acceptTourRequest);
         }
 
 
