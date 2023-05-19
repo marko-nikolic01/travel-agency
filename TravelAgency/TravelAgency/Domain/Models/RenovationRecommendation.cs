@@ -51,6 +51,7 @@ namespace TravelAgency.Domain.Models
             Id = -1;
             RatingId = -1;
             Description = "";
+            UrgencyLevel = UrgencyLevel.LEVEL1;
         }
 
         public RenovationRecommendation(AccommodationOwnerRating rating)
@@ -58,6 +59,7 @@ namespace TravelAgency.Domain.Models
             Id = -1;
             RatingId = rating.Id;
             Description = "";
+            UrgencyLevel = UrgencyLevel.LEVEL1;
         }
 
         public string[] ToCSV()

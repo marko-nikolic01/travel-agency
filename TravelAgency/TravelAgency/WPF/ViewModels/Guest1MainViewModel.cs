@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using TravelAgency.Domain.Models;
+using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
     public class Guest1MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private SuperGuestService _superGuestService;
+
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
@@ -24,10 +27,12 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1AccommodationSearchViewModel _guest1AccommodationSearchViewModel;
         private Guest1AccommodationReservationsViewModel _guest1AccommodationReservationsViewModel;
         private Guest1AccommodationReservationMoveRequestsViewModel _guest1AccommodationReservationMoveRequestsViewModel;
+        private Guest1RateableStaysViewModel _guest1RateableStaysViewModel;
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
         private string _selectedTab;
         private string _currentDateTime;
+        private DateTime _date;
 
         public ViewModelBase CurrentViewModel
         {
@@ -83,12 +88,17 @@ namespace TravelAgency.WPF.ViewModels
 
         public Guest1MainViewModel(User guest)
         {
+            _superGuestService = new SuperGuestService();
+
             Guest = guest;
+            _superGuestService.CheckSuperGuest(Guest);
+
             NavigationCommand = new MyICommand<string>(OnNavigation);
             _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
             _guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
             _guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
             _guest1ForumsMenuViewModel = new Guest1ForumsMenuViewModel(NavigationCommand);
+
             CurrentViewModel = _guest1HomeMenuViewModel;
             SelectedTab = "Home";
             StartTimer();
@@ -134,6 +144,16 @@ namespace TravelAgency.WPF.ViewModels
                     _guest1AccommodationReservationMoveRequestsViewModel = new Guest1AccommodationReservationMoveRequestsViewModel(NavigationCommand, Guest);
                     CurrentViewModel = _guest1AccommodationReservationMoveRequestsViewModel;
                     break;
+                case "guest1RateableStaysViewModel":
+                    _guest1RateableStaysViewModel = new Guest1RateableStaysViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = _guest1RateableStaysViewModel;
+                    break;
+                case "guest1WriteReviewViewModel":
+                    CurrentViewModel = new Guest1WriteReviewViewModel(NavigationCommand, _guest1RateableStaysViewModel.SelectedStay);
+                    break;
+                case "guest1ReviewsViewModel":
+                    CurrentViewModel = new Guest1ReviewsViewModel(NavigationCommand, Guest);
+                    break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
                     break;
@@ -150,7 +170,13 @@ namespace TravelAgency.WPF.ViewModels
 
         private void LoadCurrentDateTime(object sender, EventArgs e)
         {
-            CurrentDateTime = DateTime.Now.ToString("dd/MM/yyyy     hh:mm:ss tt");
+            DateTime newTime = DateTime.Now;
+            if (_date.Date != newTime.Date) 
+            {
+                _superGuestService.CheckSuperGuest(Guest);
+            }
+            _date = newTime;
+            CurrentDateTime = _date.ToString("dd/MM/yyyy     hh:mm:ss tt");
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

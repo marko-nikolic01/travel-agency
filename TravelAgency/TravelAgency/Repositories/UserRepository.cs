@@ -35,6 +35,7 @@ namespace TravelAgency.Repositories
                 {
                     if (title.GuestId == user.Id && title.IsActive())
                     {
+                        user.IsSuperGuest = true;
                         user.SuperGuestTitle = title;
                     }
                 }

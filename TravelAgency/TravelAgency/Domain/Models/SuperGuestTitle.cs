@@ -84,14 +84,6 @@ namespace TravelAgency.Domain.Models
             }
         }
 
-        public void ReturnPoint()
-        {
-            if (Points < 5)
-            {
-                Points++;
-            }
-        }
-
         public bool IsActive()
         {
             if (EndDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)

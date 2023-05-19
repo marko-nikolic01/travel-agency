@@ -22,6 +22,7 @@ namespace TravelAgency.Services
             UserRepository = Injector.Injector.CreateInstance<IUserRepository>();
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
+            ReservationRepository.LinkGuests(UserRepository.GetAll());
             UserRepository.LinkSuperGuestTitles(TitleRepository.GetAll());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
         }
@@ -59,12 +60,14 @@ namespace TravelAgency.Services
 
         private void CreateSuperGuestTitle(User guest)
         {
+            guest.IsSuperGuest = true;
             guest.SuperGuestTitle = new SuperGuestTitle(guest);
             TitleRepository.Save(guest.SuperGuestTitle);
         }
 
         private void EndSuperGuestTitle(User guest)
         {
+            guest.IsSuperGuest = false;
             guest.SuperGuestTitle = null;
             CheckSuperGuest(guest);
         }
@@ -74,15 +77,6 @@ namespace TravelAgency.Services
             if (guest.IsSuperGuest)
             {
                 guest.SuperGuestTitle.DeductPoint();
-                TitleRepository.SaveAll();
-            }
-        }
-
-        public void ReturnPoint(User guest)
-        {
-            if (guest.IsSuperGuest)
-            {
-                guest.SuperGuestTitle.ReturnPoint();
                 TitleRepository.SaveAll();
             }
         }

@@ -171,8 +171,8 @@ namespace TravelAgency.Domain.Models
             AccommodationComfort = Convert.ToInt32(values[4]);
             AccommodationLocation = Convert.ToInt32(values[5]);
             OwnerCorrectness = Convert.ToInt32(values[6]);
-            //OwnerResponsiveness = Convert.ToInt32(values[7]);
-            Comment = values[7];
+            OwnerResponsiveness = Convert.ToInt32(values[7]);
+            Comment = values[8];
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -222,12 +222,19 @@ namespace TravelAgency.Domain.Models
                         return "Rating for owner responsiveness must be between 1 and 5";
                     }
                 }
+                else if (columnName == "Comment")
+                {
+                    if (Comment == "")
+                    {
+                        return "You must leave a comment";
+                    }
+                }
 
                 return null;
             }
         }
 
-        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness" };
+        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness", "Comment" };
 
         public bool IsValid
         {

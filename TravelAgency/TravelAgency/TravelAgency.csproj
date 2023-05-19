@@ -12,6 +12,10 @@
     <None Remove="Resources\Images\accept-circular-button-outline.png" />
     <None Remove="Resources\Images\belled.png" />
     <None Remove="Resources\Images\cross-button.png" />
+    <None Remove="Resources\Images\email.png" />
+    <None Remove="Resources\Images\exclamation-mark.png" />
+    <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+    <None Remove="Resources\Images\maintenance.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
     <None Remove="Resources\Images\NavForum.png" />
@@ -21,6 +25,7 @@
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
+    <None Remove="Resources\Images\paintwork.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
     <None Remove="Resources\Images\Renovations.png" />
     <None Remove="Resources\Images\SuperOwnerMedal.png" />
@@ -50,7 +55,9 @@
     <None Remove="Resources\Images\star-in-a-circle.png" />
     <None Remove="Resources\Images\star.png" />
     <None Remove="Resources\Images\timer.png" />
+    <None Remove="Resources\Images\trash.png" />
     <None Remove="Resources\Images\user.png" />
+    <None Remove="Resources\Images\verify.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +75,11 @@
 	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
 	  <Resource Include="Resources\Images\belled.png" />
 	  <Resource Include="Resources\Images\cross-button.png" />
+	  <Resource Include="Resources\Images\email.png" />
+	  <Resource Include="Resources\Images\exclamation-mark.png" />
+	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+	  <Resource Include="Resources\Images\maintenance.png" />
+	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
@@ -78,6 +90,7 @@
 	  <Resource Include="Resources\Images\calendarCheck.png" />
 	  <Resource Include="Resources\Images\calendarUp.png" />
 	  <Resource Include="Resources\Images\exit.png" />
+	  <Resource Include="Resources\Images\trash.png" />
 	  <Resource Include="Resources\Images\undo.png" />
 	  <Resource Include="Resources\Images\add.png" />
 	  <Resource Include="Resources\Images\books.png" />
@@ -144,6 +157,7 @@
       <Resource Include="Resources\Images\Picture5.PNG" />
       <Resource Include="Resources\Images\Picture6.PNG" />
       <Resource Include="Resources\Images\Picture7.PNG" />
+      <Resource Include="Resources\Images\verify.png" />
   </ItemGroup>
 
   <ItemGroup>

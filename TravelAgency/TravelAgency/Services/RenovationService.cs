@@ -48,6 +48,7 @@ namespace TravelAgency.Services
                 RecommendationRepository.Save(recommendation);
                 rating.RenovationReccommendationId = recommendation.Id;
                 rating.RenovationRecommendation = recommendation;
+                RatingRepository.SaveAll();
                 return true;
             }
             return false;
