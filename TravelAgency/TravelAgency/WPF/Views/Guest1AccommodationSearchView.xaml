@@ -299,7 +299,10 @@
                                         </Grid>
                                     </Button.Content>
                                 </Button>
-                                <Image Grid.Row="1" Grid.Column="6" Height="25" Width="25" Source="../../Resources/Images/star.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                                <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="6">
+                                    <Image Height="25" Width="25" Source="../../Resources/Images/star.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                                    <Image Height="25" Width="25" Source="../../Resources/Images/paintwork.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

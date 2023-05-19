@@ -101,7 +101,8 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand">
+            <Button Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1ReviewsViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

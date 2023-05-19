@@ -77,14 +77,5 @@ namespace TravelAgency.Services
                 TitleRepository.SaveAll();
             }
         }
-
-        public void ReturnPoint(User guest)
-        {
-            if (guest.IsSuperGuest)
-            {
-                guest.SuperGuestTitle.ReturnPoint();
-                TitleRepository.SaveAll();
-            }
-        }
     }
 }

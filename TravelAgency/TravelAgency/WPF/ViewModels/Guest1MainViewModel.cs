@@ -142,6 +142,9 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1WriteReviewViewModel":
                     CurrentViewModel = new Guest1WriteReviewViewModel(NavigationCommand, _guest1RateableStaysViewModel.SelectedStay);
                     break;
+                case "guest1ReviewsViewModel":
+                    CurrentViewModel = new Guest1ReviewsViewModel(NavigationCommand, Guest);
+                    break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
                     break;

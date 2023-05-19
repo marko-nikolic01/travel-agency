@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
@@ -22,6 +23,7 @@ namespace TravelAgency.WPF.ViewModels
         private AccommodationSearchService _searchService;
         private LocationService _locationService;
         private SuperOwnerService _superOwnerService;
+        private RenovationService _renovationService;
 
         public User Guest { get; set; }
         private ObservableCollection<Accommodation> _accommodations;
@@ -137,6 +139,7 @@ namespace TravelAgency.WPF.ViewModels
             _searchService = new AccommodationSearchService();
             _locationService = new LocationService();
             _superOwnerService = new SuperOwnerService();
+            _renovationService = new RenovationService();
 
             InitializeData();
         }

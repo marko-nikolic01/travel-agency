@@ -17,7 +17,6 @@ namespace TravelAgency.WPF.ViewModels
         private AccommodationReservationMoveService _moveService;
 
         public MyICommand<string> NavigationCommand { get; private set; }
-        public MyICommand CancelReservationCommand { get; private set; }
 
         public User Guest { get; set; }
         private ObservableCollection<AccommodationReservationMoveRequest> _moveRequests;
