@@ -34,6 +34,7 @@ namespace TravelAgency.WPF.ViewModels
             set
             {
                 selectedAccommodation = value;
+                OnPropertyChanged(nameof(SelectedAccommodation));
                 UpdateAvailableDateSpans();
             }
         }
@@ -179,6 +180,8 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
+            NewAccommodationRenovation.AccommodationId = SelectedAccommodation.Id;
+            NewAccommodationRenovation.Accommodation = SelectedAccommodation;
             NewAccommodationRenovation.DateSpan = SelectedDateSpan;
 
             renovationService.ScheduleRenovation(NewAccommodationRenovation);
