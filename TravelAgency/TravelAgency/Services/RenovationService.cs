@@ -132,7 +132,8 @@ namespace TravelAgency.Services
 
         public bool IsDateInTheLastYear(DateOnly date)
         {
-            return DateOnly.FromDateTime(DateTime.Now).DayNumber - date.DayNumber < 365;
+            int days = DateOnly.FromDateTime(DateTime.Now).DayNumber - date.DayNumber;
+            return 0 < days && days < 365;
         }
 
         public List<AccommodationWithRenovationDTO> GetAccommodationswWithRenovations()
