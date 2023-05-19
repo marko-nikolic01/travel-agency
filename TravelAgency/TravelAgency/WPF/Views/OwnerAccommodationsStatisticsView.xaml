@@ -13,6 +13,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding NavigateToMonthStatsCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -56,8 +57,10 @@
             </Grid>
 
             <DataGrid Grid.Row="1"
+                      x:Name="yearStatsDataGrid"
                       Style="{StaticResource ownerDataGrid}"
                       ItemsSource="{Binding StatisticsDTO.StatisticsByYear}"
+                      SelectedItem="{Binding SelectedYearStats}"
                       Margin="0 0 0 10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Year"
@@ -90,7 +93,9 @@
                            FontWeight="Bold"/>
 
                 <TextBox Grid.Column="1"
-                         Style="{StaticResource formTextBox}"/>
+                         Style="{StaticResource formTextBox}"
+                         Text="{Binding StatisticsDTO.BusiestYear}"
+                         IsReadOnly="True"/>
             </Grid>            
         </Grid>
 
@@ -115,7 +120,8 @@
 
                 <controls:ButtonWithShortcut Grid.Column="1"
                                              Text="Get statistics for the selected year"
-                                             KeyboardShortcutText="Enter"/>
+                                             KeyboardShortcutText="Ctrl+T"
+                                             Click="MonthlyStatistics_Click"/>
             </Grid>
 
             <controls:Tip Grid.Column="2"

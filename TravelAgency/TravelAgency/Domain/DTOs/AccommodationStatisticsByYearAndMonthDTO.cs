@@ -16,7 +16,7 @@ namespace TravelAgency.Domain.DTOs
         public int Month { get; set; }
         public int NumberOfReservations { get; set; }
         public int NumberOfCancellations { get; set; }
-        public int NumberOfReservationMovings { get; set; }
+        public int NumberOfMovings { get; set; }
         public int NumberOfRenovationSuggestions { get; set; }
         public int NumberOfBusyDays { get; set; }
 
@@ -27,7 +27,7 @@ namespace TravelAgency.Domain.DTOs
             Month = month;
             NumberOfReservations = numberOfReservations;
             NumberOfCancellations = numberOfCancellations;
-            NumberOfReservationMovings = numberOfReservationMovings;
+            NumberOfMovings = numberOfReservationMovings;
             NumberOfRenovationSuggestions = numberOfRenovationSuggestions;
             NumberOfBusyDays = busyDays;
         }

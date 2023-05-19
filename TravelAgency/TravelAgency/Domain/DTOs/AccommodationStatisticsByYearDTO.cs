@@ -17,6 +17,7 @@ namespace TravelAgency.Domain.DTOs
         public int NumberOfRenovationSuggestions { get; set; }
         public int NumberOfBusyDays { get; set; }
         public List<AccommodationStatisticsByYearAndMonthDTO>? StatisticsByMonths { get; set; }
+        public string BusiestMonth { get; set; }
 
         public AccommodationStatisticsByYearDTO()
         {
@@ -27,6 +28,7 @@ namespace TravelAgency.Domain.DTOs
             NumberOfMovings = 0;
             NumberOfRenovationSuggestions = 0;
             NumberOfBusyDays = 0;
+            BusiestMonth = string.Empty;
 
             StatisticsByMonths = new List<AccommodationStatisticsByYearAndMonthDTO>();
         }

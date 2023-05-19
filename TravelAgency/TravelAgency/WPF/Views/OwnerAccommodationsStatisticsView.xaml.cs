@@ -23,18 +23,34 @@ namespace TravelAgency.WPF.Views
     public partial class OwnerAccommodationsStatisticsView : Page
     {
         public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand NavigateToMonthStatsCommand { get; set; }
 
         public OwnerAccommodationsStatisticsViewModel ViewModel { get; set; }
 
         public OwnerAccommodationsStatisticsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
+            NavigateToMonthStatsCommand = new MyICommand(Execute_NavigateToMonthStatsCommand);
 
             InitializeComponent();
-            ViewModel = new OwnerAccommodationsStatisticsViewModel();
+            ViewModel = new OwnerAccommodationsStatisticsViewModel(this.NavigationService);
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_NavigateToMonthStatsCommand()
+        {
+            if (ViewModel.SelectedYearStats != null)
+            {
+                OwnerAccommodationStatisticsByYearViewModel vm = new OwnerAccommodationStatisticsByYearViewModel(ViewModel.SelectedYearStats);
+                OwnerAccommodationStatisticsByYearView page = new OwnerAccommodationStatisticsByYearView(vm);
+                this.NavigationService.Navigate(page);
+            }
+            else
+            {
+                MessageBox.Show("Select a year.");
+            }
         }
 
         private void Execute_NavigateBackCommand()
@@ -45,6 +61,11 @@ namespace TravelAgency.WPF.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             Execute_NavigateBackCommand();
+        }
+
+        private void MonthlyStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToMonthStatsCommand();
         }
     }
 }

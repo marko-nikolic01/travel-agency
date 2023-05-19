@@ -9,6 +9,9 @@ using TravelAgency.Repositories;
 using TravelAgency.Domain.Models;
 using Syncfusion.Windows.Shared;
 using System.Windows.Media;
+using Syncfusion.Windows.PdfViewer;
+using TravelAgency.Converters;
+using System.Globalization;
 
 namespace TravelAgency.Services
 {
@@ -57,7 +60,34 @@ namespace TravelAgency.Services
                 dto.StatisticsByYear.Add(statisticsForYear);
             }
 
+            dto.BusiestYear = GetBusiestYear(dto);
+
             return dto;
+        }
+
+        private string GetBusiestYear(AccommodationStatisticsDTO accommodationStatisticsDTO)
+        {
+            var busiestYearStats = accommodationStatisticsDTO.StatisticsByYear.OrderByDescending(a => a.NumberOfBusyDays).FirstOrDefault();
+            
+            if (busiestYearStats != null)
+            {
+                return busiestYearStats.Year.ToString();
+            }
+
+            return string.Empty;
+        }
+
+        private string GetBusiestMonth(AccommodationStatisticsByYearDTO accommodationStatisticsByYear)
+        {
+            var busiestMonthStats = accommodationStatisticsByYear.StatisticsByMonths.OrderByDescending(a => a.NumberOfBusyDays).FirstOrDefault();
+
+            if (busiestMonthStats != null)
+            {
+                var converter = new IntegerToMonthString();
+                return (string)converter.Convert(busiestMonthStats.Month, typeof(string), null, CultureInfo.CurrentCulture);
+            }
+
+            return string.Empty;
         }
 
         private List<int> GetActiveYearsForAccommodation(Accommodation accommodation)
@@ -103,15 +133,18 @@ namespace TravelAgency.Services
             for (int i = 1; i <= 12; i++) {
                 var monthStat = GetStatisticsForAccommodationByMonthAndYear(accommodation, year, i);
 
+                dto.Accommodation = accommodation;
                 dto.Year = year;
                 dto.NumberOfReservations += monthStat.NumberOfReservations;
                 dto.NumberOfCancellations += monthStat.NumberOfCancellations;
-                dto.NumberOfMovings += monthStat.NumberOfReservationMovings;
+                dto.NumberOfMovings += monthStat.NumberOfMovings;
                 dto.NumberOfRenovationSuggestions += monthStat.NumberOfRenovationSuggestions;
                 dto.NumberOfBusyDays += monthStat.NumberOfBusyDays;
 
                 dto.StatisticsByMonths.Add(monthStat);
             }
+
+            dto.BusiestMonth = GetBusiestMonth(dto);
 
             return dto;
         }

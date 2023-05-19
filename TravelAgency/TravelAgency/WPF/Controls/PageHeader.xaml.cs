@@ -34,7 +34,6 @@ namespace TravelAgency.WPF.Controls
         public PageHeader()
         {
             InitializeComponent();
-            DataContext = this;
         }
     }
 }
