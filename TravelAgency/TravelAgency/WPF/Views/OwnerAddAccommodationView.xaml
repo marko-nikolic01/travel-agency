@@ -121,7 +121,8 @@
                 <TextBox Grid.Row="0" Grid.Column="1"
                          x:Name="nameTextBox"
                          Text="{Binding NewAccommodation.Name,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
-                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
+                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                         Style="{StaticResource formTextBox}"/>
                 
                 <ComboBox Grid.Row="1" Grid.Column="1"
                           x:Name="CountryComboBox"

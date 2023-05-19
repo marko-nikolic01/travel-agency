@@ -146,5 +146,13 @@ namespace TravelAgency.Services
 
             return dtos;
         }
+
+        public void SetRenovationStatus(List<Accommodation> accommodations)
+        {
+            foreach (var accommodation in accommodations)
+            {
+                accommodation.IsRenovated = IsAccommodationRenovatedInTheLastYear(accommodation);
+            }
+        }
     }
 }

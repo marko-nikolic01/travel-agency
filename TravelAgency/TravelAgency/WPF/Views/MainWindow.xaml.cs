@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Injector;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
 using TravelAgency.WPF.Views;
@@ -28,7 +30,7 @@ namespace TravelAgency
     /// //The main logic for this class was taken from the example uploaded on canvas
     public partial class MainWindow : Window
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
         private UserService _userService;
 
         private string _username;
@@ -56,7 +58,7 @@ namespace TravelAgency
         {
             InitializeComponent();
             DataContext = this;
-            _repository = new UserRepository();
+            _repository = Injector.Injector.CreateInstance<IUserRepository>();
             _userService = new UserService();
         }
 

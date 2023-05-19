@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
@@ -55,7 +56,6 @@ namespace TravelAgency.Services
             }
 
             averageRating /= ratings.Count;
-
             return averageRating;
         }
 

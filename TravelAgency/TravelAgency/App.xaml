@@ -15,7 +15,7 @@
             </Style>
 
             <Style TargetType="controls:ButtonWithShortcut" x:Key="backButton">
-                <Setter Property="Background" Value="#111111"/>
+                <Setter Property="Background" Value="#222222"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Text" Value="Back"/>
                 <Setter Property="KeyboardShortcutText" Value="Backspace"/>

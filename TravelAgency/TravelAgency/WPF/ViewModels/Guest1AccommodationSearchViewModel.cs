@@ -158,6 +158,7 @@ namespace TravelAgency.WPF.ViewModels
             List<Accommodation> accommodations = _accommodationService.GetAccommodations();
             accommodations = _superOwnerService.SortBySuperOwnersFirst(accommodations);
             Accommodations = new ObservableCollection<Accommodation>(accommodations);
+            _renovationService.SetRenovationStatus(accommodations);
         }
 
         private void InitializeLocations()

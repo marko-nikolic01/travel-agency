@@ -25,6 +25,7 @@ namespace TravelAgency.WPF.Pages
     {
         public MyICommand NavigateToManageAccommodationsPageCommand { get; set; }
         public MyICommand NavigateToRenovationsPageCommand { get; set; }
+        public MyICommand NavigateToStatisticsPageCommand { get; set; }
 
         public OwnerAccommodationsViewModel ViewModel { get; set; }
 
@@ -32,10 +33,18 @@ namespace TravelAgency.WPF.Pages
         {
             NavigateToManageAccommodationsPageCommand = new MyICommand(Execute_ManageAccommodationsNavigationButton);
             NavigateToRenovationsPageCommand = new MyICommand(Execute_RenovationsNavigationButton);
+            NavigateToStatisticsPageCommand = new MyICommand(Execute_StatisticsNavigationButton);
+
             InitializeComponent();
             ViewModel = new OwnerAccommodationsViewModel();
             DataContext = ViewModel;
+
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_StatisticsNavigationButton()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerAccommodationsStatisticsView.xaml", UriKind.Relative));
         }
 
         private void Execute_RenovationsNavigationButton()
@@ -61,6 +70,11 @@ namespace TravelAgency.WPF.Pages
         private void AccommodationsNavigationButton_Click(object sender, RoutedEventArgs e)
         {
             Execute_ManageAccommodationsNavigationButton();
+        }
+
+        private void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_StatisticsNavigationButton();
         }
     }
 }

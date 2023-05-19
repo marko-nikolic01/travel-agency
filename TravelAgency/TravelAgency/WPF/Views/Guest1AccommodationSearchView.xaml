@@ -301,7 +301,8 @@
                                 </Button>
                                 <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="6">
                                     <Image Height="25" Width="25" Source="../../Resources/Images/star.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
-                                    <Image Height="25" Width="25" Source="../../Resources/Images/paintwork.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                                    <Rectangle Height="10" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Rectangle>
+                                    <Image Height="25" Width="25" Source="../../Resources/Images/maintenance.png" Visibility="{Binding Path=IsRenovated, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
