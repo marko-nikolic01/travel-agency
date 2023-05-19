@@ -44,24 +44,36 @@
                            Style="{StaticResource formTextBlock}"/>
 
                 <ComboBox Grid.Column="1"
-                          Style="{StaticResource formComboBox}"/>
+                          ItemsSource="{Binding Accommodations}"
+                          SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
+                          Style="{StaticResource formComboBox}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <DataGrid Grid.Row="1"
                       Style="{StaticResource ownerDataGrid}"
+                      ItemsSource="{Binding StatisticsDTO.StatisticsByYear}"
                       Margin="0 0 0 10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Year"
-                                        Binding="{Binding Accommodation.Name}"
-                                        Width="*"/>
+                                        Binding="{Binding Year}"
+                                        Width="0.5*"/>
                     <DataGridTextColumn Header="Reservations"
-                                        Binding="{Binding DateSpan.StartDate}"
+                                        Binding="{Binding NumberOfReservations}"
                                         Width="*"/>
                     <DataGridTextColumn Header="Cancellations"
-                                        Binding="{Binding DateSpan.EndDate}"
+                                        Binding="{Binding NumberOfCancellations}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Reservation movings"
+                                        Binding="{Binding NumberOfMovings}"
                                         Width="*"/>
                     <DataGridTextColumn Header="Renovation suggestions"
-                                        Binding="{Binding Description}"
+                                        Binding="{Binding NumberOfRenovationSuggestions}"
                                         Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

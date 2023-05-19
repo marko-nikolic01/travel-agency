@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
@@ -23,11 +24,15 @@ namespace TravelAgency.WPF.Views
     {
         public MyICommand NavigateBackCommand { get; set; }
 
+        public OwnerAccommodationsStatisticsViewModel ViewModel { get; set; }
+
         public OwnerAccommodationsStatisticsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
 
             InitializeComponent();
+            ViewModel = new OwnerAccommodationsStatisticsViewModel();
+            DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
         }

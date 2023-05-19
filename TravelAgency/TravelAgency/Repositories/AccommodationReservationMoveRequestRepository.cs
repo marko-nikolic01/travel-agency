@@ -107,5 +107,19 @@ namespace TravelAgency.Repositories
             moveRequest.StatusChanged = status;
             _serializer.ToCSV(FilePath, _moveRequests);
         }
+
+        public List<AccommodationReservationMoveRequest> GetByAccommodation(Accommodation accommodation)
+        {
+            var filtered = new List<AccommodationReservationMoveRequest>();
+            foreach (var moveRequest in _moveRequests)
+            {
+                if (moveRequest.Reservation.Accommodation == accommodation)
+                {
+                    filtered.Add(moveRequest);
+                }
+            }
+
+            return filtered;
+        }
     }
 }
