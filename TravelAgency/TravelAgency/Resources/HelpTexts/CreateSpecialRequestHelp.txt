@@ -9,7 +9,7 @@ click on save and add next request, and new form for new request will open.
 Also you can go back and forward through your requests by clicking pointing
 buttons on the left and right side.
 
-You can discard the request which are you on right now, by clicking delete this request.
+You can discard the request which are you currently filling, by clicking delete this request.
 
 Once you finished click on submit request and request will be saved and showed in
 special requests page.

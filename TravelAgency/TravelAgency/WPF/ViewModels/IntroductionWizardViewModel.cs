@@ -91,7 +91,7 @@ namespace TravelAgency.WPF.ViewModels
             else if (i == 1)
             {
                 BackButtonVisibility = "Visible";
-                Text = "This is offered tours page. It serves you to choose the tour" +
+                Text = "This is offered tours page. It allows you to choose the tour" +
                     "\n and make a reservation for it";
                 ImageSource = "../../Resources/Images/Picture2.PNG";
             }
@@ -110,7 +110,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else if (i == 4)
             {
-                Text = "Tour rating";
+                Text = "Tour rating form";
                 ImageSource = "../../Resources/Images/Picture5.PNG";
             }
             else if (i == 5)

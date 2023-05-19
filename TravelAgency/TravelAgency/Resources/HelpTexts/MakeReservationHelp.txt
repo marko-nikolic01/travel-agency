@@ -1,4 +1,4 @@
-This is form for tour reservation.
+This is form for making tour reservation.
 
 To reserve one tour you need to do following things:
 
@@ -7,7 +7,7 @@ You can deselect it by clicking button right to the vouchers list.
 
 Enter number of guests for which you want to reserve, keep in mind that you
 can't reserve for more guests than there are free spots on tour.
-Next to field where the number of guests is entered you have many spots are left
+Next to field where the number of guests is entered you have how many spots are left
 for the current input.
 
 Next you have to select who are concrete guests you are reservating for, if

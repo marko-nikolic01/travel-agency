@@ -7,11 +7,13 @@ namespace TravelAgency.WPF.Views
     public partial class TourRequestView : Page
     {
         TourRequestViewModel viewModel;
-        public TourRequestView(int id)
+        public TourRequestView(int id, bool requestMade = false)
         {
             viewModel = new TourRequestViewModel(id);
             InitializeComponent();
             DataContext = viewModel;
+            if (requestMade)
+                MessageBox.Show("The request was made successfully.");
         }
 
         private void CreateRequest_Click(object sender, RoutedEventArgs e)

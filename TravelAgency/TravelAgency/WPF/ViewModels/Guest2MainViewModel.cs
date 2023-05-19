@@ -73,7 +73,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Execute_NavigateToOfferedToursCommand(object obj)
         {
-            Page OfferedTours = new OfferedToursView(currentGuestId);
+            Page OfferedTours = new OfferedToursView(currentGuestId, false);
             NavService.Navigate(OfferedTours);
             UpdateHelpText("OfferedToursHelp");
         }

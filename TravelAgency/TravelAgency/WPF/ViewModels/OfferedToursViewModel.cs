@@ -18,8 +18,6 @@ namespace TravelAgency.WPF.ViewModels
         private string city;
         private string country;
         private string guests;
-        private bool helpClicked;
-        private bool dataGridClicked;
         private ObservableCollection<TourOccurrence> occurrences;
         TourOccurrenceService occurrenceService;
         public ObservableCollection<TourOccurrence> TourOccurrences
@@ -28,18 +26,6 @@ namespace TravelAgency.WPF.ViewModels
             set { occurrences = value; OnPropertyChanged(); }
         }
         public TourOccurrence SelectedTourOccurrence { get; set; }
-        public ButtonCommandNoParameter SearchHelpCommand { get; set; }
-        public ButtonCommandNoParameter DataGridHelpCommand { get; set; }
-        public bool SearchHelpClicked
-        {
-            get { return helpClicked; }
-            set { helpClicked = value; OnPropertyChanged(); }
-        }
-        public bool DataGridHelpClicked
-        {
-            get { return dataGridClicked; }
-            set { dataGridClicked = value; OnPropertyChanged(); }
-        }
         public string Country{
             get { return country; }
             set { country = value; OnPropertyChanged(); }
@@ -72,9 +58,6 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrences = new ObservableCollection<TourOccurrence>(occurrenceService.GetOfferedTours());
             currentGuestId = id;
             occurrenceService.Subscribe(this);
-            SearchHelpClicked = false;
-            SearchHelpCommand = new ButtonCommandNoParameter(HelpClick);
-            DataGridHelpCommand = new ButtonCommandNoParameter(DataGridClick);
             SetSelectedTourOccurrence(selectedTourOccurrenceId);
         }
         private void SetSelectedTourOccurrence(int occurrenceId)
@@ -87,14 +70,6 @@ namespace TravelAgency.WPF.ViewModels
                         SelectedTourOccurrence = occurrence;
                 }
             }
-        }
-        private void HelpClick()
-        {
-            SearchHelpClicked = !SearchHelpClicked;
-        }
-        private void DataGridClick()
-        {
-            DataGridHelpClicked = !DataGridHelpClicked;
         }
         public bool CanTourBeReserved()
         {
