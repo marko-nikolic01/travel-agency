@@ -56,10 +56,10 @@
             <ListBox Grid.Column="1" Margin="10" Grid.Row="0" Height="80" ItemsSource="{Binding Vouchers}" Name="vouchersList"
                  SelectedValue="{Binding SelectedVoucher}" 
                  DisplayMemberPath="VoucherString" />
-            <Button Width="40" Grid.Row="0" Grid.Column="3" Height="40" HorizontalAlignment="Center" x:Name="VouchersBtn" VerticalAlignment="Center" Command="{Binding VoucherHelpCommand}">
+            <Button Width="40" Grid.Row="0" Grid.Column="3" Height="40" HorizontalAlignment="Center" x:Name="VouchersBtn" VerticalAlignment="Center" Command="{Binding FirstHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = VoucherHelpClicked}"    
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = VouchersBtn}" Placement="Left"
                 AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -74,19 +74,21 @@
                 </Popup>
                 <Button Content="Deselect" Grid.Column="2" Grid.Row="0" Background="#4681f4" Foreground="White" Width="150" Height="30" HorizontalAlignment="Center" Click="Deselect_Click"></Button>
                 <Label Margin="20 0" Grid.Column="0" Grid.Row="2">Guests which will come:</Label>
-            <xctk:IntegerUpDown Margin="10" Grid.Column="1" TextAlignment="Left" Grid.Row="1" FontSize="20" Name="myUpDownControl" Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:IntegerUpDown Minimum="1" Margin="10" Grid.Column="1" TextAlignment="Left" Grid.Row="1" FontSize="20" Name="myUpDownControl" Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Column="2" FontSize="20" Grid.Row="1" Text="{Binding Path=SpotsLeft}"></TextBlock>
             <TextBox Margin="10" Grid.Column="1" Grid.Row="2" Name="GuestUsernameText" Text="{Binding Path=GuestName}"></TextBox>
             <Button Grid.Column="1" Grid.Row="3" Background="#4681f4" Foreground="White" Content="Add" Width="150" Height="30" IsEnabled="{Binding IsAddButtonEnabled}" Command="{Binding AddGuestCommand}" x:Name="AddButton"></Button>
             <ListBox Margin="10" Grid.Column="1" Grid.Row="4" Name="GuestList" ItemsSource="{Binding GuestsList}" SelectedValue="{Binding SelectedGuest}">
             </ListBox>
+            <TextBlock Grid.Row="4" FontSize="16" Grid.Column="2" HorizontalAlignment="Left" Margin="20 0" VerticalAlignment="Center" Foreground="Red" Text="{Binding GuestsLeft}"></TextBlock>
+
             <Button Grid.Column="1" Grid.Row="5" Background="#4681f4" Foreground="White" Content="Remove Guest" Width="150" Height="30" Command="{Binding RemoveGuestCommand}"></Button>
             
             <Grid Grid.Column="3" Grid.Row="4">
-                <Button Width="40" Height="40" HorizontalAlignment="Center" x:Name="GuestListBtn" VerticalAlignment="Center" Command="{Binding GuestsHelpCommand}">
+                <Button Width="40" Height="40" HorizontalAlignment="Center" x:Name="GuestListBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = GuestsHelpClicked}"    
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = GuestListBtn}" Placement="Left"
                 AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -102,10 +104,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Column="3" Grid.Row="1">
-                <Button Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestsBtn" VerticalAlignment="Center" Command="{Binding NumGuestsHelpCommand}">
+                <Button Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestsBtn" VerticalAlignment="Center" Command="{Binding SecondHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = NumGuestsHelpClicked}"    
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = NumGuestsBtn}" Placement="Left"
                 AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">

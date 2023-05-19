@@ -22,11 +22,13 @@ namespace TravelAgency.WPF.Views
     public partial class SpecialTourRequestsView : Page
     {
         int id;
-        public SpecialTourRequestsView(int guestId)
+        public SpecialTourRequestsView(int guestId, bool requestMade = false)
         {
             id = guestId;
             InitializeComponent();
             DataContext = new SpecialTourRequestsViewModel(guestId);
+            if (requestMade)
+                MessageBox.Show("The request was made successfully.");
         }
 
         private void NewRequest_Click(object sender, RoutedEventArgs e)

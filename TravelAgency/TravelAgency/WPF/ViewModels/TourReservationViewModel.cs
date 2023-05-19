@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
@@ -15,32 +14,31 @@ namespace TravelAgency.WPF.ViewModels
         private string guestName;
         private string guestsNumber;
         private string spotsLeft;
+        private string guestsLeft;
         private bool addEnabled;
         private bool submitEnabled;
-        private bool guestsHelpClicked;
-        private bool numGuestsHelpClicked;
-        private bool voucherHelpClicked;
         public string TourDescription { get; set; }
         public string GuestName { get => guestName; 
                                   set{ if (value != guestName) { guestName = value; OnPropertyChanged(); }}}
         public string GuestsNumber{ get => guestsNumber; 
                                     set { if (value != guestsNumber) { guestsNumber = value; OnPropertyChanged(); CheckSpotsNumber(); } } }
-
+        public string GuestsLeft
+        {
+            get => guestsLeft;
+            set
+            {
+                if (value != guestsLeft)
+                {
+                    guestsLeft = value; OnPropertyChanged();
+                }
+            }
+        }
         public string SpotsLeft { get => spotsLeft;
                                   set { if (value != spotsLeft) { spotsLeft = value; OnPropertyChanged(); } } }
         public bool IsAddButtonEnabled { get => addEnabled;
                                          set { if (value != addEnabled) { addEnabled = value; OnPropertyChanged(); } } }
         public bool IsSubmitButtonEnabled { get => submitEnabled;
             set { if (value != submitEnabled) { submitEnabled = value; OnPropertyChanged(); } } }
-        public bool GuestsHelpClicked { get => guestsHelpClicked;
-            set { if (value != guestsHelpClicked) { guestsHelpClicked = value; OnPropertyChanged(); } } }
-        public bool NumGuestsHelpClicked
-        {
-            get => numGuestsHelpClicked;
-            set { if (value != numGuestsHelpClicked) { numGuestsHelpClicked = value; OnPropertyChanged(); } }
-        }
-        public bool VoucherHelpClicked{ get => voucherHelpClicked;
-            set { if (value != voucherHelpClicked) { voucherHelpClicked = value; OnPropertyChanged(); } } }
         public ObservableCollection<string> GuestsList { get; set; }
 
         private UserService userService;
@@ -49,9 +47,6 @@ namespace TravelAgency.WPF.ViewModels
         public string SelectedGuest { get; set; }
         public ButtonCommandNoParameter AddGuestCommand { get; set; }
         public ButtonCommandNoParameter RemoveGuestCommand { get; set; }
-        public ButtonCommandNoParameter GuestsHelpCommand { get; set; }
-        public ButtonCommandNoParameter NumGuestsHelpCommand { get; set; }
-        public ButtonCommandNoParameter VoucherHelpCommand { get; set; }
         private TourOccurrence tourOccurrence;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -74,21 +69,7 @@ namespace TravelAgency.WPF.ViewModels
             GuestsNumber = "1";
             AddGuestCommand = new ButtonCommandNoParameter(AddGuest);
             RemoveGuestCommand = new ButtonCommandNoParameter(RemoveGuest);
-            GuestsHelpCommand = new ButtonCommandNoParameter(GuestsHelpClick);
-            NumGuestsHelpCommand = new ButtonCommandNoParameter(NumGuestsHelpClick);
-            VoucherHelpCommand = new ButtonCommandNoParameter(VoucherHelpClick);
-        }
-        private void NumGuestsHelpClick()
-        {
-            NumGuestsHelpClicked = !NumGuestsHelpClicked;
-        }
-        private void GuestsHelpClick()
-        {
-            GuestsHelpClicked = !GuestsHelpClicked;
-        }
-        private void VoucherHelpClick()
-        {
-            VoucherHelpClicked = !VoucherHelpClicked;
+            UpdateHelpText();
         }
         private void RemoveGuest()
         {
@@ -97,6 +78,7 @@ namespace TravelAgency.WPF.ViewModels
                 GuestsList.Remove(SelectedGuest);
                 IsAddButtonEnabled = true;
                 IsSubmitButtonEnabled = false;
+                HowManyGuestsLeft();
             }
         }
         private void AddGuest()
@@ -105,6 +87,7 @@ namespace TravelAgency.WPF.ViewModels
             {
                 GuestsList.Add(GuestName);
                 GuestName = "";
+                HowManyGuestsLeft();
                 IsListBoxFull();
             }
         }
@@ -148,6 +131,7 @@ namespace TravelAgency.WPF.ViewModels
                 int spotsLeft = tourOccurrence.Tour.MaxGuestNumber - (tourOccurrence.Guests.Count + input);
                 if (spotsLeft < 0)
                 {
+                    GuestsLeft = "";
                     SpotsLeft = "Not enough\nspots on tour";
                     IsSubmitButtonEnabled = false;
                 }
@@ -159,6 +143,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else
             {
+                GuestsLeft = "";
                 SpotsLeft = "Wrong input";
                 IsSubmitButtonEnabled = false;
             }   
@@ -177,12 +162,29 @@ namespace TravelAgency.WPF.ViewModels
             {
                 IsAddButtonEnabled = true;
                 IsSubmitButtonEnabled = false;
+                int x = currentGuestNumber - GuestsList.Count;
+                GuestsLeft = "Add "+x+" more \n guests";
             }
             else
             {
                 IsAddButtonEnabled = false;
                 IsSubmitButtonEnabled = true;
+                GuestsLeft = "";
             }
+        }
+        private void HowManyGuestsLeft()
+        {
+            int currentGuestNumber = int.Parse(GuestsNumber);
+            int x;
+            if ((x = currentGuestNumber - GuestsList.Count) > 0)
+                GuestsLeft = "Add " + x + " more \n guests";
+            else
+                GuestsLeft = "";
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/MakeReservationHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

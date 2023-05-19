@@ -51,10 +51,10 @@
                 </Grid.ColumnDefinitions>
                 <Label Margin="20" Grid.Column="0" FontSize="24" Content="Active Tour"></Label>
                 <Grid Grid.Column="1">
-                    <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="ActiveTourBtn" VerticalAlignment="Top" Command="{Binding ActiveTourHelpCommand}">
+                    <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="ActiveTourBtn" VerticalAlignment="Top" Command="{Binding FirstHelpCommand}">
                         <Image Source="../../Resources/Images/questionmark.png"></Image>
                     </Button>
-                    <Popup IsOpen = "{Binding Path = ActiveTourHelpClicked}"    
+                    <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = ActiveTourBtn}" Placement="Left"
                     AllowsTransparency = "True">
                         <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -95,7 +95,7 @@
                             <DataGridTextColumn Header="Guide" ElementStyle="{StaticResource stil}" Binding="{Binding Guide.Username}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Country" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
                             <DataGridTextColumn Header="City" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Date and time" ElementStyle="{StaticResource stil}" Binding="{Binding DateTime}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Date and time" ElementStyle="{StaticResource stil}" Binding="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Duration (hours)" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Language}"></DataGridTextColumn>
                             <DataGridTemplateColumn Header="Details">
@@ -117,10 +117,10 @@
                     </DataGrid>
                 </Border>
                 <Grid Grid.Column="1">
-                    <Button Margin="10,0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding DataGridHelpCommand}">
+                    <Button Margin="10,0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding SecondHelpCommand}">
                         <Image Source="../../Resources/Images/questionmark.png"></Image>
                     </Button>
-                    <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
+                    <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
                     AllowsTransparency = "True">
                         <Border BorderBrush="Gainsboro" BorderThickness="3">

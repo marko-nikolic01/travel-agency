@@ -1,0 +1,11 @@
+Here you can choose what tour to reserve.
+
+In the table in the middle are all tours that are currently available.
+
+To reserve tour click select one tour by clicking anywhere in the row of appropriate tour.
+
+Then click on "make a reservation" button in bottom left corner.
+
+You can filter table by multiple parameters (country, city...) by entering text in fields over the table.
+
+If you want to see vouchers you have click on "My vouchers" button at the bottom right corner.
