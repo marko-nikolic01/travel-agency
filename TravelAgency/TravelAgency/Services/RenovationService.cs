@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
@@ -84,6 +85,11 @@ namespace TravelAgency.Services
             return filtered;
         }
 
+        public void ScheduleRenovation(AccommodationRenovation renovation)
+        {
+            RenovationRepository.Save(renovation);
+        }
+
         private bool IsRenovationActive(AccommodationRenovation renovation)
         {
             return DateOnly.FromDateTime(DateTime.Now).CompareTo(renovation.DateSpan.EndDate) < 0;
@@ -102,7 +108,42 @@ namespace TravelAgency.Services
 
         public bool CanRenovationBeCancelled(AccommodationRenovation renovation)
         {
-            return  renovation.DateSpan.StartDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber > 5;
+            return renovation.DateSpan.StartDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber > 5;
+        }
+
+        public bool IsAccommodationRenovatedInTheLastYear(Accommodation accommodation)
+        {
+            foreach (var renovation in RenovationRepository.GetByAccommodation(accommodation))
+            {
+                if (IsRenovationInTheLastYear(renovation))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsRenovationInTheLastYear(AccommodationRenovation renovation)
+        {
+            return IsDateInTheLastYear(renovation.DateSpan.EndDate);
+        }
+
+        public bool IsDateInTheLastYear(DateOnly date)
+        {
+            return DateOnly.FromDateTime(DateTime.Now).DayNumber - date.DayNumber < 365;
+        }
+
+        public List<AccommodationWithRenovationDTO> GetAccommodationswWithRenovations()
+        {
+            List<AccommodationWithRenovationDTO> dtos = new List<AccommodationWithRenovationDTO>();
+
+            foreach (var accommodation in AccommodationRepository.GetAll())
+            {
+                dtos.Add(new AccommodationWithRenovationDTO(accommodation, IsAccommodationRenovatedInTheLastYear(accommodation)));
+            }
+
+            return dtos;
         }
     }
 }
