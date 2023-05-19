@@ -43,7 +43,8 @@
                            Text="Accommodation:"
                            Style="{StaticResource formTextBlock}"/>
 
-                <ComboBox Grid.Column="1"/>
+                <ComboBox Grid.Column="1"
+                          Style="{StaticResource formComboBox}"/>
             </Grid>
 
             <DataGrid Grid.Row="1"
