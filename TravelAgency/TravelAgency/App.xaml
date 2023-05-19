@@ -15,7 +15,7 @@
             </Style>
 
             <Style TargetType="controls:ButtonWithShortcut" x:Key="backButton">
-                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Background" Value="#222222"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Text" Value="Back"/>
                 <Setter Property="KeyboardShortcutText" Value="Backspace"/>
@@ -26,7 +26,7 @@
                 <Setter Property="Margin" Value="0 0 30 5"/>
             </Style>
 
-            <Style x:Key="formTextBlox" TargetType="TextBox">
+            <Style x:Key="formTextBox" TargetType="TextBox">
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Margin" Value="0 0 0 5"/>
                 <Setter Property="MaxWidth" Value="235"/>
@@ -50,6 +50,7 @@
             <Style x:Key="ownerDataGrid" TargetType="DataGrid">
                 <Setter Property="IsReadOnly" Value="True"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="FontSize" Value="16"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

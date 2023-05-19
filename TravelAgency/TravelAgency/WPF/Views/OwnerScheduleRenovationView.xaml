@@ -86,7 +86,7 @@
                 </Grid>
 
                 <TextBox Grid.Row="3" Grid.Column="1"
-                         Style="{StaticResource formTextBlox}"
+                         Style="{StaticResource formTextBox}"
                          Margin="0"/>
             </Grid>
 

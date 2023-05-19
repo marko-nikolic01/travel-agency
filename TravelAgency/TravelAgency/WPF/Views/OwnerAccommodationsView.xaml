@@ -14,6 +14,7 @@
     <Page.InputBindings>
         <KeyBinding Key="M" Modifiers="Ctrl" Command="{Binding NavigateToManageAccommodationsPageCommand,ElementName=root}"/>
         <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding NavigateToRenovationsPageCommand,ElementName=root}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding NavigateToStatisticsPageCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -43,7 +44,8 @@
                                                      Text="Statistics"
                                                      Icon="../../Resources/Images/OwnerStatistics.png"
                                                      KeyboardShortcutText="Ctrl+S"
-                                                     Background="White"/>
+                                                     Background="White"
+                                                     Click="Statistics_Click"/>
             
             <controls:AccommodationsNavigationButton Grid.Row="2"
                                                      Text="Renovations"
