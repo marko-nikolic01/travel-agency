@@ -1,0 +1,17 @@
+This is form for creating tour request.
+
+To choose the location where you would like the tour to be, first select the country 
+from the first combo box in the form. To find country faster press first letter of the country,
+example: F for France.
+
+Then you can choose city from that country in the same way and using same shortcut.
+
+Next you need to add maximum number of guests that you want to be on tour.
+
+Next you add date span in which you want this tour to be held.
+Minimum date must be at least two days from now.
+
+Finally you can add description where you can more detailed to explain what
+kind of tour you would like.
+
+When you are finished click on Create request button.

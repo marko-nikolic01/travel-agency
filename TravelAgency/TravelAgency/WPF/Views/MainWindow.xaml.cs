@@ -87,8 +87,17 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Guest2)
                     {
-                        Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
-                        guest2Main.Show();
+                        ProgramStatusRepository repository = new ProgramStatusRepository();
+                        if (repository.GetProgramStatus().IsFirstTimeOpening)
+                        {
+                            IntroductionWizardWindow introduction = new IntroductionWizardWindow(user.Id);
+                            introduction.Show();
+                        }
+                        else
+                        {
+                            Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
+                            guest2Main.Show();
+                        }
                     }
                     _userService.LogInUser(user);
                     Close();

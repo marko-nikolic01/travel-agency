@@ -17,6 +17,5 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void LinkAccommodations(List<Accommodation> accommodations);
         public List<AccommodationRenovation> GetByOwner(User owner);
         public void Delete(AccommodationRenovation renovation);
-        public void DeleteById(int id);
     }
 }

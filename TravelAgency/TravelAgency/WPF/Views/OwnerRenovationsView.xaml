@@ -20,7 +20,8 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="Return" Command="{Binding ScheduleRenovationCommand, ElementName=root}"/>
+        <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -89,8 +90,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="pastRenovationsDataGrid"
                           ItemsSource="{Binding PastRenovations}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding Accommodation.Name}"
@@ -120,22 +120,24 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Style="{StaticResource backButton}"
-                                         Margin="0 16 10 16"/>
+                                         Margin="0 16 10 16"
+                                         Click="GoBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"
                                          KeyboardShortcutText="Enter"
-                                         Margin="0 16 10 16"/>
+                                         Margin="0 16 10 16"
+                                         Click="ScheduleRenovation_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Cancel renovation"
-                                         KeyboardShortcutText="Delete"
+                                         KeyboardShortcutText="Ctrl+Delete"
                                          Margin="0 16 20 16"
-                                         Click="GoBack_Click"/>
+                                         Click="CancelRenovationButton_Click"/>
 
             <controls:Tip Grid.Column="3"
                           Header="Which renovations can be canceled?"
-                          TipText="Only renovations that are "/>
+                          TipText="Only renovations that are due in 5 days or more can be cancelled."/>
         </Grid>
     </Grid>
 </Page>

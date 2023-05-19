@@ -145,6 +145,13 @@
     </Resource>
       <Resource Include="Resources\Images\timer.png" />
       <Resource Include="Resources\Images\user.png" />
+      <Resource Include="Resources\Images\Picture1.PNG" />
+      <Resource Include="Resources\Images\Picture2.PNG" />
+      <Resource Include="Resources\Images\Picture3.PNG" />
+      <Resource Include="Resources\Images\Picture4.PNG" />
+      <Resource Include="Resources\Images\Picture5.PNG" />
+      <Resource Include="Resources\Images\Picture6.PNG" />
+      <Resource Include="Resources\Images\Picture7.PNG" />
   </ItemGroup>
 
   <ItemGroup>

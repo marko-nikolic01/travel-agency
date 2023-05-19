@@ -1,0 +1,7 @@
+Here are listed all special requests you have made.
+
+One special request consists of at least two ordinary requests.
+
+If one request in special request is invalid then special request will be invalid too.
+
+To create special request click on create special request button on the bottom.

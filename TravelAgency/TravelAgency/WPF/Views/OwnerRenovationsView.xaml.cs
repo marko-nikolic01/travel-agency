@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.Pages;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -25,15 +26,37 @@ namespace TravelAgency.WPF.Views
         public OwnerRenovationsViewModel ViewModel { get; set; }
 
         public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand CancelRenovationCommand { get; set; }
+        public MyICommand ScheduleRenovationCommand { get; set; }
 
         public OwnerRenovationsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
+            CancelRenovationCommand = new MyICommand(Execute_CancelRenovationCommand);
+            ScheduleRenovationCommand = new MyICommand(Execute_ScheduleRenovationCommand);
+
             InitializeComponent();
+
             ViewModel = new OwnerRenovationsViewModel(this.NavigationService);
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+
+            scheduledRenovationsDataGrid.CommandBindings.Clear();
+            pastRenovationsDataGrid.CommandBindings.Clear();
+        }
+
+        private void Execute_ScheduleRenovationCommand()
+        {
+            OwnerScheduleRenovationViewModel vm = new OwnerScheduleRenovationViewModel(this.NavigationService);
+            OwnerScheduleRenovationView ownerScheduleRenovationView = new OwnerScheduleRenovationView(vm);
+            this.NavigationService.Navigate(ownerScheduleRenovationView);
+        }
+
+        private void Execute_CancelRenovationCommand()
+        {
+            ViewModel.CancelRenovationCommand.Execute();
+            scheduledRenovationsDataGrid.Focus();
         }
 
         private void Execute_NavigateBackCommand()
@@ -44,6 +67,16 @@ namespace TravelAgency.WPF.Views
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             Execute_NavigateBackCommand();
+        }
+
+        private void CancelRenovationButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CancelRenovationCommand.Execute();
+        }
+
+        private void ScheduleRenovation_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_ScheduleRenovationCommand();
         }
     }
 }

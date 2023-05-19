@@ -7,11 +7,18 @@ namespace TravelAgency.WPF.Views
     public partial class OfferedToursView : Page
     {
         private OfferedToursViewModel toursViewModel;
-        public OfferedToursView(int guestId, int selectedTourOccurrenceId = -1)
+        public OfferedToursView(int guestId, bool tourReserved, int selectedTourOccurrenceId = -1)
         {
+            if (tourReserved)
+                MessageBox.Show("Tour successfully reserved.");
             toursViewModel = new OfferedToursViewModel(guestId, selectedTourOccurrenceId);
             InitializeComponent();
-            DataContext = toursViewModel;   
+            DataContext = toursViewModel;
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            SearchHelpButton.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            DataGridBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
         }
 
         private void ReserveTour_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,16 @@
+This form allows you to rate the tour and the guide.
+
+Tour is rated by entering following data:
+
+Grades from 1 to 5 for how much tour was interesting, guides language,
+and guides knowledge.
+
+Comment where you can describe your experiences from tour, what you liked
+and what didn't and what would you improve.
+
+Rating will be forwarded to guide so it can help them to improve their work.
+
+Besides this, you can add your photos from tour by adding photos link and clicking
+add photo button. You can preview all added photos by clicking preview photos button.
+If you want to remove specific photo click on its link from the and then click on
+remove photo button.

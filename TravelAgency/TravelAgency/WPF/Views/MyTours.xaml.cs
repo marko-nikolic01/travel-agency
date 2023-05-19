@@ -8,11 +8,18 @@ namespace TravelAgency.WPF.Views
     public partial class MyTours : Page
     {
         MyToursViewModel myToursViewModel;
-        public MyTours(int guestId)
+        public MyTours(int guestId, bool tourRated = false)
         {
+            if(tourRated)
+                MessageBox.Show("Tour successfully rated.");
             InitializeComponent();
             myToursViewModel = new MyToursViewModel(guestId);
             DataContext = myToursViewModel;
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            ActiveTourBtn.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            DataGridBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
         }
 
         private void RateTour_Click(object sender, RoutedEventArgs e)

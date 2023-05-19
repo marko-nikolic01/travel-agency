@@ -1,0 +1,28 @@
+﻿<Window x:Class="TravelAgency.WPF.Views.IntroductionWizardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        mc:Ignorable="d"
+        Title="IntroductionWizard" Height="768" Width="1024" Background="Azure">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label FontSize="20" Margin="20 10" Content="Introduciton wizard"></Label>
+        <Image Grid.Row="1" Source="{Binding ImageSource}"></Image>
+        <TextBlock FontSize="20" Grid.Row="2" Margin="20" Text="{Binding Text}"></TextBlock>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Visibility="{Binding BackButtonVisibility}" FontSize="20" Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Content="Back" Command="{Binding BackCommand}"/>
+            <Button FontSize="20" Grid.Column="1" Background="#4681f4" Width="374" Foreground="White" Height="43" Content="{Binding NextButtonText}" Command="{Binding NextCommand}"/>
+        </Grid>
+    </Grid>
+</Window>

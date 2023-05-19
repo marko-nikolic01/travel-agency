@@ -171,7 +171,7 @@ namespace TravelAgency.Domain.Models
             AccommodationComfort = Convert.ToInt32(values[4]);
             AccommodationLocation = Convert.ToInt32(values[5]);
             OwnerCorrectness = Convert.ToInt32(values[6]);
-            OwnerResponsiveness = Convert.ToInt32(values[7]);
+            //OwnerResponsiveness = Convert.ToInt32(values[7]);
             Comment = values[7];
         }
 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,13 +16,15 @@ using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class TourGuestRatingsViewModel
+    public class TourGuestRatingsViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<TourDetailsViewModel> TourReviews { get; set; }
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
         public TourRatingService TourRatingService { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         public TourGuestRatingsViewModel(int id)
         {
             TourRatingService = new TourRatingService();
@@ -29,7 +33,10 @@ namespace TravelAgency.WPF.ViewModels
             RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
             LeftCommand = new ButtonCommand<TourDetailsViewModel>(ShowPreviousPhoto);
         }
-
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
             if (tourReviewViewModel.TourRating.IsValid)

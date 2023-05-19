@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repositories;
 using TravelAgency.Services;
@@ -15,6 +16,7 @@ namespace TravelAgency.WPF.ViewModels
         private VoucherService voucherService;
         public VoucherViewModel(int guestId)
         {
+            UpdateHelpText();
             GuestId = guestId;
             voucherService = new VoucherService();
             Vouchers = voucherService.GetGuestVouchers(GuestId);
@@ -37,6 +39,11 @@ namespace TravelAgency.WPF.ViewModels
             {
                 voucherService.DisableVoucher(SelectedVoucher, tourOccurrenceId);
             }
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/VouchersHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

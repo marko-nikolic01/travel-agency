@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
@@ -15,27 +16,35 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string selectedCountry;
         private string selectedCity;
-        private bool dateHelpClicked;
-        private bool guestNumHelpClicked;
-        private bool descriptionHelpClicked;
-        public bool DateHelpClicked
+        private string numberOfGuests;
+        private string language;
+        private string numberOfGuestValid;
+        private string languageValid;
+        private string minDateValid;
+        private string maxDateValid;
+        private DateTime maxDate;
+        private DateTime minDate;
+        public string NumberOfGuestValid
         {
-            get { return dateHelpClicked; }
-            set { dateHelpClicked = value; OnPropertyChanged(); }
+            get { return numberOfGuestValid; }
+            set { numberOfGuestValid = value; OnPropertyChanged(); }
         }
-        public bool GuestNumHelpClicked
+        public string LanguageValid
         {
-            get { return guestNumHelpClicked; }
-            set { guestNumHelpClicked = value; OnPropertyChanged(); }
+            get { return languageValid; }
+            set { if (value != languageValid) { languageValid = value; OnPropertyChanged(); } }
         }
-        public bool DescriptionHelpClicked
+        public string MinDateValid
         {
-            get { return descriptionHelpClicked; }
-            set { descriptionHelpClicked = value; OnPropertyChanged(); }
+            get { return minDateValid; }
+            set { if (value != minDateValid) { minDateValid = value; OnPropertyChanged(); } }
         }
-        public ButtonCommandNoParameter GuestNumHelpCommand { get; set; }
-        public ButtonCommandNoParameter DateHelpCommand { get; set; }
-        public ButtonCommandNoParameter DescriptionHelpCommand { get; set; }
+        public string MaxDateValid
+        {
+            get { return maxDateValid; }
+            set { if (value != maxDateValid) { maxDateValid = value; OnPropertyChanged(); } }
+        }
+
         public string SelectedCountry{
             get => selectedCountry;
             set{ if (value != selectedCountry) { selectedCountry = value; OnPropertyChanged(); SetCitiesComboBox(); } }
@@ -44,11 +53,34 @@ namespace TravelAgency.WPF.ViewModels
             get => selectedCity;
             set { if (value != selectedCity) { selectedCity = value; OnPropertyChanged(); } }
         }
-        public string Language { get; set; }
-        public DateTime MinDate { get; set; }
+        public string Language
+        {
+            get { return language; }
+            set { if (value != language) { language = value; OnPropertyChanged(); IsLanguageValid(); } }
+        }
+        public DateTime MinDate
+        {
+            get { return minDate; }
+            set { minDate = value; OnPropertyChanged(); IsMinDateValid(); }
+        }
+        public DateTime MaxDate
+        {
+            get { return maxDate; }
+            set { maxDate = value; OnPropertyChanged(); IsMaxDateValid(); }
+        }
         public string Description { get; set; }
-        public DateTime MaxDate { get; set; }
-        public string NumberOfGuests { get; set; }
+        
+        public string NumberOfGuests
+        {
+            get { return numberOfGuests; }
+            set { 
+                numberOfGuests = value; OnPropertyChanged();
+                if (!IsGuestNumValid())
+                    NumberOfGuestValid = "Must be positive number";
+                else
+                    NumberOfGuestValid = "";
+                }
+        }
         public int guestId;
         public TourRequest TourRequest;
         public ObservableCollection<string> Countries { get; set; }
@@ -57,6 +89,7 @@ namespace TravelAgency.WPF.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            
         }
         private TourRequestService tourRequestService;
         public TourRequestFormViewModel(int id)
@@ -69,21 +102,7 @@ namespace TravelAgency.WPF.ViewModels
             MinDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 3);
             MaxDate = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, DateTime.Now.Date.Day + 4);
             Language = "";
-            GuestNumHelpCommand = new ButtonCommandNoParameter(GuestNumClick);
-            DateHelpCommand = new ButtonCommandNoParameter(DateClick);
-            DescriptionHelpCommand = new ButtonCommandNoParameter(DescriptionClick);
-        }
-        private void GuestNumClick()
-        {
-            GuestNumHelpClicked = !GuestNumHelpClicked;
-        }
-        private void DateClick()
-        {
-            DateHelpClicked = !DateHelpClicked;
-        }
-        private void DescriptionClick()
-        {
-            DescriptionHelpClicked = !DescriptionHelpClicked;
+            UpdateHelpText();
         }
         public void SetCitiesComboBox()
         {
@@ -102,21 +121,70 @@ namespace TravelAgency.WPF.ViewModels
 
         public bool Valid()
         {
-            DateOnly minDate = DateOnly.FromDateTime(MinDate);
-            int deltaDays = minDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber;
+           if(IsGuestNumValid() && IsLanguageValid() && IsMinDateValid() && IsMaxDateValid())
+                return true;
+           else
+                return false;
+        }
+        public bool IsGuestNumValid()
+        {
             int result = 0;
             if (int.TryParse(NumberOfGuests, out result))
             {
-                if(result < 1)
+                if (result < 1)
                     return false;
-            }
-            else
-                return false;
-            if (Language != "" && deltaDays > 2 && MaxDate > MinDate)
-            {
-                return true;
+                else 
+                    return true;
             }
             return false;
+        }
+        public bool IsLanguageValid()
+        {
+            if (Language == null || Language == "")
+            {
+                LanguageValid = "Language can't be empty";
+                return false;
+            }
+            else
+            {
+                LanguageValid = "";
+                return true;
+            }
+        }
+        public bool IsMinDateValid()
+        {
+            DateOnly minDate = DateOnly.FromDateTime(MinDate);
+            int deltaDays = minDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber;
+            if(deltaDays < 2)
+            {
+                IsMaxDateValid();
+                MinDateValid = "Must be at least two days from now";
+                return false;
+            }
+            else
+            {
+                IsMaxDateValid();
+                MinDateValid = "";
+                return true;
+            }
+        }
+        public bool IsMaxDateValid()
+        {
+            if(MinDate > MaxDate)
+            {
+                MaxDateValid = "Must be greater than min date";
+                return false;
+            }
+            else
+            {
+                MaxDateValid = "";
+                return true;
+            }
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/CreateRequestHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

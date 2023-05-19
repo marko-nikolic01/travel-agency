@@ -1,0 +1,14 @@
+This is statistics of all tour requests that you have made.
+
+In the upper part there is table which shows percentage of accepted
+tour requests and average number of people in this accepted requests.
+
+This is shown generally for all time.
+And it is shown for specific year, to choose year select it from
+combo box on the left side of the table.
+
+Under this is graph which shows relation between made requests and
+languages in this requests, or location.
+
+You can choose statistic you want from the radio buttons (location or language)
+on the left side of the graph.

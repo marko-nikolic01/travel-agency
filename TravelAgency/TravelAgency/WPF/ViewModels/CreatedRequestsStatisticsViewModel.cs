@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Documents;
@@ -99,6 +100,7 @@ namespace TravelAgency.WPF.ViewModels
             FillOptions();
             FillChartColumns();
             GraphHelpCommand = new ButtonCommandNoParameter(GraphClick);
+            UpdateHelpText();
         }
         private void GraphClick()
         {
@@ -168,6 +170,11 @@ namespace TravelAgency.WPF.ViewModels
             }
             BarLabelsLocation = new[] { "Locations" };
             FormatterLocation = value => null;
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/StatisticsHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
         }
     }
 }

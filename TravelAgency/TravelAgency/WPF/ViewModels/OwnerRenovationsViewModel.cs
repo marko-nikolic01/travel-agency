@@ -21,9 +21,10 @@ namespace TravelAgency.WPF.ViewModels
 
         private NavigationService navigationService;
 
-        public AccommodationRenovation SelectedScheduledRenovation { get; set; }
+        public AccommodationRenovation? SelectedScheduledRenovation { get; set; }
 
         public MyICommand ScheduleRenovationCommand { get; set; }
+        public MyICommand CancelRenovationCommand { get; set; }
 
         public ObservableCollection<AccommodationRenovation> ScheduledRenovations { get; set; }
         public ObservableCollection<AccommodationRenovation> PastRenovations { get; set; }
@@ -38,6 +39,7 @@ namespace TravelAgency.WPF.ViewModels
             this.navigationService = navigationService;
 
             ScheduleRenovationCommand = new MyICommand(Execute_ScheduleRenovationCommand);
+            CancelRenovationCommand = new MyICommand(Execute_CancelRenovationCommand);
 
             ScheduledRenovations = new ObservableCollection<AccommodationRenovation>(renovationService.GetScheduledRenovationsByOwner(loggedInUser));
             PastRenovations = new ObservableCollection<AccommodationRenovation>(renovationService.GetPastRenovationsByOwner(loggedInUser));
@@ -45,7 +47,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_ScheduleRenovationCommand()
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Ne radi još :(");
         }
 
         private void Execute_CancelRenovationCommand()
@@ -56,7 +58,30 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            renovationService.CancelRenovation(SelectedScheduledRenovation);
+            if (renovationService.CanRenovationBeCancelled(SelectedScheduledRenovation))
+            {
+                var result = MessageBox.Show("Are you sure you want to cancel this renovation?", "Canceling renovation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    renovationService.CancelRenovation(SelectedScheduledRenovation);
+                    UpdateScheduledRenovations();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selected renovation can't be cancelled because it's less than 5 days due.");
+            }            
+        }
+
+        private void UpdateScheduledRenovations()
+        {
+            ScheduledRenovations.Clear();
+
+            foreach (var renovation in renovationService.GetScheduledRenovationsByOwner(loggedInUser))
+            {
+                ScheduledRenovations.Add(renovation);
+            }
         }
     }
 }

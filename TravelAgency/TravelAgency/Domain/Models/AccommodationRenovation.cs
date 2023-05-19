@@ -18,7 +18,11 @@ namespace TravelAgency.Domain.Models
         public DateSpan DateSpan
         {
             get { return dateSpan; }
-            set { dateSpan = value; }
+            set
+            {
+                dateSpan = value;
+                OnPropertyChanged(nameof(DateSpan));
+            }
         }
         private string description;
         public string Description
@@ -26,7 +30,6 @@ namespace TravelAgency.Domain.Models
             get { return description; }
             set { description = value; }
         }
-        public bool Canceled { get; set; }
 
         public AccommodationRenovation()
         {
@@ -34,7 +37,6 @@ namespace TravelAgency.Domain.Models
             AccommodationId = -1;
             DateSpan = new DateSpan();
             Description = string.Empty;
-            Canceled = false;
         }
 
         public void FromCSV(string[] values)
@@ -44,7 +46,6 @@ namespace TravelAgency.Domain.Models
             DateSpan.StartDate = DateOnly.ParseExact(values[2], "dd/MM/yyyy");
             DateSpan.EndDate = DateOnly.ParseExact(values[3], "dd/MM/yyyy");
             Description = values[4];
-            Canceled = Convert.ToBoolean(Convert.ToInt32(values[5]));
         }
 
         public string[] ToCSV()
@@ -55,8 +56,7 @@ namespace TravelAgency.Domain.Models
                 AccommodationId.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
-                Description,
-                Convert.ToInt32(Canceled).ToString()
+                Description
             };
 
             return csvValues;

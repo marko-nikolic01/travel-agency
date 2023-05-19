@@ -59,8 +59,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="activeReservationsDataGrid"
                           ItemsSource="{Binding AccommodationReservations}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding Accommodation.Name}"
@@ -95,8 +94,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="requestsDataGrid"
                           ItemsSource="{Binding MoveRequests}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding MoveRequest.Reservation.Accommodation.Name}"
@@ -109,7 +107,7 @@
                                             Width="*"/>
                         <DataGridTextColumn Header="Guest"
                                             Binding="{Binding MoveRequest.Reservation.Guest.Username}"
-                                            Width="*"/>
+                                            Width="0.6*"/>
                         <DataGridTextColumn Header="New start date"
                                             Binding="{Binding MoveRequest.DateSpan.StartDate}"
                                             Width="*"/>
