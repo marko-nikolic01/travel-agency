@@ -1,0 +1,98 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerAccommodationStatisticsByYearView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
+      mc:Ignorable="d" 
+      x:Name="root"
+      d:DesignHeight="620" d:DesignWidth="840"
+      Title="OwnerAccommodationStatisticsByYearView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <converters:IntegerToMonthString x:Key="intToMonth"/>
+    </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="{Binding PageHeaderText}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Grid.Row="0"
+                      ItemsSource="{Binding SelectedStats.StatisticsByMonths}"
+                      Style="{StaticResource ownerDataGrid}"
+                      Margin="0 0 0 10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Month"
+                                        Binding="{Binding Month, Converter={StaticResource intToMonth}}"
+                                        Width="0.5*"/>
+                    <DataGridTextColumn Header="Reservations"
+                                        Binding="{Binding NumberOfReservations}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Cancellations"
+                                        Binding="{Binding NumberOfCancellations}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Reservation movings"
+                                        Binding="{Binding NumberOfMovings}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Renovation suggestions"
+                                        Binding="{Binding NumberOfRenovationSuggestions}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Busiest month"
+                           Style="{StaticResource formTextBlock}"
+                           FontWeight="Bold"/>
+
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource formTextBox}"
+                         Text="{Binding SelectedStats.BusiestMonth}"
+                         IsReadOnly="True"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 20 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Style="{StaticResource backButton}"
+                                         Margin="0 0 10 0"
+                                         Click="GoBack_Click"/>
+
+            <controls:Tip Grid.Column="1"
+                          Margin="0 0 0 0"
+                          Header="What is the busiest month?"
+                          TipText="The busiest month is the month in which the selected accommodation has been booked for the most days."/>
+        </Grid>
+    </Grid>
+</Page>

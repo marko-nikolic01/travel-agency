@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="620" d:DesignWidth="840"
@@ -20,6 +21,8 @@
         <Style x:Key="customFormTextBlock" TargetType="TextBlock" BasedOn="{StaticResource formTextBlock}">
             <Setter Property="Margin" Value="0 0 30 5"/>
         </Style>
+
+        <converters:DateOnlyToStringConverter x:Key="dateToString"/>
     </Page.Resources>
 
     <Page.InputBindings>
@@ -101,7 +104,7 @@
                          Style="{StaticResource formTextBox}"
                          Text="{Binding NewAccommodationRenovation.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          Margin="0"
-                         HorizontalAlignment="Stretch"/>    
+                         HorizontalAlignment="Stretch"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="2">
@@ -196,7 +199,7 @@
                                Style="{StaticResource formTextBlock}"/>
 
                     <TextBox Grid.Column="1"
-                             Text="{Binding SelectedDateSpan.StartDate, StringFormat={}{0:MM/dd/yyyy}}"
+                             Text="{Binding SelectedDateSpan.StartDate, Converter={StaticResource dateToString}}"
                              Style="{StaticResource formTextBox}"
                              IsReadOnly="True"/>
 
@@ -205,9 +208,9 @@
                                Style="{StaticResource formTextBlock}"
                                Margin="10 0"
                                HorizontalAlignment="Center"/>
-                    
+
                     <TextBox Grid.Column="3"
-                             Text="{Binding SelectedDateSpan.EndDate, StringFormat={}{0:MM/dd/yyyy}}"
+                             Text="{Binding SelectedDateSpan.EndDate, Converter={StaticResource dateToString}}"
                              Style="{StaticResource formTextBox}"
                              IsReadOnly="True"/>
                 </Grid>

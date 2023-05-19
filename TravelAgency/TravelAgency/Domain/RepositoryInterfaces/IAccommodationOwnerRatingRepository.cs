@@ -24,5 +24,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void LinkReservations(List<AccommodationReservation> reservations);
 
         public void LinkRenovationRecommendations(List<RenovationRecommendation> recommendations);
+
+        public List<AccommodationOwnerRating> GetByAccommodation(Accommodation accommodation);
     }
 }

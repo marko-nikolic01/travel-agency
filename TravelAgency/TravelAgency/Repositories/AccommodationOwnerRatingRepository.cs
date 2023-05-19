@@ -100,5 +100,19 @@ namespace TravelAgency.Repositories
         {
             serializer.ToCSV(FilePath, accommodationOwnerRatings);
         }
+
+        public List<AccommodationOwnerRating> GetByAccommodation(Accommodation accommodation)
+        {
+            List<AccommodationOwnerRating> filtered = new List<AccommodationOwnerRating>();
+            foreach (var rating in accommodationOwnerRatings)
+            {
+                if (rating.AccommodationReservation.Accommodation == accommodation)
+                {
+                    filtered.Add(rating);
+                }
+            }
+
+            return filtered;
+        }
     }
 }
