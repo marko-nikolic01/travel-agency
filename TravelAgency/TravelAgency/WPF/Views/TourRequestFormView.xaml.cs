@@ -15,13 +15,24 @@ namespace TravelAgency.WPF.Views
             InitializeComponent();
             TourRequestFormViewModel = new TourRequestFormViewModel(id);
             DataContext = TourRequestFormViewModel;
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            NumGuestBtn.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            DateBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
+            DescriptionBtn.DataContext = toolTipViewModel;
+            popup3.DataContext = toolTipViewModel;
         }
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TourRequestFormViewModel.SubmitRequest())
+            if (TourRequestFormViewModel.Valid())
             {
-                TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId);
-                this.NavigationService.Navigate(requestView);
+                if(MessageBox.Show("Are you sure you want to make \nthis request?", "Tour request", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    TourRequestFormViewModel.SubmitRequest();
+                    TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId, true);
+                    this.NavigationService.Navigate(requestView);
+                }
             }
             else
                 MessageBox.Show("Invalid input");

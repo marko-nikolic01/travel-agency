@@ -21,13 +21,13 @@ namespace TravelAgency.WPF.Views
         private void ShowAcceptedTour_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             notificationsViewModel.RemoveRequestNotification();
-            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId);
+            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId, false);
             this.NavigationService.Navigate(tours);
         }
         private void ShowNewTour_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             notificationsViewModel.RemoveTourNotification();
-            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId, notificationsViewModel.SelectedOccurrenceId);
+            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId, false, notificationsViewModel.SelectedOccurrenceId);
             this.NavigationService.Navigate(tours);
         }
         private void RejectPresence_Click(object sender, System.Windows.RoutedEventArgs e)

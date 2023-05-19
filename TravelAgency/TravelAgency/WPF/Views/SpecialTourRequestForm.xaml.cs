@@ -46,9 +46,12 @@ namespace TravelAgency.WPF.Views
                 MessageBox.Show("Must be at least 2 tour requests");
             else if (viewModelIterator.GetViewModelInstance().Valid())
             {
-                viewModelIterator.SaveSpecialTourRequest();
-                SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId);
-                this.NavigationService.Navigate(view);
+                if (MessageBox.Show("Are you sure you want to make \nthis request?", "Special tour request", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    viewModelIterator.SaveSpecialTourRequest();
+                    SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId, true);
+                    this.NavigationService.Navigate(view);
+                }
             }
             else
                 MessageBox.Show("Invalid input");

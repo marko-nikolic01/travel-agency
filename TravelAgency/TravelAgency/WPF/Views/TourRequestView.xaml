@@ -78,8 +78,8 @@
                     <DataGridTextColumn Header="City" ElementStyle="{StaticResource stil}" Binding="{Binding Location.City}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Language}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Guests" ElementStyle="{StaticResource stil}" Binding="{Binding GuestNumber}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
                 </DataGrid.Columns>

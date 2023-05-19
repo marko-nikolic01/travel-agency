@@ -24,17 +24,27 @@ namespace TravelAgency.WPF.Views
             vouchersList.DataContext = voucherViewModel;
             occurrence = tourOccurrence;
             id = guestId;
-          }
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            VouchersBtn.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            NumGuestsBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
+            GuestListBtn.DataContext = toolTipViewModel;
+            popup3.DataContext = toolTipViewModel;
+        }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            voucherViewModel.UpdateVoucher(occurrence.Id);
-            tourReservationViewModel.SubmitReservation();
-            OfferedToursView offeredTours = new OfferedToursView(id);
-            this.NavigationService.Navigate(offeredTours);
+            if (MessageBox.Show("Are you sure you want to reserve \nthis tour?", "Tour reservation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                voucherViewModel.UpdateVoucher(occurrence.Id);
+                tourReservationViewModel.SubmitReservation();
+                OfferedToursView offeredTours = new OfferedToursView(id, true);
+                this.NavigationService.Navigate(offeredTours);
+            }
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            OfferedToursView offeredTours = new OfferedToursView(id);
+            OfferedToursView offeredTours = new OfferedToursView(id, false);
             this.NavigationService.Navigate(offeredTours);
         }
         private void Deselect_Click(object sender, RoutedEventArgs e)

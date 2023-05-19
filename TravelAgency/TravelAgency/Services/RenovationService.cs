@@ -85,6 +85,11 @@ namespace TravelAgency.Services
             return filtered;
         }
 
+        public void ScheduleRenovation(AccommodationRenovation renovation)
+        {
+            RenovationRepository.Save(renovation);
+        }
+
         private bool IsRenovationActive(AccommodationRenovation renovation)
         {
             return DateOnly.FromDateTime(DateTime.Now).CompareTo(renovation.DateSpan.EndDate) < 0;
@@ -103,7 +108,7 @@ namespace TravelAgency.Services
 
         public bool CanRenovationBeCancelled(AccommodationRenovation renovation)
         {
-            return  renovation.DateSpan.StartDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber > 5;
+            return renovation.DateSpan.StartDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber > 5;
         }
 
         public bool IsAccommodationRenovatedInTheLastYear(Accommodation accommodation)

@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        Title="TourRequestForm" d:DesignHeight="768" d:DesignWidth="1024">
+        xmlns:localviewmodel="clr-namespace:TravelAgency.WPF.ViewModels" 
+      mc:Ignorable="d"
+        Title="TourRequestForm" d:DesignHeight="768" d:DesignWidth="1024" Background="Azure">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -54,7 +55,11 @@
                 <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
-            <xctk:IntegerUpDown TextAlignment="Left" Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <xctk:IntegerUpDown Minimum="1" Width="320" TextAlignment="Left" Margin="20 5" HorizontalAlignment="Left"
+                                FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Row="3" FontSize="16" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding NumberOfGuestValid}"></Label>
+            </StackPanel>
             <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                       ItemsSource="{Binding Countries}" 
                       SelectedItem="{Binding SelectedCountry}"
@@ -67,18 +72,26 @@
                           >
                     
                 </ComboBox>
-                <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="320">
-                
-                </TextBox>
-            <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
-            <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="590" 
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="20 0" Height="40" Width="320">
+                    </TextBox>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding LanguageValid}"></Label>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+            <DatePicker  Width="320" HorizontalAlignment="Left" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding MinDateValid, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                <DatePicker Width="320" HorizontalAlignment="Left" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding MaxDateValid, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>    
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="590" 
                      TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Left" Text="{Binding Description}"/>
             <Grid Grid.Column="2" Grid.Row="3">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding GuestNumHelpCommand}">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" DataContext="toolTipViewModel" VerticalAlignment="Center" Command="{Binding FirstHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = GuestNumHelpClicked}"    
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"
                     PlacementTarget = "{Binding ElementName = NumGuestBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -93,10 +106,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="4">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding DateHelpCommand}">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding SecondHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = DateHelpClicked}"    
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -112,10 +125,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="6">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding DescriptionHelpCommand}">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = DescriptionHelpClicked}"    
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DescriptionBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">

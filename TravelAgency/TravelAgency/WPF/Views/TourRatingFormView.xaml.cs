@@ -17,12 +17,22 @@ namespace TravelAgency.WPF.Views
             viewModel = new TourRatingFormViewModel(selectedTourOccurrence, currentGuestId);
             DataContext = viewModel;
             this.currentGuestId = currentGuestId;
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            TourRateBtn.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            TourImgBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
+            CommentBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
         }
         private void SubmitRating_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.SubmitRating();
-            MyTours myTours = new MyTours(currentGuestId);
-            this.NavigationService.Navigate(myTours);
+            if (MessageBox.Show("Are you sure you want to rate \nthis tour?", "Tour rating", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                viewModel.SubmitRating();
+                MyTours myTours = new MyTours(currentGuestId, true);
+                this.NavigationService.Navigate(myTours);
+            }
         }
         private void PreviewImages_Click(object sender, RoutedEventArgs e)
         {

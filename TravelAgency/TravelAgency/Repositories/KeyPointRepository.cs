@@ -17,30 +17,12 @@ namespace TravelAgency.Repositories
         private readonly Serializer<KeyPoint> _serializer;
         private List<KeyPoint> keyPoints;
 
-        public KeyPointRepository(TourOccurrenceRepository tourOccurrenceRepository)
-        {
-            _serializer = new Serializer<KeyPoint>();
-            keyPoints = _serializer.FromCSV(FilePath);
-            LinkKeyPoints(tourOccurrenceRepository);
-        }
-
         public KeyPointRepository()
         {
             _serializer = new Serializer<KeyPoint>();
             keyPoints = _serializer.FromCSV(FilePath);
         }
 
-        private void LinkKeyPoints(TourOccurrenceRepository tourOccurrenceRepository)
-        {
-            foreach (KeyPoint keyPoint in keyPoints)
-            {
-                TourOccurrence tourOccurrence = tourOccurrenceRepository.GetAll().Find(tO => tO.Id == keyPoint.TourOccurrenceId);
-                if (tourOccurrence != null)
-                {
-                    tourOccurrence.KeyPoints.Add(keyPoint);
-                }
-            }
-        }
         public int NextId()
         {
             if (keyPoints.Count == 0)

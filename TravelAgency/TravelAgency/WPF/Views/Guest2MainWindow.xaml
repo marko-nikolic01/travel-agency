@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        xmlns:viewmodel="clr-namespace:TravelAgency.WPF.ViewModels"
         mc:Ignorable="d"
         Title="Guest2MainWindow" Height="768" Width="1024" Background="Azure"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
@@ -232,7 +233,7 @@
                         <TextBlock Margin="10 0">Notifications</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Width="140" ToolTip="asfadg" Name="HelpButton" BorderBrush="#FFD2D2D2">
+                <Button Width="140" ToolTip="asfadg" Name="HelpButton" Click="HelpButton_Click" BorderBrush="#FFD2D2D2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Resources/Images/HelpImage.png" Height="25" Width="25"/>
                         <TextBlock Margin="10 0">Help</TextBlock>
@@ -255,5 +256,16 @@
             </StackPanel>
         </Grid>
         <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="Guest2ProfileView.xaml" />
+        <Grid x:Name="HelpGrid" Grid.Row="1" Background="Azure" VerticalAlignment="Bottom">
+            <StackPanel>
+                <Border BorderBrush="#636360" BorderThickness="2"> 
+                <Grid>
+                    <Label FontSize="24" Margin="30 0"> Help </Label>
+                    <Button Click="HelpButton_Click" Margin="30 0" Width="40" HorizontalAlignment="Right" Content="X"></Button>
+                </Grid>
+                </Border>
+                <TextBlock FontSize="20" Margin="50 20" Text="{Binding Path=(viewmodel:Guest2MainViewModel.HelpText)}"></TextBlock>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

@@ -1,0 +1,9 @@
+This is start up page, which is showing your personal informations.
+
+If you want to change username click on change username link and small form will show up
+right to link. Then you just type in new username that you want.
+
+In same way you can change your password.
+
+In the bottom part of this page you can generate report about all your tour attendances
+for given time span by entering starting and ending date.

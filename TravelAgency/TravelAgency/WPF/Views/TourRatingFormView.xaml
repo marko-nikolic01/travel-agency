@@ -82,10 +82,10 @@
                 <ComboBoxItem Content="1"></ComboBoxItem>
             </ComboBox>
             <Grid Grid.Row="0" Grid.Column="2">
-                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourRateBtn" VerticalAlignment="Top" Command="{Binding RatingsHelpCommand}">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourRateBtn" VerticalAlignment="Top" Command="{Binding FirstHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = RatingsHelpClicked}"    
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = TourRateBtn}" Placement="Left"
                     AllowsTransparency = "True">
                 <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -100,10 +100,10 @@
             </Popup>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="2">
-                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourImgBtn" VerticalAlignment="Bottom" Command="{Binding PhotosHelpCommand}">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourImgBtn" VerticalAlignment="Bottom" Command="{Binding SecondHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = PhotosHelpClicked}"    
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = TourImgBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -118,10 +118,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Row="5" Grid.Column="2">
-                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="CommentBtn" VerticalAlignment="Center" Command="{Binding CommentHelpCommand}">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="CommentBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = CommentHelpClicked}"    
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = CommentBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">

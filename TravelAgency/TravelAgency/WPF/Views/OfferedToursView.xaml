@@ -68,11 +68,11 @@
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Guests</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
-            <Button Margin="10,-5,10,15" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="6" x:Name="SearchHelpButton" Command="{Binding SearchHelpCommand}">
+            <Button Margin="10,-5,10,15" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="6" x:Name="SearchHelpButton" Command="{Binding FirstHelpCommand}">
                 <Image Source="../../Resources/Images/questionmark.png"></Image>
             </Button>
 
-            <Popup IsOpen = "{Binding Path = SearchHelpClicked}"
+            <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"
             PlacementTarget = "{Binding ElementName = SearchHelpButton}" Placement="Left"
             AllowsTransparency = "True">
                 <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -106,7 +106,7 @@
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="City" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Date and time" 
-                                        Binding="{Binding DateTime, StringFormat='{}{0:MM/dd/yyyy HH:mm}'}" ></DataGridTextColumn>
+                                        Binding="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" ></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Max guests" Binding="{Binding Tour.MaxGuestNumber}"></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Current guests" Binding="{Binding Guests.Count}"></DataGridTextColumn>
@@ -133,10 +133,10 @@
                 </DataGrid>
             </Border>
             <Grid Grid.Column="1">
-                <Button Margin="10,0,10,15" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding DataGridHelpCommand}">
+                <Button Margin="10,0,10,15" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding SecondHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = DataGridHelpClicked}"    
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                 PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
                 AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">

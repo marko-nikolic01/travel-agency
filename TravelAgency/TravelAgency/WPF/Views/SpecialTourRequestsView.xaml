@@ -70,7 +70,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate}">
+                        <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate, StringFormat='{}{0:dd/MM/yyyy}'}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
@@ -78,7 +78,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate}">
+                        <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate, StringFormat='{}{0:dd/MM/yyyy}'}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
