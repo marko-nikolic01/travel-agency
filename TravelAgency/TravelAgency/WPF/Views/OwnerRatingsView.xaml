@@ -50,8 +50,7 @@
 
                 <DataGrid Grid.Row="1"
                           ItemsSource="{Binding OwnerRatings}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
                                             Binding="{Binding AccommodationReservation.Guest.Username}"
@@ -88,8 +87,7 @@
 
                 <DataGrid Grid.Row="1"
                           ItemsSource="{Binding Reservations}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
+                          Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
                                             Binding="{Binding Accommodation.Name}"

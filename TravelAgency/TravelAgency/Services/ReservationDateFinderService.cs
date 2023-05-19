@@ -16,6 +16,7 @@ namespace TravelAgency.Services
         private DateOnly _endDateIterator;
         private DateOnly _iterationStopperDate;
         public IAccommodationReservationRepository ReservationRepository { get; set; }
+        public IAccommodationRenovationRepository RenovationRepository { get; set; }
 
         public ReservationDateFinderService()
         {
@@ -24,6 +25,7 @@ namespace TravelAgency.Services
             _endDateIterator = DateOnly.FromDateTime(DateTime.Now);
             _iterationStopperDate = DateOnly.FromDateTime(DateTime.Now);
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
+            RenovationRepository = Injector.Injector.CreateInstance<IAccommodationRenovationRepository>();
         }
 
         public void SetReservationLength(int length)
@@ -65,6 +67,12 @@ namespace TravelAgency.Services
                 isDateSpanAllowed = _endDateIterator.CompareTo(_iterationStopperDate) <= 0;
             }
             return availableDates;
+        }
+
+        public List<DateSpan> FindAvailableDatesInsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, int numberOfDays, Accommodation accommodation)
+        {
+            SetReservationLength(numberOfDays);
+            return FindAvailableDatesInsideDateRange(dateRangeStart, dateRangeEnd, accommodation);
         }
 
         public List<DateSpan> FindAvailableDatesOutsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, Accommodation accommodation)
@@ -137,10 +145,20 @@ namespace TravelAgency.Services
                     bool isDateAvailable = dateIterator.CompareTo(reservation.DateSpan.StartDate) < 0 || dateIterator.CompareTo(reservation.DateSpan.EndDate) > 0;
                     if (!isDateAvailable) return false;
                 }
+                foreach (AccommodationRenovation renovation in RenovationRepository.GetByAccommodation(accommodation))
+                {
+                    bool isDateAvailable = dateIterator.CompareTo(renovation.DateSpan.StartDate) < 0 || dateIterator.CompareTo(renovation.DateSpan.EndDate) > 0;
+                    if (!isDateAvailable) return false;
+                }
                 dateIterator = dateIterator.AddDays(1);
                 isDateInsideSpan = dateIterator.CompareTo(_endDateIterator) <= 0;
             }
             return true;
+        }
+
+        public bool IsFutureDate(DateTime date)
+        {
+            return DateOnly.FromDateTime(DateTime.Now).CompareTo(DateOnly.FromDateTime(date)) < 0;
         }
     }
 }
