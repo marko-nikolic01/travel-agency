@@ -1,18 +1,18 @@
 1|1|Keypoint1|True
 2|1|Keypoint2|True
-3|2|Keypoint1|False
-4|2|Keypoint2|False
-5|3|Navi Mumbai|False
-6|3|Mumbai|False
+3|2|Keypoint1|True
+4|2|Keypoint2|True
+5|3|Navi Mumbai|True
+6|3|Mumbai|True
 7|4|Navi Mumbai|False
 8|4|Mumbai|False
 9|5|kjssd|False
 10|5|asdf|False
-11|6|kjssd|False
-12|6|zser|False
-13|7|ssd|False
-14|7|hdd|False
-15|7|A|False
-16|7|S|False
+11|6|kjssd|True
+12|6|zser|True
+13|7|ssd|True
+14|7|hdd|True
+15|7|A|True
+16|7|S|True
 17|8|A|False
 18|8|S|False

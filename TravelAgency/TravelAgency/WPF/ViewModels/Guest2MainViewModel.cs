@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using TravelAgency.Commands;
+using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
 using TravelAgency.Services;
 using TravelAgency.WPF.Views;
@@ -44,7 +45,7 @@ namespace TravelAgency.WPF.ViewModels
         public RelayCommand NavigateToNotificationsCommand { get; set; }
         public RelayCommand NavigateToSpecialRequestsCommand { get; set; }
         private int currentGuestId;
-
+        VoucherService voucherService;
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -53,6 +54,9 @@ namespace TravelAgency.WPF.ViewModels
         public Guest2MainViewModel(NavigationService navService, int guestId)
         {
             currentGuestId = guestId;
+            voucherService = new VoucherService();
+            // ili samo za jednog umesto za sve
+            voucherService.CheckIfGuestsWonVouchers();
             TourOccurrenceAttendanceService attendanceService = new TourOccurrenceAttendanceService();
             attendanceService.Subscribe(this);
             NavService = navService;
@@ -129,10 +133,18 @@ namespace TravelAgency.WPF.ViewModels
             TourRequestService requestService = new TourRequestService();
             CreatedTourFromStatisticService service = new CreatedTourFromStatisticService();
             if (attendanceService.GetAttendance(currentGuestId) != null || requestService.NewAcceptedRequestExists(currentGuestId) 
-                || service.NewTourNotificationExists(currentGuestId))
+                || service.NewTourNotificationExists(currentGuestId) || NotificationForVoucherExist())
                 return true;
             else
                 return false;
+        }
+        private bool NotificationForVoucherExist()
+        {
+            WonVoucherNotification notification = voucherService.GetVoucherNotification(currentGuestId);
+            if (notification != null)
+                if (!notification.Seen)
+                    return true;
+            return false;
         }
     }
 }
