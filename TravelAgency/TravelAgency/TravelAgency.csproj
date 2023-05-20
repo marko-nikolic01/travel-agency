@@ -157,6 +157,8 @@
       <Resource Include="Resources\Images\Picture5.PNG" />
       <Resource Include="Resources\Images\Picture6.PNG" />
       <Resource Include="Resources\Images\Picture7.PNG" />
+      <Resource Include="Resources\Images\leftpointing.png" />
+      <Resource Include="Resources\Images\rightpointing.png" />
       <Resource Include="Resources\Images\verify.png" />
   </ItemGroup>
 

@@ -41,7 +41,7 @@ namespace TravelAgency.WPF.ViewModels
         public List<NewTourNotification> NewTourNotifications { get; set; }
         public RequestAcceptedNotification RequestNotification { get; set; }
         public NewTourNotification NewTourNotification { get; set; }
-        public int SelectedOccurrenceId;
+        public TourOccurrence TourOccurrence;
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -127,7 +127,7 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrenceService occurrenceService = new TourOccurrenceService();
             if (NewTourNotification != null)
             {
-                SelectedOccurrenceId = occurrenceService.GetByTourId(NewTourNotification.TourId).Id;
+                TourOccurrence = occurrenceService.GetByTourId(NewTourNotification.TourId);
                 NewTourNotification.Seen = true;
                 service.UpdateNotification(NewTourNotification);
                 NewTourNotifications.Remove(NewTourNotification);
