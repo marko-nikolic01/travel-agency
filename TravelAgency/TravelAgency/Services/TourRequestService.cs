@@ -255,9 +255,9 @@ namespace TravelAgency.Services
         {
             return ITourRequestRepository.GetLanguages(guestId);
         }
-        public List<string> GetCountriesForGuest(int guestId)
+        public List<string> GetLocationsForGuest(int guestId)
         {
-            return ITourRequestRepository.GetCountriesForGuest(guestId);
+            return ITourRequestRepository.GetLocationsForGuest(guestId);
         }
 
         public string GetMostRequestedLanguage()
