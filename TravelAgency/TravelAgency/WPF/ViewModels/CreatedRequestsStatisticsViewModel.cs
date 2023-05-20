@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Documents;
 using TravelAgency.Commands;
+using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
@@ -154,18 +155,19 @@ namespace TravelAgency.WPF.ViewModels
             BarLabels = new[] { "Languages" };
             Formatter = value => null;
         }
+        
         private void FillForLocations()
         {
-            List<string> countries = requestService.GetCountriesForGuest(currentGuestId);
-            var groupedCountries = countries.GroupBy(x => x)
+            List<string> locations = requestService.GetLocationsForGuest(currentGuestId);
+            var groupedLocations = locations.GroupBy(x => x)
                                    .Select(g => new { Value = g.Key, Count = g.Count() });
             SeriesCollectionLocation = new SeriesCollection();
-            foreach (var country in groupedCountries)
+            foreach (var location in groupedLocations)
             {
                 SeriesCollectionLocation.Add(new ColumnSeries
                 {
-                    Title = country.Value,
-                    Values = new ChartValues<double> { country.Count }
+                    Title = location.Value,
+                    Values = new ChartValues<double> { location.Count }
                 });
             }
             BarLabelsLocation = new[] { "Locations" };

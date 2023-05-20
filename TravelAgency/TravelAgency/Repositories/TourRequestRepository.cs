@@ -148,13 +148,16 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
-        public List<string> GetCountriesForGuest(int guestId)
+        public List<string> GetLocationsForGuest(int guestId)
         {
             List<string> result = new List<string>();
             foreach (TourRequest request in tourRequests)
             {
                 if (request.GuestId == guestId && request.SpecialTourRequestId == -1)
-                    result.Add(request.Location.Country);
+                {
+                    string LocationName = request.Location.Country + ", " + request.Location.City;
+                    result.Add(LocationName);
+                }
             }
             return result;
         }

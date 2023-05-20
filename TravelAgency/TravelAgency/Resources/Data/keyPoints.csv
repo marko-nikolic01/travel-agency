@@ -1,63 +1,18 @@
-1|1|berliner mauer|False
-2|1|brandenburger tor|False
-3|1|kudamm strasse|False
-4|2|berliner mauer|True
-5|2|brandenburger tor|True
-6|2|kudamm strasse|True
-7|3|berliner mauer|False
-8|3|brandenburger tor|False
-9|3|kudamm strasse|False
-10|4|berliner mauer|True
-11|4|brandenburger tor|True
-12|4|kudamm strasse|True
-13|5|centar|True
-14|5|luvr|True
-15|5|trijumfalna kapija|True
-16|5|toranj|True
-17|5|notr dam|True
-18|6|centar|False
-19|6|luvr|False
-20|6|trijumfalna kapija|False
-21|6|toranj|False
-22|6|notr dam|False
-23|7|centar|False
-24|7|luvr|False
-25|7|trijumfalna kapija|False
-26|7|toranj|False
-27|7|notr dam|False
-28|8|centar|False
-29|8|luvr|False
-30|8|trijumfalna kapija|False
-31|8|toranj|False
-32|8|notr dam|False
-33|9|3r|False
-34|9|vv|False
-35|10|prvos|False
-36|10|drugos|False
-37|11|prvos|False
-38|11|drugos|False
-39|12|cd|False
-40|12|bg|False
-41|13|dssdsd|True
-42|13|vdvdd|True
-43|14|kljucna tacka 1|True
-44|14|vdvdd|True
-45|15|sdss|False
-46|15|dffdvgdv|False
-47|16|a|True
-48|16|d|True
-49|17|prva k. tacka|False
-50|17|druga k. tacka|False
-51|18|prva k. tacka|False
-52|18|druga k. tacka|False
-53|19|sd|False
-54|19|xc|False
-55|16|trecess|True
-56|23|erste|False
-57|23|zweite|False
-58|24|erste|False
-59|24|zweite|False
-60|22|erste|True
-61|22|zweite|True
-62|25|kjssd|False
-63|25|dss|False
+1|1|Keypoint1|False
+2|1|Keypoint2|False
+3|2|Keypoint1|False
+4|2|Keypoint2|False
+5|3|Navi Mumbai|False
+6|3|Mumbai|False
+7|4|Navi Mumbai|False
+8|4|Mumbai|False
+9|5|kjssd|False
+10|5|asdf|False
+11|6|kjssd|False
+12|6|zser|False
+13|7|ssd|False
+14|7|hdd|False
+15|7|A|False
+16|7|S|False
+17|8|A|False
+18|8|S|False

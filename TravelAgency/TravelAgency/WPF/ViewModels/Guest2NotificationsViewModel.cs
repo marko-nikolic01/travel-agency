@@ -69,7 +69,7 @@ namespace TravelAgency.WPF.ViewModels
             foreach(var notification in NewTourNotifications) 
             {
                 if (notification.IsForLanguage)
-                    notification.NotificationText = "New tour has been created in " + notification.Tour.Language + "language";
+                    notification.NotificationText = "New tour has been created in " + notification.Tour.Language + " language";
                 else
                     notification.NotificationText = "New tour has been created in " + notification.Tour.Location.Country + ", " + notification.Tour.Location.City;
             }
