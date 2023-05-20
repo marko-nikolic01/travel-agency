@@ -42,12 +42,12 @@ namespace TravelAgency.WPF.Views
             toursViewModel.Search();
         }
 
-        private void ShowPhotos_Click(object sender, RoutedEventArgs e)
+        private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
             if (toursViewModel.SelectedTourOccurrence != null)
             {
-                TourPhotosView tourPhotosView = new TourPhotosView(toursViewModel.SelectedTourOccurrence);
-                tourPhotosView.Show();
+                TourDetailedView tourDetailedView = new TourDetailedView(toursViewModel.SelectedTourOccurrence, toursViewModel.currentGuestId);
+                this.NavigationService.Navigate(tourDetailedView);
             }
         }
         private void Vouchers_Click(object sender, RoutedEventArgs e)
