@@ -91,6 +91,14 @@
 
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Orientation="Horizontal" Margin="10 20">
+                <Label Content="{Binding VoucherWonString}" />
+                <Label Margin="30 0">
+                    <Hyperlink Click="ShowVouchers_Click">
+                        <TextBlock FontSize="20" Text="{Binding ShowVoucherString}"/>
+                    </Hyperlink>
+                </Label>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

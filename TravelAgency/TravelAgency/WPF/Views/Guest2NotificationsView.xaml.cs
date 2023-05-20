@@ -34,5 +34,11 @@ namespace TravelAgency.WPF.Views
         {
             notificationsViewModel.RejectPresence();
         }
+        private void ShowVouchers_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            notificationsViewModel.RemoveVoucherNotification();
+            VouchersView vouchers = new VouchersView(notificationsViewModel.currentGuestId);
+            this.NavigationService.Navigate(vouchers);
+        }
     }
 }
