@@ -94,6 +94,7 @@ namespace TravelAgency.WPF.ViewModels
         private TourRequestService tourRequestService;
         public TourRequestFormViewModel(int id)
         {
+            NumberOfGuests = "1";
             tourRequestService = new TourRequestService();
             Cities = new ObservableCollection<string>();
             Countries = new ObservableCollection<string>(tourRequestService.getCountries());
@@ -155,10 +156,10 @@ namespace TravelAgency.WPF.ViewModels
         {
             DateOnly minDate = DateOnly.FromDateTime(MinDate);
             int deltaDays = minDate.DayNumber - DateOnly.FromDateTime(DateTime.Now).DayNumber;
-            if(deltaDays < 2)
+            if(deltaDays < 3)
             {
                 IsMaxDateValid();
-                MinDateValid = "Must be at least two days from now";
+                MinDateValid = "Must be at least three days from now";
                 return false;
             }
             else

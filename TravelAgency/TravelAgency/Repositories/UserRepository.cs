@@ -88,7 +88,10 @@ namespace TravelAgency.Repositories
         {
             return _users.FindAll(u => u.Role == Roles.Owner);
         }
-
+        public List<User> GetGuests2()
+        {
+            return _users.FindAll(u => u.Role == Roles.Guest2);
+        }
         public void LogInUser(User user)
         {
             loggedInUser = user;

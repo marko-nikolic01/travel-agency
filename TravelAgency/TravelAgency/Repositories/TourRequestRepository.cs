@@ -228,5 +228,37 @@ namespace TravelAgency.Repositories
                     number++;
             return number;
         }
+        public bool ShouldNotifyGuestForLanguage(int guestId, string language)
+        {
+            bool existsInNotAcceptedRequests = false;
+            foreach (TourRequest request in GetRequestsByGuestId(guestId))
+            {
+                if (request.Language == language)
+                {
+                    if (request.Status != RequestStatus.Accepted)
+                        existsInNotAcceptedRequests = true;
+                    // ako je vec prihvacen negde takav zahtev ne treba obavestiti gosta
+                    else
+                        return false;
+                }
+            }
+            return existsInNotAcceptedRequests;
+        }
+        public bool ShouldNotifyGuestForLocation(int guestId, int locationId)
+        {
+            bool existsInNotAcceptedRequests = false;
+            foreach (TourRequest request in GetRequestsByGuestId(guestId))
+            {
+                if (request.Location.Id == locationId)
+                {
+                    if (request.Status != RequestStatus.Accepted)
+                        existsInNotAcceptedRequests = true;
+                    // ako je vec prihvacen negde takav zahtev ne treba obavestiti gosta
+                    else
+                        return false;
+                }
+            }
+            return existsInNotAcceptedRequests;
+        }
     }
 }

@@ -113,11 +113,10 @@
                     PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
-                        <Canvas Width = "220" Height = "90" Background="Azure">
+                        <Canvas Width = "220" Height = "70" Background="Azure">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock FontSize="14" Padding="10">
-                                Enter date range in which tour<LineBreak/>could be held.<LineBreak/>
-                                Min date must at least 48h from<LineBreak/>now.
+                                Enter date range in which tour<LineBreak/>could be held.
                                 </TextBlock>
                             </StackPanel>
                         </Canvas>

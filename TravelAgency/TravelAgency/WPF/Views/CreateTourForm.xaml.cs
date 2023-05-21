@@ -228,11 +228,11 @@ namespace TravelAgency.WPF.Views
             Tour newTour = TourOccurrenceService.SaveNewTours(NewTour, ListPhotos.Items, ListDateTimes.Items, ListKeyPoints.Items, ActiveGuide);
             if(CreatingTourForLanguage)
             {
-                service.MakeNotificationsForLanguage(newTour);
+                service.MakeNotifications(newTour, "language");
             }
             else if(CreatingTourForLocation)
             {
-                service.MakeNotificationsForLocation(newTour);
+                service.MakeNotifications(newTour, "location");
             }
         }
 
