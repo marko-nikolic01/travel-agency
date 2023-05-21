@@ -24,7 +24,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<TourOccurrence> GetFinishedOccurrencesForGuideByYear(int guideId, int year);
         public List<TourOccurrence> GetOfferedToursByLocation(Location location);
 
-        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide);
+        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, int activeGuideId);
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence);
 
