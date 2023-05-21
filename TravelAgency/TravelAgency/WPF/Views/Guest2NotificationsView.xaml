@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="768" d:DesignWidth="1024" Background="White"
+      d:DesignHeight="768" d:DesignWidth="1024" Background="Azure"
       Title="Guest2NotificationsView">
     <Page.Resources>
         <Style TargetType="Label">

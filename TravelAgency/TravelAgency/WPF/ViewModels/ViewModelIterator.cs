@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Commands;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
@@ -13,6 +15,7 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string backButtonVisibility;
         private string nextButtonVisibility;
+        private bool discardButtonEnabled;
         public string BackButtonVisibility
         {
             get => backButtonVisibility;
@@ -22,6 +25,11 @@ namespace TravelAgency.WPF.ViewModels
         {
             get => nextButtonVisibility;
             set { if (value != nextButtonVisibility) { nextButtonVisibility = value; OnPropertyChanged(); } }
+        }
+        public bool DiscardButtonEnabled
+        {
+            get => discardButtonEnabled;
+            set { if (value != discardButtonEnabled) { discardButtonEnabled = value; OnPropertyChanged(); } }
         }
         public List<TourRequestFormViewModel> viewModels;
         int i;
@@ -37,8 +45,10 @@ namespace TravelAgency.WPF.ViewModels
             viewModels = new List<TourRequestFormViewModel>();
             viewModels.Add(new TourRequestFormViewModel(currentGuestId));
             i = 0;
+            DiscardButtonEnabled = false;
             BackButtonVisibility = "Hidden";
             NextButtonVisibility = "Hidden";
+            UpdateHelpText();
         }
         public TourRequestFormViewModel GetViewModelInstance()
         {
@@ -53,6 +63,7 @@ namespace TravelAgency.WPF.ViewModels
             i = viewModels.Count - 1;
             BackButtonVisibility = "Visible";
             NextButtonVisibility = "Hidden";
+            DiscardButtonEnabled = true;
             return viewModels[i];
         }
         public TourRequestFormViewModel GetPreviousViewModel()
@@ -83,6 +94,26 @@ namespace TravelAgency.WPF.ViewModels
             {
                 tourRequest.SubmitRequest(specialRequestId);
             }
+        }
+        private void UpdateHelpText()
+        {
+            string file = @"../../../Resources/HelpTexts/CreateSpecialRequestHelp.txt";
+            Guest2MainViewModel.HelpText = File.ReadAllText(file);
+        }
+        public void DeleteCurrentViewModel()
+        {
+            viewModels.RemoveAt(i);
+            i = viewModels.Count - 1;
+            BackButtonVisibility = "Visible";
+            NextButtonVisibility = "Hidden";
+            CanDeleteViewModel();
+        }
+        private void CanDeleteViewModel()
+        {
+            if(viewModels.Count == 1)
+                DiscardButtonEnabled = false;
+            else
+                DiscardButtonEnabled = true;
         }
     }
 }
