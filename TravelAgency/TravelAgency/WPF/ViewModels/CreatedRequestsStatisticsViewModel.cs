@@ -142,7 +142,8 @@ namespace TravelAgency.WPF.ViewModels
         {
             List<string> languages = requestService.GetLanguages(currentGuestId);
             var groupedLanguages = languages.GroupBy(x => x)
-                                   .Select(g => new { Value = g.Key, Count = g.Count() });
+                                   .Select(g => new { Value = g.Key, Count = g.Count() })
+                                   .OrderByDescending(g => g.Count);
             SeriesCollection = new SeriesCollection();
             foreach (var language in groupedLanguages) 
             {
@@ -160,7 +161,8 @@ namespace TravelAgency.WPF.ViewModels
         {
             List<string> locations = requestService.GetLocationsForGuest(currentGuestId);
             var groupedLocations = locations.GroupBy(x => x)
-                                   .Select(g => new { Value = g.Key, Count = g.Count() });
+                                   .Select(g => new { Value = g.Key, Count = g.Count() })
+                                   .OrderByDescending(g => g.Count); ;
             SeriesCollectionLocation = new SeriesCollection();
             foreach (var location in groupedLocations)
             {

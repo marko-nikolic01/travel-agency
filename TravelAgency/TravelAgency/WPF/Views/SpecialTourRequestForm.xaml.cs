@@ -18,6 +18,14 @@ namespace TravelAgency.WPF.Views
             DataContext = viewModelIterator.GetViewModelInstance();
             BackButton.DataContext = viewModelIterator;
             NextButton.DataContext = viewModelIterator;
+            discardBtn.DataContext = viewModelIterator;
+            ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
+            NumGuestBtn.DataContext = toolTipViewModel;
+            popup1.DataContext = toolTipViewModel;
+            DateBtn.DataContext = toolTipViewModel;
+            popup2.DataContext = toolTipViewModel;
+            DescriptionBtn.DataContext = toolTipViewModel;
+            popup3.DataContext = toolTipViewModel;
         }
         private void SaveRequest_Click(object sender, RoutedEventArgs e)
         {
@@ -39,6 +47,14 @@ namespace TravelAgency.WPF.Views
                 DataContext = viewModelIterator.GetNextViewModel();
             else
                 MessageBox.Show("Invalid input");
+        }
+        private void DiscardViewModel_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure?", "Discard request", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                viewModelIterator.DeleteCurrentViewModel();
+                DataContext = viewModelIterator.GetViewModelInstance();
+            }
         }
         private void SubmitRequest_Click(object sender, RoutedEventArgs e)
         {

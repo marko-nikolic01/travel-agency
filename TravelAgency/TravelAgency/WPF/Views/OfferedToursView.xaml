@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="Guest2Main" d:DesignHeight="768" d:DesignWidth="1024">
+        Title="Guest2Main" d:DesignHeight="768" d:DesignWidth="1024" Background="Azure">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -62,7 +62,7 @@
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="1" Text="{Binding Country, UpdateSourceTrigger=PropertyChanged}" x:Name="tbCountry" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="2" HorizontalContentAlignment="Center">City</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="2" x:Name="tbCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
-            <Label Grid.Row="0" Grid.Column="3" HorizontalContentAlignment="Center">Duration</Label>
+            <TextBlock FontSize="20" Grid.Row="0" HorizontalAlignment="Center" Margin="0 -10 0 0" Grid.Column="3">Duration<LineBreak/> (hours)</TextBlock>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="4" HorizontalContentAlignment="Center">Language</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>

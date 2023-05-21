@@ -58,7 +58,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Next()
         {
-            if (i<6)
+            if (i<7)
             {
                 i++;
                 changeData();
@@ -84,28 +84,28 @@ namespace TravelAgency.WPF.ViewModels
             if(i == 0) 
             {
                 BackButtonVisibility = "Hidden";
-                Text = "This is opening page, your profile. Here you can see your personal information" +
-                    "\n at top is navigation menu which allows you to navigate through the whole application.";
+                Text = "This is startup page, your profile. Here you can see your personal information." +
+                    "\n At the top is navigation menu which allows you to navigate through the whole application.";
                 ImageSource = "../../Resources/Images/Picture1.PNG";
             }
             else if (i == 1)
             {
                 BackButtonVisibility = "Visible";
-                Text = "This is offered tours page. It allows you to choose the tour" +
-                    "\n and make a reservation for it";
+                Text = "This is offered tours page. It allows you to choose the tour and make a reservation for it." +
+                    "\n If you want to see more details on tour, such as photos, click on more details button.";
                 ImageSource = "../../Resources/Images/Picture2.PNG";
             }
             else if (i == 2)
             {
                 Text = "This is form where you enter data for reservation. Number of guests" +
-                    "\n and who are the guests";
+                    "\n and who are the guests.";
                 ImageSource = "../../Resources/Images/Picture3.PNG";
             }
             else if (i == 3)
             {
                 Text = "In this page you can see if you have active tour and follow it. Also you can see" +
                     "\n your status on that tour. Below that are all tours that you have been on." +
-                    "\n you can rate tours on which you've been on.";
+                    "\n You can rate tours on which you've been on.";
                 ImageSource = "../../Resources/Images/Picture4.PNG";
             }
             else if (i == 4)
@@ -123,8 +123,14 @@ namespace TravelAgency.WPF.ViewModels
             }
             else if (i == 6)
             {
-                Text = "This is form for creating tour request";
+                Text = "This is form for creating tour request.";
                 ImageSource = "../../Resources/Images/Picture7.PNG";
+                NextButtonText = "Next";
+            }
+            else if (i == 7)
+            {
+                Text = "Here are all created special requests.";
+                ImageSource = "../../Resources/Images/Picture8.PNG";
                 NextButtonText = "Finish";
             }
         }

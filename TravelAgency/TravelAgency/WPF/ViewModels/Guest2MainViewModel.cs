@@ -16,6 +16,12 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string imageSource;
         private static string helpText;
+        private bool comboBoxOpen;
+        public bool ComboBoxOpen
+        {
+            get => comboBoxOpen;
+            set { if (value != comboBoxOpen) { comboBoxOpen = value; OnPropertyChanged(); } }
+        }
         public string NotificationsImageSource
         {
             get => imageSource;
@@ -71,6 +77,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateToSpecialRequestsCommand(object obj)
         {
+            ComboBoxOpen = false;
             Page specialRequests = new SpecialTourRequestsView(currentGuestId);
             NavService.Navigate(specialRequests);
             UpdateHelpText("SpecialRequestsHelp");
@@ -89,12 +96,14 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Execute_NavigateToRequestsCommand(object obj)
         {
+            ComboBoxOpen = false;
             Page requests = new TourRequestView(currentGuestId);
             NavService.Navigate(requests);
             UpdateHelpText("RequestsHelp");
         }
         private void Execute_NavigateToProfileCommand(object obj)
         {
+            ComboBoxOpen = false;
             Page requests = new Guest2ProfileView(currentGuestId);
             NavService.Navigate(requests);
             UpdateHelpText("ProfileHelp");

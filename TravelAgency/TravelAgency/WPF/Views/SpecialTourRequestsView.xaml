@@ -6,7 +6,7 @@
       xmlns:system="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:TravelAgency.WPF.Views" xmlns:local1="clr-namespace:TravelAgency.WPF.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="768" d:DesignWidth="1024" Background="White"
+      d:DesignHeight="768" d:DesignWidth="1024" Background="Azure"
       Title="SpecialTourRequestsView">
     <Page.Resources>
         <Style TargetType="Button">
@@ -103,7 +103,12 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
                     </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Description}" Margin="10" />
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -128,10 +133,10 @@
                     PlacementTarget = "{Binding ElementName = TourRequestBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
-                        <Canvas Width = "290" Height = "100" Background="Azure">
+                        <Canvas Width = "240" Height = "80" Background="Azure">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock FontSize="14" Padding="10">
-
+                                    Create your special request here<LineBreak/>and see if guide has accepted it.
                                 </TextBlock>
                             </StackPanel>
                         </Canvas>
