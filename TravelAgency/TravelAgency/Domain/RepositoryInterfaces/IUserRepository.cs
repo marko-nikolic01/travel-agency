@@ -23,7 +23,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateSuperOwners();
 
         public List<User> GetOwners();
-
+        public List<User> GetGuests2();
         public void LogInUser(User user);
 
         public User GetLoggedInUser();

@@ -31,5 +31,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<TourRequest> GetBySpecialRequestId(int id);
         public List<TourRequest> GetSpecialRequests();
         public int GetNumberOfAllRequests(int guestId);
+        public bool ShouldNotifyGuestForLanguage(int guestId, string language);
+        public bool ShouldNotifyGuestForLocation(int guestId, int locationId);
     }
 }

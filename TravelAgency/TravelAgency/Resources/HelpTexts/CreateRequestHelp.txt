@@ -9,7 +9,7 @@ Then you can choose city from that country in the same way and using same shortc
 Next you need to add maximum number of guests that you want to be on tour.
 
 Next you add date span in which you want this tour to be held.
-Minimum date must be at least two days from now.
+Minimum date must be at least three days from now.
 
 Finally you can add description where you can more detailed to explain what
 kind of tour you would like.

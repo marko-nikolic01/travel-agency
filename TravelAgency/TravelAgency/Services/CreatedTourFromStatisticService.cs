@@ -33,91 +33,27 @@ namespace TravelAgency.Services
                 }
             }
         }
-        public void MakeNotificationsForLanguage(Tour tour)
+        public void MakeNotifications(Tour tour, string notificationType)
         {
-            foreach(Domain.Models.User user in IUserRepository.GetAll())
+            foreach (Domain.Models.User user in IUserRepository.GetGuests2())
             {
-                if (user.Role == Roles.Guest2)
+                if (notificationType == "language")
                 {
-                    foreach (TourRequest request in GetNotAcceptedRequests(user.Id))
+                    if (ITourRequestRepository.ShouldNotifyGuestForLanguage(user.Id, tour.Language))
                     {
-                        if (request.Language == tour.Language)
-                        {
-                            if (IsRequestLanguageAlreadyAccepted(request.Language, user.Id))
-                                break;
-                            NewTourNotification createdTour = new NewTourNotification(tour.Id, user.Id, false, tour, true, false);
-                            INewTourNotificationRepository.Save(createdTour);
-                            break;
-                        }
+                        NewTourNotification createdTour = new NewTourNotification(tour.Id, user.Id, false, tour, true, false);
+                        INewTourNotificationRepository.Save(createdTour);
+                    }
+                }
+                if (notificationType == "location")
+                {
+                    if (ITourRequestRepository.ShouldNotifyGuestForLocation(user.Id, tour.Location.Id))
+                    {
+                        NewTourNotification createdTour = new NewTourNotification(tour.Id, user.Id, false, tour, false, true);
+                        INewTourNotificationRepository.Save(createdTour);
                     }
                 }
             }
-        }
-        private bool IsRequestLanguageAlreadyAccepted(string language, int id)
-        {
-            foreach (TourRequest request in GetAcceptedRequests(id))
-            {
-                if (request.Language == language) 
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public void MakeNotificationsForLocation(Tour tour)
-        {
-            foreach (Domain.Models.User user in IUserRepository.GetAll())
-            {
-                if (user.Role == Roles.Guest2)
-                {
-                    foreach (TourRequest request in GetNotAcceptedRequests(user.Id))
-                    {
-                        if (request.LocationId == tour.LocationId)
-                        {
-                            if (IsRequestLocationAlreadyAccepted(request.LocationId, user.Id))
-                                break;
-                            NewTourNotification createdTour = new NewTourNotification(tour.Id, user.Id, false, tour, false, true);
-                            INewTourNotificationRepository.Save(createdTour);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        private bool IsRequestLocationAlreadyAccepted(int locationId, int id)
-        {
-            foreach (TourRequest request in GetAcceptedRequests(id))
-            {
-                if (request.LocationId == locationId)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        private List<TourRequest> GetNotAcceptedRequests(int id)
-        {
-            List <TourRequest> result = new List <TourRequest>();
-            foreach (TourRequest request in ITourRequestRepository.GetAll())
-            {
-                if (request.GuestId == id && request.Status != RequestStatus.Accepted)
-                {
-                    result.Add(request);
-                }
-            }
-            return result;
-        }
-        private List<TourRequest> GetAcceptedRequests(int id)
-        {
-            List<TourRequest> result = new List<TourRequest>();
-            foreach (TourRequest request in ITourRequestRepository.GetAll())
-            {
-                if (request.GuestId == id && request.Status == RequestStatus.Accepted)
-                {
-                    result.Add(request);
-                }
-            }
-            return result;
         }
         public bool NewTourNotificationExists(int guestId)
         {
