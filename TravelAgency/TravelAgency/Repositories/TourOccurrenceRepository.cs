@@ -109,10 +109,10 @@ namespace TravelAgency.Repositories
             return result;
         }
 
-        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide)
+        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, int activeGuideId)
         {
             tourOccurrence.Id = NextId();
-            tourOccurrence.GuideId = activeGuide.Id;
+            tourOccurrence.GuideId = activeGuideId;
             tourOccurrences.Add(tourOccurrence);
             _serializer.ToCSV(FilePath, tourOccurrences);
             NotifyObservers();
