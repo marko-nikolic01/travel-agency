@@ -217,7 +217,7 @@ namespace TravelAgency.Services
             tourOccurrence.Tour = newTour;
             tourOccurrence.DateTime = dateTime;
             tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
-            return ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, activeGuide);
+            return ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, activeGuide.Id);
         }
         private void SaveKeyPoint(string keyPointItem, TourOccurrence tourOccurrence)
         {
@@ -301,6 +301,29 @@ namespace TravelAgency.Services
         }
         public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId, ObservableCollection<string> keyPoints, int duration)
         {
+            Tour newTour = GenerateNewTour(request, duration);
+            ITourRepository.Save(newTour);
+
+            TourOccurrence newTourOccurrence = GenerateNewTourOccurrence(newTour, dateTime);
+            ITourOccurrenceRepository.SaveTourOccurrence(newTourOccurrence, GuideId);
+            foreach(string keyPoint in keyPoints)
+            {
+                SaveKeyPoint(keyPoint, newTourOccurrence);
+            }
+        }
+
+        private TourOccurrence GenerateNewTourOccurrence(Tour newTour, DateTime dateTime)
+        {
+            TourOccurrence tourOccurrence = new TourOccurrence();
+            tourOccurrence.TourId = newTour.Id;
+            tourOccurrence.Tour = newTour;
+            tourOccurrence.DateTime = dateTime;
+            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
+            return tourOccurrence;
+        }
+
+        private Tour GenerateNewTour(TourRequest request, int duration)
+        {
             Tour newTour = new Tour();
             newTour.Language = request.Language;
             newTour.Description = request.Description;
@@ -308,17 +331,7 @@ namespace TravelAgency.Services
             newTour.LocationId = request.LocationId;
             newTour.Location = request.Location;
             newTour.Duration = duration;
-            ITourRepository.Save(newTour);
-            TourOccurrence tourOccurrence = new TourOccurrence();
-            tourOccurrence.TourId = newTour.Id;
-            tourOccurrence.Tour = newTour;
-            tourOccurrence.DateTime = dateTime;
-            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
-            ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, IUserRepository.GetById(GuideId));
-            foreach(string k in keyPoints)
-            {
-                SaveKeyPoint(k, tourOccurrence);
-            }
+            return newTour;
         }
 
         public void UndoCancelTour(int canceledTour)
@@ -329,21 +342,13 @@ namespace TravelAgency.Services
 
         public bool IsGuideFree(int guideId, DateTime concreteDateTime, int duration)
         {
-            foreach(var tourOccurrence in ITourOccurrenceRepository.GetUpcomings(guideId))
+            bool isGuideFree = true;
+            var upcommingTourOccurrences = ITourOccurrenceRepository.GetUpcomings(guideId);
+            foreach (var tourOccurrence in upcommingTourOccurrences)
             {
-                if(tourOccurrence.DateTime.Date == concreteDateTime.Date)
-                {
-                    if ((tourOccurrence.DateTime <= concreteDateTime) && (tourOccurrence.DateTime.AddHours(duration) >= concreteDateTime))
-                    {
-                        return false;
-                    }
-                    else if ((tourOccurrence.DateTime >= concreteDateTime) && (tourOccurrence.DateTime <= concreteDateTime.AddHours(duration)))
-                    {
-                        return false;
-                    }
-                }
+                isGuideFree = isGuideFree && tourOccurrence.IsDateTimeFree(concreteDateTime, duration);
             }
-            return true;
+            return isGuideFree;
         }
     }
 
