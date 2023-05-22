@@ -41,7 +41,7 @@ namespace TravelAgency.WPF.ViewModels
             GuideLanguage = "5";
             Interesting = "5";
             Urls = new ObservableCollection<string>();
-            Description = occurrence.Tour.Name + " in " + occurrence.Tour.Location.Country +
+            Description = "Guide: "+occurrence.Guide.Username+".  " +occurrence.Tour.Name + " in " + occurrence.Tour.Location.Country +
                 ", " + occurrence.Tour.Location.City + ". " + occurrence.Tour.Description;
             tourRatingService = new TourRatingService();
             AddUrlCommand = new ButtonCommandNoParameter(AddUrl);

@@ -86,7 +86,7 @@ namespace TravelAgency.Domain.Models
         public void CheckIfExpired()
         {
             int currentDays = DateOnly.FromDateTime(DateTime.Now).DayNumber;
-            if (MinDate.DayNumber - currentDays < 3)
+            if (MinDate.DayNumber - currentDays < 3 && Status == RequestStatus.Pending)
             {
                 Status = RequestStatus.Invalid;
             }

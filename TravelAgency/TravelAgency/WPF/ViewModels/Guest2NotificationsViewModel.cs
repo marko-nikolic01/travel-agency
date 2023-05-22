@@ -17,6 +17,18 @@ namespace TravelAgency.WPF.ViewModels
         private string presenceString;
         private string confirmationString;
         private string rejectionString;
+        private string voucherWonString;
+        private string showVoucherString;
+        public string VoucherWonString
+        {
+            get => voucherWonString;
+            set { if (value != voucherWonString) { voucherWonString = value; OnPropertyChanged(); } }
+        }
+        public string ShowVoucherString
+        {
+            get => showVoucherString;
+            set { if (value != showVoucherString) { showVoucherString = value; OnPropertyChanged(); } }
+        }
         public string TourPresenceString
         {
             get => presenceString;
@@ -41,7 +53,8 @@ namespace TravelAgency.WPF.ViewModels
         public List<NewTourNotification> NewTourNotifications { get; set; }
         public RequestAcceptedNotification RequestNotification { get; set; }
         public NewTourNotification NewTourNotification { get; set; }
-        public int SelectedOccurrenceId;
+        public WonVoucherNotification VoucherNotification { get; set; }
+        public TourOccurrence TourOccurrence;
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -52,6 +65,8 @@ namespace TravelAgency.WPF.ViewModels
             TourPresenceString = "";
             ConfirmationString = "";
             RejectionString = "";
+            VoucherWonString = "";
+            ShowVoucherString = "";
             currentGuestId = id;
             tourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
             tourRequestService = new TourRequestService();
@@ -61,6 +76,7 @@ namespace TravelAgency.WPF.ViewModels
             AllertIfSelectеd();
             IsSomeTourAccepted();
             GetNewToursFromStatistic();
+            CheckIfVoucherWon();
         }
         private void GetNewToursFromStatistic()
         {
@@ -69,7 +85,7 @@ namespace TravelAgency.WPF.ViewModels
             foreach(var notification in NewTourNotifications) 
             {
                 if (notification.IsForLanguage)
-                    notification.NotificationText = "New tour has been created in " + notification.Tour.Language + "language";
+                    notification.NotificationText = "New tour has been created in " + notification.Tour.Language + " language";
                 else
                     notification.NotificationText = "New tour has been created in " + notification.Tour.Location.Country + ", " + notification.Tour.Location.City;
             }
@@ -127,11 +143,31 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrenceService occurrenceService = new TourOccurrenceService();
             if (NewTourNotification != null)
             {
-                SelectedOccurrenceId = occurrenceService.GetByTourId(NewTourNotification.TourId).Id;
+                TourOccurrence = occurrenceService.GetByTourId(NewTourNotification.TourId);
                 NewTourNotification.Seen = true;
                 service.UpdateNotification(NewTourNotification);
                 NewTourNotifications.Remove(NewTourNotification);
             }
+            tourOccurrenceAttendanceService.NotifyObservers();
+        }
+        private void CheckIfVoucherWon()
+        {
+            VoucherService voucherService = new VoucherService();
+            VoucherNotification = voucherService.GetVoucherNotification(currentGuestId);
+            if(VoucherNotification != null) 
+            {
+                if(!VoucherNotification.Seen)
+                {
+                    VoucherWonString = "You have won new voucher";
+                    ShowVoucherString = "CLICK HERE TO SEE VOUCHERS";
+                }
+            }
+        }
+        public void RemoveVoucherNotification()
+        {
+            VoucherNotification.Seen = true;
+            VoucherService voucherService = new VoucherService();
+            voucherService.UpdateNotification(VoucherNotification);
             tourOccurrenceAttendanceService.NotifyObservers();
         }
     }

@@ -121,29 +121,15 @@ namespace TravelAgency.WPF.ViewModels
         }
         private void Confirm()
         {
-            if(SelectedDate == null)
+            if (!CheckAllInputsPresent())
             {
-                MessageBox.Show("Select date please!");
                 return;
             }
-            if (!IsTimeSelected)
-            {
-                MessageBox.Show("Select time please!");
-                return;
-            }
-            if(KeyPoints.Count < 2)
-            {
-                MessageBox.Show("Enter at least 2 Key Points!");
-                return;
-            }
-            if(Duration <= 0)
-            {
-                MessageBox.Show("Enter duration!");
-                return;
-            }
+            
             DateTime date = DateTime.ParseExact(SelectedDate, "G", new CultureInfo("en-US"));
             string dateTime = date.ToString("dd-MM-yyyy") + " " + SelectedTime.ToString("HH:mm");
             DateTime concreteDateTime = DateTime.ParseExact(dateTime, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
+
             if (!TourOccurrenceService.IsGuideFree(ActiveGuide.Id, concreteDateTime, Duration))
             {
                 MessageBox.Show("You are not free in the time you entered!");
@@ -152,8 +138,34 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id, KeyPoints, Duration);
             TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime);
             TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId));
+
             Page page = new TourRequestBookingView(ActiveGuide.Id, NavigationService);
             NavigationService.Navigate(page);
+        }
+
+        private bool CheckAllInputsPresent()
+        {
+            if (SelectedDate == null)
+            {
+                MessageBox.Show("Select date please!");
+                return false;
+            }
+            if (!IsTimeSelected)
+            {
+                MessageBox.Show("Select time please!");
+                return false;
+            }
+            if (KeyPoints.Count < 2)
+            {
+                MessageBox.Show("Enter at least 2 Key Points!");
+                return false;
+            }
+            if (Duration <= 0)
+            {
+                MessageBox.Show("Enter duration!");
+                return false;
+            }
+            return true;
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

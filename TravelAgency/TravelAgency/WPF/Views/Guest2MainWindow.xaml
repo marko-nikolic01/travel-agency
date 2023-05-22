@@ -211,7 +211,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Offered Tours" Width="170" Command="{Binding NavigateToOfferedToursCommand}" BorderBrush="#FFBAB8B8"/>
                 <Button Content="My Tours" Width="170" Command="{Binding NavigateToMyToursCommand}" BorderBrush="#FFBBB8B8"/>
-                <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Width="180" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14">
+                <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Width="180" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14" IsDropDownOpen="{Binding ComboBoxOpen}">
                     <ComboBox.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#5783db" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#5783db" />
@@ -239,7 +239,7 @@
                         <TextBlock Margin="10 0">Help</TextBlock>
                     </StackPanel>
                 </Button>
-                <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Width="120" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14">
+                <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Width="120" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14" >
                     <ComboBox.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#5783db" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#5783db" />
@@ -247,7 +247,7 @@
                     <ComboBoxItem Content="&lt;Profile&gt;" IsSelected="True" >
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Width="120" Height="40" Content="Account" Command="{Binding NavigateToProfileCommand}"/>
+                        <Button Width="120" Height="40" Content="My Profile" Command="{Binding NavigateToProfileCommand}"/>
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <Button Width="120" Height="40" Content="Sign out" Click="SignOut_Click"/>

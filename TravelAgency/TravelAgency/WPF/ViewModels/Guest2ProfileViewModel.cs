@@ -87,7 +87,11 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void PrepareData()
         {
-            tourOccurrenceAttendanceDTOs = service.GetAttendancesForPeriod(GuestId, StartDate, EndDate);
+            List<TourOccurrenceAttendanceDTO> list = service.GetAttendancesForPeriod(GuestId, StartDate, EndDate);
+            var attendances = from attendance in list
+                               orderby attendance.TourDateTime
+                               select attendance;
+            tourOccurrenceAttendanceDTOs = attendances.ToList();
         }
         public void ChangeUsername()
         {

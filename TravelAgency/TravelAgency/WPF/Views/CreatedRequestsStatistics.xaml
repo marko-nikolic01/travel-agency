@@ -37,7 +37,9 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Content="Request acceptance" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-            <Label Content="Average number of people in tours" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+            <TextBlock FontSize="20" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                Average number of people in <LineBreak/> accepted tours
+            </TextBlock>
             <Label Margin="0 0 10 0" Content="All time" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
                 <Label Margin="20" Content="For year"></Label>

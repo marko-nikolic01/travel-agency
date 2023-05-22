@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Domain.Models
@@ -129,6 +130,22 @@ namespace TravelAgency.Domain.Models
                 return true;
             else
                 return false;
+        }
+
+        public bool IsDateTimeFree(DateTime concreteDateTime, int duration)
+        {
+            if (DateTime.Date == concreteDateTime.Date)
+            {
+                if ((DateTime <= concreteDateTime) && (DateTime.AddHours(duration) >= concreteDateTime))
+                {
+                    return false;
+                }
+                else if ((DateTime >= concreteDateTime) && (DateTime <= concreteDateTime.AddHours(duration)))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -132,9 +132,9 @@ namespace TravelAgency.WPF.ViewModels
                 numOfGuests = int.Parse(Guests);
             else
                 numOfGuests = 0;
-            toursList = toursList.Where(x => (x.Tour.Location.City.ToLower().Contains(City) || tbCityEmpty) &&
-                                        (x.Tour.Location.Country.ToLower().Contains(Country) || tbCountryEmpty) &&
-                                        (x.Tour.Language.ToLower().Contains(Language) || tbLanguageEmpty) &&
+            toursList = toursList.Where(x => (x.Tour.Location.City.ToLower().Contains(City.ToLower()) || tbCityEmpty) &&
+                                        (x.Tour.Location.Country.ToLower().Contains(Country.ToLower()) || tbCountryEmpty) &&
+                                        (x.Tour.Language.ToLower().Contains(Language.ToLower()) || tbLanguageEmpty) &&
                                         (x.Tour.Duration.ToString().Contains(Duration) || tbDurEmpty) &&
                                         ((x.Tour.MaxGuestNumber - x.Guests.Count) >= numOfGuests)).ToList();
             TourOccurrences = new ObservableCollection<TourOccurrence>(toursList);

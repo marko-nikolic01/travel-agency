@@ -83,6 +83,11 @@
                     <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
                 </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Description}" Margin="10" />
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
             </DataGrid>
         </Border>
         <Grid Grid.Row="2">

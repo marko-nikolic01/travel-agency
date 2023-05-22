@@ -66,6 +66,7 @@
                       >
 
             </ComboBox>
+            <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Width="200" Height="35" x:Name="discardBtn" HorizontalAlignment="Right" Click="DiscardViewModel_Click" IsEnabled="{Binding DiscardButtonEnabled}" Margin="0 0 40 0" Background="#4681f4" Foreground="White">Discard this request</Button>
             <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                           ItemsSource="{Binding Cities}" 
                           SelectedItem="{Binding SelectedCity}"
@@ -87,10 +88,10 @@
             </StackPanel>
             <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="6" Grid.Column="1" Margin="20 0 0 30" Width="600" HorizontalAlignment="Left" Text="{Binding Description}"/>
             <Grid Grid.Column="2" Grid.Row="3">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding GuestNumHelpCommand}">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding FirstHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = GuestNumHelpClicked}"    
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = NumGuestBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -105,10 +106,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="4">
-                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding DateHelpCommand}">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding SecondHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = DateHelpClicked}"    
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -124,10 +125,10 @@
                 </Popup>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="6">
-                <Button Margin="0 -35 0 0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding DescriptionHelpCommand}">
+                <Button Margin="0 -35 0 0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>
                 </Button>
-                <Popup IsOpen = "{Binding Path = DescriptionHelpClicked}"    
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
                     PlacementTarget = "{Binding ElementName = DescriptionBtn}" Placement="Left"
                     AllowsTransparency = "True">
                     <Border BorderBrush="Gainsboro" BorderThickness="3">
@@ -143,12 +144,12 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <Button Height="40" Width="50" Margin="30 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" x:Name="BackButton" Click="BackButton_Click" Visibility="{Binding BackButtonVisibility}">
-                <Image Source="/Resources/Images/LeftArrow.png"></Image>
+            <Button Height="50" Width="60" Margin="30 0 0 0" HorizontalAlignment="Left" BorderBrush="{x:Null}" Background="Azure" VerticalAlignment="Bottom" x:Name="BackButton" Click="BackButton_Click" Visibility="{Binding BackButtonVisibility}">
+                <Image Source="../../Resources/Images/leftpointing.png" Margin="0 0 0 -5" Height="50" Width="60" ></Image>
             </Button>
             <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Content="Save and add next tour" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="SaveRequest_Click"/>
-            <Button Height="40" Width="50" Margin="0 0 30 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="NextButton_Click" x:Name="NextButton" Visibility="{Binding NextButtonVisibility}">
-                <Image Source="/Resources/Images/RightArrow.png"></Image>
+            <Button Height="50" Width="60" Margin="0 0 30 0" HorizontalAlignment="Right" BorderBrush="{x:Null}" Background="Azure"  VerticalAlignment="Bottom" Click="NextButton_Click" x:Name="NextButton" Visibility="{Binding NextButtonVisibility}">
+                <Image Source="../../Resources/Images/rightpointing.png" Margin="0 0 0 -5" Height="50" Width="60"></Image>
             </Button>
         </Grid>
         <Grid Grid.Row="3">

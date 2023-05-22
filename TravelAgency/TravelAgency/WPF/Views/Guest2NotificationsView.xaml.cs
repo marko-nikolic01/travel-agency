@@ -27,12 +27,18 @@ namespace TravelAgency.WPF.Views
         private void ShowNewTour_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             notificationsViewModel.RemoveTourNotification();
-            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId, false, notificationsViewModel.SelectedOccurrenceId);
-            this.NavigationService.Navigate(tours);
+            TourDetailedView tour = new TourDetailedView(notificationsViewModel.TourOccurrence, notificationsViewModel.currentGuestId);
+            this.NavigationService.Navigate(tour);
         }
         private void RejectPresence_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             notificationsViewModel.RejectPresence();
+        }
+        private void ShowVouchers_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            notificationsViewModel.RemoveVoucherNotification();
+            VouchersView vouchers = new VouchersView(notificationsViewModel.currentGuestId);
+            this.NavigationService.Navigate(vouchers);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace TravelAgency.WPF.ViewModels
         public string Duration { get; set; }
         public string KeyPointOfArrival { get; set; }
         public string ButtonVisibility { get; set; }
+        public string LabelVisibility { get; set; }
         public TourOccurrence tourOccurrence;
         private TourOccurrenceAttendanceService attendanceService;
         
@@ -43,9 +44,15 @@ namespace TravelAgency.WPF.ViewModels
         {
             TourRatingService ratingService = new TourRatingService();
             if (ratingService.IsTourNotRated(guestId, tourOccurrence.Id))
+            {
                 ButtonVisibility = "Visible";
+                LabelVisibility = "Hidden";
+            }
             else
+            {
                 ButtonVisibility = "Hidden";
+                LabelVisibility = "Visible";
+            }
         }
     }
 }

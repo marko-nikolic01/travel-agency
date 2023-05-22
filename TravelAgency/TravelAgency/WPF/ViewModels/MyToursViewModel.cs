@@ -33,14 +33,10 @@ namespace TravelAgency.WPF.ViewModels
         public bool CanTourBeRated()
         {
             TourRatingService ratingService = new TourRatingService();
-            if (SelectedTourOccurrence != null)
-            {
-                if (ratingService.IsTourNotRated(currentGuestId, SelectedTourOccurrence.Id))
-                    return true;
-                else
-                    return false;
-            }
-            return false;
+            if (ratingService.IsTourNotRated(currentGuestId, SelectedTourOccurrence.Id))
+                return true;
+            else
+                return false;
         }
     }
 }

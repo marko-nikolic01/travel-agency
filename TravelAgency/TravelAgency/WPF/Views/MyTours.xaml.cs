@@ -24,15 +24,15 @@ namespace TravelAgency.WPF.Views
 
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
-           if (myToursViewModel.CanTourBeRated())
+           if (myToursViewModel.SelectedTourOccurrence == null)
+                MessageBox.Show("You must select tour occurrence to rate.");
+            else if (myToursViewModel.CanTourBeRated())
            {
                 TourRatingFormView ratingFormView = new TourRatingFormView(myToursViewModel.SelectedTourOccurrence, myToursViewModel.currentGuestId);
                 this.NavigationService.Navigate(ratingFormView);
-            }
-           else
-           {
-                MessageBox.Show("This tour occurrence is already rated.");
            }
+           else
+                MessageBox.Show("This tour occurrence is already rated.");
         }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {
