@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Documents;
 using TravelAgency.Domain.Models;
 using TravelAgency.WPF.ViewModels;
 
@@ -6,24 +8,18 @@ namespace TravelAgency.WPF.Views
 {
     public partial class TourPhotosView : Window
     {
-        private TourOccurrence tourOccurrence;
         private TourPhotosViewModel tourPhotosViewModel;
         public TourPhotosView(TourOccurrence tourOccurrence)
         {
             InitializeComponent();
-            this.tourOccurrence = tourOccurrence;
             tourPhotosViewModel = new TourPhotosViewModel(tourOccurrence.Tour.Photos);
             DataContext = tourPhotosViewModel;
         }
-
-        private void NextImage_Click(object sender, RoutedEventArgs e)
+        public TourPhotosView(List<string> links)
         {
-            tourPhotosViewModel.ShowNextPhoto();
-        }
-
-        private void PreviousImage_Click(object sender, RoutedEventArgs e)
-        {
-            tourPhotosViewModel.ShowPreviousPhoto();
+            InitializeComponent();
+            tourPhotosViewModel = new TourPhotosViewModel(links);
+            DataContext = tourPhotosViewModel;
         }
     }
 }

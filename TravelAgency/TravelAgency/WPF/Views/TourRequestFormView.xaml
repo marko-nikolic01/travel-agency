@@ -1,13 +1,14 @@
-﻿<Window x:Class="TravelAgency.WPF.Views.TourRequestFormView"
+﻿<Page x:Class="TravelAgency.WPF.Views.TourRequestFormView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        Title="TourRequestForm" Height="768" Width="1024" ResizeMode="NoResize">
-    <Window.Resources>
+        xmlns:localviewmodel="clr-namespace:TravelAgency.WPF.ViewModels" 
+      mc:Ignorable="d"
+        Title="TourRequestForm" d:DesignHeight="768" d:DesignWidth="1024" Background="Azure">
+    <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
         </Style>
@@ -20,30 +21,19 @@
         <Style TargetType="DatePicker">
             <Setter Property="FontSize" Value="20" />
         </Style>
-    </Window.Resources>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="140"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Offered Tours" Width="180"/>
-                    <Button Content="My Tours" Width="180" />
-                    <ComboBox Width="180">
-                    </ComboBox>
-                    <Button Content="Notifications" Width="180"/>
-                    <Button Content="Help" Width="180"/>
-                    <ComboBox Width="120">
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-        <Grid Grid.Row="1">
+            
+        <Grid Grid.Row="0">
             <Label Margin="20" FontSize="24" Content="Creating tour request"></Label>
         </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
@@ -56,6 +46,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Country" HorizontalAlignment="Left" />
                 <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="City" HorizontalAlignment="Left"/>
@@ -64,33 +55,100 @@
                 <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>
-            <xctk:IntegerUpDown Margin="20 0" Grid.Column="1" Grid.Row="3" FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="220" SelectionChanged="Country_SelectionChanged"
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <xctk:IntegerUpDown Minimum="1" Width="320" TextAlignment="Left" Margin="20 5" HorizontalAlignment="Left"
+                                FontSize="20" Name="myUpDownControl" Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Row="3" FontSize="16" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding NumberOfGuestValid}"></Label>
+            </StackPanel>
+            <ComboBox x:Name="CountryComboBox" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                       ItemsSource="{Binding Countries}" 
                       SelectedItem="{Binding SelectedCountry}"
                       >
                 
             </ComboBox>
-                <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="220"
+            <ComboBox x:Name="CityComboBox" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20 0" Height="40" Width="320" FontSize="20"
                           ItemsSource="{Binding Cities}" 
                           SelectedItem="{Binding SelectedCity}"
                           >
                     
                 </ComboBox>
-                <TextBox Text="{Binding Language}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220">
-                
-                </TextBox>
-            <DatePicker Grid.Row="4" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
-            <DatePicker Grid.Row="5" Grid.Column="1" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
-            <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="500" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="20 0" Height="40" Width="320">
+                    </TextBox>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding LanguageValid}"></Label>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+            <DatePicker  Width="320" HorizontalAlignment="Left" Margin="20 0" Height="40" SelectedDate="{Binding Path=MinDate}"></DatePicker>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding MinDateValid, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                <DatePicker Width="320" HorizontalAlignment="Left" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
+                <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding MaxDateValid, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>    
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="20 0" Width="590" 
+                     TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <Grid Grid.Column="2" Grid.Row="3">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" DataContext="toolTipViewModel" VerticalAlignment="Center" Command="{Binding FirstHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"
+                    PlacementTarget = "{Binding ElementName = NumGuestBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "60" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Enter maximum number of<LineBreak/>guests on tour here.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="4">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DateBtn" VerticalAlignment="Bottom" Command="{Binding SecondHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DateBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "70" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Enter date range in which tour<LineBreak/>could be held.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="6">
+                <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="DescriptionBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DescriptionBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "220" Height = "70" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Description can help guides to<LineBreak/>make the tour the way you want.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
         </Grid>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Width="374" Height="43" Click="SubmitButton_Click" x:Name="SubmitButton">Submit rating</Button>
-                <Button Grid.Column="1" Width="374" Height="43" Content="Cancel reservation"/>
+            <Button Grid.Column="0" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="SubmitButton_Click" x:Name="SubmitButton">Submit request</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="Cancel_Click" Content="Cancel request"/>
             </Grid>
         </Grid>
-</Window>
+</Page>

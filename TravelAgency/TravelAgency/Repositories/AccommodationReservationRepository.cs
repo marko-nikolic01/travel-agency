@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -74,19 +75,6 @@ namespace TravelAgency.Repositories
             return reservations;
         }
 
-        public List<AccommodationReservation> GetFutureNotCanceledByGuest(User guest)
-        {
-            List<AccommodationReservation> reservations = new List<AccommodationReservation>();
-            foreach (AccommodationReservation reservation in _accommodationReservations)
-            {
-                if (reservation.Guest.Id == guest.Id && !reservation.Canceled && reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) > 0)
-                {
-                    reservations.Add(reservation);
-                }
-            }
-            return reservations;
-        }
-
         public int NextId()
         {
             if (_accommodationReservations.Count < 1)
@@ -106,7 +94,7 @@ namespace TravelAgency.Repositories
 
         public bool IsActive(AccommodationReservation accommodationReservation)
         {
-            return DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber < 0;
+            return DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber < 0 && !accommodationReservation.Canceled;
         }
 
         public List<AccommodationReservation> GetByAccommodation(Accommodation accommodation)
@@ -140,6 +128,27 @@ namespace TravelAgency.Repositories
         {
             reservation.Canceled = canceled;
             _serializer.ToCSV(FilePath, _accommodationReservations);
+        }
+
+        public List<AccommodationReservation> GetByOwner(User owner)
+        {
+            return _accommodationReservations.FindAll(ar => ar.Accommodation.OwnerId == owner.Id);
+        }
+
+        public List<AccommodationReservation> GetActiveByOwner(User owner)
+        {
+            var reservations = GetByOwner(owner);
+            List<AccommodationReservation> activeReservations = new List<AccommodationReservation>();
+
+            foreach (var reservation in reservations)
+            {
+                if (IsActive(reservation))
+                {
+                    activeReservations.Add(reservation);
+                }
+            }
+
+            return activeReservations;
         }
     }
 }

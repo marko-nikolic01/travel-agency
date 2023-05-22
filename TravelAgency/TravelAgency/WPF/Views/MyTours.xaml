@@ -1,12 +1,12 @@
-﻿<Window x:Class="TravelAgency.WPF.Views.MyTours"
+﻿<Page x:Class="TravelAgency.WPF.Views.MyTours"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="MyTours" Height="768" Width="1024">
-    <Window.Resources>
+        Title="MyTours" d:DesignHeight="768" d:DesignWidth="1024" Background="Azure">
+    <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
         </Style>
@@ -19,66 +19,132 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="20" />
         </Style>
-
-    </Window.Resources>
+        <Style x:Key="FADataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#82dafa"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="5 0"/>
+        </Style>
+        <Style x:Key="FADataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource FADataGridColumnHeaderStyle}"/>
+        </Style>
+        <Style x:Key="stil" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5 10" />
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+
+            <RowDefinition Height="123*"></RowDefinition>
+            <RowDefinition Height="206*"></RowDefinition>
+            <RowDefinition Height="55*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Offered Tours" Width="180"/>
-                <Button Content="My Tours" Width="180"/>
-                <ComboBox Width="180">
-                </ComboBox>
-                <Button Content="Notifications" Width="180"/>
-                <Button Content="Help" Width="180"/>
-                <ComboBox Width="120">
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        <StackPanel Grid.Row="1">
-            <Label Margin="20" FontSize="24" Content="Active Tour"></Label>
+
+        <StackPanel Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Margin="20" Grid.Column="0" FontSize="24" Content="Active Tour"></Label>
+                <Grid Grid.Column="1">
+                    <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="ActiveTourBtn" VerticalAlignment="Top" Command="{Binding FirstHelpCommand}">
+                        <Image Source="../../Resources/Images/questionmark.png"></Image>
+                    </Button>
+                    <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = ActiveTourBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                        <Border BorderBrush="Gainsboro" BorderThickness="3">
+                            <Canvas Width = "290" Height = "100" Background="Azure">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock FontSize="14" Padding="10">
+                                Here you can see if there is active tour<LineBreak/>that you have reserved.<LineBreak/>
+                                If you have active tour, the current key point<LineBreak/>and your status in tour will be displayed.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Canvas>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </Grid>
             <TextBlock TextAlignment="Left" Width="auto" Height="120" Text="{Binding Path=ActiveTourString}" Margin="25 0"></TextBlock>
             <Separator/>
         </StackPanel>
-        <StackPanel Grid.Row="2">
-        <Label Margin="20 0" FontSize="24" Content="Finished Tours"></Label>
-            <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
-                 SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Country" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Date and time" Binding="{Binding DateTime}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Duration (hours)" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Details">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Click="ShowDetails_Click" Margin="4">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="10"></Setter>
-                                        </Style>
-                                    </Button.Resources>
-                                    More details
-                                </Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Margin="20 0" Grid.Row="0" FontSize="24" Content="Finished Tours"></Label>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Gainsboro" BorderThickness="3">
+                    <DataGrid FontSize="20" Grid.Row="0" Grid.Column="0" Background="Azure" IsReadOnly="True" ItemsSource="{Binding Path=TourOccurrences}" 
+                 SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" Style="{StaticResource FADataGridStyle}" HorizontalAlignment="Left" Width="930" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FF356CF9" Grid.ColumnSpan="2" Margin="0">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#07b9fa"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Guide" ElementStyle="{StaticResource stil}" Binding="{Binding Guide.Username}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Country" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Location.Country}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="City" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Location.City}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Date and time" ElementStyle="{StaticResource stil}" Binding="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Duration (hours)" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Language}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Details">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Background="#4681f4" Foreground="White" Click="ShowDetails_Click" Margin="4">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="10"></Setter>
+                                                </Style>
+                                            </Button.Resources>
+                                            More details
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                </DataGrid.Columns>
-        </DataGrid>
-        </StackPanel>
-        <Grid Grid.Row="3">
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Button Margin="10,0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="DataGridBtn" VerticalAlignment="Top" Command="{Binding SecondHelpCommand}">
+                        <Image Source="../../Resources/Images/questionmark.png"></Image>
+                    </Button>
+                    <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = DataGridBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                        <Border BorderBrush="Gainsboro" BorderThickness="3">
+                            <Canvas Width = "285" Height = "110" Background="Azure">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock FontSize="14" Padding="10">
+                            Here are all the tours you've been on.<LineBreak/>
+                            Rate the tour by selecting one from table<LineBreak/> 
+                            and clicking "Rate the tour" button.
+                            <LineBreak />To see more detailed view of tour,<LineBreak /> click on "More details" button
+                                    </TextBlock>
+                                </StackPanel>
+                            </Canvas>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="RateTour_Click">Rate the tour</Button>
+            <Button Background="#4681f4" VerticalAlignment="Top" Margin="0 25 0 0" Foreground="White" Grid.Column="0" Width="374" Height="43" Click="RateTour_Click">Rate the tour</Button>
         </Grid>
     </Grid>
-</Window>
+</Page>

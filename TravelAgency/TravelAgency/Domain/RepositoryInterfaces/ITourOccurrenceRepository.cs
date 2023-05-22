@@ -22,8 +22,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId);
 
         public List<TourOccurrence> GetFinishedOccurrencesForGuideByYear(int guideId, int year);
+        public List<TourOccurrence> GetOfferedToursByLocation(Location location);
 
-        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, User activeGuide);
+        public TourOccurrence SaveTourOccurrence(TourOccurrence tourOccurrence, int activeGuideId);
 
         public void UpdateTourOccurrence(TourOccurrence tourOccurrence);
 
@@ -34,7 +35,9 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void NotifyObservers();
 
         public TourOccurrence GetById(int id);
+        public TourOccurrence GetByTourId(int id);
 
-        public void Delete(TourOccurrence tourOccurrence);
+        public int Delete(TourOccurrence tourOccurrence);
+        public void UndoDelete(int canceledTour);
     }
 }

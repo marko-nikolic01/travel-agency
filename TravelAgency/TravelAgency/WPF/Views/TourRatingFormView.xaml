@@ -1,0 +1,149 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.TourRatingFormView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        mc:Ignorable="d"
+        Title="TourGuideRating" d:DesignHeight="768" d:DesignWidth="1024" Background="Azure">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+                <Label Margin="20" FontSize="24" Content="Rating a tour"></Label>
+                <Label Margin="20 0" FontSize="20" Content="{Binding Description}" x:Name="descriptionLabel"></Label>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Guide knowledge" HorizontalAlignment="Left" />
+            <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="Guide language" HorizontalAlignment="Left"/>
+            <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Interesting" HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Images (url)" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="20 10" x:Name="urlText" HorizontalAlignment="Left" Width="500" Text="{Binding Url}"/>
+            <ListBox FontSize="20" Grid.Row="4" Grid.Column="1" Width="500" HorizontalAlignment="Left" Margin="20 0 0 10" ItemsSource="{Binding Urls}" SelectedItem="{Binding SelectedUrl}"/>
+            <TextBox x:Name="commentTb" TextWrapping="Wrap" AcceptsReturn="True"
+                     Grid.Row="5" Grid.Column="1" Margin="20 10 0 0" Width="500" HorizontalAlignment="Left" Text="{Binding AdditionalComment}"/>
+            <Label Grid.Row="5" Grid.Column="0" Margin="20 10" Content="Comment" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Background="#4681f4" Foreground="White" Grid.Column="2" Content="Add photo" HorizontalAlignment="Left" Margin="10 0 50 0" Height="30" Width="150" Command="{Binding AddUrlCommand}"/>
+            <StackPanel Grid.Row="4" Grid.Column="2">
+                <Button  Content="Preview photos" Background="#4681f4" Foreground="White" HorizontalAlignment="Left" Margin="10" Height="30" Width="150" Click="PreviewImages_Click"/>
+                <Button  Content="Remove photo" Background="#4681f4" Foreground="White" HorizontalAlignment="Left" Margin="10 10 0 0" Height="30" Width="150" Command="{Binding RemoveUrlCommand}"/>
+            </StackPanel>
+            <ComboBox x:Name="knowledgeCb" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Margin="20,0,0,1" Height="40" Width="220" Text="{Binding GuideKnowledge}">
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="languageCb" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="1" Margin="20,0,0,4" Height="40" Width="220" Text="{Binding GuideLanguage}">
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="interestingCb" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="20 0" Height="40" Width="220" Text="{Binding Interesting}">
+                <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="3"></ComboBoxItem>
+                <ComboBoxItem Content="2"></ComboBoxItem>
+                <ComboBoxItem Content="1"></ComboBoxItem>
+            </ComboBox>
+            <Grid Grid.Row="0" Grid.Column="2">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourRateBtn" VerticalAlignment="Top" Command="{Binding FirstHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup1" IsOpen = "{Binding Path = FirstHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = TourRateBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                <Border BorderBrush="Gainsboro" BorderThickness="3">
+                    <Canvas Width = "220" Height = "60" Background="Azure">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock FontSize="14" Padding="10">
+                                Rate tour characteristics<LineBreak/>on scale from 1 to 5.
+                                </TextBlock>
+                        </StackPanel>
+                    </Canvas>
+                </Border>
+            </Popup>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="2">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="TourImgBtn" VerticalAlignment="Bottom" Command="{Binding SecondHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup2" IsOpen = "{Binding Path = SecondHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = TourImgBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "250" Height = "75" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Add your photos from tour.<LineBreak/>You can preview photos you added<LineBreak/>if you click Preview image
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+            <Grid Grid.Row="5" Grid.Column="2">
+                <Button Margin="0 0 40 0" Width="40" Height="40" HorizontalAlignment="Right" x:Name="CommentBtn" VerticalAlignment="Center" Command="{Binding ThirdHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup x:Name="popup3" IsOpen = "{Binding Path = ThirdHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = CommentBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "250" Height = "95" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Add your observations from tour.<LineBreak/>What was good, interesting.<LineBreak/>
+                                Was something bad, how would you<LineBreak/>improve it.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Width="374" Height="43" Background="#4681f4" Foreground="White" Click="SubmitRating_Click" x:Name="SubmitButton">Submit rating</Button>
+            <Button Grid.Column="1" Width="374" Height="43" Background="#4681f4" Foreground="White" Content="Cancel rating" Click="Close_Click"/>
+        </Grid>
+    </Grid>
+</Page>

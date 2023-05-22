@@ -28,6 +28,19 @@ namespace TravelAgency.Domain.Models
                 }
             }
         }
+        private bool canNotBeChecked;
+        public bool CanNotBeChecked
+        {
+            get => canNotBeChecked;
+            set
+            {
+                if (value != canNotBeChecked)
+                {
+                    canNotBeChecked = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

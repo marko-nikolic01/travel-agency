@@ -8,6 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Domain.Models
 {
@@ -20,12 +22,26 @@ namespace TravelAgency.Domain.Models
         public DateTime DateTime { get; set; }
         public List<KeyPoint> KeyPoints { get; set; }
         public List<User> Guests { get; set; }
-        public CurrentState CurrentState { get; set; }
+
+        private CurrentState currentState;
+        public CurrentState CurrentState
+        {
+            get { return currentState; }
+            set 
+            {
+                if (value != currentState)
+                {
+                    currentState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public User Guide { get; set; }
         public int GuideId { get; set; }
         public int FreeSpots { get; set; }
         public int ActiveKeyPointId { get; set; }
         public string DetailedRowString { get; set; }
+        public bool IsDeleted { get; set; }
         private int toShadow;
         public int ToShadow
         {
@@ -39,22 +55,6 @@ namespace TravelAgency.Domain.Models
                 }
             }
         }
-
-        private int toDisplay;
-        public int ToDisplay
-        {
-            get => toDisplay;
-            set
-            {
-                if (value != toDisplay)
-                {
-                    toDisplay = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsDeleted { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -115,6 +115,37 @@ namespace TravelAgency.Domain.Models
                 }
             }
             return result;
+        }
+        public string GetActiveTourString(string keyPointName)
+        {
+            string result;
+            result = "Active tour: " + Tour.Name;
+            result += "\n" + Tour.Description;
+            result += "\nCurrent key point: " + keyPointName;
+            return result;
+        }
+        public bool IsInAppropriateDateSpan(DateTime startDate, DateTime endDate)
+        {
+            if (DateTime >= startDate && DateTime <= endDate)
+                return true;
+            else
+                return false;
+        }
+
+        public bool IsDateTimeFree(DateTime concreteDateTime, int duration)
+        {
+            if (DateTime.Date == concreteDateTime.Date)
+            {
+                if ((DateTime <= concreteDateTime) && (DateTime.AddHours(duration) >= concreteDateTime))
+                {
+                    return false;
+                }
+                else if ((DateTime >= concreteDateTime) && (DateTime <= concreteDateTime.AddHours(duration)))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

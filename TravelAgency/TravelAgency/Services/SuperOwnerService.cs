@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
@@ -55,7 +56,6 @@ namespace TravelAgency.Services
             }
 
             averageRating /= ratings.Count;
-
             return averageRating;
         }
 
@@ -76,7 +76,7 @@ namespace TravelAgency.Services
             UserRepository.UpdateSuperOwners();
         }
 
-        public IEnumerable<Accommodation> SortBySuperOwnersFirst(IEnumerable<Accommodation> accommodations)
+        public List<Accommodation> SortBySuperOwnersFirst(List<Accommodation> accommodations)
         {
             var a = new List<Accommodation>(accommodations);
             List<Accommodation> sortedAccommodations = new List<Accommodation>();

@@ -1,12 +1,12 @@
-﻿<Window x:Class="TravelAgency.WPF.Views.TourRequestView"
+﻿<Page x:Class="TravelAgency.WPF.Views.TourRequestView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d"
-        Title="TourRequestWindow" Height="768" Width="1024" ResizeMode="NoResize">
-    <Window.Resources>
+        Title="TourRequestWindow" d:DesignHeight="768" d:DesignWidth="1024" >
+    <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
         </Style>
@@ -16,48 +16,87 @@
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="20" />
         </Style>
-    </Window.Resources>
+        <Style x:Key="stil" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5 10" />
+        </Style>
+        <Style x:Key="FADataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#82dafa"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="5 0"/>
+        </Style>
+        <Style x:Key="FADataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource FADataGridColumnHeaderStyle}"/>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54"></RowDefinition>
             <RowDefinition Height="140"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Offered Tours" Width="180"/>
-                <Button Content="My Tours" Width="180" />
-                <ComboBox Width="180">
-                </ComboBox>
-                <Button Content="Notifications" Width="180"/>
-                <Button Content="Help" Width="180"/>
-                <ComboBox Width="120">
-                </ComboBox>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="20" FontSize="24" Content="Tour requests"></Label>
+            <Grid Grid.Column="1">
+                <Button Margin="10,30 0, 0" Width="40" Height="40" HorizontalAlignment="Left" x:Name="TourRequestBtn" VerticalAlignment="Top" Command="{Binding TourRequestHelpCommand}">
+                    <Image Source="../../Resources/Images/questionmark.png"></Image>
+                </Button>
+                <Popup IsOpen = "{Binding Path = TourRequestHelpClicked}"    
+                    PlacementTarget = "{Binding ElementName = TourRequestBtn}" Placement="Left"
+                    AllowsTransparency = "True">
+                    <Border BorderBrush="Gainsboro" BorderThickness="3">
+                        <Canvas Width = "290" Height = "100" Background="Azure">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="14" Padding="10">
+                                Here you have all requests that you made<LineBreak/>
+                                and their status.
+                                <LineBreak/>Make a new request to get the tour<LineBreak/>you want.
+                                </TextBlock>
+                            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </Popup>
+            </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <Label Margin="20" FontSize="24" Content="Tour requests"></Label>
-        </Grid>
-        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}"></DataGridTextColumn>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Language" Binding="{Binding Language}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Guests" Binding="{Binding GuestNumber}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Min Date" Binding="{Binding MinDate}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Max Date" Binding="{Binding MaxDate}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
-                <DataGridTextColumn Header="GivenDate" Binding="{Binding GivenDate}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="3">
+        <Border Grid.Row="1" BorderBrush="Gainsboro" BorderThickness="3">
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding Path=MadeRequests}" AutoGenerateColumns="False" FontSize="20"
+                  Style="{StaticResource FADataGridStyle}" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FF356CF9">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#07b9fa"/>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Country" ElementStyle="{StaticResource stil}" Binding="{Binding Location.Country}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="City" ElementStyle="{StaticResource stil}" Binding="{Binding Location.City}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Language}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Guests" ElementStyle="{StaticResource stil}" Binding="{Binding GuestNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Description}" Margin="10" />
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+        </Border>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
-            <Button Grid.Column="1" Width="374" Height="43" Content="Show statistics"/>
+            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
+            <Button Grid.Column="1" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="ShowStatistics_Click" Content="Show statistics"/>
         </Grid>
     </Grid>
-</Window>
+</Page>

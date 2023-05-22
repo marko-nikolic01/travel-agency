@@ -19,6 +19,7 @@ namespace TravelAgency.Repositories
         private readonly Serializer<User> _serializer;
 
         private List<User> _users;
+        private User loggedInUser;
 
         public UserRepository()
         {
@@ -26,6 +27,25 @@ namespace TravelAgency.Repositories
             _users = _serializer.FromCSV(FilePath);
         }
 
+        public void LinkSuperGuestTitles(List<SuperGuestTitle> titles) 
+        {
+            foreach (User user in _users)
+            {
+                foreach (SuperGuestTitle title in titles)
+                {
+                    if (title.GuestId == user.Id && title.IsActive())
+                    {
+                        user.IsSuperGuest = true;
+                        user.SuperGuestTitle = title;
+                    }
+                }
+            }
+        }
+
+        public List<User> GetAll()
+        {
+            return _users;
+        }
         public User GetByUsername(string username)
         {
             _users = _serializer.FromCSV(FilePath);
@@ -68,6 +88,35 @@ namespace TravelAgency.Repositories
         {
             return _users.FindAll(u => u.Role == Roles.Owner);
         }
+        public List<User> GetGuests2()
+        {
+            return _users.FindAll(u => u.Role == Roles.Guest2);
+        }
+        public void LogInUser(User user)
+        {
+            loggedInUser = user;
+        }
 
+        public User GetLoggedInUser()
+        {
+            return loggedInUser;
+        }
+        public void UpdateNewUsername(int userId, string newUsername)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.Username = newUsername;
+            _serializer.ToCSV(FilePath, _users);
+        }
+        public void UpdateNewPassword(int userId, string newPassword)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.Password = newPassword;
+            _serializer.ToCSV(FilePath, _users);
+        }
+        public bool CheckPassword(int userId, string Password)
+        {
+            User user = _users.Find(u => u.Id == userId);
+            return user.Password == Password;
+        }
     }
 }

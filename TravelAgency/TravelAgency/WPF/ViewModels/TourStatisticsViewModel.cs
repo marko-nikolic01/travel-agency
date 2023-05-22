@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
@@ -25,9 +27,9 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter RightCommand { get; set; }
         public ButtonCommandNoParameter LeftCommand { get; set; }
         public ButtonCommandNoParameter ViewCommand { get; set; }
-        public ButtonCommand<Window> HomeCommand { get; set; }
         public TourOccurrence SelectedTourOccurrence { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
+        public NavigationService NavService { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -96,8 +98,9 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public TourStatisticsViewModel(int id)
+        public TourStatisticsViewModel(int id, System.Windows.Navigation.NavigationService navService)
         {
+            NavService = navService;
             TourOccurrenceService = new TourOccurrenceService();
             AttendanceService = new TourOccurrenceAttendanceService();
             UserService userService = new UserService();
@@ -107,7 +110,6 @@ namespace TravelAgency.WPF.ViewModels
             RightCommand = new ButtonCommandNoParameter(ShowNextPhoto);
             LeftCommand = new ButtonCommandNoParameter(ShowPreviousPhoto);
             ViewCommand = new ButtonCommandNoParameter(ViewDetails);
-            HomeCommand = new ButtonCommand<Window>(ShowHome);
         }
         private void FillOptions()
         {
@@ -120,16 +122,12 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void ViewDetails()
         {
-            TourStatisticsDetailsViewModel viewModel = new TourStatisticsDetailsViewModel(SelectedTourOccurrence);
-            TourStatisticsDetailsView tourStatisticsDetailsView = new TourStatisticsDetailsView();
-            tourStatisticsDetailsView.DataContext = viewModel;
-            tourStatisticsDetailsView.ShowDialog();
-        }
-        private void ShowHome(Window window)
-        {
-            GuideMain guideMain = new GuideMain(ActiveGuide);
-            guideMain.Show();
-            window.Close();
+            //TourStatisticsDetailsViewModel viewModel = new TourStatisticsDetailsViewModel(SelectedTourOccurrence);
+            //TourStatisticsDetailsView tourStatisticsDetailsView = new TourStatisticsDetailsView();
+            //tourStatisticsDetailsView.DataContext = viewModel;
+            //tourStatisticsDetailsView.ShowDialog();
+            Page details = new TourGuestsStatisticsView(SelectedTourOccurrence);
+            NavService.Navigate(details);
         }
         private void ShowNextPhoto()
         {

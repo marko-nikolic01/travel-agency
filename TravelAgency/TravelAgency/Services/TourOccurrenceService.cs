@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
-using TravelAgency.Injector;
 using TravelAgency.Observer;
-using TravelAgency.Repositories;
 using System.Globalization;
 using System.Windows.Controls;
-using TravelAgency.Serializer;
-using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
+using System.Collections.ObjectModel;
 
 namespace TravelAgency.Services
 {
@@ -41,26 +35,44 @@ namespace TravelAgency.Services
             LinkTourPhotos(IPhotoRepository, ITourRepository);
             LinkTourOccurrences(ITourRepository);
             LinkTourGuests(ITourReservationRepository, IUserRepository);
-            LinkKeyPoints(IKeyPointRepository);
+            LinkKeyPoints();
+            LinkTourGuide();
         }
-        private void LinkKeyPoints(IKeyPointRepository keyPointRepository)
+        private void LinkKeyPoints()
         {
             foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
             {
                 tourOccurrence.KeyPoints.Clear();
                 tourOccurrence.KeyPoints.AddRange(IKeyPointRepository.GetByTourOccurrence(tourOccurrence.Id));
+                foreach(var k in tourOccurrence.KeyPoints)
+                {
+                    if (k.IsChecked && tourOccurrence.CurrentState != CurrentState.Ended)
+                    {
+                        tourOccurrence.ActiveKeyPointId = k.Id;
+                    }
+                }
+                if(tourOccurrence.ActiveKeyPointId != -1 && tourOccurrence.ActiveKeyPointId != tourOccurrence.KeyPoints[tourOccurrence.KeyPoints.Count-1].Id && tourOccurrence.CurrentState != CurrentState.Ended)
+                {
+                    tourOccurrence.CurrentState = CurrentState.Started;
+                    UpdateTourOccurrence(tourOccurrence.Id);
+                }
+            }
+        }
+        private void LinkTourGuide()
+        {
+            foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
+            {
+                User user = IUserRepository.GetById(tourOccurrence.GuideId);
+                if (user != null)
+                {
+                    tourOccurrence.Guide = user;
+                }
             }
         }
         private void LinkTourGuests(ITourReservationRepository reservationRepository, IUserRepository userRepository)
         {
-            foreach (var tourReservation in reservationRepository.GetAll())
-            {
-                TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
-                if (tourOccurrence != null)
-                {
-                    tourOccurrence.Guests.Clear();
-                }
-            }
+            foreach (TourOccurrence tourOccurrence in ITourOccurrenceRepository.GetAll())
+                tourOccurrence.Guests.Clear();
             foreach (TourReservation tourReservation in reservationRepository.GetAll())
             {
                 TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(x => x.Id == tourReservation.TourOccurrenceId);
@@ -102,13 +114,13 @@ namespace TravelAgency.Services
             }
         }
 
-        public void CancelTour(TourOccurrence SelectedTourOccurrence, int ActiveGuideId)
+        public int CancelTour(TourOccurrence SelectedTourOccurrence, int ActiveGuideId)
         {
             foreach (var guest in SelectedTourOccurrence.Guests)
             {
-                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuideId, Deadline = DateTime.Now.AddYears(1) });
+                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = ActiveGuideId, Deadline = DateTime.Now.AddYears(1), CanceledTourOccurrenceId = SelectedTourOccurrence.Id });
             }
-            ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
+            return ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
         }
 
         public void Subscribe(IObserver observer)
@@ -149,11 +161,6 @@ namespace TravelAgency.Services
             }
             return mostVisited;
         }
-
-        public void NotifyObservers()
-        {
-            ITourOccurrenceRepository.NotifyObservers();
-        }
         public void UpdateTour(TourOccurrence tourOccurrence)
         {
             ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
@@ -176,7 +183,7 @@ namespace TravelAgency.Services
             return ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId);
         }
 
-        public void SaveNewTours(Tour newTour, ItemCollection links, ItemCollection dateTimes, ItemCollection keyPoints, User activeGuide)
+        public Tour SaveNewTours(Tour newTour, ItemCollection links, ItemCollection dateTimes, ItemCollection keyPoints, User activeGuide)
         {
             ITourRepository.Save(newTour);
             SavePhotos(newTour, links);
@@ -190,6 +197,7 @@ namespace TravelAgency.Services
                     SaveKeyPoint(keyPointItem, tourOccurrence);
                 }
             }
+            return newTour;
         }
         private void SavePhotos(Tour newTour, ItemCollection links)
         {
@@ -209,7 +217,7 @@ namespace TravelAgency.Services
             tourOccurrence.Tour = newTour;
             tourOccurrence.DateTime = dateTime;
             tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
-            return ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, activeGuide);
+            return ITourOccurrenceRepository.SaveTourOccurrence(tourOccurrence, activeGuide.Id);
         }
         private void SaveKeyPoint(string keyPointItem, TourOccurrence tourOccurrence)
         {
@@ -253,16 +261,16 @@ namespace TravelAgency.Services
             {
                 if (occurrence.CurrentState == CurrentState.Started && occurrence.DateTime.Date.Equals(DateTime.Now.Date))
                 {
-                    TourOccurrenceAttendance tourAttendance = FindAttendance(guestId, occurrence.Id);
+                    TourOccurrenceAttendance tourAttendance = ITourOccurrenceAttendanceRepository.GetByTourOccurrenceIdAndGuestId(occurrence.Id, guestId);
                     if (tourAttendance != null)
                     {
-                        result = BuildActiveTourString(occurrence);
+                        result = occurrence.GetActiveTourString(IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name);
                         result += "\nStatus: " + tourAttendance.ResponseStatus.ToString();
                         return result;
                     }
                     else if (ITourReservationRepository.IsTourReserved(guestId, occurrence.Id))
                     {
-                        result = BuildActiveTourString(occurrence);
+                        result = occurrence.GetActiveTourString(IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name);
                         result += "\nStatus: haven't arrived yet";
                         return result;
                     }
@@ -270,33 +278,77 @@ namespace TravelAgency.Services
             }
             return result;
         }
-
-        private string BuildActiveTourString(TourOccurrence occurrence)
-        {
-            string result;
-            string keyPointName = IKeyPointRepository.GetById(occurrence.ActiveKeyPointId).Name;
-            result = "Active tour: " + occurrence.Tour.Name;
-            result += "\n" + occurrence.Tour.Description;
-            result += "\nCurrent key point: " + keyPointName;
-            return result;
-        }
-
-        private TourOccurrenceAttendance FindAttendance(int currentGuestId, int id)
-        {
-            return ITourOccurrenceAttendanceRepository.GetAll().Find(x => x.GuestId == currentGuestId && x.TourOccurrenceId == id);
-        }
         public List<TourOccurrence> GetTodays(int activeGuideId)
         {
             return ITourOccurrenceRepository.GetTodays(activeGuideId);
         }
-
-        public void UpdateTourOccurrence(TourOccurrence tourOccurrence)
+        public TourOccurrence GetByTourId(int id)
         {
-            ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+            return ITourOccurrenceRepository.GetByTourId(id);
         }
-        public void SaveTourReservation(TourReservation tourReservation)
+        public TourOccurrence GetById(int id)
         {
-            ITourReservationRepository.Save(tourReservation);
+            return ITourOccurrenceRepository.GetById(id);
+        }
+
+        public void UpdateTourOccurrence(int tourOccurrenceId)
+        {
+            TourOccurrence tourOccurrence = ITourOccurrenceRepository.GetAll().Find(t => t.Id == tourOccurrenceId);
+            if(tourOccurrence != null)
+            {
+                ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
+            }
+        }
+        public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId, ObservableCollection<string> keyPoints, int duration)
+        {
+            Tour newTour = GenerateNewTour(request, duration);
+            ITourRepository.Save(newTour);
+
+            TourOccurrence newTourOccurrence = GenerateNewTourOccurrence(newTour, dateTime);
+            ITourOccurrenceRepository.SaveTourOccurrence(newTourOccurrence, GuideId);
+            foreach(string keyPoint in keyPoints)
+            {
+                SaveKeyPoint(keyPoint, newTourOccurrence);
+            }
+        }
+
+        private TourOccurrence GenerateNewTourOccurrence(Tour newTour, DateTime dateTime)
+        {
+            TourOccurrence tourOccurrence = new TourOccurrence();
+            tourOccurrence.TourId = newTour.Id;
+            tourOccurrence.Tour = newTour;
+            tourOccurrence.DateTime = dateTime;
+            tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
+            return tourOccurrence;
+        }
+
+        private Tour GenerateNewTour(TourRequest request, int duration)
+        {
+            Tour newTour = new Tour();
+            newTour.Language = request.Language;
+            newTour.Description = request.Description;
+            newTour.MaxGuestNumber = request.GuestNumber;
+            newTour.LocationId = request.LocationId;
+            newTour.Location = request.Location;
+            newTour.Duration = duration;
+            return newTour;
+        }
+
+        public void UndoCancelTour(int canceledTour)
+        {
+            IVoucherRepository.DeleteByCanceledTourId(canceledTour);
+            ITourOccurrenceRepository.UndoDelete(canceledTour);
+        }
+
+        public bool IsGuideFree(int guideId, DateTime concreteDateTime, int duration)
+        {
+            bool isGuideFree = true;
+            var upcommingTourOccurrences = ITourOccurrenceRepository.GetUpcomings(guideId);
+            foreach (var tourOccurrence in upcommingTourOccurrences)
+            {
+                isGuideFree = isGuideFree && tourOccurrence.IsDateTimeFree(concreteDateTime, duration);
+            }
+            return isGuideFree;
         }
     }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Repositories;
 
 namespace TravelAgency.Services
 {
@@ -15,6 +16,8 @@ namespace TravelAgency.Services
         public IAccommodationRepository AccommodationRepository { get; set; }
         public ILocationRepository LocationRepository { get; set; }
         public IAccommodationGuestRatingRepository GuestRatingRepository { get; set; }
+        public IAccommodationPhotoRepository AccommodationPhotoRepository { get; set; }
+        private SuperGuestService _superGuestService;
 
         public AccommodationReservationService()
         {
@@ -23,17 +26,21 @@ namespace TravelAgency.Services
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             GuestRatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
+            AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
+            _superGuestService = new SuperGuestService();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
+            AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
             GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
+            
         }
 
         public List<AccommodationReservation> GetByGuest(User guest)
         {
-            return ReservationRepository.GetFutureNotCanceledByGuest(guest);
+            return ReservationRepository.GetAllNotCanceledByGuest(guest);
         }
 
         public bool CreateReservation(AccommodationReservation reservation)
@@ -41,9 +48,9 @@ namespace TravelAgency.Services
             if (reservation.IsValid)
             {
                 ReservationRepository.Save(reservation);
+                _superGuestService.DeductPoint(reservation.Guest);
                 return true;
             }
-
             return false;
         }
 
@@ -66,6 +73,11 @@ namespace TravelAgency.Services
                 return false;
             }
             return true;
+        }
+
+        public List<AccommodationReservation> GetActiveByOwner(User owner)
+        {
+            return ReservationRepository.GetActiveByOwner(owner);
         }
     }
 }

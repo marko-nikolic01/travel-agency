@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Serializer;
@@ -10,12 +12,26 @@ namespace TravelAgency.Domain.Models
 {
     //The idea for this class was mostly taken from the example uploaded on canvas
     public enum Roles { Owner, Guest1, Guide, Guest2 }
-    public class User : ISerializable
+    public class User : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsSuperOwner { get; set; }
+        private bool _isSuperGuest;
+        public bool IsSuperGuest
+        {
+            get => _isSuperGuest;
+            set
+            {
+                if (value != _isSuperGuest)
+                {
+                    _isSuperGuest = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public SuperGuestTitle SuperGuestTitle { get; set; }
         public Roles Role { get; set; }
         public DateOnly BirthDay { get; set; }
         public User()
@@ -24,6 +40,8 @@ namespace TravelAgency.Domain.Models
             Username = "";
             Password = "";
             IsSuperOwner = false;
+            IsSuperGuest = false;
+            SuperGuestTitle = null;
         }
 
         public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
@@ -33,7 +51,9 @@ namespace TravelAgency.Domain.Models
             Role = role;
             IsSuperOwner = isSuperOwner;
             BirthDay = birthDay;
+            SuperGuestTitle = null;
         }
+
 
         public string[] ToCSV()
         {
@@ -49,6 +69,13 @@ namespace TravelAgency.Domain.Models
             Role = (Roles)Convert.ToInt32(values[3]);
             IsSuperOwner = Convert.ToBoolean(Convert.ToInt32(values[4]));
             BirthDay = DateOnly.ParseExact(values[5], "dd-MM-yyyy", CultureInfo.InvariantCulture);
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -61,5 +61,10 @@ namespace TravelAgency.Repositories
         {
             return accommodationGuestRatings.FindAll(agr => agr.AccommodationReservation.Accommodation.OwnerId == owner.Id);
         }
+
+        public int GetRatingsCountByOwner(User owner)
+        {
+            return GetByOwner(owner).Count;
+        }
     }
 }

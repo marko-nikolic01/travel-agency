@@ -88,6 +88,19 @@ namespace TravelAgency.Domain.Models
         public Location? Location { get; set; }
         public List<AccommodationPhoto> Photos { get; set; }
 
+        private bool isRenovated;
+
+        public bool IsRenovated
+        {
+            get { return isRenovated; }
+            set
+            {
+                isRenovated = value;
+                OnPropertyChanged(nameof(IsRenovated));
+            }
+        }
+
+
         public Accommodation()
         {
             Id = -1;

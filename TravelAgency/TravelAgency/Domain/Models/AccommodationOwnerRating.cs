@@ -15,6 +15,8 @@ namespace TravelAgency.Domain.Models
         public int Id { get; set; }
         public int AccommodationReservationId { get; set; }
         public AccommodationReservation AccommodationReservation { get; set; }
+        public int RenovationReccommendationId { get; set; }
+        public RenovationRecommendation RenovationRecommendation { get; set; }
         private int accommodationCleanliness;
         private int accommodationComfort;
         private int accommodationLocation;
@@ -105,6 +107,7 @@ namespace TravelAgency.Domain.Models
         {
             Id = -1;
             AccommodationReservationId = -1;
+            RenovationReccommendationId = -1;
             AccommodationCleanliness = 1;
             AccommodationComfort = 1;
             AccommodationLocation = 1;
@@ -118,6 +121,7 @@ namespace TravelAgency.Domain.Models
         {
             Id = -1;
             AccommodationReservationId = reservation.Id;
+            RenovationReccommendationId = -1;
             AccommodationReservation = reservation;
             AccommodationCleanliness = 1;
             AccommodationComfort = 1;
@@ -147,6 +151,7 @@ namespace TravelAgency.Domain.Models
             {
                 Id.ToString(),
                 AccommodationReservationId.ToString(),
+                RenovationReccommendationId.ToString(),
                 AccommodationCleanliness.ToString(),
                 AccommodationComfort.ToString(),
                 AccommodationLocation.ToString(),
@@ -161,12 +166,13 @@ namespace TravelAgency.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             AccommodationReservationId = Convert.ToInt32(values[1]);
-            AccommodationCleanliness = Convert.ToInt32(values[2]);
-            AccommodationComfort = Convert.ToInt32(values[3]);
-            AccommodationLocation = Convert.ToInt32(values[4]);
-            OwnerCorrectness = Convert.ToInt32(values[5]);
-            OwnerResponsiveness = Convert.ToInt32(values[6]);
-            Comment = values[7];
+            RenovationReccommendationId = Convert.ToInt32(values[2]);
+            AccommodationCleanliness = Convert.ToInt32(values[3]);
+            AccommodationComfort = Convert.ToInt32(values[4]);
+            AccommodationLocation = Convert.ToInt32(values[5]);
+            OwnerCorrectness = Convert.ToInt32(values[6]);
+            OwnerResponsiveness = Convert.ToInt32(values[7]);
+            Comment = values[8];
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -216,12 +222,19 @@ namespace TravelAgency.Domain.Models
                         return "Rating for owner responsiveness must be between 1 and 5";
                     }
                 }
+                else if (columnName == "Comment")
+                {
+                    if (Comment == "")
+                    {
+                        return "You must leave a comment";
+                    }
+                }
 
                 return null;
             }
         }
 
-        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness" };
+        private readonly string[] _validatedProperties = { "AccommodationCleanliness", "AccommodationComfort", "AccommodationLocation", "OwnerCorrectness", "OwnerResponsiveness", "Comment" };
 
         public bool IsValid
         {

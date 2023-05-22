@@ -1,0 +1,101 @@
+﻿<Window x:Class="TravelAgency.WPF.Views.OwnerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+        xmlns:viewmodels="clr-namespace:TravelAgency.WPF.ViewModels"
+        xmlns:pages="clr-namespace:TravelAgency.WPF.Pages"
+        xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+        xmlns:customcontrols="clr-namespace:TravelAgency.WPF.Controls.CustomControls"
+        mc:Ignorable="d"
+        x:Name="root"
+        Title="OwnerWindow"
+        Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.InputBindings>
+        <KeyBinding Key="D1" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="profile"/>
+        <KeyBinding Key="D2" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="accommodations"/>
+        <KeyBinding Key="D3" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="reservations"/>
+        <KeyBinding Key="D4" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="ratings"/>
+        <KeyBinding Key="D5" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="forum"/>
+        <KeyBinding Key="L" Modifiers="Ctrl+Alt" Command="{Binding LogOutCommand,ElementName=root}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="LightGray" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Margin="0 15 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <controls:OwnerSidebarUserButton Grid.Row="0"
+                                                 Text="Notifications"
+                                                 KeyboardShortcutText="Ctrl+B"
+                                                 Width="200"
+                                                 Margin="0 3"/>
+
+                <controls:OwnerSidebarUserButton Grid.Row="1"
+                                                 Text="Log Out"
+                                                 KeyboardShortcutText="Ctrl+Alt+L"
+                                                 Width="200"
+                                                 Margin="0 3"/>
+            </Grid>
+
+            <Separator Grid.Row="1" Margin="10 15"/>
+
+            <StackPanel Grid.Row="2">
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="myProfileRadioButton"
+                                                           Text="My Profile"
+                                                           KeyboardShortcutText="Ctrl+1"
+                                                           Icon="../../Resources/Images/NavProfile.png"
+                                                           IsChecked="True"
+                                                           Command="{Binding NavigateToMyProfilePageCommand}"/>
+
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="accommodationsRadioButton"
+                                                           Text="Accommodations"
+                                                           KeyboardShortcutText="Ctrl+2"
+                                                           Icon="../../Resources/Images/NavAccommodations.png"
+                                                           Command="{Binding NavigateToAccommodationsPageCommand}"/>
+
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="reservationsRadioButton" 
+                                                           Text="Reservations"
+                                                           KeyboardShortcutText="Ctrl+3"
+                                                           Icon="../../Resources/Images/NavReservations.png"
+                                                           Command="{Binding NavigateToReservationsPageCommand}"/>
+
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="ratingsRadioButton"
+                                                           Text="Ratings"
+                                                           KeyboardShortcutText="Ctrl+4"
+                                                           Icon="../../Resources/Images/NavRatings.png"
+                                                           Command="{Binding NavigateToRatingsPageCommand}"/>
+
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
+                                                           Text="Forum"
+                                                           KeyboardShortcutText="Ctrl+5"
+                                                           Icon="../../Resources/Images/NavForum.png"/>
+            </StackPanel>
+        </Grid>
+
+        <Frame Grid.Column="1"
+               x:Name="NavigationFrame"
+               Source="../Views/OwnerProfileView.xaml  "
+               NavigationUIVisibility="Hidden"
+               Padding="30"
+               Focusable="False"/>
+    </Grid>
+</Window>

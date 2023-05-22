@@ -1,0 +1,282 @@
+﻿<Page x:Class="TravelAgency.WPF.Pages.OwnerAddAccommodationView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
+      xmlns:model="clr-namespace:TravelAgency.Domain.Models"
+      mc:Ignorable="d" 
+      d:DesignHeight="625" d:DesignWidth="840"
+      x:Name="root"
+      Title="OwnerAddAccommodationPage"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <Style x:Key="formTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 0 30 5"/>
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+            <Setter Property="MaxWidth" Value="235"/>
+        </Style>
+        
+        <Style TargetType="xctk:IntegerUpDown">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+        </Style>
+        
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+        </Style>
+        
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>    
+        </Style>
+
+        <converters:EnumBooleanConverter x:Key="radioButtonConverter"/>
+
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <Rectangle Stroke="Red" StrokeThickness="1"/>
+            </Grid>
+        </ControlTemplate>
+    </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBack}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddPhotoCommand}"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>
+    </Page.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Accommodations > Manage accommodations > Add accommodation"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Name"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Country"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="City"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                           Text="Type"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           Text="Maximum no. guests"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="5" Grid.Column="0"
+                           Text="Minimum no. days"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="6" Grid.Column="0"
+                           Text="No. days to cancel:"
+                           Style="{StaticResource formTextBlock}"/>
+                <TextBlock Grid.Row="7" Grid.Column="0"
+                           Text="Photos of accommodation"
+                           Style="{StaticResource formTextBlock}"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         x:Name="nameTextBox"
+                         Text="{Binding NewAccommodation.Name,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
+                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                         Style="{StaticResource formTextBox}"/>
+                
+                <ComboBox Grid.Row="1" Grid.Column="1"
+                          x:Name="CountryComboBox"
+                          SelectedIndex="0"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          SelectedItem="{Binding SelectedCountry}"
+                          ItemsSource="{Binding Countries}"
+                          IsTextSearchEnabled="True"
+                          IsEditable="True">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <ComboBox Grid.Row="2" Grid.Column="1"
+                          x:Name="CityComboBox"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          IsEnabled="{Binding IsEnabled}"
+                          SelectedItem="{Binding SelectedCity}"
+                          ItemsSource="{Binding Cities}"
+                          IsTextSearchEnabled="True"
+                          IsEditable="True">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <StackPanel Grid.Row="3" Grid.Column="1"
+                            Orientation="Horizontal"
+                            Margin="0 0 0 5">
+
+                    <RadioButton Content="Apartment"
+                                 GroupName="AccommodationType"
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.APARTMENT}}"/>
+                    <RadioButton Content="House"
+                                 GroupName="AccommodationType"
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HOUSE}}"/>
+                    <RadioButton Content="Hut"
+                                 GroupName="AccommodationType"
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HUT}}"/>
+                </StackPanel>
+
+                <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1"
+                                    Value="{Binding NewAccommodation.MaxGuests}"
+                                    Minimum="1"
+                                    Increment="1"/>
+
+                <xctk:IntegerUpDown Grid.Row="5" Grid.Column="1"
+                                    Value="{Binding NewAccommodation.MinDays}"
+                                    Minimum="1"
+                                    Increment="1"/>
+
+                <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1"
+                                    Value="{Binding NewAccommodation.DaysToCancel}"
+                                    Minimum="1"
+                                    Increment="1"/>
+
+                <TextBox Grid.Row="7" Grid.Column="1"
+                         Text="{Binding PhotoLink,UpdateSourceTrigger=PropertyChanged}"
+                         
+                         Margin="0 0 0 5"/>
+
+                <Grid Grid.Row="8" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="1"
+                             Width="235"
+                             ItemsSource="{Binding Photos}"
+                             SelectedItem="{Binding SelectedPhoto}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Grid Grid.Row="2"
+                          Margin="0 5 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:ButtonWithShortcut Grid.Column="0"
+                                                     Text="Add photo"
+                                                     KeyboardShortcutText="Ctrl+N"
+                                                     Margin="0 0 2 0"
+                                                     Click="AddPhoto_Click"/>
+
+                        <controls:ButtonWithShortcut Grid.Column="1"
+                                                     Text="Remove photo"
+                                                     KeyboardShortcutText="Ctrl+D"
+                                                     Margin="2 0 0 0"
+                                                     Click="RemovePhoto_Click"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="9" Grid.ColumnSpan="2"
+                      Margin="0 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:ButtonWithShortcut Grid.Column="0"
+                                                 Margin="0 0 2 0"
+                                                 Style="{StaticResource dialogBackButton}"
+                                                 KeyboardShortcutText="Ctrl+Shift+Backspace"
+                                                 Click="GoBack_Click"/>
+
+                    <controls:ButtonWithShortcut Grid.Column="1"
+                                                 Text="Add"
+                                                 Margin="0 0 2 0"
+                                                 KeyboardShortcutText="Ctrl+S"
+                                                 Click="AddAccommodation_Click"/>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <controls:Tip Grid.Row="0"
+                              Header="How to navigate through input fields?"
+                              TipText="To navigate to the next input field use Tab and to navigate to the previous field use Shift+Tab."
+                              Margin="15 0 0 5"/>
+
+                <controls:Tip Grid.Row="1"
+                              Header="How to select accommodation type?"
+                              TipText="To select an accommodation type use LEFT and RIGHT arrow keys and press SPACE to select it."
+                              Margin="15 5 0 5"/>
+
+                <controls:Tip Grid.Row="2"
+                              Header="How to use numeric fields?"
+                              TipText="To increase and decrease value in numeric fields use UP and DOWN arrow keys."
+                              Margin="15 5 0 5"/>
+
+                <controls:Tip Grid.Row="3"
+                              Header="How to add and remove photos?"
+                              TipText="To add a photo, copy the link to the field and press Ctrl+A. To remove a photo navigate to the list of photos (using Tab and Shift+Tab) and with UP and DOWN arrow keys select a photo. Then press Ctrl+D."
+                              Margin="15 5 0 0"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

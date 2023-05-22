@@ -1,0 +1,101 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.CreateTourForm"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="Create new tour">
+    <Page.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="12"/>
+            </StackPanel>
+        </ControlTemplate>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Margin" Value="0 3 0 3"></Setter>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Margin" Value="0 7 0 7"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0 7 0 7"></Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="135"></ColumnDefinition>
+            <ColumnDefinition Width="90"></ColumnDefinition>
+            <ColumnDefinition Width="65"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Grid.Column="0" Content="Name:" FontSize="13"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Location:" FontSize="13"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Description:" FontSize="13"></Label>
+        <Label Grid.Row="5" Grid.Column="0" Content="Language:" FontSize="13"></Label>
+        <Label Grid.Row="6" Grid.Column="0" Content="Max guests number:" FontSize="13"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Content="Key points:" FontSize="13"></Label>
+        <Label Grid.Row="10" Grid.Column="0" Content="Date and time:" FontSize="13"></Label>
+        <Label Grid.Row="13" Grid.Column="0" Content="Duration:" FontSize="13"></Label>
+        <Label Grid.Row="14" Grid.Column="0" Content="Images:" FontSize="13"></Label>
+        <Button Grid.Column="3" Grid.Row="16" Margin="5" Width="50" Content="Create" FontSize="15" Click="Create_Click"></Button>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=NewTour.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        
+        <ComboBox Margin="0 7 0 7" Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}"></ComboBox>
+        <ComboBox Margin="10 7 0 7" Grid.Row="2" Grid.Column="2"  ItemsSource="{Binding Path=Cities}"  SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Grid.ColumnSpan="2"></ComboBox>
+        
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" TextWrapping="Wrap" Text="{Binding Path=NewTour.Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=NewTour.Language, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}" ></TextBox>
+        <xctk:IntegerUpDown Margin="0 7 0 7" Grid.Row="6" Grid.Column="1" Name="MaxGuests" Text="{Binding Path=NewTour.MaxGuestNumberInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
+        <TextBox Grid.Row="7" Grid.Column="1" Name="KeyPointsText"></TextBox>
+        <Button Grid.Row="7" Grid.Column="2" Width="30" Margin="0 7 0 7" Click="AddKeyPoint_Click">
+            <Image Source="/Resources/Images/add.png"></Image>
+        </Button>
+        <ListBox Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Name="ListKeyPoints"></ListBox>
+        <DatePicker SelectedDateChanged="DateCalendar_SelectedDateChanged" Grid.Row="10" Grid.Column="1" Name="DateCalendar" Margin="0 7 0 7"></DatePicker>
+        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="10" Grid.Column="2" Margin="5 7 0 7" Name="Time"></xctk:TimePicker>
+        <Button Grid.Row="10" Grid.Column="3" Margin="0 7 0 7" Width="30" Click="AddDateTime_Click">
+            <Image Source="/Resources/Images/add.png"></Image>
+        </Button>
+        <ListBox Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Name="ListDateTimes"></ListBox>
+        <xctk:IntegerUpDown Margin="0 7 0 7" Grid.Row="13" Grid.Column="1" Name="Duration" Text="{Binding Path=NewTour.DurationInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
+        <TextBox Grid.Row="14" Grid.Column="1" Name="ImageText"></TextBox>
+        <Button Grid.Row="14" Grid.Column="2" Margin="10 7 0 7" HorizontalAlignment="Left" Width="30" Click="AddImages_Click">
+            <Image Source="/Resources/Images/add.png"></Image>
+        </Button>
+        <Button Grid.Row="14" Grid.Column="2" Margin="0 7 10 7" HorizontalAlignment="Right" Width="30" Click="RemoveImage_Click" IsEnabled="{Binding PhotosEnabled}">
+            <Image Source="/Resources/Images/cross-button.png"></Image>
+        </Button>
+        <Button Grid.Row="14" Grid.Column="3" Margin="0 7 0 7" Content="Preview" Width="50" Click="PreView_Click" IsEnabled="{Binding PhotosEnabled}"></Button>
+        <ListBox Grid.Row="15" Grid.Column="1" Grid.RowSpan="2" Name="ListPhotos" SelectedIndex="{Binding SelectedPhoto}"></ListBox>
+    </Grid>
+</Page>

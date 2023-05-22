@@ -32,6 +32,7 @@ namespace TravelAgency.Domain.Models
                 }
             }
         }
+        public DateOnly RequestDate { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,6 +49,7 @@ namespace TravelAgency.Domain.Models
             StatusChanged = false;
             RejectionExplanation = "";
             DateSpan = new DateSpan();
+            RequestDate = DateOnly.FromDateTime(DateTime.Now);
         }
 
         public AccommodationReservationMoveRequest(AccommodationReservation reservation)
@@ -58,6 +60,22 @@ namespace TravelAgency.Domain.Models
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
+            RequestDate = DateOnly.FromDateTime(DateTime.Now);
+        }
+
+        public bool CheckExpiration()
+        {
+            bool requestExpired = (Status == AccommodationReservationMoveRequestStatus.WAITING) &&
+                            ((DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0) ||
+                            (Reservation.DateSpan.StartDate.CompareTo(DateOnly.FromDateTime(DateTime.Now)) <= 0));
+            if (requestExpired)
+            {
+                Status = AccommodationReservationMoveRequestStatus.REJECTED;
+                RejectionExplanation = "Zahtev je istekao.";
+                StatusChanged = true;
+                return true;
+            }
+            return false;
         }
 
         public string[] ToCSV()
@@ -70,6 +88,7 @@ namespace TravelAgency.Domain.Models
                 Convert.ToInt32(StatusChanged).ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
+                RequestDate.ToString("dd/MM/yyyy"),
                 RejectionExplanation
             };
             return csvValues;
@@ -83,7 +102,8 @@ namespace TravelAgency.Domain.Models
             StatusChanged = Convert.ToBoolean(Convert.ToInt32(values[3]));
             DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
             DateSpan.EndDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy");
-            RejectionExplanation = values[6];
+            RequestDate = DateOnly.ParseExact(values[6], "dd/MM/yyyy");
+            RejectionExplanation = values[7];
         }
 
 

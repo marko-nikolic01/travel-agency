@@ -15,11 +15,12 @@ namespace TravelAgency.Repositories
         private const string FilePath = "../../../Resources/Data/tourOccurrenceAttendances.csv";
         private readonly Serializer<TourOccurrenceAttendance> _serializer;
         private List<TourOccurrenceAttendance> tourOccurrenceAttendances;
-
+        private List<IObserver> observers;
         public TourOccurrenceAttendanceRepository()
         {
             _serializer = new Serializer<TourOccurrenceAttendance>();
             tourOccurrenceAttendances = _serializer.FromCSV(FilePath);
+            observers = new List<IObserver>();
         }
 
         public int NextId()
@@ -62,6 +63,20 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
+
+        public List<TourOccurrenceAttendance> GetByGuestId(int id)
+        {
+            List<TourOccurrenceAttendance> result = new List<TourOccurrenceAttendance>();
+            foreach (TourOccurrenceAttendance tourOccurrenceAttendance in tourOccurrenceAttendances)
+            {
+                if (tourOccurrenceAttendance.GuestId == id)
+                {
+                    result.Add(tourOccurrenceAttendance);
+                }
+            }
+            return result;
+        }
+
         public List<int> GetGuestsByTourOccurrenceId(int id)
         {
             List<int> result = new List<int>();
@@ -114,5 +129,24 @@ namespace TravelAgency.Repositories
             }
             return count;
         }
+        
+        public void Subscribe(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void Unsubscribe(IObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (var observer in observers)
+            {
+                observer.Update();
+            }
+        }
+
     }
 }

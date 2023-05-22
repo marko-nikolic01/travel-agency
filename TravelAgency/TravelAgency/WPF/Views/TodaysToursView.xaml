@@ -1,0 +1,138 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.TodaysToursView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:conv="clr-namespace:TravelAgency.Converters"
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="Todays tours">
+
+    <Grid>
+        <Grid.Resources>
+            <conv:NotActiveConverter x:Key="NotActiveConverter"/>
+            <conv:NotReadyStartConverter x:Key="NotReadyStartConverter"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Todays tours" FontSize="20" FontWeight="DemiBold" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
+                  ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" FontSize="14" AlternatingRowBackground="SeaShell">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Location" Width="*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="Tour.Location.City"/>
+                            <Binding Path="Tour.Location.Country"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding DateTime, StringFormat=HH:mm}" Header="Time"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="start" Margin="5" Content="Start" Click="StartButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotReadyStartConverter}}"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="end" Margin="5" Content="End" Click="StopButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotActiveConverter}}" ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding KeyPoints}" SelectedItem="{Binding Path= DataContext.SelectedKeyPoint, RelativeSource={RelativeSource AncestorType=Page}}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn IsReadOnly="True" Binding="{Binding Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"></DataGridCheckBoxColumn>
+                            <DataGridTextColumn Binding="{Binding Path=Name}"></DataGridTextColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="RowButton" Content="Check!" Click="RowButton_Click"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsChecked, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" Value="true">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=CanNotBeChecked, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" Value="true">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentState, UpdateSourceTrigger=PropertyChanged}" Value="2">
+                            <DataTrigger.Setters>
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=ToShadow, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                            <DataTrigger.Setters>
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Label Content="Guests at active tour" FontSize="20" Grid.Row="6" Grid.ColumnSpan="4" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <DataGrid FontSize="14" AlternatingRowBackground="SeaShell" CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="*"></DataGridTextColumn>
+                <!-- Idea for the DataGridComboBoxColumn taken from StackOverflow-->
+                <DataGridComboBoxColumn x:Name="ComboColumn" Header="Arrival point" DisplayMemberPath="Name" SelectedValueBinding="{Binding Path=DataContext.ChosenKeyPointId, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                        SelectedValuePath="Id" Width="*">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style></Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <EventSetter Event = "SelectionChanged" Handler = "SomeSelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

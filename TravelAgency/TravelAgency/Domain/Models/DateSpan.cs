@@ -12,6 +12,7 @@ namespace TravelAgency.Domain.Models
     {
         private DateOnly _startDate;
         private DateOnly _endDate;
+        private int _dayCount;
 
         public DateOnly StartDate
         {
@@ -21,6 +22,7 @@ namespace TravelAgency.Domain.Models
                 if (value != _startDate)
                 {
                     _startDate = value;
+                    DayCount = (EndDate.DayNumber - StartDate.DayNumber + 1);
                     OnPropertyChanged("StartDate");
                 }
             }
@@ -34,10 +36,25 @@ namespace TravelAgency.Domain.Models
                 if (value != _endDate)
                 {
                     _endDate = value;
+                    DayCount = (EndDate.DayNumber - StartDate.DayNumber + 1);
                     OnPropertyChanged("EndDate");
                 }
             }
         }
+
+        public int DayCount
+        {
+            get => _dayCount;
+            set
+            {
+                if (value != _dayCount)
+                {
+                    _dayCount = value;
+                    OnPropertyChanged("EndDate");
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -57,12 +74,5 @@ namespace TravelAgency.Domain.Models
             StartDate = startDate;
             EndDate = endDate;
         }
-
-        public int CountDays()
-        {
-            return EndDate.DayNumber - StartDate.DayNumber + 1;
-        }
-
-
     }
 }

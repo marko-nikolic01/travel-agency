@@ -64,5 +64,27 @@ namespace TravelAgency.Repositories
             _serializer.ToCSV(FilePath, vouchers);
             return oldVoucher;
         }
+
+        private void delete(List<int> ids)
+        {
+            foreach (int id in ids)
+            {
+                Voucher oldVoucher = vouchers.Find(x => x.Id == id);
+                vouchers.Remove(oldVoucher);
+                _serializer.ToCSV(FilePath, vouchers);
+            }
+        }
+        public void DeleteByCanceledTourId(int canceledTour)
+        {
+            List<int> voucherIds = new List<int>();
+            foreach(Voucher voucher in vouchers)
+            {
+                if(voucher.CanceledTourOccurrenceId == canceledTour)
+                {
+                    voucherIds.Add(voucher.Id);
+                }
+            }
+            delete(voucherIds);
+        }
     }
 }

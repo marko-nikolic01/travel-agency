@@ -12,6 +12,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     {
         public List<TourRating> GetAll();
         public List<TourRating> GetRatingsByTourOccurrenceId(int id);
+        public int GetRatingsNumberByGuestId(int id);
         public int NextId();
         public TourRating Save(TourRating tourRating);
         public bool IsTourNotRated(int guestId, int occurrenceId);

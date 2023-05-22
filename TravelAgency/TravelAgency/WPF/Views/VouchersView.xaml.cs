@@ -20,29 +20,14 @@ namespace TravelAgency.WPF.Views
     /// <summary>
     /// Interaction logic for VouchersView.xaml
     /// </summary>
-    public partial class VouchersView : Window
+    public partial class VouchersView : Page
     {
         VoucherViewModel voucherViewModel;
-        User ActiveGuest;
-        public VouchersView(User ActiveGuest)
+        public VouchersView(int guestId)
         {
             InitializeComponent();
-            voucherViewModel = new VoucherViewModel(ActiveGuest.Id);
+            voucherViewModel = new VoucherViewModel(guestId);
             this.DataContext = voucherViewModel;
-            this.ActiveGuest = ActiveGuest;
-        }
-
-        private void MyToursButton_Click(object sender, RoutedEventArgs e)
-        {
-            MyTours myTours = new MyTours(ActiveGuest.Id);
-            myTours.Show();
-            Close();
-        }
-        private void OfferedToursButton_Click(object sender, RoutedEventArgs e)
-        {
-            Guest2Main offeredTours = new Guest2Main(ActiveGuest);
-            offeredTours.Show();
-            Close();
         }
     }
 }

@@ -17,6 +17,7 @@
             <Button Content="Add accommodation" Click="ShowCreateAccommodation_Click"/>
             <Button Content="Rate guests" Click="ShowAccommodationGuestRatingWindow_Click"/>
             <Button Content="Sign out" Click="SignOut_Click"/>
+            <Button Content="New main window" Click="NewWindow_Click"/>
         </ToolBar>
 
         <TabControl DockPanel.Dock="Top">

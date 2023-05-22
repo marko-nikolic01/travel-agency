@@ -118,5 +118,23 @@ namespace TravelAgency.Repositories
 
             return null;
         }
+
+        public bool CountryExists(string country)
+        {
+            foreach (string _country in GetAllCountries())
+            {
+                if (country == _country) return true;
+            }
+            return false;
+        }
+
+        public bool CityExists(string city)
+        {
+            foreach (string _city in GetAllCities())
+            {
+                if (city == _city) return true;
+            }
+            return false;
+        }
     }
 }

@@ -1,0 +1,132 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerAccommodationsStatisticsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      mc:Ignorable="d" 
+      x:Name="root"
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerAccommodationsStatisticsView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding NavigateToMonthStatsCommand,ElementName=root}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Accommodations > Statistics"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Margin="0 0 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Accommodation:"
+                           Style="{StaticResource formTextBlock}"/>
+
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding Accommodations}"
+                          SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
+                          Style="{StaticResource formComboBox}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+            <DataGrid Grid.Row="1"
+                      x:Name="yearStatsDataGrid"
+                      Style="{StaticResource ownerDataGrid}"
+                      ItemsSource="{Binding StatisticsDTO.StatisticsByYear}"
+                      SelectedItem="{Binding SelectedYearStats}"
+                      Margin="0 0 0 10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Year"
+                                        Binding="{Binding Year}"
+                                        Width="0.5*"/>
+                    <DataGridTextColumn Header="Reservations"
+                                        Binding="{Binding NumberOfReservations}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Cancellations"
+                                        Binding="{Binding NumberOfCancellations}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Reservation movings"
+                                        Binding="{Binding NumberOfMovings}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Renovation suggestions"
+                                        Binding="{Binding NumberOfRenovationSuggestions}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Busiest year:"
+                           Style="{StaticResource formTextBlock}"
+                           FontWeight="Bold"/>
+
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource formTextBox}"
+                         Text="{Binding StatisticsDTO.BusiestYear}"
+                         IsReadOnly="True"/>
+            </Grid>            
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0"
+                  Margin="0 20 10 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <controls:ButtonWithShortcut Grid.Column="0"
+                                             Style="{StaticResource backButton}"
+                                             Margin="0 0 10 0"
+                                             Click="BackButton_Click"/>
+
+                <controls:ButtonWithShortcut Grid.Column="1"
+                                             Text="Get statistics for the selected year"
+                                             KeyboardShortcutText="Ctrl+T"
+                                             Click="MonthlyStatistics_Click"/>
+            </Grid>
+
+            <controls:Tip Grid.Column="2"
+                          Header="How to get statistics for a particular year?"
+                          TipText="To get statistics for a particular year select an accommodation, select a year and press Enter."/>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
-using TravelAgency.Repositories;
+using TravelAgency.Observer;
 
 namespace TravelAgency.Services
 {
@@ -14,10 +10,12 @@ namespace TravelAgency.Services
     {
         public ITourOccurrenceAttendanceRepository IAttendanceRepository { get; set; }
         public IUserRepository IUserRepository { get;set; }
+        public IKeyPointRepository IKeyPointRepository { get; set; }
         public TourOccurrenceAttendanceService()
         {
             IAttendanceRepository = Injector.Injector.CreateInstance<ITourOccurrenceAttendanceRepository>();
             IUserRepository = Injector.Injector.CreateInstance<IUserRepository>();
+            IKeyPointRepository = Injector.Injector.CreateInstance<IKeyPointRepository>();
         }
         public int GetGuestsNumberByTour(int id)
         {
@@ -117,9 +115,30 @@ namespace TravelAgency.Services
             IAttendanceRepository.SaveOrUpdate(tourOccurrenceAttendance);
         }
 
-        public TourOccurrenceAttendance GetByTourOccurrenceIdAndGuestId(int TourOccurrenceId, int GuestId)
+        public string GetArrivalKeyPoint(int occurrenceId, int guestId)
         {
-            return IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(TourOccurrenceId, GuestId);
+            TourOccurrenceAttendance attendance = IAttendanceRepository.GetByTourOccurrenceIdAndGuestId(occurrenceId, guestId);
+            KeyPoint keyPoint = IKeyPointRepository.GetById(attendance.KeyPointId);
+            return keyPoint.Name;
+        }
+        public int GetNumberOfGuestsAttendances(int guestId)
+        {
+            int number = 0;
+            List<TourOccurrenceAttendance> tourOccurrenceAttendances = IAttendanceRepository.GetByGuestId(guestId);
+            foreach(TourOccurrenceAttendance attendance in tourOccurrenceAttendances)
+            {
+                if(attendance.ResponseStatus == ResponseStatus.Accepted)
+                    number++;
+            }    
+            return number;
+        }
+        public void Subscribe(IObserver observer)
+        {
+            IAttendanceRepository.Subscribe(observer);
+        }
+        public void NotifyObservers()
+        {
+            IAttendanceRepository.NotifyObservers();
         }
     }
 }

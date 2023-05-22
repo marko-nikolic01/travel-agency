@@ -77,7 +77,7 @@ namespace TravelAgency.WPF.Views
 
         private void ShowNotifications()
         {
-            var unratedGuests = AccommodationGuestRatingService.GetUnratedReservations();
+            var unratedGuests = AccommodationGuestRatingService.GetUnratedReservationsByOwner(LoggedInUser);
 
             foreach (var unratedGuest in unratedGuests)
             {
@@ -119,6 +119,12 @@ namespace TravelAgency.WPF.Views
                 AccommodationReservationMoveRequestManagingWindow moveRequestManagingWindow = new AccommodationReservationMoveRequestManagingWindow(SelectedMoveRequest);
                 moveRequestManagingWindow.Show();
             }
+        }
+
+        private void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            OwnerWindow ownerWindow = new OwnerWindow();
+            ownerWindow.Show();
         }
     }
 }

@@ -16,7 +16,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.RepositoryInterfaces;
+using TravelAgency.Injector;
 using TravelAgency.Repositories;
+using TravelAgency.Services;
 using TravelAgency.WPF.Views;
 
 namespace TravelAgency
@@ -27,7 +30,8 @@ namespace TravelAgency
     /// //The main logic for this class was taken from the example uploaded on canvas
     public partial class MainWindow : Window
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
+        private UserService _userService;
 
         private string _username;
         public string Username
@@ -54,7 +58,8 @@ namespace TravelAgency
         {
             InitializeComponent();
             DataContext = this;
-            _repository = new UserRepository();
+            _repository = Injector.Injector.CreateInstance<IUserRepository>();
+            _userService = new UserService();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -67,8 +72,10 @@ namespace TravelAgency
                 {
                     if (user.Role == Roles.Guide)
                     {
-                        GuideMain guideMain = new GuideMain(user);
-                        guideMain.Show();
+                        GuideView guideView = new GuideView(user.Id);
+                        guideView.Show();
+                        //GuideMain guideMain = new GuideMain(user);
+                        //guideMain.Show();
                     }
                     else if (user.Role == Roles.Owner)
                     {
@@ -77,14 +84,24 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Guest1)
                     {
-                        Guest1Main guest1Main = new Guest1Main(user);
-                        guest1Main.Show();
+                        Guest1MainView guest1MainView = new Guest1MainView(user);
+                        guest1MainView.Show();
                     }
                     else if (user.Role == Roles.Guest2)
                     {
-                        Guest2Main guest2Main = new Guest2Main(user);
-                        guest2Main.Show();
+                        ProgramStatusRepository repository = new ProgramStatusRepository();
+                        if (repository.GetProgramStatus().IsFirstTimeOpening)
+                        {
+                            IntroductionWizardWindow introduction = new IntroductionWizardWindow(user.Id);
+                            introduction.Show();
+                        }
+                        else
+                        {
+                            Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
+                            guest2Main.Show();
+                        }
                     }
+                    _userService.LogInUser(user);
                     Close();
                 }
                 else
@@ -96,7 +113,6 @@ namespace TravelAgency
             {
                 MessageBox.Show("Wrong username!");
             }
-
         }
     }
 }

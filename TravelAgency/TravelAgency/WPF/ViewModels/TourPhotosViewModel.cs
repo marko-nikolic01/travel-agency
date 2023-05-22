@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 
 namespace TravelAgency.WPF.ViewModels
@@ -25,7 +22,8 @@ namespace TravelAgency.WPF.ViewModels
                 }
             }
         }
-
+        public ButtonCommandNoParameter PreviousPhotoCommand { get; set; }
+        public ButtonCommandNoParameter NextPhotoCommand { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -33,15 +31,31 @@ namespace TravelAgency.WPF.ViewModels
         }
         private List<string>? imageUrls;
         private int index;
+
         public TourPhotosViewModel(List<Photo>? photos)
         {
-            index = 0;
             imageUrls = new List<string>();
-            foreach (Photo p in photos)
+            foreach (Photo photo in photos)
             {
-                imageUrls.Add(p.Link);
+                imageUrls.Add(photo.Link);
             }
+            Initialize();
+        }
+        public TourPhotosViewModel(List<string>? photoLinks)
+        {
+            imageUrls = new List<string>();
+            foreach (string link in photoLinks)
+            {
+                imageUrls.Add(link);
+            }
+            Initialize();
+        }
+        private void Initialize()
+        {
+            index = 0;
             ImageUrl = imageUrls[0];
+            PreviousPhotoCommand = new ButtonCommandNoParameter(ShowPreviousPhoto);
+            NextPhotoCommand = new ButtonCommandNoParameter(ShowNextPhoto);
         }
         public void ShowNextPhoto()
         {

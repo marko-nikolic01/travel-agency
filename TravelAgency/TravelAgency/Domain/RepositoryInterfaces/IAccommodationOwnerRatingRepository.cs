@@ -11,8 +11,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     {
         public List<AccommodationOwnerRating> GetAll();
 
-        public AccommodationOwnerRating GetById(int id);
-
         public List<AccommodationOwnerRating> GetByOwner(User owner);
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User owner, IEnumerable<AccommodationGuestRating> guestRatings);
@@ -21,6 +19,12 @@ namespace TravelAgency.Domain.RepositoryInterfaces
 
         public AccommodationOwnerRating Save(AccommodationOwnerRating rating);
 
+        public void SaveAll();
+
         public void LinkReservations(List<AccommodationReservation> reservations);
+
+        public void LinkRenovationRecommendations(List<RenovationRecommendation> recommendations);
+
+        public List<AccommodationOwnerRating> GetByAccommodation(Accommodation accommodation);
     }
 }

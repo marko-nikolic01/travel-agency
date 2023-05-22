@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Serializer;
+using TravelAgency.Services;
 
 namespace TravelAgency.Domain.RepositoryInterfaces
 {
     public interface IUserRepository
     {
+        public List<User> GetAll();
         public User GetByUsername(string username);
 
         public User GetById(int id);
@@ -21,5 +23,13 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateSuperOwners();
 
         public List<User> GetOwners();
+        public List<User> GetGuests2();
+        public void LogInUser(User user);
+
+        public User GetLoggedInUser();
+        public void UpdateNewUsername(int userId, string newUsername);
+        public void UpdateNewPassword(int userId, string newPassword);
+        public bool CheckPassword(int userId, string Password);
+        public void LinkSuperGuestTitles(List<SuperGuestTitle> titles);
     }
 }

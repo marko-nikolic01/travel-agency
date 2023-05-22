@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,26 +16,39 @@ using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class TourGuestRatingsViewModel
+    public class TourGuestRatingsViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<TourDetailsViewModel> TourReviews { get; set; }
         public ButtonCommand<TourDetailsViewModel> ReportCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> RightCommand { get; set; }
         public ButtonCommand<TourDetailsViewModel> LeftCommand { get; set; }
+        public TourRatingService TourRatingService { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         public TourGuestRatingsViewModel(int id)
         {
-            TourRatingService tourReviewService = new TourRatingService();
-            TourReviews = new ObservableCollection<TourDetailsViewModel>(tourReviewService.getTourReviews(id));
+            TourRatingService = new TourRatingService();
+            TourReviews = new ObservableCollection<TourDetailsViewModel>(TourRatingService.getTourReviews(id));
             ReportCommand = new ButtonCommand<TourDetailsViewModel>(ReportNotValid);
             RightCommand = new ButtonCommand<TourDetailsViewModel>(ShowNextPhoto);
             LeftCommand = new ButtonCommand<TourDetailsViewModel>(ShowPreviousPhoto);
         }
-
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         private void ReportNotValid(TourDetailsViewModel tourReviewViewModel)
         {
-            tourReviewViewModel.TourRating.IsValid = false;
-            TourRatingService tourReviewService = new TourRatingService();
-            tourReviewService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            if (tourReviewViewModel.TourRating.IsValid)
+            {
+                tourReviewViewModel.TourRating.IsValid = false;
+                TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            }
+            else
+            {
+                tourReviewViewModel.TourRating.IsValid = true;
+                TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
+            }
         }
         private void ShowNextPhoto(TourDetailsViewModel tourReviewViewModel)
         {

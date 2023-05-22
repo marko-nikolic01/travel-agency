@@ -1,27 +1,30 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using TravelAgency.Domain.Models;
-using TravelAgency.Repositories;
+﻿using System.Windows;
+using System.Windows.Controls;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
-    public partial class TourRequestView : Window
+    public partial class TourRequestView : Page
     {
-        private int guestId;
-        public ObservableCollection<TourRequest> MadeRequests { get; set; }
-        public TourRequestView(int id)
+        TourRequestViewModel viewModel;
+        public TourRequestView(int id, bool requestMade = false)
         {
+            viewModel = new TourRequestViewModel(id);
             InitializeComponent();
-            DataContext = this;
-            TourRequestRepository repository = new TourRequestRepository();
-            MadeRequests = new ObservableCollection<TourRequest>(repository.GetAll());
-            guestId = id;
+            DataContext = viewModel;
+            if (requestMade)
+                MessageBox.Show("The request was made successfully.");
         }
 
         private void CreateRequest_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestFormView createRequest = new TourRequestFormView(guestId);
-            createRequest.Show();
+            TourRequestFormView requestFormView = new TourRequestFormView(viewModel.guestId);
+            this.NavigationService.Navigate(requestFormView);
+        }
+        private void ShowStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            CreatedRequestsStatistics requestsStatistics = new CreatedRequestsStatistics(viewModel.guestId);
+            this.NavigationService.Navigate(requestsStatistics);
         }
     }
 }

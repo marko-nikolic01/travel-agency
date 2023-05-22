@@ -37,7 +37,6 @@ namespace TravelAgency.Services
             ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
             OwnerRatingRepository.LinkReservations(ReservationRepository.GetAll());
             GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
-
         }
 
         public bool CreateRating(AccommodationOwnerRating rating)
@@ -122,6 +121,11 @@ namespace TravelAgency.Services
             }
 
             return ownerRatings;
+        }
+
+        public int GetRatingsCountForOwner(User owner)
+        {
+            return OwnerRatingRepository.GetByOwner(owner).Count;
         }
     }
 }

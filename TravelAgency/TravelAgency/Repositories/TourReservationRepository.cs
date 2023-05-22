@@ -27,7 +27,16 @@ namespace TravelAgency.Repositories
         {
             return tourReservations;
         }
-
+        public List<TourReservation> GetAllForGuest(int guestId)
+        {
+            List<TourReservation> result = new List<TourReservation>();
+            foreach(TourReservation reservation in tourReservations)
+            {
+                if(reservation.UserId == guestId)
+                    result.Add(reservation);
+            }
+            return result;
+        }
         private int GetNewId()
         {
             if (tourReservations.Count == 0)
