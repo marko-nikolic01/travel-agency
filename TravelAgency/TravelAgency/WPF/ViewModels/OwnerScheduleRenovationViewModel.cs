@@ -25,7 +25,7 @@ namespace TravelAgency.WPF.ViewModels
         private UserService userService;
         private AccommodationService accommodationService;
         private RenovationService renovationService;
-        private ReservationDateFinderService reservationDateFinderService;
+        private AccommodationDateFinderService accommodationDateFinderService;
 
         private Accommodation selectedAccommodation;
         public Accommodation SelectedAccommodation
@@ -66,13 +66,13 @@ namespace TravelAgency.WPF.ViewModels
 
         public DateTime Tommorrow { get; set; }
 
-        private DateTime minDateTime { get; set; }
+        private DateTime minimumEndDate { get; set; }
         public DateTime MinimumEndDate
         {
-            get { return minDateTime; }
+            get { return minimumEndDate; }
             set
             {
-                minDateTime = value;
+                minimumEndDate = value;
                 OnPropertyChanged(nameof(MinimumEndDate));
             }
         }
@@ -117,7 +117,7 @@ namespace TravelAgency.WPF.ViewModels
             userService = new UserService();
             accommodationService = new AccommodationService();
             renovationService = new RenovationService();
-            reservationDateFinderService = new ReservationDateFinderService();
+            accommodationDateFinderService = new AccommodationDateFinderService();
 
             loggedInUser = userService.GetLoggedInUser();
 
@@ -132,12 +132,14 @@ namespace TravelAgency.WPF.ViewModels
                 Execute_NavigateBackCommand();
             }
 
-            SelectedAccommodation = Accommodations[0];
-            NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
             Tommorrow = DateTime.Now.AddDays(1);
-            SelectedStartDate = DateTime.Now.AddDays(1);
-            SelectedEndDate = DateTime.Now.AddDays(1);
-            MinimumEndDate = DateTime.Now.AddDays(1);
+            selectedStartDate = DateTime.Now.AddDays(1);
+            selectedEndDate = DateTime.Now.AddDays(1);
+            minimumEndDate = DateTime.Now.AddDays(1);
+
+            SelectedAccommodation = Accommodations[0];
+
+            NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
         }
 
         private void Execute_NavigateBackCommand()
@@ -147,9 +149,9 @@ namespace TravelAgency.WPF.ViewModels
 
         private void UpdateAvailableDateSpans()
         {
-            if (selectedStartDate != null && selectedEndDate != null)
+            if (SelectedStartDate != null && SelectedEndDate != null)
             {
-                var availableDates = reservationDateFinderService.FindAvailableDatesInsideDateRange(selectedStartDate, selectedEndDate, numberOfDays, SelectedAccommodation);
+                var availableDates = accommodationDateFinderService.FindAvailableDatesInsideDateRange(SelectedAccommodation, SelectedStartDate, SelectedEndDate, numberOfDays);
                 AvailableDateSpans.Clear();
                 foreach (var date in availableDates)
                 {

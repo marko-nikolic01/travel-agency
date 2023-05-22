@@ -27,7 +27,7 @@ namespace TravelAgency.WPF.Views
     public partial class AccommodationReservationMoveRequestWindow : Window, IDataErrorInfo, INotifyPropertyChanged
     {
         public AccommodationReservationMoveService ReservationMoveService { get; set; }
-        public ReservationDateFinderService DateFinderService { get; set; }
+        public AccommodationDateFinderService DateFinderService { get; set; }
 
         public AccommodationReservation Reservation { get; set; }
         public AccommodationReservationMoveRequest MoveRequest { get; set; }
@@ -113,7 +113,7 @@ namespace TravelAgency.WPF.Views
             ShouldValidate = true;
 
             ReservationMoveService = new AccommodationReservationMoveService();
-            DateFinderService = new ReservationDateFinderService();
+            DateFinderService = new AccommodationDateFinderService();
 
             LoadPhotos();
         }

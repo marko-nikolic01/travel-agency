@@ -17,7 +17,7 @@ namespace TravelAgency.WPF.ViewModels
     public class Guest1AccommodationReservationMoveViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
         private AccommodationReservationMoveService _reservationMoveService;
-        private ReservationDateFinderService _dateFinderService;
+        private AccommodationDateFinderService _dateFinderService;
 
         public MyICommand<string> NavigationCommand { get; private set; }
         public MyICommand FindAvailableDatesCommand { get; private set; }
@@ -165,7 +165,7 @@ namespace TravelAgency.WPF.ViewModels
         public Guest1AccommodationReservationMoveViewModel(MyICommand<string> navigationCommand, AccommodationReservation reservation)
         {
             _reservationMoveService = new AccommodationReservationMoveService();
-            _dateFinderService = new ReservationDateFinderService();
+            _dateFinderService = new AccommodationDateFinderService();
 
             NavigationCommand = navigationCommand;
             FindAvailableDatesCommand = new MyICommand(OnFindAvailableDates);

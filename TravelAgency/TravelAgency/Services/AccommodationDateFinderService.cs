@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Injector;
 
 namespace TravelAgency.Services
 {
-    public class ReservationDateFinderService
+    public class AccommodationDateFinderService
     {
         private int _reservationLength;
         private DateOnly _startDateIterator;
@@ -18,7 +20,7 @@ namespace TravelAgency.Services
         public IAccommodationReservationRepository ReservationRepository { get; set; }
         public IAccommodationRenovationRepository RenovationRepository { get; set; }
 
-        public ReservationDateFinderService()
+        public AccommodationDateFinderService()
         {
             _reservationLength = 1;
             _startDateIterator = DateOnly.FromDateTime(DateTime.Now);
@@ -69,10 +71,30 @@ namespace TravelAgency.Services
             return availableDates;
         }
 
-        public List<DateSpan> FindAvailableDatesInsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, int numberOfDays, Accommodation accommodation)
+        public List<DateSpan> FindAvailableDatesInsideDateRange(Accommodation accommodation, DateTime startDate, DateTime endDate, int numberOfDays)
         {
-            SetReservationLength(numberOfDays);
-            return FindAvailableDatesInsideDateRange(dateRangeStart, dateRangeEnd, accommodation);
+            List<DateSpan> availableDates = new List<DateSpan>();
+
+            DateOnly startDateIterator = DateOnly.FromDateTime(startDate);
+            DateOnly endDateIterator = DateOnly.FromDateTime(startDate).AddDays(numberOfDays - 1);
+
+            while (IsDateEarlierThanDate(endDateIterator, DateOnly.FromDateTime(endDate)))
+            {
+                if (IsDateSpanAvailable(accommodation, startDateIterator, endDateIterator))
+                {
+                    availableDates.Add(new DateSpan(startDateIterator, endDateIterator));
+                }
+
+                startDateIterator = startDateIterator.AddDays(1);
+                endDateIterator = endDateIterator.AddDays(1);
+            }
+
+            return availableDates;
+        }
+
+        public bool IsDateEarlierThanDate(DateOnly date1, DateOnly date2)
+        {
+            return date1.CompareTo(date2) <= 0;
         }
 
         public List<DateSpan> FindAvailableDatesOutsideDateRange(DateTime dateRangeStart, DateTime dateRangeEnd, Accommodation accommodation)
@@ -150,15 +172,77 @@ namespace TravelAgency.Services
                     bool isDateAvailable = dateIterator.CompareTo(renovation.DateSpan.StartDate) < 0 || dateIterator.CompareTo(renovation.DateSpan.EndDate) > 0;
                     if (!isDateAvailable) return false;
                 }
+
                 dateIterator = dateIterator.AddDays(1);
                 isDateInsideSpan = dateIterator.CompareTo(_endDateIterator) <= 0;
             }
             return true;
         }
 
-        public bool IsFutureDate(DateTime date)
+        private bool IsDateSpanAvailable(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
         {
-            return DateOnly.FromDateTime(DateTime.Now).CompareTo(DateOnly.FromDateTime(date)) < 0;
+            DateOnly dateIterator = new DateOnly(startDate.Year, startDate.Month, startDate.Day);
+
+            while (IsDateEarlierThanDate(dateIterator, endDate))
+            {
+                if (IsDateInsideReservations(accommodation, dateIterator))
+                {
+                    return false;
+                }
+
+                if (IsDateInsideRenovations(accommodation, dateIterator))
+                {
+                    return false;
+                }
+
+                dateIterator = dateIterator.AddDays(1);
+            }
+
+            return true;
+        }
+
+        private bool IsDateInsideReservations(Accommodation accommodation, DateOnly date)
+        {
+            foreach (AccommodationReservation reservation in ReservationRepository.GetByAccommodation(accommodation))
+            {
+                if (IsDateInsideReservation(date, reservation))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsDateInsideRenovations(Accommodation accommodation, DateOnly date)
+        {
+            foreach (AccommodationRenovation renovation in RenovationRepository.GetByAccommodation(accommodation))
+            {
+                if (IsDateInsideRenovation(date, renovation))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsDateInsideReservation(DateOnly date, AccommodationReservation reservation)
+        {
+            return IsDateInsideDateSpan(date, reservation.DateSpan.StartDate, reservation.DateSpan.EndDate);
+        }
+
+        private bool IsDateInsideRenovation(DateOnly date, AccommodationRenovation renovation)
+        {
+            return IsDateInsideDateSpan(date, renovation.DateSpan.StartDate, renovation.DateSpan.EndDate);
+        }
+
+        private bool IsDateInsideDateSpan(DateOnly date, DateOnly startDate, DateOnly endDate)
+        {
+            bool isLaterThanStartDate = date.CompareTo(startDate) >= 0;
+            bool isEarlierThanEndDate = date.CompareTo(endDate) <= 0;
+
+            return isLaterThanStartDate && isEarlierThanEndDate;
         }
     }
 }
