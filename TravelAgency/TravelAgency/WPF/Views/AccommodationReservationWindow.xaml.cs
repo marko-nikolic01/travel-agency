@@ -19,7 +19,7 @@ namespace TravelAgency.WPF.Views
     public partial class AccommodationReservationWindow : Window, IDataErrorInfo, INotifyPropertyChanged
     {
         public AccommodationReservationService ReservationService { get; set; }
-        public ReservationDateFinderService DateFinderService { get; set; }
+        public AccommodationDateFinderService DateFinderService { get; set; }
 
         public User Guest { get; set; }
         public Accommodation Accommodation { get; set; }
@@ -87,7 +87,7 @@ namespace TravelAgency.WPF.Views
             this.Width = 1000;
 
             ReservationService = new AccommodationReservationService();
-            DateFinderService = new ReservationDateFinderService();
+            DateFinderService = new AccommodationDateFinderService();
 
             Guest = guest;
             Accommodation = accommodation;

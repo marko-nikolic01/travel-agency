@@ -27,5 +27,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public void UpdateStatusChangedFlag(AccommodationReservationMoveRequest moveRequest, bool status);
 
         public List<AccommodationReservationMoveRequest> GetByAccommodation(Accommodation accommodation);
+
+        public List<AccommodationReservationMoveRequest> GetByReservation(AccommodationReservation reservation);
     }
 }

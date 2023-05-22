@@ -186,7 +186,7 @@ namespace TravelAgency.Services
             foreach (var reservation in ReservationRepository.GetByAccommodation(accommodation))
             {
                 var date = reservation.DateSpan.StartDate;
-                if (date.Year == year && date.Month == month)
+                if (date.Year == year && date.Month == month && !IsReservationMoved(reservation))
                 {
                     if (reservation.Canceled)
                     {
@@ -253,6 +253,11 @@ namespace TravelAgency.Services
             }
 
             return count;
+        }
+
+        private bool IsReservationMoved(AccommodationReservation reservation)
+        {
+            return MoveRequestRepository.GetByReservation(reservation).Count > 0;
         }
     }
 }
