@@ -17,7 +17,6 @@ namespace TravelAgency.WPF.ViewModels
     {
         private AccommodationReservationService _reservationService;
         private ReservationDateFinderService _dateFinderService;
-        private SuperGuestService _superGuestService;
 
         public MyICommand<string> NavigationCommand { get; private set; }
         public MyICommand FindAvailableDatesCommand { get; private set; }
@@ -196,7 +195,6 @@ namespace TravelAgency.WPF.ViewModels
         {
             _reservationService = new AccommodationReservationService();
             _dateFinderService = new ReservationDateFinderService();
-            _superGuestService = new SuperGuestService();
 
             NavigationCommand = navigationCommand;
             FindAvailableDatesCommand = new MyICommand(OnFindAvailableDates);
@@ -286,7 +284,6 @@ namespace TravelAgency.WPF.ViewModels
             if (Reservation.IsValid)
             {
                 _reservationService.CreateReservation(Reservation);
-                _superGuestService.DeductPoint(Guest);
                 NavigationCommand.Execute("previousViewModel");
             }
         }

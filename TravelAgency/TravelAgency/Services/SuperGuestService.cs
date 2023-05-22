@@ -29,22 +29,23 @@ namespace TravelAgency.Services
 
         public void CheckSuperGuest(User guest)
         {
+            if (guest.IsSuperGuest && !guest.SuperGuestTitle.IsActive())
+            {
+                EndSuperGuestTitle(guest);
+            }
+
             if (!guest.IsSuperGuest)
             {
-                List<AccommodationReservation> reservations = ReservationRepository.GetAllNotCanceledByGuest(guest);
-                if (CountLastYearReservations(reservations) >= 10)
+                if (CountLastYearReservations(guest) >= 10)
                 {
                     CreateSuperGuestTitle(guest);
                 }
             }
-            else if (!guest.SuperGuestTitle.IsActive())
-            {
-                EndSuperGuestTitle(guest);
-            }
         }
 
-        private int CountLastYearReservations(List<AccommodationReservation>  reservations)
+        private int CountLastYearReservations(User guest)
         {
+            List<AccommodationReservation> reservations = ReservationRepository.GetAllNotCanceledByGuest(guest);
             int count = 0;
             foreach (AccommodationReservation reservation in reservations)
             {
@@ -69,7 +70,6 @@ namespace TravelAgency.Services
         {
             guest.IsSuperGuest = false;
             guest.SuperGuestTitle = null;
-            CheckSuperGuest(guest);
         }
 
         public void DeductPoint(User guest)

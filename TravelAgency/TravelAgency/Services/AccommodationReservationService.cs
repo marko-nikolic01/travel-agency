@@ -17,6 +17,7 @@ namespace TravelAgency.Services
         public ILocationRepository LocationRepository { get; set; }
         public IAccommodationGuestRatingRepository GuestRatingRepository { get; set; }
         public IAccommodationPhotoRepository AccommodationPhotoRepository { get; set; }
+        private SuperGuestService _superGuestService;
 
         public AccommodationReservationService()
         {
@@ -26,6 +27,7 @@ namespace TravelAgency.Services
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             GuestRatingRepository = Injector.Injector.CreateInstance<IAccommodationGuestRatingRepository>();
             AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
+            _superGuestService = new SuperGuestService();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
@@ -46,9 +48,9 @@ namespace TravelAgency.Services
             if (reservation.IsValid)
             {
                 ReservationRepository.Save(reservation);
+                _superGuestService.DeductPoint(reservation.Guest);
                 return true;
             }
-
             return false;
         }
 
