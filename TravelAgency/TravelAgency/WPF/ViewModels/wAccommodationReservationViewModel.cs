@@ -16,7 +16,7 @@ namespace TravelAgency.WPF.ViewModels
     public class wAccommodationReservationViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private AccommodationReservationService _reservationService;
-        private ReservationDateFinderService _dateFinderService;
+        private AccommodationDateFinderService _dateFinderService;
 
         public User Guest { get; set; }
         private Accommodation _accommodation;
@@ -151,7 +151,7 @@ namespace TravelAgency.WPF.ViewModels
         public wAccommodationReservationViewModel(User guest, Accommodation accommodation)
         {
             _reservationService = new AccommodationReservationService();
-            _dateFinderService = new ReservationDateFinderService();
+            _dateFinderService = new AccommodationDateFinderService();
 
             Guest = guest;
             Accommodation = accommodation;

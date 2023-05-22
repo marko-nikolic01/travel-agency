@@ -93,7 +93,7 @@ namespace TravelAgency.Services
 
         private bool IsRenovationActive(AccommodationRenovation renovation)
         {
-            return DateOnly.FromDateTime(DateTime.Now).CompareTo(renovation.DateSpan.EndDate) < 0;
+            return DateOnly.FromDateTime(DateTime.Now).CompareTo(renovation.DateSpan.EndDate) <= 0;
         }
 
         public bool CancelRenovation(AccommodationRenovation renovation)
@@ -125,12 +125,12 @@ namespace TravelAgency.Services
             return false;
         }
 
-        public bool IsRenovationInTheLastYear(AccommodationRenovation renovation)
+        private bool IsRenovationInTheLastYear(AccommodationRenovation renovation)
         {
             return IsDateInTheLastYear(renovation.DateSpan.EndDate);
         }
 
-        public bool IsDateInTheLastYear(DateOnly date)
+        private bool IsDateInTheLastYear(DateOnly date)
         {
             int days = DateOnly.FromDateTime(DateTime.Now).DayNumber - date.DayNumber;
             return 0 < days && days < 365;

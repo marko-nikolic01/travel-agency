@@ -121,5 +121,10 @@ namespace TravelAgency.Repositories
 
             return filtered;
         }
+
+        public List<AccommodationReservationMoveRequest> GetByReservation(AccommodationReservation reservation)
+        {
+            return _moveRequests.FindAll(mr => mr.ReservationId == reservation.Id);
+        }
     }
 }

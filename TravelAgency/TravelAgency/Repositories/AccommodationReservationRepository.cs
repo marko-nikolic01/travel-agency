@@ -94,7 +94,7 @@ namespace TravelAgency.Repositories
 
         public bool IsActive(AccommodationReservation accommodationReservation)
         {
-            return DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber < 0;
+            return DateOnly.Parse(DateTime.Now.Date.ToShortDateString()).DayNumber - accommodationReservation.DateSpan.EndDate.DayNumber < 0 && !accommodationReservation.Canceled;
         }
 
         public List<AccommodationReservation> GetByAccommodation(Accommodation accommodation)
