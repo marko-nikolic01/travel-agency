@@ -186,8 +186,16 @@ namespace TravelAgency.WPF.ViewModels
             NewAccommodationRenovation.Accommodation = SelectedAccommodation;
             NewAccommodationRenovation.DateSpan = SelectedDateSpan;
 
-            renovationService.ScheduleRenovation(NewAccommodationRenovation);
-            Execute_NavigateBackCommand();
+            if (renovationService.CanRenovationBeScheduled(NewAccommodationRenovation))
+            {
+                renovationService.ScheduleRenovation(NewAccommodationRenovation);
+                MessageBox.Show("Successfully scheduled renovation!");
+                Execute_NavigateBackCommand();
+            }
+            else
+            {
+                MessageBox.Show("Invalid request!");
+            }
         }
 
         private void Execute_ScheduleRenovationCommand()

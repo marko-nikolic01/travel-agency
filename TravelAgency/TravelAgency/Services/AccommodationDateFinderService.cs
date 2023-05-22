@@ -179,7 +179,7 @@ namespace TravelAgency.Services
             return true;
         }
 
-        private bool IsDateSpanAvailable(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
+        public bool IsDateSpanAvailable(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
         {
             DateOnly dateIterator = new DateOnly(startDate.Year, startDate.Month, startDate.Day);
 
@@ -243,6 +243,11 @@ namespace TravelAgency.Services
             bool isEarlierThanEndDate = date.CompareTo(endDate) <= 0;
 
             return isLaterThanStartDate && isEarlierThanEndDate;
+        }
+
+        public bool CanRenovationBeScheduled(AccommodationRenovation renovation)
+        {
+            return IsDateSpanAvailable(renovation.Accommodation, renovation.DateSpan.StartDate, renovation.DateSpan.EndDate);
         }
     }
 }

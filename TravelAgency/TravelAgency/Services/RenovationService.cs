@@ -22,6 +22,8 @@ namespace TravelAgency.Services
         public IRenovationRecommendationRepository RecommendationRepository { get; set; }
         public IAccommodationOwnerRatingRepository RatingRepository { get; set; }
 
+        private AccommodationDateFinderService accommodationDateFinderService;
+
 
         public RenovationService()
         {
@@ -38,6 +40,8 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             RatingRepository.LinkRenovationRecommendations(RecommendationRepository.GetAll());
             RenovationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+
+            accommodationDateFinderService = new AccommodationDateFinderService();
         }
 
         public bool RecommendRenovation(AccommodationOwnerRating rating, RenovationRecommendation recommendation)
@@ -86,9 +90,15 @@ namespace TravelAgency.Services
             return filtered;
         }
 
-        public void ScheduleRenovation(AccommodationRenovation renovation)
+        public bool ScheduleRenovation(AccommodationRenovation renovation)
         {
-            RenovationRepository.Save(renovation);
+            if (CanRenovationBeScheduled(renovation))
+            {
+                RenovationRepository.Save(renovation);
+                return true;
+            }
+
+            return false;
         }
 
         private bool IsRenovationActive(AccommodationRenovation renovation)
@@ -154,6 +164,11 @@ namespace TravelAgency.Services
             {
                 accommodation.IsRenovated = IsAccommodationRenovatedInTheLastYear(accommodation);
             }
+        }
+
+        public bool CanRenovationBeScheduled(AccommodationRenovation renovation)
+        {
+            return accommodationDateFinderService.IsDateSpanAvailable(renovation.Accommodation, renovation.DateSpan.StartDate, renovation.DateSpan.EndDate);
         }
     }
 }
