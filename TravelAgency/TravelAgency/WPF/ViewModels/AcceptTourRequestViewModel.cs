@@ -129,8 +129,15 @@ namespace TravelAgency.WPF.ViewModels
             DateTime date = DateTime.ParseExact(SelectedDate, "G", new CultureInfo("en-US"));
             string dateTime = date.ToString("dd-MM-yyyy") + " " + SelectedTime.ToString("HH:mm");
             DateTime concreteDateTime = DateTime.ParseExact(dateTime, "dd-MM-yyyy HH:mm", new CultureInfo("en-US"));
+            DateTime dT1 = TourRequest.MinDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
+            DateTime dT2 = TourRequest.MaxDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
+            if (concreteDateTime < dT1 || concreteDateTime > dT2)
+            {
+                MessageBox.Show("wrong date!");
+                return;
+            }
 
-            if (!TourOccurrenceService.IsGuideFree(ActiveGuide.Id, concreteDateTime, Duration))
+                if (!TourOccurrenceService.IsGuideFree(ActiveGuide.Id, concreteDateTime, Duration))
             {
                 MessageBox.Show("You are not free in the time you entered!");
                 return;

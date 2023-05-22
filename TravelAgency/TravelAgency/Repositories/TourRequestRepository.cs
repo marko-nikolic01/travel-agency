@@ -90,7 +90,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYear(string year)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(year))
                 {
@@ -103,7 +103,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByLanguage(string year, string selectedLanguage)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(year) && r.Language.Equals(selectedLanguage))
                 {
@@ -116,7 +116,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByCountry(string year, string selectedCountry)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(year) && r.Location.Country.Equals(selectedCountry))
                 {
@@ -129,7 +129,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByCountryCity(string year, string selectedCountry, string city)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(year) && r.Location.City.Equals(city) && r.Location.Country.Equals(selectedCountry))
                 {
@@ -165,7 +165,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByLanguageAndYear(string selectedYear, string selectedLanguage, int month)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Language.Equals(selectedLanguage))
                 {
@@ -178,7 +178,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByLocationAndYear(string selectedYear, string selectedCountry, string selectedCity, int month)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Location.Country.Equals(selectedCountry) && r.Location.City.Equals(selectedCity))
                 {
@@ -191,7 +191,7 @@ namespace TravelAgency.Repositories
         public int GetCountForYearByCountryAndYear(string selectedYear, string selectedCountry, int month)
         {
             int result = 0;
-            foreach (var r in tourRequests)
+            foreach (var r in GetAll())
             {
                 if (r.MinDate.ToString("yyyy").Equals(selectedYear) && (int.Parse(r.MinDate.ToString("MM")) == month) && r.Location.Country.Equals(selectedCountry))
                 {
