@@ -60,6 +60,8 @@ namespace TravelAgency
             DataContext = this;
             _repository = Injector.Injector.CreateInstance<IUserRepository>();
             _userService = new UserService();
+
+            usernameTextBox.Focus();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -79,7 +81,7 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Owner)
                     {
-                        OwnerMain ownerMain = new OwnerMain(user);
+                        OwnerWindow ownerMain = new OwnerWindow();
                         ownerMain.Show();
                     }
                     else if (user.Role == Roles.Guest1)
