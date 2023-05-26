@@ -60,6 +60,8 @@ namespace TravelAgency
             DataContext = this;
             _repository = Injector.Injector.CreateInstance<IUserRepository>();
             _userService = new UserService();
+
+            usernameTextBox.Focus();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)

@@ -30,6 +30,8 @@ namespace TravelAgency.WPF.Views
 
         private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             Close();
         }
     }

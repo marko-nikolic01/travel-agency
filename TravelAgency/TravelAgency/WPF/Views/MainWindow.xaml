@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TravelAgency"
         mc:Ignorable="d"
         Title="Sign In" Height="250" Width="500">
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -26,11 +27,22 @@
 
             <Label Grid.Row="0" Grid.Column="0" Height="30">Username:</Label>
             <Label Grid.Row="1" Grid.Column="0" Height="30">Password:</Label>
-            <TextBox Grid.Row="0" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="25" TextWrapping="Wrap" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     x:Name="usernameTextBox"
+                     Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="25"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Center"/>
             <PasswordBox Name="txtPassword" Grid.Row="1" Grid.Column="1" Height="25" VerticalAlignment="Center"/>
         </Grid>
 
-        <Button Grid.Row="2" Click="SignIn" Content="Sign in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="60"/>
+        <Button Grid.Row="2"
+                IsDefault="True"
+                Focusable="False"
+                Click="SignIn"
+                Content="Sign in"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Height="20" Width="60"/>
 
     </Grid>
 </Window>

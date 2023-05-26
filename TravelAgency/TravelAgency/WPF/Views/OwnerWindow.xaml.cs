@@ -42,7 +42,9 @@ namespace TravelAgency.WPF.Views
 
         private void Execute_LogOutCommand()
         {
-            this.Close();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
