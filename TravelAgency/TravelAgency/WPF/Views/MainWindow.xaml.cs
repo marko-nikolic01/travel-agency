@@ -79,7 +79,7 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Owner)
                     {
-                        OwnerMain ownerMain = new OwnerMain(user);
+                        OwnerWindow ownerMain = new OwnerWindow();
                         ownerMain.Show();
                     }
                     else if (user.Role == Roles.Guest1)
