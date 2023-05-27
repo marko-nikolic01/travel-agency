@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Repositories;
@@ -43,8 +45,7 @@ namespace TravelAgency.Services
         {
             if (initialComment.Text != "")
             {
-                CommentRepository.Save(initialComment);
-                forum.Comments.Add(initialComment);
+                PostComment(forum, initialComment);
                 ForumRepository.Save(forum);
                 return true;
             }
@@ -63,13 +64,23 @@ namespace TravelAgency.Services
             {
                 comment.Forum = forum;
                 forum.Comments.Add(comment);
+                CountImportantComments(forum, comment);
                 CommentRepository.Save(comment);
-                if (DidUserVisitLocation(comment.User, forum.Location))
-                {
-                    comment.LocationVisited = true;
-                    forum.CommentsByVisitors++;
-                }
+                ForumRepository.SaveAll();
+            }
+        }
 
+        public void CountImportantComments(Forum forum, Comment comment)
+        {
+            if (DidUserVisitLocation(comment.User, forum.Location))
+            {
+                comment.LocationVisited = true;
+                forum.CommentsByVisitors++;
+            }
+            if (IsUserAccommodationOwner(comment.User, forum.Location))
+            {
+                comment.OwnsAccommodationOnLocation = true;
+                forum.CommentsByAccommodationOwners++;
             }
         }
 
@@ -89,9 +100,12 @@ namespace TravelAgency.Services
         public bool IsUserAccommodationOwner(User user, Location location)
         {
             List<Accommodation> accommodations = AccommodationRepository.GetByOwner(user);
-            if (accommodations.Count() > 0)
+            foreach (Accommodation accommodation in accommodations)
             {
-                return true;
+                if (location == accommodation.Location)
+                {
+                    return true;
+                }
             }
             return false;
         }
