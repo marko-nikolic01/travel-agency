@@ -18,6 +18,9 @@ namespace TravelAgency.Domain.Models
         public Location Location { get; set; }
         private List<Comment> _comments;
         private bool _closed;
+        private int _commentsByVisitors;
+        private int _commentsByAccommodationOwners;
+        private bool _useful;
 
         public List<Comment> Comments
         {
@@ -45,12 +48,56 @@ namespace TravelAgency.Domain.Models
             }
         }
 
+        public int CommentsByVisitors
+        {
+            get => _commentsByVisitors;
+            set
+            {
+                if (value != _commentsByVisitors)
+                {
+                    _commentsByVisitors = value;
+                    MarkAsUseful();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int CommentsByAccommodationOwners
+        {
+            get => _commentsByAccommodationOwners;
+            set
+            {
+                if (value != _commentsByAccommodationOwners)
+                {
+                    _commentsByAccommodationOwners = value;
+                    MarkAsUseful();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool Useful
+        {
+            get => _useful;
+            set
+            {
+                if (value != _useful)
+                {
+                    _useful = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Forum() 
         {
             Admin = new User();
             Location = new Location();
             Comments = new List<Comment>();
             Closed = false;
+            CommentsByVisitors = 0;
+            CommentsByAccommodationOwners = 0;
+            Useful = false;
         }
 
         public Forum(User admin, Location location)
@@ -59,11 +106,22 @@ namespace TravelAgency.Domain.Models
             Location = location;
             Comments = new List<Comment>();
             Closed = false;
+            CommentsByVisitors = 0;
+            CommentsByAccommodationOwners = 0;
+            Useful = false;
         }
 
         public void Close()
         {
             Closed = true;
+        }
+
+        private void MarkAsUseful()
+        {
+            if ((CommentsByVisitors >= 20) || (CommentsByAccommodationOwners >= 10))
+            {
+                Useful = true;
+            }
         }
 
         public string[] ToCSV()
@@ -73,7 +131,9 @@ namespace TravelAgency.Domain.Models
                 Id.ToString(),
                 Admin.Id.ToString(),
                 Location.Id.ToString(),
-                Convert.ToInt32(Closed).ToString()
+                Convert.ToInt32(Closed).ToString(),
+                CommentsByVisitors.ToString(),
+                CommentsByAccommodationOwners.ToString()
             };
             return csvValues;
         }
@@ -84,6 +144,8 @@ namespace TravelAgency.Domain.Models
             Admin.Id = Convert.ToInt32(values[1]);
             Location.Id = Convert.ToInt32(values[2]);
             Closed = Convert.ToBoolean(Convert.ToInt32(values[3]));
+            CommentsByVisitors = Convert.ToInt32(values[4]);
+            CommentsByAccommodationOwners = Convert.ToInt32(values[5]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

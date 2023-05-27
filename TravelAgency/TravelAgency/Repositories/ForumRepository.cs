@@ -17,6 +17,12 @@ namespace TravelAgency.Repositories
 
         private List<Forum> forums;
 
+        public ForumRepository()
+        {
+            serializer = new Serializer<Forum>();
+            forums = serializer.FromCSV(FilePath);
+        }
+
         public void LinkAdmins(List<User> users)
         {
             foreach (Forum forum in forums)
@@ -49,7 +55,16 @@ namespace TravelAgency.Repositories
 
         public void LinkComments(List<Comment> comments)
         {
-            throw new NotImplementedException();
+            foreach (Forum forum in forums)
+            {
+                foreach (Comment comment in comments)
+                {
+                    if (forum.Id == comment.Forum.Id)
+                    {
+                        forum.Comments.Add(comment);
+                    }
+                }
+            }
         }
 
         public List<Forum> GetAll()

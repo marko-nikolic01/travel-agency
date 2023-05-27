@@ -18,6 +18,12 @@ namespace TravelAgency.Repositories
 
         private List<Comment> comments;
 
+        public CommentRepository()
+        {
+            serializer = new Serializer<Comment>();
+            comments = serializer.FromCSV(FilePath);
+        }
+
         public List<Comment> GetAll()
         {
             return comments;
