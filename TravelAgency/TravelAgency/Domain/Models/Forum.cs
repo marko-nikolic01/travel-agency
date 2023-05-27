@@ -53,6 +53,14 @@ namespace TravelAgency.Domain.Models
             Closed = false;
         }
 
+        public Forum(User admin, Location location)
+        {
+            Admin = admin;
+            Location = location;
+            Comments = new List<Comment>();
+            Closed = false;
+        }
+
         public void Close()
         {
             Closed = true;

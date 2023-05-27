@@ -17,11 +17,11 @@ namespace TravelAgency.Repositories
 
         private List<Forum> forums;
 
-        public void LinkAdmins(List<User> owners)
+        public void LinkAdmins(List<User> users)
         {
             foreach (Forum forum in forums)
             {
-                foreach (User user in owners)
+                foreach (User user in users)
                 {
                     if (forum.Admin.Id == user.Id)
                     {

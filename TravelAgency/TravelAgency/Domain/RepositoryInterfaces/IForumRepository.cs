@@ -14,7 +14,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public Forum Save(Forum forum);
         public void SaveAll();
         public int NextId();
-        public void LinkAdmins(List<User> owners);
+        public void LinkAdmins(List<User> users);
         public void LinkLocations(List<Location> locations);
         public void LinkComments(List<Comment> comments);
     }

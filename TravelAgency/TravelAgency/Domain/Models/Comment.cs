@@ -67,6 +67,14 @@ namespace TravelAgency.Domain.Models
             OwnsAccommodationOnLocation = false;
         }
 
+        public Comment(Forum forum, User user)
+        {
+            Forum = forum;
+            User = user;
+            LocationVisited = false;
+            OwnsAccommodationOnLocation = false;
+        }
+
         public string[] ToCSV()
         {
             string[] csvValues =
