@@ -71,6 +71,21 @@ namespace TravelAgency.Services
             return availableDates;
         }
 
+        public List<DateSpan> FindAnyAvailableDates(Accommodation accommodation)
+        {
+            List<DateSpan> availableDates = new List<DateSpan>();
+            PrepareDateIterators(DateTime.Now.AddDays(1), DateTime.Now, DateTime.Now);
+            while (availableDates.Count() < 20)
+            {
+                if (IsDateSpanAvailable(accommodation))
+                {
+                    availableDates.Add(CreateDateSpan());
+                }
+                AddDaysToIterators(1);
+            }
+            return availableDates;
+        }
+
         public List<DateSpan> FindAvailableDatesInsideDateRange(Accommodation accommodation, DateTime startDate, DateTime endDate, int numberOfDays)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
