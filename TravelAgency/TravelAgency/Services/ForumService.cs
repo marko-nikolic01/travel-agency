@@ -64,7 +64,7 @@ namespace TravelAgency.Services
             {
                 comment.Forum = forum;
                 forum.Comments.Add(comment);
-                CountImportantComments(forum, comment);
+                CountImportantComments(forum, comment); 
                 CommentRepository.Save(comment);
                 ForumRepository.SaveAll();
             }
