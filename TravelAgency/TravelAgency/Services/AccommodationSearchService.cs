@@ -80,7 +80,7 @@ namespace TravelAgency.Services
             return accommodations;
         }
 
-        private List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
         {
             if (guestNumberFilter > 0)
             {
@@ -89,7 +89,7 @@ namespace TravelAgency.Services
             return accommodations;
         }
 
-        private List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
         {
             if (DayFilter > 0)
             {
