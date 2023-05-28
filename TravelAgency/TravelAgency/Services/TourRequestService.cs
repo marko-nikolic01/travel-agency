@@ -51,15 +51,7 @@ namespace TravelAgency.Services
         }
         public List<TourRequest> GetPendings()
         {
-            List<TourRequest> pendings = new List<TourRequest>();
-            foreach (var request in ITourRequestRepository.GetAll())
-            {
-                if (request.Status == RequestStatus.Pending)
-                {
-                    pendings.Add(request);
-                }
-            }
-            return pendings;
+            return ITourRequestRepository.GetPendings();
         }
         public List<string> getCountries()
         {

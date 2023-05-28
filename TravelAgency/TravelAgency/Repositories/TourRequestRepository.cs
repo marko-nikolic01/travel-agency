@@ -39,6 +39,17 @@ namespace TravelAgency.Repositories
             return result;
         }
 
+        public List<TourRequest> GetPendings()
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.SpecialTourRequestId == -1 && request.Status == RequestStatus.Pending)
+                    result.Add(request);
+            }
+            return result;
+        }
+
         public TourRequest Save(TourRequest tourRequest)
         {
             tourRequest.Id = NextId();

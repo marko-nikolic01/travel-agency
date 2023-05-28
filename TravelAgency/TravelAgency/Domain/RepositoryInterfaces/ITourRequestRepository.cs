@@ -12,6 +12,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
     public interface ITourRequestRepository
     {
         public List<TourRequest> GetAll();
+        public List<TourRequest> GetPendings();
         public void NotifyObservers();
         public void Subscribe(IObserver observer);
         public void Unsubscribe(IObserver observer);
