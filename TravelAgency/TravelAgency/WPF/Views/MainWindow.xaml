@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency"
         mc:Ignorable="d"
-        Title="Sign In" Height="250" Width="500">
+        Title="Sign In" Height="250" Width="500"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
 

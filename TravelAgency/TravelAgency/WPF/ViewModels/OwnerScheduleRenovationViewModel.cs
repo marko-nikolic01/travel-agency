@@ -131,15 +131,17 @@ namespace TravelAgency.WPF.ViewModels
                 MessageBox.Show("You have no accommodations.");
                 Execute_NavigateBackCommand();
             }
+            else
+            {
+                Tommorrow = DateTime.Now.AddDays(1);
+                selectedStartDate = DateTime.Now.AddDays(1);
+                selectedEndDate = DateTime.Now.AddDays(1);
+                minimumEndDate = DateTime.Now.AddDays(1);
 
-            Tommorrow = DateTime.Now.AddDays(1);
-            selectedStartDate = DateTime.Now.AddDays(1);
-            selectedEndDate = DateTime.Now.AddDays(1);
-            minimumEndDate = DateTime.Now.AddDays(1);
+                SelectedAccommodation = Accommodations[0];
 
-            SelectedAccommodation = Accommodations[0];
-
-            NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
+                NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
+            }
         }
 
         private void Execute_NavigateBackCommand()

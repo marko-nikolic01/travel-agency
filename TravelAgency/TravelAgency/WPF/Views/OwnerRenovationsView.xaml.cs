@@ -48,9 +48,16 @@ namespace TravelAgency.WPF.Views
 
         private void Execute_ScheduleRenovationCommand()
         {
-            OwnerScheduleRenovationViewModel vm = new OwnerScheduleRenovationViewModel(this.NavigationService);
-            OwnerScheduleRenovationView ownerScheduleRenovationView = new OwnerScheduleRenovationView(vm);
-            this.NavigationService.Navigate(ownerScheduleRenovationView);
+            if (ViewModel.OwnerHasAccommodations())
+            {
+                OwnerScheduleRenovationViewModel vm = new OwnerScheduleRenovationViewModel(this.NavigationService);
+                OwnerScheduleRenovationView ownerScheduleRenovationView = new OwnerScheduleRenovationView(vm);
+                this.NavigationService.Navigate(ownerScheduleRenovationView);
+            }
+            else
+            {
+                MessageBox.Show("You have no accommodations.");
+            }
         }
 
         private void Execute_CancelRenovationCommand()

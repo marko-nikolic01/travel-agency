@@ -16,6 +16,7 @@ namespace TravelAgency.WPF.ViewModels
     {
         private UserService userService;
         private RenovationService renovationService;
+        private AccommodationService accommodationService;
 
         private User loggedInUser;
 
@@ -33,6 +34,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             userService = new UserService();
             renovationService = new RenovationService();
+            accommodationService = new AccommodationService();
 
             loggedInUser = userService.GetLoggedInUser();
 
@@ -82,6 +84,11 @@ namespace TravelAgency.WPF.ViewModels
             {
                 ScheduledRenovations.Add(renovation);
             }
+        }
+
+        public bool OwnerHasAccommodations()
+        {
+            return accommodationService.GetByOwner(loggedInUser).Count > 0;
         }
     }
 }
