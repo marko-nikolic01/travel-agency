@@ -50,7 +50,7 @@
         <Label Grid.Row="2" Content="Language:"></Label>
         <TextBlock Margin="0 0 5 0" Text="{Binding TourRequest.Language}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
         <Label Grid.Row="3" Content="Description:"></Label>
-        <TextBlock Margin="0 0 5 0" Grid.RowSpan="2" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
+        <TextBlock Margin="0 0 5 0" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
         <Separator Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Top"></Separator>
         <Label Content="Enter keypoint: " Grid.Row="4"></Label>
         <TextBox Grid.Row="4" Margin="5"  Grid.Column="1" Text="{Binding Path=KeyPoint}" FontSize="18"></TextBox>

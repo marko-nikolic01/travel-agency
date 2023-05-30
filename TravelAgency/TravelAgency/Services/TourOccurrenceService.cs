@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Windows.Controls;
 using TravelAgency.Domain.RepositoryInterfaces;
 using System.Collections.ObjectModel;
+using static System.Windows.Forms.LinkLabel;
 
 namespace TravelAgency.Services
 {
@@ -303,7 +304,7 @@ namespace TravelAgency.Services
         {
             Tour newTour = GenerateNewTour(request, duration);
             ITourRepository.Save(newTour);
-
+            SavePhoto(newTour, "https://assets.thehansindia.com/h-upload/2019/12/27/248830-worldtour.jpg");
             TourOccurrence newTourOccurrence = GenerateNewTourOccurrence(newTour, dateTime);
             ITourOccurrenceRepository.SaveTourOccurrence(newTourOccurrence, GuideId);
             foreach(string keyPoint in keyPoints)
@@ -332,6 +333,15 @@ namespace TravelAgency.Services
             newTour.Location = request.Location;
             newTour.Duration = duration;
             return newTour;
+        }
+
+        private void SavePhoto(Tour newTour, string v)
+        {
+            Photo photo = new Photo();
+            photo.TourId = newTour.Id;
+            photo.Link = v;
+            newTour.Photos.Add(photo);
+            IPhotoRepository.Save(photo);
         }
 
         public void UndoCancelTour(int canceledTour)
