@@ -25,7 +25,6 @@ namespace TravelAgency.WPF.ViewModels
         private SuperOwnerService _superOwnerService;
         private RenovationService _renovationService;
 
-        public User Guest { get; set; }
         private ObservableCollection<Accommodation> _accommodations;
         private Accommodation _selectedAccommodation;
         private List<string> _countries;

@@ -28,6 +28,7 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1AccommodationReservationsViewModel _guest1AccommodationReservationsViewModel;
         private Guest1AccommodationReservationMoveRequestsViewModel _guest1AccommodationReservationMoveRequestsViewModel;
         private Guest1RateableStaysViewModel _guest1RateableStaysViewModel;
+        private Guest1WhereverWheneverSearchViewModel _guest1WhereverWheneverSearchViewModel;
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
         private string _selectedTab;
@@ -153,6 +154,10 @@ namespace TravelAgency.WPF.ViewModels
                     break;
                 case "guest1ReviewsViewModel":
                     CurrentViewModel = new Guest1ReviewsViewModel(NavigationCommand, Guest);
+                    break;
+                case "guest1WhereverWheneverSearchViewModel":
+                    _guest1WhereverWheneverSearchViewModel = new Guest1WhereverWheneverSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1WhereverWheneverSearchViewModel;
                     break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
