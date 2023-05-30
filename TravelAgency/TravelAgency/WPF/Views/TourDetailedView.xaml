@@ -57,7 +57,7 @@
             <Label Grid.Row="0" Grid.Column="1" Margin="10 0" Content="{Binding TourName}" HorizontalAlignment="Left" />
             <Label Grid.Row="1" Grid.Column="1" Margin="10 0" Content="{Binding Location}" HorizontalAlignment="Left"/>
             <Label Grid.Row="2" Grid.Column="1" Margin="10 0" Content="{Binding Language}" HorizontalAlignment="Left"/>
-            <TextBlock FontSize="20" Grid.Row="3" Grid.Column="1" Margin="20 0" Text="{Binding Description}" HorizontalAlignment="Left"/>
+            <TextBlock FontSize="20" TextWrapping="WrapWithOverflow" Grid.Row="3" Grid.Column="1" Margin="20 0" Text="{Binding Description}" HorizontalAlignment="Left"/>
             <Label Grid.Row="4" Grid.Column="1" Margin="10 0" Content="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" HorizontalAlignment="Left"/>
             <Label Grid.Row="5" Grid.Column="1" Margin="10 0" Content="{Binding Duration}" HorizontalAlignment="Left"/>
             <Label Grid.Row="7" Grid.Column="1" Margin="10 10" VerticalAlignment="Top" Content="{Binding FreeSpots}" HorizontalAlignment="Left"/>
