@@ -45,7 +45,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="My ratings"
+                           Text="My ratings of guests"
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
@@ -115,7 +115,7 @@
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
-                                         Text="Review request"
+                                         Text="Rate guest"
                                          KeyboardShortcutText="Enter"
                                          Margin="0 30 30 30"/>
 
