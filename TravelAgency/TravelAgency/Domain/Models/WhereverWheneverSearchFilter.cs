@@ -77,6 +77,15 @@ namespace TravelAgency.Domain.Models
             SearchInsideDateSpan = false;
         }
 
+        public WhereverWheneverSearchFilter(WhereverWheneverSearchFilter filter)
+        {
+            GuestNumber = filter.GuestNumber;
+            DayNumber = filter.DayNumber;
+            SearchInsideDateSpan = filter.SearchInsideDateSpan;
+            FirstDate = filter.FirstDate;
+            LastDate = filter.LastDate;
+        }
+
         private void ResetDateSpan()
         {
             FirstDate = DateTime.Now.AddDays(1);

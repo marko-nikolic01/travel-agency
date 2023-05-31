@@ -203,6 +203,9 @@
                     <DataTemplate DataType="{x:Type viewModels:Guest1WhereverWheneverSearchViewModel}">
                         <views:Guest1WhereverWheneverSearchView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1WhereverWheneverReservationViewModel}">
+                        <views:Guest1WhereverWheneverReservationView/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </DockPanel>

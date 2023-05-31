@@ -256,7 +256,7 @@
                                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=MaxGuests, StringFormat='Maksimalan broj gostiju: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=MinDays, StringFormat='Minimalan broj dana: {0}'}"></TextBlock>
                                 <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False"
-                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationSearchView}}" CommandParameter="guest1AccommodationReservationViewModel">
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1WhereverWheneverSearchView}}" CommandParameter="guest1WhereverWheneverReservationViewModel">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>

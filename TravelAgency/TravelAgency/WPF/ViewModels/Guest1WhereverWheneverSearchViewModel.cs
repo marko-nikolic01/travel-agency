@@ -162,7 +162,7 @@ namespace TravelAgency.WPF.ViewModels
             List<Accommodation> searchedAccommodations = _whereverWheneverService.SearchAccommodationsByFilter(SearchFilter);
             if (searchedAccommodations != null)
             {
-                LastUsedSearchFilter = SearchFilter;
+                LastUsedSearchFilter = new WhereverWheneverSearchFilter(SearchFilter);
                 searchedAccommodations = _superOwnerService.SortBySuperOwnersFirst(searchedAccommodations);
                 Accommodations = new ObservableCollection<Accommodation>(searchedAccommodations);
             }

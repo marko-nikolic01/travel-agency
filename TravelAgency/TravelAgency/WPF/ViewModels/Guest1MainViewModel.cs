@@ -159,6 +159,10 @@ namespace TravelAgency.WPF.ViewModels
                     _guest1WhereverWheneverSearchViewModel = new Guest1WhereverWheneverSearchViewModel(NavigationCommand);
                     CurrentViewModel = _guest1WhereverWheneverSearchViewModel;
                     break;
+                case "guest1WhereverWheneverReservationViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1WhereverWheneverReservationViewModel(NavigationCommand, Guest, _guest1WhereverWheneverSearchViewModel.SelectedAccommodation, _guest1WhereverWheneverSearchViewModel.LastUsedSearchFilter);
+                    break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
                     break;
