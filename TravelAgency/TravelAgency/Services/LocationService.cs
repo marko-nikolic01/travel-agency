@@ -17,6 +17,11 @@ namespace TravelAgency.Services
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
         }
 
+        public List<Location> GetAllLocations() 
+        {
+            return LocationRepository.GetAll();
+        }
+
         public List<string> GetCountries()
         {
             return LocationRepository.GetAllCountries();
@@ -43,6 +48,32 @@ namespace TravelAgency.Services
             }
 
             return null;
+        }
+
+        public List<Location> GetLocationsByCountry(string country)
+        {
+            List<Location> locations = new List<Location>();
+            foreach (Location location in LocationRepository.GetAll())
+            {
+                if (location.Country == country)
+                {
+                    locations.Add(location);
+                }
+            }
+            return locations;
+        }
+
+        public List<Location> GetLocationsByCity(string city)
+        {
+            List<Location> locations = new List<Location>();
+            foreach (Location location in LocationRepository.GetAll())
+            {
+                if (location.City == city)
+                {
+                    locations.Add(location);
+                }
+            }
+            return locations;
         }
 
         public bool CountryExists(string country)

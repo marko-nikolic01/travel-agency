@@ -206,6 +206,12 @@
                     <DataTemplate DataType="{x:Type viewModels:Guest1WhereverWheneverReservationViewModel}">
                         <views:Guest1WhereverWheneverReservationView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1ForumLocationSearchViewModel}">
+                        <views:Guest1ForumLocationSearchView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1OpenForumViewModel}">
+                        <views:Guest1OpenForumView/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </DockPanel>

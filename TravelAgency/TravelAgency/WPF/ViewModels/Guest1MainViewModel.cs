@@ -20,6 +20,7 @@ namespace TravelAgency.WPF.ViewModels
 
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
+
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
         private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
         private Guest1ReviewsMenuViewModel _guest1ReviewsMenuViewModel;
@@ -29,6 +30,8 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1AccommodationReservationMoveRequestsViewModel _guest1AccommodationReservationMoveRequestsViewModel;
         private Guest1RateableStaysViewModel _guest1RateableStaysViewModel;
         private Guest1WhereverWheneverSearchViewModel _guest1WhereverWheneverSearchViewModel;
+        private Guest1ForumLocationSearchViewModel _guest1ForumLocationSearchViewModel;
+
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
         private string _selectedTab;
@@ -162,6 +165,14 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1WhereverWheneverReservationViewModel":
                     PreviousViewModel = CurrentViewModel;
                     CurrentViewModel = new Guest1WhereverWheneverReservationViewModel(NavigationCommand, Guest, _guest1WhereverWheneverSearchViewModel.SelectedAccommodation, _guest1WhereverWheneverSearchViewModel.LastUsedSearchFilter);
+                    break;
+                case "guest1ForumLocationSearchViewModel":
+                    _guest1ForumLocationSearchViewModel = new Guest1ForumLocationSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1ForumLocationSearchViewModel;
+                    break;
+                case "guest1OpenForumViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1OpenForumViewModel(NavigationCommand, Guest, _guest1ForumLocationSearchViewModel.SelectedLocation);
                     break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;

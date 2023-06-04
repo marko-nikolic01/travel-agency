@@ -11,16 +11,31 @@ using TravelAgency.Serializer;
 
 namespace TravelAgency.Domain.Models
 {
-    public class Forum : ISerializable, INotifyPropertyChanged
+    public class Forum : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
         public User Admin { get; set; }
+        
         public Location Location { get; set; }
+        private string _title;
         private List<Comment> _comments;
         private bool _closed;
         private int _commentsByVisitors;
         private int _commentsByAccommodationOwners;
         private bool _useful;
+
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                if (value != _title)
+                {
+                    _title = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public List<Comment> Comments
         {
@@ -93,6 +108,7 @@ namespace TravelAgency.Domain.Models
         {
             Admin = new User();
             Location = new Location();
+            Title = "";
             Comments = new List<Comment>();
             Closed = false;
             CommentsByVisitors = 0;
@@ -104,6 +120,7 @@ namespace TravelAgency.Domain.Models
         {
             Admin = admin;
             Location = location;
+            Title = "";
             Comments = new List<Comment>();
             Closed = false;
             CommentsByVisitors = 0;
@@ -133,7 +150,8 @@ namespace TravelAgency.Domain.Models
                 Location.Id.ToString(),
                 Convert.ToInt32(Closed).ToString(),
                 CommentsByVisitors.ToString(),
-                CommentsByAccommodationOwners.ToString()
+                CommentsByAccommodationOwners.ToString(),
+                Title
             };
             return csvValues;
         }
@@ -146,6 +164,7 @@ namespace TravelAgency.Domain.Models
             Closed = Convert.ToBoolean(Convert.ToInt32(values[3]));
             CommentsByVisitors = Convert.ToInt32(values[4]);
             CommentsByAccommodationOwners = Convert.ToInt32(values[5]);
+            Title = values[6];
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -153,6 +172,39 @@ namespace TravelAgency.Domain.Models
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Title")
+                {
+                    if (Title == "")
+                    {
+                        return "* Title is required";
+                    }
+                }
+                return null;
+            }
+        }
+
+        private readonly string[] _validatedProperties = { "Title" };
+
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in _validatedProperties)
+                {
+                    if (this[property] != null)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }

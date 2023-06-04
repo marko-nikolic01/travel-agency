@@ -45,8 +45,8 @@ namespace TravelAgency.Services
         {
             if (initialComment.Text != "")
             {
-                PostComment(forum, initialComment);
                 ForumRepository.Save(forum);
+                PostComment(forum, initialComment);
                 return true;
             }
             return false;

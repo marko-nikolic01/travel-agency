@@ -15,6 +15,7 @@
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\exclamation-mark.png" />
     <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+    <None Remove="Resources\Images\location.png" />
     <None Remove="Resources\Images\maintenance.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
@@ -78,6 +79,7 @@
 	  <Resource Include="Resources\Images\email.png" />
 	  <Resource Include="Resources\Images\exclamation-mark.png" />
 	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+	  <Resource Include="Resources\Images\location.png" />
 	  <Resource Include="Resources\Images\maintenance.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
