@@ -9,18 +9,25 @@
     <Window.Resources>
         <ImageBrush x:Key="BackImage" ImageSource="/Resources/Images/back.png" />
         <ImageBrush x:Key="HomeImage" ImageSource="/Resources/Images/home.png"/>
-        <ImageBrush x:Key="ProfileImage" ImageSource="/Resources/Images/ProfilePicture.jpg"/>
+        <ImageBrush x:Key="ProfileImage" ImageSource="/Resources/Images/ProfilePictureButton.jpeg"/>
+        <Style TargetType="MenuItem">
+            <Setter Property="Foreground" Value="#0e1d31"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Height="35" Background="LightSlateGray">
+        <Menu DockPanel.Dock="Top" Height="35" Background="#0e1d31">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem FontSize="22">
+            <MenuItem FontSize="22" Background="#0e1d31" Margin="5 0 0 0">
                 <MenuItem.Icon>
-                    <Image Height="20" Stretch="UniformToFill" Width="20" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
+                    <Image Height="30" Margin="-5" Width="30" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                 </MenuItem.Icon>
                 <MenuItem Header="New tour" Command="{Binding NavigateToCreateTourPageCommand}">
                     <MenuItem.Icon>
@@ -66,9 +73,9 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20">
+            <MenuItem Foreground="#FFFFFF" Background="#0e1d31" Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20">
             </MenuItem>
-            <MenuItem Header="⋮" FontSize="22" HorizontalAlignment="Right">
+            <MenuItem Margin="0 0 5 0" Background="#0e1d31" Foreground="#ef4865" Header="⋮" FontSize="22" HorizontalAlignment="Right">
                 <MenuItem  Header="Undo">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Images/undo.png"></Image>
@@ -86,7 +93,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <StackPanel DockPanel.Dock="Bottom" Height="50" Orientation="Vertical" Background="LightSlateGray">
+        <StackPanel DockPanel.Dock="Bottom" Height="50" Orientation="Vertical" Background="#0e1d31">
             <Separator VerticalAlignment="Top"></Separator>
             <DockPanel Margin="0 1 0 0">
                 <Button Width="40" Height="40" HorizontalAlignment="Left" Click="Back_Click"  Margin="20 0 0 0">

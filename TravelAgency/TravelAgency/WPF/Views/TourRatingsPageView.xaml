@@ -7,7 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="Guest reviews">
-
+    <Page.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+            <Setter Property="Margin" Value="5 0 0 0"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>

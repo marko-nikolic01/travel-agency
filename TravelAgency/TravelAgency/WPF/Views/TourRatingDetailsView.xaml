@@ -8,7 +8,6 @@
       d:DesignHeight="750" d:DesignWidth="430"
       xmlns:conv="clr-namespace:TravelAgency.Converters"
       Title="Guest reviews">
-
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -36,9 +35,13 @@
                 <ItemsControl Grid.Row ="1" Grid.RowSpan="6" Grid.ColumnSpan="5" ItemsSource="{Binding Path=TourReviews}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="1" BorderThickness="2" BorderBrush="Black" Padding="5" Margin="5" Width="380">
+                            <Border Background="#0e1d32" CornerRadius="5" Padding="5" Margin="5" Width="380">
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
@@ -47,14 +50,30 @@
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition Width="120"></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="165"></ColumnDefinition>
+                                        <ColumnDefinition ></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Image Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleTrueConverter}}" Grid.Column="0" Grid.Row="0" Source="/Resources/Images/ok.png" HorizontalAlignment="Left" Height="20" Width="20"></Image>
-                                    <Image Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleFalseConverter}}" Grid.Column="0" Grid.Row="0" Source="/Resources/Images/false.png" HorizontalAlignment="Left" Height="20" Width="20"></Image>
-                                    <Button  Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleTrueConverter}}" x:Name="btn" Tag="{Binding}" Content="Report as invalid!" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Page}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="110"></Button>
-                                    <Button Visibility="{Binding TourRating.IsValid , Converter={StaticResource VisibleFalseConverter}}" x:Name="btn2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn2, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Page}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Right" Height="40" Width="110">
+                                    <Grid.Resources>
+                                        <Style TargetType="Label">
+                                            <Setter Property="FontSize" Value="14"></Setter>
+                                            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+                                            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+                                            <Setter Property="Margin" Value="15 0 0 0"></Setter>
+                                        </Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="14"></Setter>
+                                            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+                                            <Setter Property="Margin" Value="0 0 15 0"></Setter>
+                                        </Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#ef4865"></Setter>
+                                            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Image Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleTrueConverter}}" Grid.Column="0" Grid.Row="0" Source="/Resources/Images/ok.png" HorizontalAlignment="Left" Height="20" Width="20" Margin="16 0 0 0"></Image>
+                                    <Image Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleFalseConverter}}" Grid.Column="0" Grid.Row="0" Source="/Resources/Images/false.png" HorizontalAlignment="Left" Height="20" Width="20"  Margin="16 0 0 0"></Image>
+                                    <Button  Visibility="{Binding Path=TourRating.IsValid , Converter={StaticResource VisibleTrueConverter}}" x:Name="btn" Tag="{Binding}" Content="Report as invalid!" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Page}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Height="40" Width="110" Margin="0 0 10 25"></Button>
+                                    <Button Visibility="{Binding TourRating.IsValid , Converter={StaticResource VisibleFalseConverter}}" x:Name="btn2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn2, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Page}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Height="40" Width="110" Margin="0 0 10 25">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition></ColumnDefinition>
@@ -64,7 +83,7 @@
                                             <Label Grid.Column="1" Content="Undo"></Label>
                                         </Grid>
                                     </Button>
-                                    <TextBlock Grid.Column="1">
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="80 0 0 0" Grid.ColumnSpan="2">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} : {1}">
                                                 <Binding Path= "TourOccurrence.Tour.Name" />
@@ -77,20 +96,20 @@
                                     <Label Grid.Row="3" Content="Guides language skills: "></Label>
                                     <Label Grid.Row="4" Content="Tours interestingness: "></Label>
                                     <Label Grid.Row="5" Content="Additional comment: "></Label>
-                                    <Image Source="{Binding CurrentPhoto.Link}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0"></Image>
-                                    <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20" HorizontalAlignment="Right">
+                                    <Image Source="{Binding CurrentPhoto.Link}" Grid.Column="0" Grid.Row="6" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="20 10 15 10"></Image>
+                                    <Button Grid.Row="9" Grid.Column="1" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.RightCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20" HorizontalAlignment="Center">
                                         <Image Source="/Resources/Images/RightArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="20"/>
+                                                <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button Grid.Row="5" Grid.Column="2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left">
+                                    <Button Grid.Row="9" Grid.Column="0" Tag="{Binding}" CommandParameter="{Binding ElementName=btn, Path=Tag}" Command="{Binding Path= DataContext.LeftCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Height="20" Width="20" Margin="55 0 0 0" HorizontalAlignment="Center">
                                         <Image Source="/Resources/Images/LeftArrow.png"></Image>
                                         <Button.Resources>
                                             <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="20"/>
+                                                <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>

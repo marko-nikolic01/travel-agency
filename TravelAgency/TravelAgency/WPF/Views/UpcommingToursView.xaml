@@ -8,7 +8,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="Upcomming tours">
-
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid>
             <Grid.Resources>
