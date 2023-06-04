@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="TourPhotosPreView" Height="550" Width="350">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

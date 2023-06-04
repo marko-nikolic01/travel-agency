@@ -8,6 +8,20 @@
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
       Title="Requests statistics">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#0e1d32"></Setter>
+            <Setter Property="CornerRadius" Value="5"></Setter>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="#ef4865"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.Resources>
             <conv:CheckedRadioConverter x:Key="CheckedRadioConverter"/>
@@ -32,8 +46,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label Content="Choose criteria for request statistics:" Grid.ColumnSpan="2" Margin="10" FontSize="20"></Label>
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5" Grid.RowSpan="3"></Border>
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5" Grid.RowSpan="3" Grid.Column="1"></Border>
+        <Border Grid.Row="1" Margin="5" Grid.RowSpan="3"></Border>
+        <Border Grid.Row="1" Margin="5" Grid.RowSpan="3" Grid.Column="1"></Border>
         <RadioButton VerticalContentAlignment="Center" Grid.Row="1" x:Name="first" Content="Location" Margin="10" FontSize="16" IsChecked="{Binding Path=IsLocationChecked}"></RadioButton>
         <RadioButton VerticalContentAlignment="Center" Grid.Row="1" x:Name="second" Grid.Column="1" Content="Language" Margin="10" FontSize="16" IsChecked="{Binding Path=IsLanguageChecked}"></RadioButton>
         <ComboBox Grid.Row="2" ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}" IsEnabled="{Binding ElementName=first, Path=IsChecked, Converter={StaticResource CheckedRadioConverter}}" Margin="10 15 15 10"></ComboBox>
@@ -53,8 +67,8 @@
                 <DataGridTextColumn Header="Number of requests" Binding="{Binding Path=Value}" Width="*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Border Grid.Row="9" BorderBrush="Black" BorderThickness="1" Margin="5" Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="40"></Border>
-        <Label Grid.Row="9" Grid.ColumnSpan="2" Margin="18 0 18 0">
+        <Border Grid.Row="9" Margin="5" Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="40"></Border>
+        <Label Foreground="#FFFFFF" Grid.Row="9" Grid.ColumnSpan="2" Margin="18 0 18 0">
             <TextBlock Text="Use statistics in your favour! Create a tour for the last years most requested:" FontSize="20" TextWrapping="WrapWithOverflow"></TextBlock>
         </Label>
         <Button Grid.Column="0" Grid.Row="10" Margin="40 10 15 10" Content="Location" FontSize="20" Command="{Binding Path=CreateTourForLocationCommand}"></Button>
