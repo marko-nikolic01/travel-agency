@@ -47,7 +47,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Label Content="Create new tour" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="20" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+            <Label Margin="-20 0 0 0" Content="Create new tour" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="20" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
             <Button IsEnabled="{Binding Path=CanceledTour , Converter={StaticResource NotNullTrueConverter}}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="25 35 25 35" Content="Undo cancel" FontSize="20" Command="{Binding Path= UndoCancelCommand}"></Button>
             <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14" AlternatingRowBackground="SeaShell">
                 <DataGrid.Columns>
