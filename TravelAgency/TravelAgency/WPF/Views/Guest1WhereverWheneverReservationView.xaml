@@ -189,7 +189,7 @@
                         VerticalContentAlignment="Center" Text="{Binding Path=SearchFilter.GuestNumber, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True"></TextBox>
                 <ListView BorderBrush="Black" BorderThickness="1" x:Name="listViewAvailableDateSpans" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding AvailableDateSpans}" SelectedItem="{Binding Path=Reservation.DateSpan, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                          ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
+                          ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="4" Width="480" Height="40">

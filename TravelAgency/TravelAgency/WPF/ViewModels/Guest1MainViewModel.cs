@@ -31,6 +31,8 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1RateableStaysViewModel _guest1RateableStaysViewModel;
         private Guest1WhereverWheneverSearchViewModel _guest1WhereverWheneverSearchViewModel;
         private Guest1ForumLocationSearchViewModel _guest1ForumLocationSearchViewModel;
+        private Guest1MyForumsViewModel _guest1MyForumsViewModel;
+        private Guest1ForumSearchViewModel _guest1ForumSearchViewModel;
 
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
@@ -173,6 +175,14 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1OpenForumViewModel":
                     PreviousViewModel = CurrentViewModel;
                     CurrentViewModel = new Guest1OpenForumViewModel(NavigationCommand, Guest, _guest1ForumLocationSearchViewModel.SelectedLocation);
+                    break;
+                case "guest1MyForumsViewModel":
+                    _guest1MyForumsViewModel = new Guest1MyForumsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = _guest1MyForumsViewModel;
+                    break;
+                case "guest1ForumSearchViewModel":
+                    _guest1ForumSearchViewModel = new Guest1ForumSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1ForumSearchViewModel;
                     break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;

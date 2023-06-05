@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Windows.PdfViewer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,56 @@ namespace TravelAgency.Services
             ForumRepository.LinkComments(CommentRepository.GetAll());
             CommentRepository.LinkUsers(UserRepository.GetAll());
             CommentRepository.LinkForums(ForumRepository.GetAll());
+        }
+
+        public List<Forum> GetForums()
+        {
+            return ForumRepository.GetAll();
+        }
+
+        public List<Forum> GetForumsByAdmin(User admin) 
+        {
+            return ForumRepository.GetByAdmin(admin);
+        }
+
+        public List<Forum> GetForumsByCountryAndCity(string country, string city)
+        {
+            List<Forum> forums = new List<Forum>();
+            foreach (Forum forum in ForumRepository.GetAll())
+            {
+                if (forum.Location.Country == country && forum.Location.City == city)
+                {
+                    forums.Add(forum);
+                }
+            }
+
+            return forums;
+        }
+
+        public List<Forum> GetForumsByCountry(string country)
+        {
+            List<Forum> forums = new List<Forum>();
+            foreach (Forum forum in ForumRepository.GetAll())
+            {
+                if (forum.Location.Country == country)
+                {
+                    forums.Add(forum);
+                }
+            }
+            return forums;
+        }
+
+        public List<Forum> GetForumsByCity(string city)
+        {
+            List<Forum> forums = new List<Forum>();
+            foreach (Forum forum in ForumRepository.GetAll())
+            {
+                if (forum.Location.City == city)
+                {
+                    forums.Add(forum);
+                }
+            }
+            return forums;
         }
 
         public bool OpenForum(Forum forum, Comment initialComment)

@@ -26,6 +26,7 @@
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
+    <None Remove="Resources\Images\padlock.png" />
     <None Remove="Resources\Images\paintwork.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
     <None Remove="Resources\Images\Renovations.png" />
@@ -57,6 +58,7 @@
     <None Remove="Resources\Images\star.png" />
     <None Remove="Resources\Images\timer.png" />
     <None Remove="Resources\Images\trash.png" />
+    <None Remove="Resources\Images\unlock.png" />
     <None Remove="Resources\Images\user.png" />
     <None Remove="Resources\Images\verify.png" />
   </ItemGroup>
@@ -81,6 +83,7 @@
 	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
 	  <Resource Include="Resources\Images\location.png" />
 	  <Resource Include="Resources\Images\maintenance.png" />
+	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
@@ -151,6 +154,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
       <Resource Include="Resources\Images\timer.png" />
+      <Resource Include="Resources\Images\unlock.png" />
       <Resource Include="Resources\Images\user.png" />
       <Resource Include="Resources\Images\Picture1.PNG" />
       <Resource Include="Resources\Images\Picture2.PNG" />
