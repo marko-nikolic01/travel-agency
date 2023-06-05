@@ -6,59 +6,26 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class Guest1AccommodationSearchViewModel : ViewModelBase, INotifyPropertyChanged
+    public class Guest1ForumLocationSearchViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public MyICommand<string> NavigationCommand { get; private set; }
         public MyICommand SearchCommand { get; private set; }
         public MyICommand CancelSearchCommand { get; private set; }
 
-        private AccommodationService _accommodationService;
-        private AccommodationSearchService _searchService;
         private LocationService _locationService;
-        private SuperOwnerService _superOwnerService;
-        private RenovationService _renovationService;
 
-        private ObservableCollection<Accommodation> _accommodations;
-        private Accommodation _selectedAccommodation;
         private List<string> _countries;
         private List<string> _cities;
         private string _selectedCountry;
         private string _selectedCity;
-        private ObservableCollection<string> _accommodationTypes;
-        public AccommodationSearchFilter SearchFilter { get; set; }
-
-        public ObservableCollection<Accommodation> Accommodations
-        {
-            get => _accommodations;
-            set
-            {
-                if (value != _accommodations)
-                {
-                    _accommodations = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public Accommodation SelectedAccommodation
-        {
-            get => _selectedAccommodation;
-            set
-            {
-                if (value != _selectedAccommodation)
-                {
-                    _selectedAccommodation = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private ObservableCollection<Location> _locations;
+        private Location _selectedLocation;
 
         public List<string> Countries
         {
@@ -107,61 +74,59 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if ((value != _selectedCity) && Cities.Contains(value))
                 {
-                    _selectedCity = value; 
-                    
+                    _selectedCity = value;
+
                     UpdateLocationsData(false);
                     OnPropertyChanged();
                 }
             }
         }
 
-        public ObservableCollection<string> AccommodationTypes
+        public Location SelectedLocation
         {
-            get => _accommodationTypes;
+            get => _selectedLocation;
             set
             {
-                if (value != _accommodationTypes)
+                if (value != _selectedLocation)
                 {
-                    _accommodationTypes = value;
+                    _selectedLocation = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public Guest1AccommodationSearchViewModel(MyICommand<string> navigationCommand)
+        public ObservableCollection<Location> Locations
+        {
+            get => _locations;
+            set
+            {
+                if (value != _locations)
+                {
+                    _locations = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public Guest1ForumLocationSearchViewModel(MyICommand<string> navigationCommand)
         {
             NavigationCommand = navigationCommand;
             SearchCommand = new MyICommand(OnSearch);
             CancelSearchCommand = new MyICommand(OnCancelSearch);
 
-            _accommodationService = new AccommodationService();
-            _searchService = new AccommodationSearchService();
             _locationService = new LocationService();
-            _superOwnerService = new SuperOwnerService();
-            _renovationService = new RenovationService();
 
             InitializeData();
         }
 
         private void InitializeData()
         {
-            _superOwnerService.SetSuperOwners();
-            SearchFilter = new AccommodationSearchFilter();
-            InitializeAccommodations();
             InitializeLocations();
-            InitializeAccommodationTypes();
-        }
-
-        private void InitializeAccommodations()
-        {
-            List<Accommodation> accommodations = _accommodationService.GetAccommodations();
-            accommodations = _superOwnerService.SortBySuperOwnersFirst(accommodations);
-            Accommodations = new ObservableCollection<Accommodation>(accommodations);
-            _renovationService.SetRenovationStatus(accommodations);
         }
 
         private void InitializeLocations()
         {
+            Locations = new ObservableCollection<Location>(_locationService.GetAllLocations());
             Countries = _locationService.GetCountries();
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
@@ -171,34 +136,33 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCity = Cities[0];
         }
 
-        private void InitializeAccommodationTypes()
-        {
-            AccommodationTypes = new ObservableCollection<string>();
-            AccommodationTypes.Add("Not specified");
-            AccommodationTypes.Add("Appartment");
-            AccommodationTypes.Add("House");
-            AccommodationTypes.Add("Hut");
-        }
-
         public void OnSearch()
         {
-            List<Accommodation> searchedAccommodations = _searchService.Search(SearchFilter);
-            searchedAccommodations = _superOwnerService.SortBySuperOwnersFirst(searchedAccommodations);
-            Accommodations = new ObservableCollection<Accommodation>(searchedAccommodations);
+            if ((SelectedCountry == "Not specified") && (SelectedCity == "Not specified"))
+            {
+                Locations = new ObservableCollection<Location>(_locationService.GetAllLocations());
+            }
+            else if ((SelectedCountry != "Not specified") && (SelectedCity == "Not specified"))
+            {
+                Locations = new ObservableCollection<Location>(_locationService.GetLocationsByCountry(SelectedCountry));
+            }
+            else if ((SelectedCountry == "Not specified") && (SelectedCity != "Not specified"))
+            {
+                Locations = new ObservableCollection<Location>(_locationService.GetLocationsByCity(SelectedCity));
+            }
+            else 
+            {
+                Locations = new ObservableCollection<Location>();
+                Locations.Add(_locationService.GetLocationForCountryAndCity(SelectedCountry, SelectedCity));
+            }
         }
 
         public void OnCancelSearch()
         {
-            List<Accommodation> accommodations = _searchService.CancelSearch();
-            accommodations = _superOwnerService.SortBySuperOwnersFirst(accommodations);
-            Accommodations = new ObservableCollection<Accommodation>(accommodations);
-            SearchFilter.NameFilter = "";
+            Locations = new ObservableCollection<Location>(_locationService.GetAllLocations());
             SelectedCountry = "Not specified";
             UpdateLocationsData(true);
             SelectedCity = "Not specified";
-            SearchFilter.TypeFilter = "Not specified";
-            SearchFilter.GuestNumberFilter = 0;
-            SearchFilter.DayNumberFilter = 0;
         }
 
         public void UpdateLocationsData(bool updateCountry)
@@ -217,9 +181,7 @@ namespace TravelAgency.WPF.ViewModels
                 tempCities.Insert(0, "Not specified");
                 Cities = tempCities;
                 SelectedCity = "Not specified";
-                SearchFilter.CountryFilter = SelectedCountry;
             }
-            SearchFilter.CityFilter = SelectedCity;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
