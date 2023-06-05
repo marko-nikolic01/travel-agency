@@ -18,14 +18,14 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="0"></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="0"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <conv:VisibleFalseConverter x:Key="VisibleFalseConverter"/>
@@ -76,7 +76,7 @@
                                     <Button Visibility="{Binding TourRating.IsValid , Converter={StaticResource VisibleFalseConverter}}" x:Name="btn2" Tag="{Binding}" CommandParameter="{Binding ElementName=btn2, Path=Tag}" Command="{Binding Path= DataContext.ReportCommand, RelativeSource={RelativeSource AncestorType=Page}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Height="40" Width="110" Margin="0 0 10 25">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="15"></ColumnDefinition>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <Image Source="/Resources/Images/undo.png" Width="15" Height="15"></Image>
