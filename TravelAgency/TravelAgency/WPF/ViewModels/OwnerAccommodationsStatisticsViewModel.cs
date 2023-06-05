@@ -74,7 +74,7 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            Accommodations = accommodationService.GetByOwner(loggedInUser);
+            Accommodations = accommodationService.GetActiveByOwner(loggedInUser);
             
             if (Accommodations.Count > 0 )
             {

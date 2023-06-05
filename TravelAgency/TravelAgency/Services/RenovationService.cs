@@ -39,7 +39,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             RatingRepository.LinkRenovationRecommendations(RecommendationRepository.GetAll());
-            RenovationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            RenovationRepository.LinkAccommodations(AccommodationRepository.GetActive());
 
             accommodationDateFinderService = new AccommodationDateFinderService();
         }
@@ -150,7 +150,7 @@ namespace TravelAgency.Services
         {
             List<AccommodationWithRenovationDTO> dtos = new List<AccommodationWithRenovationDTO>();
 
-            foreach (var accommodation in AccommodationRepository.GetAll())
+            foreach (var accommodation in AccommodationRepository.GetActive())
             {
                 dtos.Add(new AccommodationWithRenovationDTO(accommodation, IsAccommodationRenovatedInTheLastYear(accommodation)));
             }

@@ -33,7 +33,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationReservationRepository.LinkGuests(UserRepository.GetAll());
-            AccommodationReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            AccommodationReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             ForumRepository.LinkLocations(LocationRepository.GetAll());
             ForumRepository.LinkAdmins(UserRepository.GetAll());
             ForumRepository.LinkComments(CommentRepository.GetAll());
@@ -99,7 +99,7 @@ namespace TravelAgency.Services
 
         public bool IsUserAccommodationOwner(User user, Location location)
         {
-            List<Accommodation> accommodations = AccommodationRepository.GetByOwner(user);
+            List<Accommodation> accommodations = AccommodationRepository.GetActiveByOwner(user);
             foreach (Accommodation accommodation in accommodations)
             {
                 if (location == accommodation.Location)

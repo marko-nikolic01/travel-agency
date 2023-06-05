@@ -54,7 +54,7 @@ namespace TravelAgency.WPF.Views
             AccommodationOwnerRatingService = new AccommodationOwnerRatingService();
             AccommodationGuestRatingService = new AccommodationGuestRatingService();
 
-            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetByOwner(user));
+            Accommodations = new ObservableCollection<Accommodation>(AccommodationService.GetActiveByOwner(user));
             AccommodationOwnerRatings = new ObservableCollection<AccommodationOwnerRating>(AccommodationOwnerRatingService.GetRatingsVisibleToOwner(user));
 
             AccommodationReservationMoveRequests = new ObservableCollection<AccommodationReservationMoveRequest>(moveReqestService.GetWaitingMoveRequestsByOwner(LoggedInUser));

@@ -35,6 +35,11 @@ namespace TravelAgency.WPF.Pages
             nameTextBox.Focus();
         }
 
+        public OwnerAddAccommodationView(OwnerAddAccommodationViewModel viewModel, string preselectedCountry, string preselectedCity) : this(viewModel)
+        {
+            Loaded += (s, e) => this.PreselectCountryAndCity(preselectedCountry, preselectedCity);
+        }
+
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.NavigateBack.Execute();
@@ -53,6 +58,12 @@ namespace TravelAgency.WPF.Pages
         private void AddAccommodation_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AddAccommodationCommand.Execute();
+        }
+
+        public void PreselectCountryAndCity(string preselectedCountry, string preselectedCity)
+        {
+            CountryComboBox.SelectedItem = preselectedCountry;
+            CityComboBox.SelectedItem = preselectedCity;
         }
     }
 }
