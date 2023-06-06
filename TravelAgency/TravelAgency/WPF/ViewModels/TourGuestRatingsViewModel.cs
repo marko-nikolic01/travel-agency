@@ -42,11 +42,13 @@ namespace TravelAgency.WPF.ViewModels
             if (tourReviewViewModel.TourRating.IsValid)
             {
                 tourReviewViewModel.TourRating.IsValid = false;
+                tourReviewViewModel.CanUndo = true;
                 TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
             }
             else
             {
                 tourReviewViewModel.TourRating.IsValid = true;
+                tourReviewViewModel.CanUndo = false;
                 TourRatingService.UpdateTourRatingIsValid(tourReviewViewModel.TourRating);
             }
         }
