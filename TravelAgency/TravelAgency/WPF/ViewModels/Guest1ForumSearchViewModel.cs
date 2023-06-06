@@ -130,8 +130,18 @@ namespace TravelAgency.WPF.ViewModels
         private void InitializeForums()
         {
             List<Forum> forums = _forumService.GetForums();
-            forums.Reverse();
+            forums = ReverseForums(forums);
             Forums = new ObservableCollection<Forum>(forums);
+        }
+
+        private List<Forum> ReverseForums(List<Forum> forums)
+        {
+            List<Forum> reversedForums = new List<Forum>();
+            for (int count = forums.Count() - 1; count >= 0; count--)
+            {
+                reversedForums.Add(forums[count]);
+            }
+            return reversedForums;
         }
 
         private void InitializeLocations()
@@ -150,21 +160,25 @@ namespace TravelAgency.WPF.ViewModels
             if ((SelectedCountry == "Not specified") && (SelectedCity == "Not specified"))
             {
                 List<Forum> forums = _forumService.GetForums();
+                forums = ReverseForums(forums);
                 Forums = new ObservableCollection<Forum>(forums);
             }
             else if ((SelectedCountry != "Not specified") && (SelectedCity == "Not specified"))
             {
                 List<Forum> forums = _forumService.GetForumsByCountry(SelectedCountry);
+                forums = ReverseForums(forums);
                 Forums = new ObservableCollection<Forum>(forums);
             }
             else if ((SelectedCountry == "Not specified") && (SelectedCity != "Not specified"))
             {
                 List<Forum> forums = _forumService.GetForumsByCity(SelectedCity);
+                forums = ReverseForums(forums);
                 Forums = new ObservableCollection<Forum>(forums);
             }
             else
             {
                 List<Forum> forums = _forumService.GetForumsByCountryAndCity(SelectedCountry, SelectedCity);
+                forums = ReverseForums(forums);
                 Forums = new ObservableCollection<Forum>(forums);
             }
         }

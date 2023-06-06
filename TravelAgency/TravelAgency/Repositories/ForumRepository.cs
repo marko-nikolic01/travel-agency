@@ -59,7 +59,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (Comment comment in comments)
                 {
-                    if (forum.Id == comment.Forum.Id)
+                    if ((forum.Id == comment.Forum.Id) && !forum.Comments.Contains(comment))
                     {
                         forum.Comments.Add(comment);
                     }
