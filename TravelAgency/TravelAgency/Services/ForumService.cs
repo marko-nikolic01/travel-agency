@@ -99,7 +99,7 @@ namespace TravelAgency.Services
             if (initialComment.Text != "")
             {
                 ForumRepository.Save(forum);
-                PostComment(forum, initialComment);
+                PostCommentByGuest(forum, initialComment);
                 return true;
             }
             return false;
@@ -111,7 +111,7 @@ namespace TravelAgency.Services
             ForumRepository.SaveAll();
         }
 
-        public void PostComment(Forum forum, Comment comment)
+        public void PostCommentByGuest(Forum forum, Comment comment)
         {
             if (comment.Text != "" && !forum.Closed)
             {
@@ -177,10 +177,10 @@ namespace TravelAgency.Services
             return dtos;
         }
 
-        public List<Location> GetLocationsForForumsByOwner(User owner)
+        /*public List<Location> GetLocationsForForumsByOwner(User owner)
         {
 
-        }
+        }*/
 
         private bool LocationHasForum(Location location)
         {

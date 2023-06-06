@@ -92,7 +92,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (Comment.IsValid)
             {
-                _forumService.PostComment(Forum, Comment);
+                _forumService.PostCommentByGuest(Forum, Comment);
                 InitializeComments();
             }
         }
