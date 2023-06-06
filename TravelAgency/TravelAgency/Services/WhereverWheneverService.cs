@@ -32,7 +32,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
         }
 
         public List<Accommodation> SearchAccommodationsByFilter(WhereverWheneverSearchFilter filter)
@@ -41,7 +41,7 @@ namespace TravelAgency.Services
             {
                 return null;
             }
-            List<Accommodation> accommodations = AccommodationRepository.GetAll();
+            List<Accommodation> accommodations = AccommodationRepository.GetActive();
             accommodations = _accommodationSearchService.FilterByGuestNumber(filter.GuestNumber, accommodations);
             accommodations = _accommodationSearchService.FilterByDayNumber(filter.DayNumber, accommodations);
             if (filter.SearchInsideDateSpan)

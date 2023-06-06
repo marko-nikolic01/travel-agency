@@ -11,7 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace TravelAgency.Domain.Models
 {
-    public class Comment : ISerializable, INotifyPropertyChanged
+    public class Comment : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
         public Forum Forum { get; set; }
@@ -63,6 +63,7 @@ namespace TravelAgency.Domain.Models
         {
             Forum = new Forum();
             User = new User();
+            Text = "";
             LocationVisited = false;
             OwnsAccommodationOnLocation = false;
         }
@@ -71,6 +72,7 @@ namespace TravelAgency.Domain.Models
         {
             Forum = forum;
             User = user;
+            Text = "";
             LocationVisited = false;
             OwnsAccommodationOnLocation = false;
         }
@@ -84,7 +86,7 @@ namespace TravelAgency.Domain.Models
                 User.Id.ToString(),
                 Text,
                 Convert.ToInt32(LocationVisited).ToString(),
-                Convert.ToInt32(LocationVisited).ToString()
+                Convert.ToInt32(OwnsAccommodationOnLocation).ToString()
             };
             return csvValues;
         }
@@ -104,6 +106,39 @@ namespace TravelAgency.Domain.Models
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Text")
+                {
+                    if (Text == "")
+                    {
+                        return "* Comment body is required";
+                    }
+                }
+                return null;
+            }
+        }
+
+        private readonly string[] _validatedProperties = { "Text" };
+
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in _validatedProperties)
+                {
+                    if (this[property] != null)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }

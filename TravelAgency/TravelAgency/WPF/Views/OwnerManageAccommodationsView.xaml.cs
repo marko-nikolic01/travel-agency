@@ -27,17 +27,25 @@ namespace TravelAgency.WPF.Pages
     {
         public MyICommand NavigateBackCommand { get; set; }
         public MyICommand AddAccommodationCommand { get; set; }
+        public MyICommand NavigateToManagingSuggestions { get; set; }
         public OwnerManageAccommodationsViewModel ViewModel { get; set; }
 
         public OwnerManageAccommodationsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBack);
             AddAccommodationCommand = new MyICommand(Execute_AddAccommodation);
+            NavigateToManagingSuggestions = new MyICommand(Execute_NavigateToManagingSuggestions);
+
             InitializeComponent();
             ViewModel = new OwnerManageAccommodationsViewModel();
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_NavigateToManagingSuggestions()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerAccommodationSuggestionsView.xaml", UriKind.Relative));
         }
 
         private void Execute_AddAccommodation()
@@ -60,6 +68,16 @@ namespace TravelAgency.WPF.Pages
         private void AddAccommodation_Click(object sender, RoutedEventArgs e)
         {
             Execute_AddAccommodation();
+        }
+
+        private void NavigateToManagingSuggestions_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToManagingSuggestions();
+        }
+
+        private void DeleteSelectedAccommodationCommand_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Execute_DeleteSelectedAccommodationCommand();
         }
     }
 }

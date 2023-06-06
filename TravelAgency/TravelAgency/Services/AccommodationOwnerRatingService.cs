@@ -34,7 +34,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             OwnerRatingRepository.LinkReservations(ReservationRepository.GetAll());
             GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
         }

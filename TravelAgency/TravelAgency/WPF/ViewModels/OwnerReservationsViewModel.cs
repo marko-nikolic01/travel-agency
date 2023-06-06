@@ -22,7 +22,6 @@ namespace TravelAgency.WPF.ViewModels
 
         public OwnerReservationsViewModel()
         {
-
             userService = new UserService();
             accommodationReservationService = new AccommodationReservationService();
             accommodationReservationMoveService = new AccommodationReservationMoveService();

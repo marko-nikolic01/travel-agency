@@ -88,7 +88,7 @@ namespace TravelAgency.WPF.ViewModels
 
         public bool OwnerHasAccommodations()
         {
-            return accommodationService.GetByOwner(loggedInUser).Count > 0;
+            return accommodationService.GetActiveByOwner(loggedInUser).Count > 0;
         }
     }
 }

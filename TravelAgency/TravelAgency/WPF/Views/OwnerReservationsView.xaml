@@ -8,7 +8,7 @@
       xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
       Name="root"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="620" d:DesignWidth="840"
       Title="OwnerReservationsPage"
       Style="{StaticResource pageStyle}">
 

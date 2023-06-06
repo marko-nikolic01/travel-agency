@@ -43,8 +43,8 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             RatingRepository.LinkRenovationRecommendations(RecommendationRepository.GetAll());
-            RenovationRepository.LinkAccommodations(AccommodationRepository.GetAll());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            RenovationRepository.LinkAccommodations(AccommodationRepository.GetActive());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             ReservationRepository.LinkGuests(UserRepository.GetAll());
             MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
         }

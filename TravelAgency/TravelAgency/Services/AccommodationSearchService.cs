@@ -28,7 +28,7 @@ namespace TravelAgency.Services
 
         public List<Accommodation> Search(AccommodationSearchFilter filter)
         {
-            List<Accommodation> searchedAccommodations = AccommodationRepository.GetAll();
+            List<Accommodation> searchedAccommodations = AccommodationRepository.GetActive();
             searchedAccommodations = FilterByName(filter.NameFilter, searchedAccommodations);
             searchedAccommodations = FilterByCountry(filter.CountryFilter, searchedAccommodations);
             searchedAccommodations = FilterByCity(filter.CityFilter, searchedAccommodations);
@@ -100,7 +100,7 @@ namespace TravelAgency.Services
 
         public List<Accommodation> CancelSearch()
         {
-            return AccommodationRepository.GetAll();
+            return AccommodationRepository.GetActive();
         }
     }
 }
