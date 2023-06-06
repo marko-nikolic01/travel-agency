@@ -63,7 +63,7 @@
         </Grid.ColumnDefinitions>
         <GroupBox BorderThickness="3" BorderBrush="#0e1d32" Margin="5 0 5 5" Grid.Row="2" Grid.ColumnSpan="6" Grid.RowSpan="7">
             <GroupBox.Header>
-                <Label Foreground="#0e1d32" Content="Tour info"></Label>
+                <Label Foreground="#0e1d32" FontStyle="Italic" Content="Tour info"></Label>
             </GroupBox.Header>
             <GroupBox.Content>
                 <Grid>
