@@ -1,0 +1,96 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerForumView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerForumView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <Style x:Key="h2" TargetType="TextBlock" BasedOn="{StaticResource formTextBlock}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0 0 0 20"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Forum"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Forums for my locations"
+                       Style="{StaticResource h2}"/>
+
+            <ListView Grid.Row="1"
+                      x:Name="accommodationsListView"
+                      ScrollViewer.CanContentScroll="False"
+                      HorizontalContentAlignment="Stretch"
+                      Margin="0 0 0 20"
+                      SelectedIndex="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1"
+                            BorderBrush="Black">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text="Location:"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                           Text="No. my accommodations:"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                           Text="No. comments:"/>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text=""/>
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                           Text=""/>
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                           Text=""/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Text="Go to a forum of the selected location"
+                                         KeyboardShortcutText="Enter"/>
+
+            <controls:Tip Grid.Column="1"
+                          Header="Which forums can I comment on?"
+                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation."/>
+        </Grid>
+    </Grid>
+</Page>
