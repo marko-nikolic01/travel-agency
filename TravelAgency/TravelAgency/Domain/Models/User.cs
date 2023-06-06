@@ -36,6 +36,7 @@ namespace TravelAgency.Domain.Models
         public DateOnly BirthDay { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
+        public bool IsSuperGuide { get; set; }
         public User()
         {
             Id = -1;
@@ -46,6 +47,7 @@ namespace TravelAgency.Domain.Models
             SuperGuestTitle = null;
             Name = Username;
             Gender = "Male";
+            IsSuperGuide = false;
         }
 
         public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
@@ -58,12 +60,13 @@ namespace TravelAgency.Domain.Models
             SuperGuestTitle = null;
             Name = username;
             Gender = "Male";
+            IsSuperGuide = false;
         }
 
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy"), Name, Gender };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy"), Name, Gender, IsSuperGuide.ToString() };
             return csvValues;
         }
 
@@ -77,6 +80,7 @@ namespace TravelAgency.Domain.Models
             BirthDay = DateOnly.ParseExact(values[5], "dd-MM-yyyy", CultureInfo.InvariantCulture);
             Name = values[6];
             Gender = values[7];
+            IsSuperGuide = Convert.ToBoolean(values[8]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -81,5 +81,23 @@ namespace TravelAgency.Services
         {
             return ITourRatingRepository.GetRatingsNumberByGuestId(guestId);
         }
+        public double GetAverageGrade(int id)
+        {
+            double sum = 0.0;
+            int ratingsCount = 0;
+            foreach(var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id))
+            {
+                foreach(var tourRating in ITourRatingRepository.GetRatingsByTourOccurrenceId(tourOccurrence.Id))
+                {
+                    sum += tourRating.GuideLanguage;
+                    sum += tourRating.GuideKnowledge;
+                    sum += tourRating.Interesting;
+                    ratingsCount++;
+                }
+            }
+            sum /= 3.0;
+            sum /= (double)ratingsCount;
+            return sum;
+        }
     }
 }
