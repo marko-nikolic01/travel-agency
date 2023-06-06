@@ -42,7 +42,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Tour.Language}" Header="Language"></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date and time" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd/MM/yyyy HH:mm}" Header="Date and time" Width="*"></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Reviews" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
