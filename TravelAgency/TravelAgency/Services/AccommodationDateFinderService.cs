@@ -74,7 +74,7 @@ namespace TravelAgency.Services
         public List<DateSpan> FindAnyAvailableDates(Accommodation accommodation)
         {
             List<DateSpan> availableDates = new List<DateSpan>();
-            PrepareDateIterators(DateTime.Now.AddDays(1), DateTime.Now, DateTime.Now);
+            PrepareDateIterators(DateTime.Now.AddDays(1), DateTime.Now.AddDays(_reservationLength), DateTime.Now);
             while (availableDates.Count() < 20)
             {
                 if (IsDateSpanAvailable(accommodation))

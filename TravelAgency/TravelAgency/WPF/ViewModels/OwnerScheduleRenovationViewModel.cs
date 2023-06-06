@@ -121,7 +121,7 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            Accommodations = accommodationService.GetByOwner(loggedInUser);
+            Accommodations = accommodationService.GetActiveByOwner(loggedInUser);
             AvailableDateSpans = new ObservableCollection<DateSpan>();
 
             numberOfDays = 1;

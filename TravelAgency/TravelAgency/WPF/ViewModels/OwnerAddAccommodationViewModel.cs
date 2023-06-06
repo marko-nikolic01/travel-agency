@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private User loggedInUser;
 
+        public string NavigateBackLocation { get; set; }
         public MyICommand NavigateBack { get; set; }
         public MyICommand AddPhotoCommand { get; set; }
         public MyICommand RemovePhotoCommand { get; set; }
@@ -150,6 +151,15 @@ namespace TravelAgency.WPF.ViewModels
                 "<Select city>"
             };
             SelectedCity = Cities[0];
+
+            NavigateBackLocation = "WPF/Views/OwnerManageAccommodationsView.xaml";
+        }
+
+        public OwnerAddAccommodationViewModel(NavigationService navigationService, string preselectedCountry, string preselectedCity, string navigateBackLocation) : this(navigationService)
+        {
+            SelectedCountry = preselectedCountry;
+            SelectedCity = preselectedCity;
+            NavigateBackLocation = navigateBackLocation;
         }
 
         private void Execute_AddAccommodationCommand()
@@ -189,7 +199,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateBack()
         {
-            NavigationService.Navigate(new Uri("WPF/Views/OwnerManageAccommodationsView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri(NavigateBackLocation, UriKind.Relative));
         }
 
         private void Execute_RemovePhotoCommand()

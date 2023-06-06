@@ -72,9 +72,18 @@ namespace TravelAgency.Domain.Models
 
         public WhereverWheneverSearchFilter()
         {
-            GuestNumber = 0;
-            DayNumber = 0;
+            GuestNumber = 1;
+            DayNumber = 1;
             SearchInsideDateSpan = false;
+        }
+
+        public WhereverWheneverSearchFilter(WhereverWheneverSearchFilter filter)
+        {
+            GuestNumber = filter.GuestNumber;
+            DayNumber = filter.DayNumber;
+            SearchInsideDateSpan = filter.SearchInsideDateSpan;
+            FirstDate = filter.FirstDate;
+            LastDate = filter.LastDate;
         }
 
         private void ResetDateSpan()

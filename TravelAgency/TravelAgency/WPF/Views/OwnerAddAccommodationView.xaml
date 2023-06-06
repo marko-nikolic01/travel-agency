@@ -128,7 +128,7 @@
                           x:Name="CountryComboBox"
                           SelectedIndex="0"
                           VirtualizingPanel.IsVirtualizing="True"
-                          SelectedItem="{Binding SelectedCountry}"
+                          SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
                           ItemsSource="{Binding Countries}"
                           IsTextSearchEnabled="True"
                           IsEditable="True">
@@ -143,7 +143,7 @@
                           x:Name="CityComboBox"
                           VirtualizingPanel.IsVirtualizing="True"
                           IsEnabled="{Binding IsEnabled}"
-                          SelectedItem="{Binding SelectedCity}"
+                          SelectedItem="{Binding SelectedCity, Mode=TwoWay}"
                           ItemsSource="{Binding Cities}"
                           IsTextSearchEnabled="True"
                           IsEditable="True">

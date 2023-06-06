@@ -6,8 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Converters;
 using TravelAgency.Serializer;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TravelAgency.Domain.Models
 {
@@ -100,6 +100,8 @@ namespace TravelAgency.Domain.Models
             }
         }
 
+        public bool IsOpen { get; set; }
+
 
         public Accommodation()
         {
@@ -115,7 +117,7 @@ namespace TravelAgency.Domain.Models
             Photos = new List<AccommodationPhoto>();
         }
 
-        public Accommodation(int id, string name, int ownerId, int locationId, AccommodationType type, int maxGuests, int minDays, int daysToCancel)
+        public Accommodation(int id, string name, int ownerId, int locationId, AccommodationType type, int maxGuests, int minDays, int daysToCancel, bool isClosed)
         {
             Id = id;
             Name = name;
@@ -125,6 +127,7 @@ namespace TravelAgency.Domain.Models
             MaxGuests = maxGuests;
             MinDays = minDays;
             DaysToCancel = daysToCancel;
+            IsOpen = isClosed;
 
             Photos = new List<AccommodationPhoto>();
         }
@@ -140,7 +143,8 @@ namespace TravelAgency.Domain.Models
                 Convert.ToInt32(Type).ToString(),
                 MaxGuests.ToString(),
                 MinDays.ToString(),
-                DaysToCancel.ToString()
+                DaysToCancel.ToString(),
+                Convert.ToInt32(IsOpen).ToString()
             };
             return csvValues;
         }
@@ -155,6 +159,7 @@ namespace TravelAgency.Domain.Models
             MaxGuests = Convert.ToInt32(values[5]);
             MinDays = Convert.ToInt32(values[6]);
             DaysToCancel = Convert.ToInt32(values[7]);
+            IsOpen = Convert.ToBoolean(Convert.ToInt32(values[8]));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
