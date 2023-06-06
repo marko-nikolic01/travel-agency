@@ -106,5 +106,10 @@ namespace TravelAgency.Repositories
         {
             serializer.ToCSV(FilePath, forums);
         }
+
+        public List<Forum> GetByLocation(Location location)
+        {
+            return forums.FindAll(f => f.Location == location);
+        }
     }
 }

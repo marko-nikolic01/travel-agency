@@ -12,9 +12,12 @@ namespace TravelAgency.Services
     public class LocationService
     {
         public ILocationRepository LocationRepository { get; set; }
+        public IAccommodationRepository AccommodationRepository { get; set; }
         public LocationService()
         {
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
+            AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
+            AccommodationRepository.LinkLocations(LocationRepository.GetAll());
         }
 
         public List<Location> GetAllLocations() 
@@ -84,6 +87,21 @@ namespace TravelAgency.Services
         public bool CityExists(string city)
         {
             return LocationRepository.CityExists(city);
+        }
+
+        public List<Location> GetLocationsByOwner(User owner)
+        {
+            var locations = new List<Location>();
+
+            foreach (var accommodation in AccommodationRepository.GetActiveByOwner(owner))
+            {
+                if (!locations.Contains(accommodation.Location))
+                {
+                    locations.Add(accommodation.Location);
+                }
+            }
+
+            return locations;
         }
     }
 }

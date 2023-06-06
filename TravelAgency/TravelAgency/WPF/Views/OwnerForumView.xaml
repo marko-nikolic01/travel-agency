@@ -15,11 +15,15 @@
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Margin" Value="0 0 0 20"/>
         </Style>
+
+        <Style x:Key="listBoxTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -37,45 +41,19 @@
                        Text="Forums for my locations"
                        Style="{StaticResource h2}"/>
 
-            <ListView Grid.Row="1"
-                      x:Name="accommodationsListView"
-                      ScrollViewer.CanContentScroll="False"
-                      HorizontalContentAlignment="Stretch"
-                      Margin="0 0 0 20"
-                      SelectedIndex="0">
-                <ListView.ItemTemplate>
+            <ListBox Grid.Row="1"
+                     ItemsSource="{Binding Locations}">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="1"
-                            BorderBrush="Black">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Row="0" Grid.Column="0"
-                                           Text="Location:"/>
-                                <TextBlock Grid.Row="1" Grid.Column="0"
-                                           Text="No. my accommodations:"/>
-                                <TextBlock Grid.Row="2" Grid.Column="0"
-                                           Text="No. comments:"/>
-
-                                <TextBlock Grid.Row="0" Grid.Column="0"
-                                           Text=""/>
-                                <TextBlock Grid.Row="1" Grid.Column="0"
-                                           Text=""/>
-                                <TextBlock Grid.Row="2" Grid.Column="0"
-                                           Text=""/>
-                            </Grid>
-                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding City}" Style="{StaticResource listBoxTextBlock}"/>
+                            <TextBlock Text=", " Style="{StaticResource listBoxTextBlock}"/>
+                            <TextBlock Text="{Binding Country}" Style="{StaticResource listBoxTextBlock}"/>
+                        </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
         </Grid>
 
         <Grid Grid.Row="2">
@@ -86,11 +64,13 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Go to a forum of the selected location"
-                                         KeyboardShortcutText="Enter"/>
+                                         KeyboardShortcutText="Enter"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
 
             <controls:Tip Grid.Column="1"
                           Header="Which forums can I comment on?"
-                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation."/>
+                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation. To comment on a forum select a location and then press Enter."/>
         </Grid>
     </Grid>
 </Page>

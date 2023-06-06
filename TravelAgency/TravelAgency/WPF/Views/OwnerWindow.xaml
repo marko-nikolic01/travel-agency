@@ -87,7 +87,8 @@
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
                                                            Text="Forum"
                                                            KeyboardShortcutText="Ctrl+5"
-                                                           Icon="../../Resources/Images/NavForum.png"/>
+                                                           Icon="../../Resources/Images/NavForum.png"
+                                                           Command="{Binding NavigateToRatingsPageCommand}"/>
             </StackPanel>
         </Grid>
 

@@ -72,6 +72,10 @@ namespace TravelAgency.WPF.Views
                     ratingsRadioButton.IsChecked = true;
                     ViewModel.NavigateToRatingsPageCommand.Execute(null);
                     break;
+                case "forum":
+                    forumRadioButton.IsChecked = true;
+                    ViewModel.NavigateToForumPageCommand.Execute(null);
+                    break;
                 default:
                     MessageBox.Show("Ne radi :(");
                     break;

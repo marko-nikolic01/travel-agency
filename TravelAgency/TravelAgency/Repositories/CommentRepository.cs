@@ -29,6 +29,11 @@ namespace TravelAgency.Repositories
             return comments;
         }
 
+        public List<Comment> GetByForum(Forum forum)
+        {
+            return comments.FindAll(c => c.Forum == forum);
+        }
+
         public void LinkForums(List<Forum> forums)
         {
             foreach (Comment comment in comments)

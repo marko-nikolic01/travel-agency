@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for OwnerForumView.xaml
+    /// Interaction logic for OwnerForumsForLocation.xaml
     /// </summary>
-    public partial class OwnerForumView : Page
+    public partial class OwnerForumsForLocation : Page
     {
-        public OwnerForumViewModel ViewModel { get; set; }
-
-        public OwnerForumView()
+        public OwnerForumsForLocation()
         {
             InitializeComponent();
-            ViewModel = new OwnerForumViewModel();
-            DataContext = ViewModel;
-
-            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

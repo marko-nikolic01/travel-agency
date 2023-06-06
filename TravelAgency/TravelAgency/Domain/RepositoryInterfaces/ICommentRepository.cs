@@ -12,6 +12,7 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<Comment> GetAll();
         public Comment Save(Comment comment);
         public int NextId();
+        public List<Comment> GetByForum(Forum forum);
         public void LinkUsers(List<User> users);
         public void LinkForums(List<Forum> forums);
     }

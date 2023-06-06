@@ -1,4 +1,5 @@
 ﻿using Syncfusion.Windows.PdfViewer;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Repositories;
@@ -161,5 +163,67 @@ namespace TravelAgency.Services
             return false;
         }
 
+        public List<ForumWithStatsDTO> GetForumsWithStatsByOwner(User owner)
+        {
+            var forums = GetForumsByOwner(owner);
+            var dtos = new List<ForumWithStatsDTO>();
+
+            foreach (var forum in forums)
+            {
+                ForumWithStatsDTO dto = new ForumWithStatsDTO(forum, GetNumberOfCommentsOnForum(forum), GetNumberOfAccommodationsOnLocationForOwner(owner, forum.Location));
+                dtos.Add(dto);
+            }
+
+            return dtos;
+        }
+
+        public List<Location> GetLocationsForForumsByOwner(User owner)
+        {
+
+        }
+
+        private bool LocationHasForum(Location location)
+        {
+            return GetNumberOfForumsForLocation(location) > 0;
+        }
+
+        private int GetNumberOfForumsForLocation(Location location)
+        {
+            return ForumRepository.GetByLocation(location).Count;
+        }
+
+        public List<Forum> GetForumsByOwner(User owner)
+        {
+            var forums = new List<Forum>();
+            foreach (var forum in ForumRepository.GetAll())
+            {
+                if (OwnerHasAccommodationOnLocation(owner, forum.Location))
+                {
+                    forums.Add(forum);
+                }
+            }
+
+            return forums;
+        }
+
+        public List<Comment> GetCommentsByForum(Forum forum)
+        {
+            return CommentRepository.GetByForum(forum);
+        }
+
+        private bool OwnerHasAccommodationOnLocation(User owner, Location location)
+        {
+            return GetNumberOfAccommodationsOnLocationForOwner(owner, location) > 0;
+        }
+
+        private int GetNumberOfAccommodationsOnLocationForOwner(User owner, Location location)
+        {
+            return AccommodationRepository.GetActiveByLocationAndOwner(location, owner).Count;
+        }
+
+        private int GetNumberOfCommentsOnForum(Forum forum)
+        {
+            return GetCommentsByForum(forum).Count;
+        }
     }
 }
