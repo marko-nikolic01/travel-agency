@@ -11,7 +11,9 @@
   <ItemGroup>
     <None Remove="Resources\Images\accept-circular-button-outline.png" />
     <None Remove="Resources\Images\belled.png" />
+    <None Remove="Resources\Images\commentOwner.png" />
     <None Remove="Resources\Images\cross-button.png" />
+    <None Remove="Resources\Images\Disliked.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\exclamation-mark.png" />
     <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
@@ -23,6 +25,7 @@
     <None Remove="Resources\Images\NavProfile.png" />
     <None Remove="Resources\Images\NavRatings.png" />
     <None Remove="Resources\Images\NavReservations.png" />
+    <None Remove="Resources\Images\NotDisliked.png" />
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
@@ -77,12 +80,21 @@
   <ItemGroup>
 	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
 	  <Resource Include="Resources\Images\belled.png" />
+	  <Resource Include="Resources\Images\commentOwner.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\cross-button.png" />
+	  <Resource Include="Resources\Images\Disliked.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\email.png" />
 	  <Resource Include="Resources\Images\exclamation-mark.png" />
 	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
 	  <Resource Include="Resources\Images\location.png" />
 	  <Resource Include="Resources\Images\maintenance.png" />
+	  <Resource Include="Resources\Images\NotDisliked.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />

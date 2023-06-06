@@ -5,11 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
       x:Name="root"
       d:DesignHeight="625" d:DesignWidth="840"
       Title="OwnerForumOverviewView"
       Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="invertedBooleanToVisibility"/>
+    </Page.Resources>
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
@@ -25,52 +31,85 @@
         <controls:PageHeader Grid.Row="0"
                              Text="{Binding PageHeader}"/>
 
-        <ListView Grid.Row="1"
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Comments"
+                       Style="{StaticResource h2}"
+                       Margin="0 0 0 10"/>
+
+            <ListView Grid.Row="1"
                   ItemsSource="{Binding Comments}"
                   HorizontalContentAlignment="Stretch">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="1"
-                            BorderBrush="Black"
-                            Padding="8">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1"
+                                BorderBrush="Black"
+                                Padding="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0"
+                                <Grid Grid.Row="0"
                                   Margin="0 0 0 10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0"
-                                           Text="{Binding Comment.User.Username}"
-                                           FontSize="18"
-                                           FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding Comment.User.Username}"
+                                               FontSize="18"
+                                               FontWeight="Bold"
+                                               Margin="0 0 10 0"/>
 
-                                <TextBlock Grid.Column="1"
-                                           Text="{Binding IsOwner}"/>
+                                    <Image Grid.Column="1"
+                                           Source="../../Resources/Images/commentOwner.png"
+                                           Visibility="{Binding IsOwner, Converter={StaticResource booleanToVisibility}}"
+                                           Height="22"
+                                           HorizontalAlignment="Left"/>
 
-                                <TextBlock Grid.Column="2"
-                                           Text="{Binding Disliked}"/>
 
-                                <TextBlock Grid.Column="3"
-                                           Text="{Binding DislikesCount}"/>
+                                    <Image Grid.Column="2"
+                                           Source="../../Resources/Images/NotDisliked.png"
+                                           Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
+                                           Height="22"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"/>
+
+
+                                    <Image Grid.Column="2"
+                                           Source="../../Resources/Images/Disliked.png"
+                                           Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
+                                           Height="23"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="3"
+                                               Text="{Binding DislikesCount}"
+                                               FontSize="16"
+                                               Margin="6 0 0 0"/>
+                                </Grid>
+
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding Comment.Text}"
+                                           FontSize="16"/>
                             </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
-                            <TextBlock Grid.Row="1"
-                                       Text="{Binding Comment.Text}"
-                                       FontSize="16"/>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        
 
         <Grid Grid.Row="2"
               Margin="0 20 0 0">
