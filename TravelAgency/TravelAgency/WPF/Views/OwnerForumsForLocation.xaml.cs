@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
@@ -20,9 +22,48 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerForumsForLocation : Page
     {
-        public OwnerForumsForLocation()
+        public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand NavigateToForumCommand { get; set; }
+
+        public OwnerForumsForLocationViewModel ViewModel { get; set; }
+
+        public OwnerForumsForLocation(OwnerForumsForLocationViewModel viewModel)
         {
+            NavigateBackCommand = new MyICommand(Execute_NavigateBack);
+            NavigateToForumCommand = new MyICommand(Execute_NavigateToForumCommand);
             InitializeComponent();
+            ViewModel = viewModel;
+            DataContext = ViewModel;
+
+            Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_NavigateBack()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerForumView.xaml", UriKind.Relative));
+        }
+
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateBack();
+        }
+
+        private void Execute_NavigateToForumCommand()
+        {
+            if (ViewModel.SelectedForum == null)
+            {
+                MessageBox.Show("Select a forum.");
+                return;
+            }
+
+            OwnerForumOverviewViewModel vm = new OwnerForumOverviewViewModel(ViewModel.SelectedForum.Forum, this);
+            OwnerForumOverviewView page = new OwnerForumOverviewView(vm);
+            this.NavigationService.Navigate(page);
+        }
+
+        private void NavigateToForumCommand_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToForumCommand();
         }
     }
 }

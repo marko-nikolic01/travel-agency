@@ -1,4 +1,4 @@
-﻿<Page x:Class="TravelAgency.WPF.Views.OwnerForumsForLocation"
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerForumOverviewView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,12 +8,11 @@
       mc:Ignorable="d" 
       x:Name="root"
       d:DesignHeight="625" d:DesignWidth="840"
-      Title="OwnerForumsForLocation"
+      Title="OwnerForumOverviewView"
       Style="{StaticResource pageStyle}">
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding NavigateToForumCommand, ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -27,43 +26,46 @@
                              Text="{Binding PageHeader}"/>
 
         <ListView Grid.Row="1"
-                  ItemsSource="{Binding Forums}"
-                  SelectedItem="{Binding SelectedForum}"
+                  ItemsSource="{Binding Comments}"
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1"
-                            BorderBrush="Black">
+                            BorderBrush="Black"
+                            Padding="8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0"
-                                       Text="{Binding Forum.Title}"/>
-
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                            <Grid Grid.Row="0"
+                                  Margin="0 0 0 10">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Row="0" Grid.Column="0"
-                                           Text="No. comments by owners:"/>
-                                <TextBlock Grid.Row="1" Grid.Column="0"
-                                           Text="No. comments by guests:"/>
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding Comment.User.Username}"
+                                           FontSize="18"
+                                           FontWeight="Bold"/>
 
-                                <TextBlock Grid.Row="0" Grid.Column="1"
-                                           Text="{Binding NumberOfOwnerComments}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1"
-                                           Text="{Binding NumberOfGuestComments}"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding IsOwner}"/>
+
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding Disliked}"/>
+
+                                <TextBlock Grid.Column="3"
+                                           Text="{Binding DislikesCount}"/>
                             </Grid>
+
+                            <TextBlock Grid.Row="1"
+                                       Text="{Binding Comment.Text}"
+                                       FontSize="16"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -71,8 +73,9 @@
         </ListView>
 
         <Grid Grid.Row="2"
-              Margin="0 20 0 0 ">
+              Margin="0 20 0 0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -84,14 +87,18 @@
                                          Margin="0 0 10 0"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
-                                         Text="Open the selected forum"
-                                         KeyboardShortcutText="Enter"
-                                         Click="NavigateToForumCommand_Click"
+                                         Text="Leave a comment"
+                                         KeyboardShortcutText="Ctrl+L"
                                          Margin="0 0 10 0"/>
 
-            <controls:Tip Grid.Column="2"
-                          Header="What can I do with forums?"
-                          TipText="You can select a forum and leave a helpful comment. You can also read comments of other people (guests or owners). If you find a comment not useful or incorrect you can report it."/>
+            <controls:ButtonWithShortcut Grid.Column="2"
+                                         Text="Dislike a comment"
+                                         KeyboardShortcutText="Ctrl+U"
+                                         Margin="0 0 10 0"/>
+
+            <controls:Tip Grid.Column="3"
+                          Header="What does the star symbol represent?"
+                          TipText="The star symbol represents that this forum has at least 10 comments by owners or 20 comments by guests and that that forum is considered to be helpful"/>
         </Grid>
     </Grid>
 </Page>
