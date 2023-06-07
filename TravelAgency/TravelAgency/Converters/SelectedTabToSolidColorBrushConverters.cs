@@ -99,4 +99,22 @@ namespace TravelAgency.Converters
             throw new NotImplementedException();
         }
     }
+
+    public class SelectedTabToSolidColorBrushConverter6 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string selectedTab = (string)value;
+            if (selectedTab == "UserProfile")
+            {
+                return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
+            }
+            return (SolidColorBrush)new BrushConverter().ConvertFrom("#cccccc");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

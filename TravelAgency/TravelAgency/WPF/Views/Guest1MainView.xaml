@@ -18,12 +18,21 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <converters:SelectedTabToSolidColorBrushConverter1 x:Key="SelectedTabToSolidColorBrushConverter1"/>
         <converters:SelectedTabToSolidColorBrushConverter2 x:Key="SelectedTabToSolidColorBrushConverter2"/>
         <converters:SelectedTabToSolidColorBrushConverter3 x:Key="SelectedTabToSolidColorBrushConverter3"/>
         <converters:SelectedTabToSolidColorBrushConverter4 x:Key="SelectedTabToSolidColorBrushConverter4"/>
         <converters:SelectedTabToSolidColorBrushConverter5 x:Key="SelectedTabToSolidColorBrushConverter5"/>
+        <converters:SelectedTabToSolidColorBrushConverter6 x:Key="SelectedTabToSolidColorBrushConverter6"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
     </Window.Resources>
     <Border BorderThickness="0, 1, 0, 0" BorderBrush="Black">
         <DockPanel>
@@ -54,13 +63,38 @@
                     <RowDefinition Height="10"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border VerticalAlignment="Top" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
-                    <Image Stretch="Fill" Source="../../Resources/Images/ProfilePicture.jpg"></Image>
+                    <Image Stretch="Fill" Source="../../Resources/Images/ProfilePicture.jpg" Cursor="Hand">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
                 </Border>
                 <WrapPanel Grid.Row="1" Grid.Column="2">
-                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Text="{Binding Guest.Username}"></TextBlock>
-                    <Image Grid.Column="2" Height="20" Source="../../Resources/Images/verify.png" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Text="{Binding Guest.Username}" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
                 </WrapPanel>
-                <TextBlock Grid.Row="2" Grid.Column="2" FontSize="13" Margin="5, 0, 0, 0">Gost</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="2" FontSize="13" Margin="5, 0, 0, 0" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    Gost
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
+                <WrapPanel Grid.Row="2" Grid.Column="2" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    Super-gost
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <Image  Source="../../Resources/Images/medal-ribbon.png" Cursor="Hand">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
+                </WrapPanel>
                 <Button x:Name="buttonHome" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
                     <Button.Content>
@@ -137,7 +171,8 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonUserAccount" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand">
+                <Button x:Name="buttonUserAccount" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter6}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter6}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                        Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -235,6 +270,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewModels:Guest1NotificationsViewModel}">
                         <views:Guest1NotificationsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1UserProfileViewModel}">
+                        <views:Guest1UserProfileView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

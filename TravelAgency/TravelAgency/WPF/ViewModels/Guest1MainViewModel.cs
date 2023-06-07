@@ -163,6 +163,10 @@ namespace TravelAgency.WPF.ViewModels
                     CurrentViewModel = new Guest1NotificationsViewModel(NavigationCommand, Guest);
                     SelectedTab = "Notifications";
                     break;
+                case "guest1UserProfileViewModel":
+                    CurrentViewModel = new Guest1UserProfileViewModel(NavigationCommand, Guest);
+                    SelectedTab = "UserProfile";
+                    break;
                 case "guest1AccommodationSearchViewModel":
                     _guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
                     CurrentViewModel = _guest1AccommodationSearchViewModel;
