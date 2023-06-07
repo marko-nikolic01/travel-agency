@@ -18,6 +18,7 @@ namespace TravelAgency.WPF.ViewModels
     public class Guest1MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private SuperGuestService _superGuestService;
+        private NotificationService _notificationService;
 
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
@@ -40,6 +41,7 @@ namespace TravelAgency.WPF.ViewModels
         private string _selectedTab;
         private string _currentDateTime;
         private DateTime _date;
+        private bool _hasNotifications;
 
         public ViewModelBase CurrentViewModel
         {
@@ -74,6 +76,11 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if (value != _selectedTab)
                 {
+                    if (_selectedTab == "Notifications")
+                    {
+                        HasNotifications = false;
+                        _notificationService.MarkAllAsSeen(_notificationService.GetNotificationsByUser(Guest));
+                    }
                     _selectedTab = value;
                     OnPropertyChanged();
                 }
@@ -93,12 +100,33 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
+        public bool HasNotifications
+        {
+            get => _hasNotifications;
+            set
+            {
+                if (value != _hasNotifications)
+                {
+                    _hasNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Guest1MainViewModel(User guest)
         {
             _superGuestService = new SuperGuestService();
+            _notificationService = new NotificationService();
 
             Guest = guest;
             _superGuestService.CheckSuperGuest(Guest);
+            foreach (Notification notification in _notificationService.GetNotificationsByUser(Guest))
+            {
+                if (!notification.Seen) 
+                {
+                    HasNotifications = true;
+                }
+            }
 
             NavigationCommand = new MyICommand<string>(OnNavigation);
             _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
@@ -130,6 +158,10 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1ForumsMenuViewModel":
                     CurrentViewModel = _guest1ForumsMenuViewModel;
                     SelectedTab = "Forums";
+                    break;
+                case "guest1NotificationsViewModel":
+                    CurrentViewModel = new Guest1NotificationsViewModel(NavigationCommand, Guest);
+                    SelectedTab = "Notifications";
                     break;
                 case "guest1AccommodationSearchViewModel":
                     _guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
