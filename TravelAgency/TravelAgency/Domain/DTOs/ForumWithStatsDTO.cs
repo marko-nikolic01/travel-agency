@@ -10,16 +10,16 @@ namespace TravelAgency.Domain.DTOs
     public class ForumWithStatsDTO
     {
         public Forum Forum { get; set; }
-        public int NumberOfComments { get; set; }
-        public int NumberOfAccommodations { get; set; }
+        public int NumberOfOwnerComments { get; set; }
+        public int NumberOfGuestComments { get; set; }
 
         public ForumWithStatsDTO() { }
 
-        public ForumWithStatsDTO(Forum forum, int numberOfComments, int numberOfAccommodations)
+        public ForumWithStatsDTO(Forum forum, int numberOfOwnerComments, int numberOfGuestComments)
         {
             Forum = forum;
-            NumberOfComments = numberOfComments;
-            NumberOfAccommodations = numberOfAccommodations;
+            NumberOfOwnerComments = numberOfOwnerComments;
+            NumberOfGuestComments = numberOfGuestComments;
         }
     }
 }

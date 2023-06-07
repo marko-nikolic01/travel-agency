@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -21,15 +22,35 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerForumView : Page
     {
+        public MyICommand NavigateToForumForLocationCommand { get; set; }
         public OwnerForumViewModel ViewModel { get; set; }
 
         public OwnerForumView()
         {
+            NavigateToForumForLocationCommand = new MyICommand(Execute_NavigateToForumForLocationCommand);
             InitializeComponent();
             ViewModel = new OwnerForumViewModel();
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void NavigateToForumsForLocation_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToForumForLocationCommand();
+        }
+
+        private void Execute_NavigateToForumForLocationCommand()
+        {
+            if (ViewModel.SelectedLocation == null)
+            {
+                MessageBox.Show("Select a location.");
+                return;
+            }
+
+            OwnerForumsForLocationViewModel vm = new OwnerForumsForLocationViewModel(ViewModel.SelectedLocation, this);
+            OwnerForumsForLocation page = new OwnerForumsForLocation(vm);
+            this.NavigationService.Navigate(page);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Windows.PdfViewer;
 using Syncfusion.Windows.Shared;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace TravelAgency.Services
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
         public IAccommodationReservationRepository AccommodationReservationRepository { get; set; }
+        public ICommentDislikeRepository CommentDislikeRepository { get; set; }
 
         public ForumService()
         {
@@ -32,6 +34,7 @@ namespace TravelAgency.Services
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             AccommodationReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
+            CommentDislikeRepository = Injector.Injector.CreateInstance<ICommentDislikeRepository>();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
@@ -42,6 +45,8 @@ namespace TravelAgency.Services
             ForumRepository.LinkComments(CommentRepository.GetAll());
             CommentRepository.LinkUsers(UserRepository.GetAll());
             CommentRepository.LinkForums(ForumRepository.GetAll());
+            CommentDislikeRepository.LinkUsers(UserRepository.GetAll());
+            CommentDislikeRepository.LinkComments(CommentRepository.GetAll());
         }
 
         public List<Forum> GetForums()
@@ -163,24 +168,64 @@ namespace TravelAgency.Services
             return false;
         }
 
-        public List<ForumWithStatsDTO> GetForumsWithStatsByOwner(User owner)
+        public List<ForumWithStatsDTO> GetForumsWithStatsForLocation(Location location)
         {
-            var forums = GetForumsByOwner(owner);
-            var dtos = new List<ForumWithStatsDTO>();
+            var forums = new List<ForumWithStatsDTO>();
 
-            foreach (var forum in forums)
+            foreach (var forum in GetForumsByLocation(location))
             {
-                ForumWithStatsDTO dto = new ForumWithStatsDTO(forum, GetNumberOfCommentsOnForum(forum), GetNumberOfAccommodationsOnLocationForOwner(owner, forum.Location));
-                dtos.Add(dto);
+                var dto = new ForumWithStatsDTO(forum, GetNumberOfOwnerComments(forum), GetNumberOfGuestComments(forum));
+                forums.Add(dto);
             }
 
-            return dtos;
+            return forums;
         }
 
-        /*public List<Location> GetLocationsForForumsByOwner(User owner)
+        private int GetNumberOfOwnerComments(Forum forum)
         {
+            int count = 0;
+            foreach (var comment in CommentRepository.GetByForum(forum))
+            {
+                if (comment.User.Role == Roles.Owner)
+                {
+                    count++;
+                }
+            }
 
-        }*/
+            return count;
+        }
+
+        private int GetNumberOfGuestComments(Forum forum)
+        {
+            int count = 0;
+            foreach (var comment in CommentRepository.GetByForum(forum))
+            {
+                if (comment.User.Role == Roles.Guest1)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public List<Location> GetLocationsForForumsByOwner(User owner)
+        {
+            LocationService locationService = new LocationService();
+
+            var locationsForOwner = locationService.GetLocationsByOwner(owner);
+            var locations = new List<Location>();
+
+            foreach (var location in locationsForOwner)
+            {
+                if (LocationHasForum(location))
+                {
+                    locations.Add(location);
+                }
+            }
+
+            return locations;
+        }
 
         private bool LocationHasForum(Location location)
         {
@@ -192,38 +237,51 @@ namespace TravelAgency.Services
             return ForumRepository.GetByLocation(location).Count;
         }
 
-        public List<Forum> GetForumsByOwner(User owner)
-        {
-            var forums = new List<Forum>();
-            foreach (var forum in ForumRepository.GetAll())
-            {
-                if (OwnerHasAccommodationOnLocation(owner, forum.Location))
-                {
-                    forums.Add(forum);
-                }
-            }
-
-            return forums;
-        }
-
-        public List<Comment> GetCommentsByForum(Forum forum)
-        {
-            return CommentRepository.GetByForum(forum);
-        }
-
-        private bool OwnerHasAccommodationOnLocation(User owner, Location location)
-        {
-            return GetNumberOfAccommodationsOnLocationForOwner(owner, location) > 0;
-        }
-
         private int GetNumberOfAccommodationsOnLocationForOwner(User owner, Location location)
         {
             return AccommodationRepository.GetActiveByLocationAndOwner(location, owner).Count;
         }
 
-        private int GetNumberOfCommentsOnForum(Forum forum)
+        public List<Forum> GetForumsByLocation(Location location)
         {
-            return GetCommentsByForum(forum).Count;
+            return ForumRepository.GetByLocation(location);
+        }
+
+        public List<CommentWithDataDTO> GetCommentsWithDataByForum(Forum forum, User user)
+        {
+            var forums = CommentRepository.GetByForum(forum);
+            var dtos = new List<CommentWithDataDTO>();
+
+            foreach (var comment in CommentRepository.GetByForum(forum))
+            {
+                var dto = new CommentWithDataDTO(comment, GetCommentDislikeCount(comment), IsCommentOfOwner(comment), OwnerDislikedComment(user, comment));
+                dtos.Add(dto);
+            }
+
+            return dtos;
+        }
+
+        private int GetCommentDislikeCount(Comment comment)
+        {
+            return CommentDislikeRepository.GetByComment(comment).Count;
+        }
+
+        private bool OwnerDislikedComment(User owner, Comment comment)
+        {
+            foreach (var commentDislike in CommentDislikeRepository.GetByComment(comment))
+            {
+                if (commentDislike.Owner == owner)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsCommentOfOwner(Comment comment)
+        {
+            return comment.User.Role == Roles.Owner;
         }
     }
 }
