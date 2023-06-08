@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -18,7 +19,7 @@ namespace TravelAgency.WPF.ViewModels
         private UserService userService;
         private ForumService forumService;
 
-        private Forum selectedForum;
+        public Forum SelectedForum { get; set; }
 
         public string PageHeader { get; set; }
 
@@ -26,19 +27,19 @@ namespace TravelAgency.WPF.ViewModels
 
         public ObservableCollection<CommentWithDataDTO> Comments { get; set; }
 
-        public OwnerForumOverviewViewModel(Forum selectedForum, Page backPage)
+        public OwnerForumOverviewViewModel(Forum selectedForum)
         {
             userService = new UserService();
             forumService = new ForumService();
 
             loggedInUser = userService.GetLoggedInUser();
 
-            this.selectedForum = selectedForum;
-            this.BackPage = backPage;
+            SelectedForum = selectedForum;
 
-            PageHeader = "Forums > " + selectedForum.Location.City + " > " + selectedForum.Title;
+            PageHeader = "Forum > " + selectedForum.Location.City + " > " + selectedForum.Title;
 
             Comments = new ObservableCollection<CommentWithDataDTO>(forumService.GetCommentsWithDataByForum(selectedForum, loggedInUser));
+            BackPage = new OwnerForumsForLocation(new OwnerForumsForLocationViewModel(selectedForum.Location));
         }
     }
 }

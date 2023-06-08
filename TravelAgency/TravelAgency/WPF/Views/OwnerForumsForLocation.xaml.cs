@@ -56,7 +56,7 @@ namespace TravelAgency.WPF.Views
                 return;
             }
 
-            OwnerForumOverviewViewModel vm = new OwnerForumOverviewViewModel(ViewModel.SelectedForum.Forum, this);
+            OwnerForumOverviewViewModel vm = new OwnerForumOverviewViewModel(ViewModel.SelectedForum.Forum);
             OwnerForumOverviewView page = new OwnerForumOverviewView(vm);
             this.NavigationService.Navigate(page);
         }

@@ -54,7 +54,7 @@ namespace TravelAgency.Services
             return ForumRepository.GetAll();
         }
 
-        public List<Forum> GetForumsByAdmin(User admin) 
+        public List<Forum> GetForumsByAdmin(User admin)
         {
             return ForumRepository.GetByAdmin(admin);
         }
@@ -122,7 +122,7 @@ namespace TravelAgency.Services
             {
                 comment.Forum = forum;
                 forum.Comments.Add(comment);
-                CountImportantComments(forum, comment); 
+                CountImportantComments(forum, comment);
                 CommentRepository.Save(comment);
                 ForumRepository.SaveAll();
             }
@@ -174,11 +174,20 @@ namespace TravelAgency.Services
 
             foreach (var forum in GetForumsByLocation(location))
             {
-                var dto = new ForumWithStatsDTO(forum, GetNumberOfOwnerComments(forum), GetNumberOfGuestComments(forum));
+                var dto = GetForumWithStats(forum);
                 forums.Add(dto);
             }
 
             return forums;
+        }
+
+        private ForumWithStatsDTO GetForumWithStats(Forum forum)
+        {
+            int numberOfOwnerComments = GetNumberOfOwnerComments(forum);
+            int numberOfGuestComments = GetNumberOfGuestComments(forum);
+            bool isForumVeryUseful = IsForumVeryUserful(numberOfGuestComments, numberOfOwnerComments);
+            var dto = new ForumWithStatsDTO(forum, numberOfOwnerComments, numberOfGuestComments, isForumVeryUseful);
+            return dto;
         }
 
         private int GetNumberOfOwnerComments(Forum forum)
@@ -282,6 +291,36 @@ namespace TravelAgency.Services
         private bool IsCommentOfOwner(Comment comment)
         {
             return comment.User.Role == Roles.Owner;
+        }
+
+        public void AddCommentToForum(string commentText, Forum forum, User user)
+        {
+            Comment newComment = new Comment();
+            newComment.Text = commentText;
+            newComment.OwnsAccommodationOnLocation = true;
+            AddCommentToForum(newComment, forum, user);
+        }
+
+        public void AddCommentToForum(Comment comment, Forum forum, User user)
+        {
+            comment.Forum = forum;
+            comment.User = user;
+            AddCommentToForum(comment);
+        }
+
+        public void AddCommentToForum(Comment comment)
+        {
+            CommentRepository.Save(comment);
+        }
+
+        public bool IsForumVeryUserful(ForumWithStatsDTO forum)
+        {
+            return IsForumVeryUserful(forum.NumberOfGuestComments, forum.NumberOfOwnerComments);
+        }
+
+        public bool IsForumVeryUserful(int numberOfGuestComments, int numberOfOwnerComments)
+        {
+            return numberOfGuestComments >= 20 || numberOfOwnerComments >= 10;
         }
     }
 }

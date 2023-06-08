@@ -63,6 +63,7 @@
     <None Remove="Resources\Images\trash.png" />
     <None Remove="Resources\Images\unlock.png" />
     <None Remove="Resources\Images\user.png" />
+    <None Remove="Resources\Images\UserfulForum.png" />
     <None Remove="Resources\Images\verify.png" />
   </ItemGroup>
 
@@ -179,6 +180,9 @@
       <Resource Include="Resources\Images\Picture8.PNG" />
       <Resource Include="Resources\Images\leftpointing.png" />
       <Resource Include="Resources\Images\rightpointing.png" />
+      <Resource Include="Resources\Images\UserfulForum.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
       <Resource Include="Resources\Images\verify.png" />
   </ItemGroup>
 

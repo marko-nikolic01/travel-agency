@@ -48,7 +48,7 @@ namespace TravelAgency.WPF.Views
                 return;
             }
 
-            OwnerForumsForLocationViewModel vm = new OwnerForumsForLocationViewModel(ViewModel.SelectedLocation, this);
+            OwnerForumsForLocationViewModel vm = new OwnerForumsForLocationViewModel(ViewModel.SelectedLocation);
             OwnerForumsForLocation page = new OwnerForumsForLocation(vm);
             this.NavigationService.Navigate(page);
         }

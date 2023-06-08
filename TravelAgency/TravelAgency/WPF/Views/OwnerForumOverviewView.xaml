@@ -19,6 +19,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -43,8 +44,9 @@
                        Margin="0 0 0 10"/>
 
             <ListView Grid.Row="1"
-                  ItemsSource="{Binding Comments}"
-                  HorizontalContentAlignment="Stretch">
+                      ItemsSource="{Binding Comments}"
+                      HorizontalContentAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1"
@@ -101,7 +103,8 @@
 
                                 <TextBlock Grid.Row="1"
                                            Text="{Binding Comment.Text}"
-                                           FontSize="16"/>
+                                           FontSize="16"
+                                           TextWrapping="Wrap"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -126,18 +129,19 @@
                                          Margin="0 0 10 0"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
-                                         Text="Leave a comment"
+                                         Text="Add comment"
                                          KeyboardShortcutText="Ctrl+L"
-                                         Margin="0 0 10 0"/>
+                                         Margin="0 0 10 0"
+                                         Click="NavigateToAddCommentCommand_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
-                                         Text="Dislike a comment"
+                                         Text="Dislike comment"
                                          KeyboardShortcutText="Ctrl+U"
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="3"
                           Header="What does the star symbol represent?"
-                          TipText="The star symbol represents that this forum has at least 10 comments by owners or 20 comments by guests and that that forum is considered to be helpful"/>
+                          TipText="The star symbol represents that this forum has at least 10 comments by owners or 20 comments by guests and that that forum is considered to be helpful."/>
         </Grid>
     </Grid>
 </Page>

@@ -18,8 +18,6 @@ namespace TravelAgency.WPF.ViewModels
         private UserService userService;
         private ForumService forumService;
 
-        public OwnerForumView BackPage { get; set; }
-
         private Location selectedLocation;
 
         public string PageHeader { get; set; }
@@ -27,14 +25,12 @@ namespace TravelAgency.WPF.ViewModels
         public ObservableCollection<ForumWithStatsDTO> Forums { get; set; }
         public ForumWithStatsDTO SelectedForum { get; set; }
 
-        public OwnerForumsForLocationViewModel(Location selectedLocation, OwnerForumView backPage)
+        public OwnerForumsForLocationViewModel(Location selectedLocation)
         {
             userService = new UserService();
             forumService = new ForumService();
 
             this.selectedLocation = selectedLocation;
-
-            BackPage = backPage;
 
             loggedInUser = userService.GetLoggedInUser();
             Forums = new ObservableCollection<ForumWithStatsDTO>(forumService.GetForumsWithStatsForLocation(this.selectedLocation));

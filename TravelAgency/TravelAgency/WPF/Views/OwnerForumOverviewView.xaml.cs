@@ -23,17 +23,31 @@ namespace TravelAgency.WPF.Views
     public partial class OwnerForumOverviewView : Page
     {
         public MyICommand NavigateBackCommand { get; set; }
+        public MyICommand NavigateToAddCommentCommand { get; set; }
 
         public OwnerForumOverviewViewModel ViewModel { get; set; }
 
         public OwnerForumOverviewView(OwnerForumOverviewViewModel viewModel)
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
+            NavigateToAddCommentCommand = new MyICommand(Execute_NavigateToAddCommentCommand);
             InitializeComponent();
             ViewModel = viewModel;
             DataContext = ViewModel;
             
             Loaded += (s, e) => Keyboard.Focus(this);
+        }
+
+        private void Execute_NavigateToAddCommentCommand()
+        {
+            OwnerAddCommentViewModel vm = new OwnerAddCommentViewModel(ViewModel.SelectedForum, this, this.NavigationService);
+            OwnerAddCommentView page = new OwnerAddCommentView(vm);
+            this.NavigationService.Navigate(page);
+        }
+
+        private void NavigateToAddCommentCommand_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToAddCommentCommand();
         }
 
         private void Execute_NavigateBackCommand()
