@@ -20,6 +20,7 @@
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
         <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
+        <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding DislikeCommentCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -45,6 +46,7 @@
 
             <ListView Grid.Row="1"
                       ItemsSource="{Binding Comments}"
+                      SelectedItem="{Binding SelectedComment}"
                       HorizontalContentAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
@@ -65,6 +67,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
@@ -81,6 +84,15 @@
 
 
                                     <Image Grid.Column="2"
+                                           Source="../../Resources/Images/GuestDidntVisit.png"
+                                           Visibility="{Binding GuestVisited, Converter={StaticResource invertedBooleanToVisibility}}"
+                                           Height="22"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           Margin="0 0 10 0"/>
+
+
+                                    <Image Grid.Column="3"
                                            Source="../../Resources/Images/NotDisliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
                                            Height="22"
@@ -88,14 +100,14 @@
                                            VerticalAlignment="Center"/>
 
 
-                                    <Image Grid.Column="2"
+                                    <Image Grid.Column="3"
                                            Source="../../Resources/Images/Disliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
                                            Height="23"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"/>
 
-                                    <TextBlock Grid.Column="3"
+                                    <TextBlock Grid.Column="4"
                                                Text="{Binding DislikesCount}"
                                                FontSize="16"
                                                Margin="6 0 0 0"/>
@@ -111,8 +123,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-
-        
 
         <Grid Grid.Row="2"
               Margin="0 20 0 0">
@@ -137,6 +147,7 @@
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Dislike comment"
                                          KeyboardShortcutText="Ctrl+U"
+                                         Click="DislikeComment_Click"
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="3"

@@ -59,5 +59,10 @@ namespace TravelAgency.WPF.Views
         {
             Execute_NavigateBackCommand();
         }
+
+        private void DislikeComment_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DislikeCommentCommand.Execute();
+        }
     }
 }

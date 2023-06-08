@@ -246,28 +246,32 @@ namespace TravelAgency.Services
             return ForumRepository.GetByLocation(location).Count;
         }
 
-        private int GetNumberOfAccommodationsOnLocationForOwner(User owner, Location location)
-        {
-            return AccommodationRepository.GetActiveByLocationAndOwner(location, owner).Count;
-        }
-
         public List<Forum> GetForumsByLocation(Location location)
         {
             return ForumRepository.GetByLocation(location);
         }
 
-        public List<CommentWithDataDTO> GetCommentsWithDataByForum(Forum forum, User user)
+        public List<CommentWithDataDTO> GetCommentsWithDataByForum(Forum forum, User owner)
         {
-            var forums = CommentRepository.GetByForum(forum);
             var dtos = new List<CommentWithDataDTO>();
 
             foreach (var comment in CommentRepository.GetByForum(forum))
             {
-                var dto = new CommentWithDataDTO(comment, GetCommentDislikeCount(comment), IsCommentOfOwner(comment), OwnerDislikedComment(user, comment));
+                var dto = GetCommentWithDataByForum(comment, comment.User, forum.Location, owner);
                 dtos.Add(dto);
             }
 
             return dtos;
+        }
+
+        public CommentWithDataDTO GetCommentWithDataByForum(Comment comment, User user, Location location, User owner)
+        {
+            int commentDislikeCount = GetCommentDislikeCount(comment);
+            bool isCommentOfOwner = IsCommentOfOwner(comment);
+            bool ownerDislikedComment = OwnerDislikedComment(owner, comment);
+            bool guestVisited = (user.Role == Roles.Guest1) ? DidUserVisitLocation(user, location) : true;
+            var dto = new CommentWithDataDTO(comment, commentDislikeCount, isCommentOfOwner, ownerDislikedComment, guestVisited);
+            return dto;
         }
 
         private int GetCommentDislikeCount(Comment comment)
@@ -275,7 +279,7 @@ namespace TravelAgency.Services
             return CommentDislikeRepository.GetByComment(comment).Count;
         }
 
-        private bool OwnerDislikedComment(User owner, Comment comment)
+        public bool OwnerDislikedComment(User owner, Comment comment)
         {
             foreach (var commentDislike in CommentDislikeRepository.GetByComment(comment))
             {
@@ -321,6 +325,19 @@ namespace TravelAgency.Services
         public bool IsForumVeryUserful(int numberOfGuestComments, int numberOfOwnerComments)
         {
             return numberOfGuestComments >= 20 || numberOfOwnerComments >= 10;
+        }
+
+        public void DislikeComment(Comment comment, User user)
+        {
+            CommentDislike commentDislike = new CommentDislike();
+            commentDislike.Comment = comment;
+            commentDislike.Owner = user;
+            CommentDislikeRepository.Save(commentDislike);
+        }
+
+        public bool CanOwnerDislikeComment(User owner, Comment comment)
+        {
+            return !OwnerDislikedComment(owner, comment) && !DidUserVisitLocation(comment.User, comment.Forum.Location) && !IsCommentOfOwner(comment);
         }
     }
 }
