@@ -218,12 +218,23 @@ namespace TravelAgency.Services
             return count;
         }
 
-        /*public List<Location> GetLocationsForForumsByOwner(User owner)
+        public List<Location> GetLocationsForForumsByOwner(User owner)
         {
             LocationService locationService = new LocationService();
 
+            var locationsForOwner = locationService.GetLocationsByOwner(owner);
+            var locations = new List<Location>();
 
-        }*/
+            foreach (var location in locationsForOwner)
+            {
+                if (LocationHasForum(location))
+                {
+                    locations.Add(location);
+                }
+            }
+
+            return locations;
+        }
 
         private bool LocationHasForum(Location location)
         {
