@@ -4,35 +4,38 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Navigation;
 using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
-using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class OwnerForumViewModel : ViewModelBase
+    public class OwnerForumsForLocationViewModel : ViewModelBase
     {
-
         private User loggedInUser;
 
         private UserService userService;
         private ForumService forumService;
 
-        public List<Location> Locations { get; set; }
-        public Location SelectedLocation { get; set; }
+        private Location selectedLocation;
 
-        public OwnerForumViewModel()
+        public string PageHeader { get; set; }
+
+        public ObservableCollection<ForumWithStatsDTO> Forums { get; set; }
+        public ForumWithStatsDTO SelectedForum { get; set; }
+
+        public OwnerForumsForLocationViewModel(Location selectedLocation)
         {
             userService = new UserService();
             forumService = new ForumService();
 
-            loggedInUser = userService.GetLoggedInUser();
+            this.selectedLocation = selectedLocation;
 
-            Locations = new List<Location>(forumService.GetLocationsForForumsByOwner(loggedInUser));
+            loggedInUser = userService.GetLoggedInUser();
+            Forums = new ObservableCollection<ForumWithStatsDTO>(forumService.GetForumsWithStatsForLocation(this.selectedLocation));
+
+            PageHeader = "Forum > " + this.selectedLocation.City;
         }
     }
 }

@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
+      x:Name="root"
       d:DesignHeight="625" d:DesignWidth="840"
       Title="OwnerForumView"
       Style="{StaticResource pageStyle}">
@@ -20,6 +21,10 @@
             <Setter Property="FontSize" Value="16"/>
         </Style>
     </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -42,7 +47,8 @@
                        Style="{StaticResource h2}"/>
 
             <ListBox Grid.Row="1"
-                     ItemsSource="{Binding Locations}">
+                     ItemsSource="{Binding Locations}"
+                     SelectedItem="{Binding SelectedLocation}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -56,7 +62,8 @@
             </ListBox>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2"
+              Margin="0 20 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -65,12 +72,14 @@
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Go to a forum of the selected location"
                                          KeyboardShortcutText="Enter"
+                                         Click="NavigateToForumsForLocation_Click"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"/>
 
             <controls:Tip Grid.Column="1"
                           Header="Which forums can I comment on?"
-                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation. To comment on a forum select a location and then press Enter."/>
+                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation. To comment on a forum select a location and then press Enter."
+                          Margin="15 0 0 0"/>
         </Grid>
     </Grid>
 </Page>

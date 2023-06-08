@@ -10,8 +10,8 @@
              Focusable="False">
     <Grid>
         <Button Command="{Binding Command, ElementName=root}"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0"
                 Click="Button_Click"

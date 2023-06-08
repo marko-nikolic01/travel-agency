@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Windows.PdfViewer;
 using Syncfusion.Windows.Shared;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace TravelAgency.Services
         public IUserRepository UserRepository { get; set; }
         public IAccommodationRepository AccommodationRepository { get; set; }
         public IAccommodationReservationRepository AccommodationReservationRepository { get; set; }
+        public ICommentDislikeRepository CommentDislikeRepository { get; set; }
 
         public ForumService()
         {
@@ -32,6 +34,7 @@ namespace TravelAgency.Services
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             AccommodationReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
+            CommentDislikeRepository = Injector.Injector.CreateInstance<ICommentDislikeRepository>();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
@@ -42,6 +45,8 @@ namespace TravelAgency.Services
             ForumRepository.LinkComments(CommentRepository.GetAll());
             CommentRepository.LinkUsers(UserRepository.GetAll());
             CommentRepository.LinkForums(ForumRepository.GetAll());
+            CommentDislikeRepository.LinkUsers(UserRepository.GetAll());
+            CommentDislikeRepository.LinkComments(CommentRepository.GetAll());
         }
 
         public List<Forum> GetForums()
@@ -49,7 +54,7 @@ namespace TravelAgency.Services
             return ForumRepository.GetAll();
         }
 
-        public List<Forum> GetForumsByAdmin(User admin) 
+        public List<Forum> GetForumsByAdmin(User admin)
         {
             return ForumRepository.GetByAdmin(admin);
         }
@@ -117,7 +122,7 @@ namespace TravelAgency.Services
             {
                 comment.Forum = forum;
                 forum.Comments.Add(comment);
-                CountImportantComments(forum, comment); 
+                CountImportantComments(forum, comment);
                 CommentRepository.Save(comment);
                 ForumRepository.SaveAll();
             }
@@ -163,22 +168,60 @@ namespace TravelAgency.Services
             return false;
         }
 
-        public List<ForumWithStatsDTO> GetForumsWithStatsByOwner(User owner)
+        public List<ForumWithStatsDTO> GetForumsWithStatsForLocation(Location location)
         {
-            var forums = GetForumsByOwner(owner);
-            var dtos = new List<ForumWithStatsDTO>();
+            var forums = new List<ForumWithStatsDTO>();
 
-            foreach (var forum in forums)
+            foreach (var forum in GetForumsByLocation(location))
             {
-                ForumWithStatsDTO dto = new ForumWithStatsDTO(forum, GetNumberOfCommentsOnForum(forum), GetNumberOfAccommodationsOnLocationForOwner(owner, forum.Location));
-                dtos.Add(dto);
+                var dto = GetForumWithStats(forum);
+                forums.Add(dto);
             }
 
-            return dtos;
+            return forums;
+        }
+
+        private ForumWithStatsDTO GetForumWithStats(Forum forum)
+        {
+            int numberOfOwnerComments = GetNumberOfOwnerComments(forum);
+            int numberOfGuestComments = GetNumberOfGuestComments(forum);
+            bool isForumVeryUseful = IsForumVeryUserful(numberOfGuestComments, numberOfOwnerComments);
+            var dto = new ForumWithStatsDTO(forum, numberOfOwnerComments, numberOfGuestComments, isForumVeryUseful);
+            return dto;
+        }
+
+        private int GetNumberOfOwnerComments(Forum forum)
+        {
+            int count = 0;
+            foreach (var comment in CommentRepository.GetByForum(forum))
+            {
+                if (comment.User.Role == Roles.Owner)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private int GetNumberOfGuestComments(Forum forum)
+        {
+            int count = 0;
+            foreach (var comment in CommentRepository.GetByForum(forum))
+            {
+                if (comment.User.Role == Roles.Guest1)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         /*public List<Location> GetLocationsForForumsByOwner(User owner)
         {
+            LocationService locationService = new LocationService();
+
 
         }*/
 
@@ -192,38 +235,98 @@ namespace TravelAgency.Services
             return ForumRepository.GetByLocation(location).Count;
         }
 
-        public List<Forum> GetForumsByOwner(User owner)
+        public List<Forum> GetForumsByLocation(Location location)
         {
-            var forums = new List<Forum>();
-            foreach (var forum in ForumRepository.GetAll())
+            return ForumRepository.GetByLocation(location);
+        }
+
+        public List<CommentWithDataDTO> GetCommentsWithDataByForum(Forum forum, User owner)
+        {
+            var dtos = new List<CommentWithDataDTO>();
+
+            foreach (var comment in CommentRepository.GetByForum(forum))
             {
-                if (OwnerHasAccommodationOnLocation(owner, forum.Location))
+                var dto = GetCommentWithDataByForum(comment, comment.User, forum.Location, owner);
+                dtos.Add(dto);
+            }
+
+            return dtos;
+        }
+
+        public CommentWithDataDTO GetCommentWithDataByForum(Comment comment, User user, Location location, User owner)
+        {
+            int commentDislikeCount = GetCommentDislikeCount(comment);
+            bool isCommentOfOwner = IsCommentOfOwner(comment);
+            bool ownerDislikedComment = OwnerDislikedComment(owner, comment);
+            bool guestVisited = (user.Role == Roles.Guest1) ? DidUserVisitLocation(user, location) : true;
+            var dto = new CommentWithDataDTO(comment, commentDislikeCount, isCommentOfOwner, ownerDislikedComment, guestVisited);
+            return dto;
+        }
+
+        private int GetCommentDislikeCount(Comment comment)
+        {
+            return CommentDislikeRepository.GetByComment(comment).Count;
+        }
+
+        public bool OwnerDislikedComment(User owner, Comment comment)
+        {
+            foreach (var commentDislike in CommentDislikeRepository.GetByComment(comment))
+            {
+                if (commentDislike.Owner == owner)
                 {
-                    forums.Add(forum);
+                    return true;
                 }
             }
 
-            return forums;
+            return false;
         }
 
-        public List<Comment> GetCommentsByForum(Forum forum)
+        private bool IsCommentOfOwner(Comment comment)
         {
-            return CommentRepository.GetByForum(forum);
+            return comment.User.Role == Roles.Owner;
         }
 
-        private bool OwnerHasAccommodationOnLocation(User owner, Location location)
+        public void AddCommentToForum(string commentText, Forum forum, User user)
         {
-            return GetNumberOfAccommodationsOnLocationForOwner(owner, location) > 0;
+            Comment newComment = new Comment();
+            newComment.Text = commentText;
+            newComment.OwnsAccommodationOnLocation = true;
+            AddCommentToForum(newComment, forum, user);
         }
 
-        private int GetNumberOfAccommodationsOnLocationForOwner(User owner, Location location)
+        public void AddCommentToForum(Comment comment, Forum forum, User user)
         {
-            return AccommodationRepository.GetActiveByLocationAndOwner(location, owner).Count;
+            comment.Forum = forum;
+            comment.User = user;
+            AddCommentToForum(comment);
         }
 
-        private int GetNumberOfCommentsOnForum(Forum forum)
+        public void AddCommentToForum(Comment comment)
         {
-            return GetCommentsByForum(forum).Count;
+            CommentRepository.Save(comment);
+        }
+
+        public bool IsForumVeryUserful(ForumWithStatsDTO forum)
+        {
+            return IsForumVeryUserful(forum.NumberOfGuestComments, forum.NumberOfOwnerComments);
+        }
+
+        public bool IsForumVeryUserful(int numberOfGuestComments, int numberOfOwnerComments)
+        {
+            return numberOfGuestComments >= 20 || numberOfOwnerComments >= 10;
+        }
+
+        public void DislikeComment(Comment comment, User user)
+        {
+            CommentDislike commentDislike = new CommentDislike();
+            commentDislike.Comment = comment;
+            commentDislike.Owner = user;
+            CommentDislikeRepository.Save(commentDislike);
+        }
+
+        public bool CanOwnerDislikeComment(User owner, Comment comment)
+        {
+            return !OwnerDislikedComment(owner, comment) && !DidUserVisitLocation(comment.User, comment.Forum.Location) && !IsCommentOfOwner(comment);
         }
     }
 }

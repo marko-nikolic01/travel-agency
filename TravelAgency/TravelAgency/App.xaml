@@ -25,6 +25,11 @@
                 <Setter Property="KeyboardShortcutText" Value="Ctrl+Shift+Backspace"/>
             </Style>
 
+            <Style x:Key="h2" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="Margin" Value="0 0 0 5"/>
+            </Style>
+
             <Style x:Key="formTextBlock" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Margin" Value="0 0 30 5"/>
