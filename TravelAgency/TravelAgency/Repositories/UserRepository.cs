@@ -118,5 +118,12 @@ namespace TravelAgency.Repositories
             User user = _users.Find(u => u.Id == userId);
             return user.Password == Password;
         }
+        public void UpdateSuperGuideStatus(int userId, bool status, string language)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.IsSuperGuide = status;
+            oldUser.Language = language;
+            _serializer.ToCSV(FilePath, _users);
+        }
     }
 }

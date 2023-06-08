@@ -118,8 +118,8 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Margin="15 -5 0 5" Content="*Enter password to enable resignation*" Grid.ColumnSpan="2"></Label>
-                <PasswordBox Margin="20 0 20 5" FontSize="17" Grid.Row="1"></PasswordBox>
-                <Button Grid.Column="1" Grid.Row="1" Margin="20 0 20 5" FontSize="17">
+                <TextBox Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20 0 20 5" FontSize="17" Grid.Row="1"></TextBox>
+                <Button Command="{Binding Path= ResignCommand}" IsEnabled="{Binding Path=IsPasswordCorrect}" Grid.Column="1" Grid.Row="1" Margin="20 0 20 5" FontSize="17">
                     <Button.Content>
                         <DockPanel>
                             <Image Source="/Resources/Images/danger.png" DockPanel.Dock="Left" Height="17" Width="17"></Image>
