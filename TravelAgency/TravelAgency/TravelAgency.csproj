@@ -17,6 +17,7 @@
     <None Remove="Resources\Images\Disliked.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\exclamation-mark.png" />
+    <None Remove="Resources\Images\file.png" />
     <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
     <None Remove="Resources\Images\location.png" />
     <None Remove="Resources\Images\maintenance.png" />
@@ -73,9 +74,13 @@
 
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 
+    <PackageReference Include="PdfSharp" Version="1.50.5147" />
+
     <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.5" />
 
     <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="21.2.5" />
+
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,6 +96,7 @@
 	  </Resource>
 	  <Resource Include="Resources\Images\email.png" />
 	  <Resource Include="Resources\Images\exclamation-mark.png" />
+	  <Resource Include="Resources\Images\file.png" />
 	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
 	  <Resource Include="Resources\Images\location.png" />
 	  <Resource Include="Resources\Images\maintenance.png" />
