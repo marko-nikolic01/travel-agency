@@ -60,7 +60,7 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd-MM-yyyy HH:mm}" Header="Date" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding DateTime, StringFormat=dd/MM/yyyy HH:mm}" Header="Date" Width="*"></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Cancel?">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

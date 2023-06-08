@@ -10,7 +10,7 @@
     <Page.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="17"></Setter>
-            <Setter Property="Margin" Value="20 0 0 0"></Setter>
+            <Setter Property="Margin" Value="10 0 0 0"></Setter>
             <Setter Property="FontWeight" Value="DemiBold"></Setter>
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
         </Style>
@@ -63,7 +63,7 @@
         </Grid.ColumnDefinitions>
         <GroupBox BorderThickness="3" BorderBrush="#0e1d32" Margin="5 0 5 5" Grid.Row="2" Grid.ColumnSpan="6" Grid.RowSpan="7">
             <GroupBox.Header>
-                <Label Foreground="#0e1d32" FontStyle="Italic" Content="Tour info"></Label>
+                <Label Margin="0" Foreground="#0e1d32" FontStyle="Italic" Content="Tour info"></Label>
             </GroupBox.Header>
             <GroupBox.Content>
                 <Grid>
@@ -110,7 +110,7 @@
         <TextBlock Grid.Row="12" Grid.Column="4" HorizontalAlignment="Right" Text="{Binding Path=Guests18to50, Mode=OneWay}" Margin="0 0 5 0"></TextBlock>
         <Label Grid.Row="13" Grid.Column="3" HorizontalAlignment="Right" Content="Above 50:" Grid.ColumnSpan="2"></Label>
         <TextBlock Grid.Row="14" Grid.Column="4" HorizontalAlignment="Right"  Text="{Binding Path=GestsAbove50, Mode=OneWay}" Margin="0 0 5 0"></TextBlock>
-        <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" Content="Statistical data about guests" FontStyle="Italic" FontWeight="Light" Margin="5 -5 0 0"></Label>
+        <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" Content="Statistical data about guests" FontStyle="Italic" Margin="5 -5 0 0"></Label>
         <lvc:CartesianChart Foreground="#FFFFFF" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="5" Series="{Binding SeriesCollectionAges}" Margin="20 0 0 0">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Age groups" Labels="under 18,18 to 50 ,above 50" >
@@ -121,9 +121,9 @@
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
         <Label Grid.Row="15" Content="Used voucher:" Grid.ColumnSpan="2"></Label>
-        <TextBlock Grid.Row="16" Margin="25 0 0 0" Grid.ColumnSpan="2" Text="{Binding Path=GuestsUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
+        <TextBlock Grid.Row="16" Margin="15 0 0 0" Grid.ColumnSpan="2" Text="{Binding Path=GuestsUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
         <Label Grid.Row="17" Content="Did not use:" Grid.ColumnSpan="2"></Label>
-        <TextBlock Grid.Row="18" Margin="25 0 0 0"  Text="{Binding Path=GuestsNotUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
+        <TextBlock Grid.Row="18" Margin="15 0 0 0"  Text="{Binding Path=GuestsNotUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
         <lvc:PieChart Foreground="#FFFFFF" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="4" LegendLocation="Bottom" Series="{Binding SeriesCollectionVouchers}"></lvc:PieChart>
 
         <Button Grid.Column="1" Grid.Row="20" Grid.ColumnSpan="3" Margin="20 5 5 0" FontSize="17">

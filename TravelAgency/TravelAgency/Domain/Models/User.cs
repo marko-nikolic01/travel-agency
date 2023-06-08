@@ -34,6 +34,10 @@ namespace TravelAgency.Domain.Models
         public SuperGuestTitle SuperGuestTitle { get; set; }
         public Roles Role { get; set; }
         public DateOnly BirthDay { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public bool IsSuperGuide { get; set; }
+        public string Language { get; set; }
         public User()
         {
             Id = -1;
@@ -42,6 +46,10 @@ namespace TravelAgency.Domain.Models
             IsSuperOwner = false;
             IsSuperGuest = false;
             SuperGuestTitle = null;
+            Name = Username;
+            Gender = "Male";
+            IsSuperGuide = false;
+            Language = "";
         }
 
         public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
@@ -52,12 +60,16 @@ namespace TravelAgency.Domain.Models
             IsSuperOwner = isSuperOwner;
             BirthDay = birthDay;
             SuperGuestTitle = null;
+            Name = username;
+            Gender = "Male";
+            IsSuperGuide = false;
+            Language = "";
         }
 
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy") };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy"), Name, Gender, IsSuperGuide.ToString(), Language };
             return csvValues;
         }
 
@@ -69,6 +81,10 @@ namespace TravelAgency.Domain.Models
             Role = (Roles)Convert.ToInt32(values[3]);
             IsSuperOwner = Convert.ToBoolean(Convert.ToInt32(values[4]));
             BirthDay = DateOnly.ParseExact(values[5], "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            Name = values[6];
+            Gender = values[7];
+            IsSuperGuide = Convert.ToBoolean(values[8]);
+            Language = values[9];
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
