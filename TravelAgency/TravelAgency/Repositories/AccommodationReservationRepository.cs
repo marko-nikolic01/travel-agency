@@ -75,6 +75,19 @@ namespace TravelAgency.Repositories
             return reservations;
         }
 
+        public List<AccommodationReservation> GetAllCanceledByGuest(User guest)
+        {
+            List<AccommodationReservation> reservations = new List<AccommodationReservation>();
+            foreach (AccommodationReservation reservation in _accommodationReservations)
+            {
+                if (reservation.Guest.Id == guest.Id && reservation.Canceled)
+                {
+                    reservations.Add(reservation);
+                }
+            }
+            return reservations;
+        }
+
         public int NextId()
         {
             if (_accommodationReservations.Count < 1)

@@ -1,10 +1,14 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -17,10 +21,15 @@ namespace TravelAgency.WPF.ViewModels
 {
     public class Guest1MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private CancellationTokenSource _canceller;
+
+
         private SuperGuestService _superGuestService;
+        private NotificationService _notificationService;
 
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
+        public MyICommand StopCommand { get; private set; }
 
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
         private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
@@ -40,6 +49,7 @@ namespace TravelAgency.WPF.ViewModels
         private string _selectedTab;
         private string _currentDateTime;
         private DateTime _date;
+        private bool _hasNotifications;
 
         public ViewModelBase CurrentViewModel
         {
@@ -74,6 +84,11 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if (value != _selectedTab)
                 {
+                    if (_selectedTab == "Notifications")
+                    {
+                        HasNotifications = false;
+                        _notificationService.MarkAllAsSeen(_notificationService.GetNotificationsByUser(Guest));
+                    }
                     _selectedTab = value;
                     OnPropertyChanged();
                 }
@@ -93,14 +108,36 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
+        public bool HasNotifications
+        {
+            get => _hasNotifications;
+            set
+            {
+                if (value != _hasNotifications)
+                {
+                    _hasNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Guest1MainViewModel(User guest)
         {
             _superGuestService = new SuperGuestService();
+            _notificationService = new NotificationService();
 
             Guest = guest;
             _superGuestService.CheckSuperGuest(Guest);
+            foreach (Notification notification in _notificationService.GetNotificationsByUser(Guest))
+            {
+                if (!notification.Seen) 
+                {
+                    HasNotifications = true;
+                }
+            }
 
             NavigationCommand = new MyICommand<string>(OnNavigation);
+            StopCommand = new MyICommand(OnStop);
             _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
             _guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
             _guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
@@ -111,7 +148,12 @@ namespace TravelAgency.WPF.ViewModels
             StartTimer();
         }
 
-        public void OnNavigation(string destination)
+        private void OnStop()
+        {
+            _canceller.Cancel();
+        }
+
+        public /*async*/ void OnNavigation(string destination)
         {
             switch (destination)
             {
@@ -128,8 +170,27 @@ namespace TravelAgency.WPF.ViewModels
                     SelectedTab = "Reviews";
                     break;
                 case "guest1ForumsMenuViewModel":
+                    /*_canceller = new CancellationTokenSource();
+                    await Task.Run(() =>
+                    {
+                        do
+                        {
+                            Console.WriteLine("Hello, world");
+                            if (_canceller.Token.IsCancellationRequested)
+                                break;
+
+                        } while (true);
+                    });*/
                     CurrentViewModel = _guest1ForumsMenuViewModel;
                     SelectedTab = "Forums";
+                    break;
+                case "guest1NotificationsViewModel":
+                    CurrentViewModel = new Guest1NotificationsViewModel(NavigationCommand, Guest);
+                    SelectedTab = "Notifications";
+                    break;
+                case "guest1UserProfileViewModel":
+                    CurrentViewModel = new Guest1UserProfileViewModel(NavigationCommand, Guest);
+                    SelectedTab = "UserProfile";
                     break;
                 case "guest1AccommodationSearchViewModel":
                     _guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
@@ -201,6 +262,9 @@ namespace TravelAgency.WPF.ViewModels
                     PreviousViewModel = CurrentViewModel;
                     CurrentViewModel = new Guest1ReadWriteForumViewModel2(NavigationCommand, Guest, _guest1MyForumsViewModel.SelectedForum);
                     break;
+                case "guest1ReportViewModel":
+                    CurrentViewModel = new Guest1ReportViewModel(NavigationCommand, Guest);
+                    break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
                     break;
@@ -209,7 +273,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void StartTimer()
         {
-            Timer timer = new Timer();
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += LoadCurrentDateTime;
             timer.Start();

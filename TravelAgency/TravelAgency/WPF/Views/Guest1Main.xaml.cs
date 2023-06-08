@@ -77,12 +77,6 @@ namespace TravelAgency.WPF.Views
             Countries.Insert(0, "Not specified");
             SelectedCountry = Countries[0];
 
-            if (ReservationMoveService.NotifyGuestOnStatusChange(Guest))
-            {
-                string message = "There was a status change of your move request(s)";
-                System.Windows.MessageBox.Show(message);
-            }
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
