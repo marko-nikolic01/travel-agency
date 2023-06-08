@@ -38,6 +38,7 @@ namespace TravelAgency.Domain.Models
         public string Gender { get; set; }
         public bool IsSuperGuide { get; set; }
         public string Language { get; set; }
+        public bool IsDeleted { get; set; }
         public User()
         {
             Id = -1;
@@ -50,6 +51,7 @@ namespace TravelAgency.Domain.Models
             Gender = "Male";
             IsSuperGuide = false;
             Language = "";
+            IsDeleted = false;
         }
 
         public User(string username, string password, Roles role, DateOnly birthDay, bool isSuperOwner = false)
@@ -64,12 +66,13 @@ namespace TravelAgency.Domain.Models
             Gender = "Male";
             IsSuperGuide = false;
             Language = "";
+            IsDeleted = false;
         }
 
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy"), Name, Gender, IsSuperGuide.ToString(), Language };
+            string[] csvValues = { Id.ToString(), Username, Password, ((int)Role).ToString(), Convert.ToInt32(IsSuperOwner).ToString(), BirthDay.ToString("dd-MM-yyyy"), Name, Gender, IsSuperGuide.ToString(), Language, IsDeleted.ToString() };
             return csvValues;
         }
 
@@ -85,6 +88,7 @@ namespace TravelAgency.Domain.Models
             Gender = values[7];
             IsSuperGuide = Convert.ToBoolean(values[8]);
             Language = values[9];
+            IsDeleted = Convert.ToBoolean(values[10]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -32,5 +32,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public bool CheckPassword(int userId, string Password);
         public void LinkSuperGuestTitles(List<SuperGuestTitle> titles);
         public void UpdateSuperGuideStatus(int userId, bool status, string language);
+        public void DeleteUser(int userId);
     }
 }

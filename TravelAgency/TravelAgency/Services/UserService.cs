@@ -149,5 +149,9 @@ namespace TravelAgency.Services
         {
             return IUserRepository.CheckPassword(userId, Password);
         }
+        public void DeleteUser(int id)
+        {
+            IUserRepository.DeleteUser(id);
+        }
     }
 }

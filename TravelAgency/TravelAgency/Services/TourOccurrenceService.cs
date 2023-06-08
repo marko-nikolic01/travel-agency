@@ -122,7 +122,27 @@ namespace TravelAgency.Services
             }
             return ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
         }
-
+        public void CancelTourResign(TourOccurrence SelectedTourOccurrence)
+        {
+            foreach (var guest in SelectedTourOccurrence.Guests)
+            {
+                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = -1, Deadline = DateTime.Now.AddYears(2), CanceledTourOccurrenceId = SelectedTourOccurrence.Id });
+            }
+            ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
+        }
+        public void CancelAllTours(int ActiveGuideId)
+        {
+            List<TourOccurrence> tours = new List<TourOccurrence>();
+            tours.AddRange(ITourOccurrenceRepository.GetTodays(ActiveGuideId));
+            tours.AddRange(ITourOccurrenceRepository.GetUpcomings(ActiveGuideId));
+            foreach(TourOccurrence tourOccurrence in tours)
+            {
+                if(tourOccurrence.CurrentState == CurrentState.NotStarted)
+                {
+                    CancelTourResign(tourOccurrence);
+                }
+            }
+        }
         public void Subscribe(IObserver observer)
         {
             ITourOccurrenceRepository.Subscribe(observer);
