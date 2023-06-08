@@ -1,0 +1,106 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.SpecialRequestsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:conv="clr-namespace:TravelAgency.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="Special Tour Requests">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style x:Key="FADataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Padding" Value="5 0"/>
+        </Style>
+        <Style x:Key="FADataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource FADataGridColumnHeaderStyle}"/>
+        </Style>
+        <DataTemplate x:Key="SpecialRequestDataTemplate">
+            <DataGrid ItemsSource="{Binding TourRequests}" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#0e1d32"
+                       AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
+                          Style="{StaticResource FADataGridStyle}" FontSize="17">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Yellow"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0e1d32"/>
+                    </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="5 10" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="City" Binding="{Binding Location.City}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="5 10" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Language" Binding="{Binding Language}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="5 10" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Guests" Binding="{Binding GuestNumber}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="5 10" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Book?">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="CancelButton" Margin="5" Content="Book" Command="{Binding Path= DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid>
+            <Grid.Resources>
+                <conv:NotNullTrueConverter x:Key="NotNullTrueConverter"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Width="110" Height="45" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="{Binding Path=CanceledTour , Converter={StaticResource NotNullTrueConverter}}" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="25 35 35 25" Content="Undo book" FontSize="20" Command="{Binding Path= UndoCancelCommand}"></Button>
+
+            <ListView Grid.Row="1" Margin="10" ItemTemplate="{StaticResource SpecialRequestDataTemplate}"
+                      ItemsSource="{Binding SpecialTourRequestList}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                        Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+
+
+        </Grid>
+    </Grid>
+</Page>

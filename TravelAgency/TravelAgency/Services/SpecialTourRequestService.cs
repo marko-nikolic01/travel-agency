@@ -8,7 +8,7 @@ using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
-    class SpecialTourRequestService
+    public class SpecialTourRequestService
     {
 
         public ITourRequestRepository ITourRequestRepository { get; set; }
@@ -70,6 +70,10 @@ namespace TravelAgency.Services
         public List<SpecialTourRequest>? GetSpecialRequestForGuest(int guestId)
         {
             return ISpecialTourRequestRepository.GetByGuestId(guestId);
+        }
+        public List<SpecialTourRequest>? GetOpenSpecialRequest()
+        {
+            return ISpecialTourRequestRepository.GetAll();
         }
         public int GetNumberOfAllRequests(int guestId)
         {

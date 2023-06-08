@@ -51,7 +51,7 @@
                         <Image Source="/Resources/Images/envelope.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Special tour requests">
+                <MenuItem Header="Special tour requests" Command="{Binding NavigateToSpecialRequestsPageCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Images/envelopes.png"></Image>
                     </MenuItem.Icon>
