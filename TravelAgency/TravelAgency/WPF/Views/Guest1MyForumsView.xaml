@@ -69,9 +69,7 @@
                 <Bold>Kako da zatvorim forum?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Zatvori"<LineBreak/>
                 možete zatvoriti forum. Nakon<LineBreak/>
-                zatvaranja, forum ostaje vidljiv<LineBreak/>
-                čitaocima, ali se u njega više<LineBreak/>
-                ne može pisati.
+                zatvaranja, forum ostaje vidljiv.
             </TextBlock>
             <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
                 <Bold>Šta je značenje katanaca u<LineBreak/>
@@ -187,7 +185,7 @@
                                 </Button>
                                 <Button Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="Button_Click" Focusable="False"
                                         Visibility="{Binding Path=Closed, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
-                                        Command="{Binding DataContext.ok, RelativeSource={RelativeSource AncestorType=local:Guest1MyForumsView}}">
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1MyForumsView}}" CommandParameter="guest1ReadWriteForumViewModel2">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
@@ -202,7 +200,7 @@
                                 </Button>
                                 <Button Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="Button_Click" Focusable="False"
                                         Visibility="{Binding Path=Closed, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        Command="{Binding DataContext.CancelReservationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1MyForumsView}}">
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1MyForumsView}}" CommandParameter="guest1ReadForumViewModel2">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>

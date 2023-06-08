@@ -218,6 +218,18 @@
                     <DataTemplate DataType="{x:Type viewModels:Guest1ForumSearchViewModel}">
                         <views:Guest1ForumSearchView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1ReadForumViewModel1}">
+                        <views:Guest1ReadForumView1/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1ReadForumViewModel2}">
+                        <views:Guest1ReadForumView2/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1ReadWriteForumViewModel1}">
+                        <views:Guest1ReadWriteForumView1/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:Guest1ReadWriteForumViewModel2}">
+                        <views:Guest1ReadWriteForumView2/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </DockPanel>

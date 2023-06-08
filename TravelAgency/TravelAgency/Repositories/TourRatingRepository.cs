@@ -81,6 +81,5 @@ namespace TravelAgency.Repositories
             oldTourRating.IsValid = tourRating.IsValid;
             _serializer.ToCSV(FilePath, tourRatings);
         }
-
     }
 }

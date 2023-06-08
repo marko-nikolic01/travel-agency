@@ -49,7 +49,15 @@ namespace TravelAgency.Repositories
         public User GetByUsername(string username)
         {
             _users = _serializer.FromCSV(FilePath);
-            return _users.FirstOrDefault(u => u.Username == username);
+            User user = _users.FirstOrDefault(u => u.Username == username);
+            if (user.IsDeleted)
+            {
+                return null;
+            }
+            else
+            {
+                return user;
+            }
         }
 
         public User GetById(int id)
@@ -117,6 +125,19 @@ namespace TravelAgency.Repositories
         {
             User user = _users.Find(u => u.Id == userId);
             return user.Password == Password;
+        }
+        public void UpdateSuperGuideStatus(int userId, bool status, string language)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.IsSuperGuide = status;
+            oldUser.Language = language;
+            _serializer.ToCSV(FilePath, _users);
+        }
+        public void DeleteUser(int userId)
+        {
+            User oldUser = _users.Find(u => u.Id == userId);
+            oldUser.IsDeleted = true;
+            _serializer.ToCSV(FilePath, _users);
         }
     }
 }

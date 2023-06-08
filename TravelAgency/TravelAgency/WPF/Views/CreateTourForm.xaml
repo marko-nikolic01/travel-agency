@@ -71,7 +71,7 @@
         <Button Grid.Column="3" Grid.Row="16" Margin="5 5 10 5" Width="50" Content="Create" FontSize="15" Click="Create_Click"></Button>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=NewTour.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
-        
+
         <ComboBox Margin="0 7 0 7" Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}"></ComboBox>
         <ComboBox Margin="10 7 10 7" Grid.Row="2" Grid.Column="2"  ItemsSource="{Binding Path=Cities}"  SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Grid.ColumnSpan="2"></ComboBox>
         

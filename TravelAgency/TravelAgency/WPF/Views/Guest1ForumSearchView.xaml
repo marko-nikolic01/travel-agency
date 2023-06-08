@@ -60,9 +60,7 @@
                 Klikom na dugme "Čitaj i<LineBreak/>
                 komentariši"/"Čitaj" možete<LineBreak/>
                 nastaviti na diskusiju u<LineBreak/>
-                izabranom forumu. Na<LineBreak/>
-                zakljućanim forumima možete<LineBreak/>
-                samo čitati komentare.
+                izabranom forumu.
             </TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
                 <Bold>Kako da pretražim forume?</Bold><LineBreak/><LineBreak/>
@@ -256,7 +254,7 @@
                                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=Location.City, StringFormat='Grad: {0}'}"></TextBlock>
                                 <Button Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="Button_Click" Focusable="False"
                                         Visibility="{Binding Path=Closed, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
-                                        Command="{Binding DataContext.ok, RelativeSource={RelativeSource AncestorType=local:Guest1ForumSearchView}}">
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1ForumSearchView}}" CommandParameter="guest1ReadWriteForumViewModel1">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
@@ -271,7 +269,7 @@
                                 </Button>
                                 <Button Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="Button_Click" Focusable="False"
                                         Visibility="{Binding Path=Closed, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        Command="{Binding DataContext.CancelReservationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1MyForumsView}}">
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1ForumSearchView}}" CommandParameter="guest1ReadForumViewModel1">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>

@@ -114,7 +114,6 @@ namespace TravelAgency.Services
                 }
             }
         }
-
         public int CancelTour(TourOccurrence SelectedTourOccurrence, int ActiveGuideId)
         {
             foreach (var guest in SelectedTourOccurrence.Guests)
@@ -123,12 +122,31 @@ namespace TravelAgency.Services
             }
             return ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
         }
-
+        public void CancelTourResign(TourOccurrence SelectedTourOccurrence)
+        {
+            foreach (var guest in SelectedTourOccurrence.Guests)
+            {
+                IVoucherRepository.Save(new Voucher() { GuestId = guest.Id, GuideId = -1, Deadline = DateTime.Now.AddYears(2), CanceledTourOccurrenceId = SelectedTourOccurrence.Id });
+            }
+            ITourOccurrenceRepository.Delete(SelectedTourOccurrence);
+        }
+        public void CancelAllTours(int ActiveGuideId)
+        {
+            List<TourOccurrence> tours = new List<TourOccurrence>();
+            tours.AddRange(ITourOccurrenceRepository.GetTodays(ActiveGuideId));
+            tours.AddRange(ITourOccurrenceRepository.GetUpcomings(ActiveGuideId));
+            foreach(TourOccurrence tourOccurrence in tours)
+            {
+                if(tourOccurrence.CurrentState == CurrentState.NotStarted)
+                {
+                    CancelTourResign(tourOccurrence);
+                }
+            }
+        }
         public void Subscribe(IObserver observer)
         {
             ITourOccurrenceRepository.Subscribe(observer);
         }
-
         public TourOccurrence GetMostVisitedAllTime(int guideId)
         {
             if (ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(guideId).Count == 0)
@@ -228,7 +246,6 @@ namespace TravelAgency.Services
             tourOccurrence.KeyPoints.Add(keyPoint);
             IKeyPointRepository.Save(keyPoint);
         }
-
         public List<TourOccurrence> GetFinishedOccurrencesForGuest(int guestId)
         {
             List<TourOccurrence> result = new List<TourOccurrence>();
@@ -242,7 +259,6 @@ namespace TravelAgency.Services
             }
             return result;
         }
-
         private bool WasGuestOnTour(TourOccurrence occurrence, int guestId)
         {
             TourOccurrenceAttendance attendance;
@@ -254,7 +270,6 @@ namespace TravelAgency.Services
             }
             return false;
         }
-
         public string GetActiveTour(int guestId)
         {
             string result = "There is no active tour";
@@ -312,7 +327,6 @@ namespace TravelAgency.Services
                 SaveKeyPoint(keyPoint, newTourOccurrence);
             }
         }
-
         private TourOccurrence GenerateNewTourOccurrence(Tour newTour, DateTime dateTime)
         {
             TourOccurrence tourOccurrence = new TourOccurrence();
@@ -322,7 +336,6 @@ namespace TravelAgency.Services
             tourOccurrence.FreeSpots = newTour.MaxGuestNumber;
             return tourOccurrence;
         }
-
         private Tour GenerateNewTour(TourRequest request, int duration)
         {
             Tour newTour = new Tour();
@@ -334,7 +347,6 @@ namespace TravelAgency.Services
             newTour.Duration = duration;
             return newTour;
         }
-
         private void SavePhoto(Tour newTour, string v)
         {
             Photo photo = new Photo();
@@ -343,13 +355,11 @@ namespace TravelAgency.Services
             newTour.Photos.Add(photo);
             IPhotoRepository.Save(photo);
         }
-
         public void UndoCancelTour(int canceledTour)
         {
             IVoucherRepository.DeleteByCanceledTourId(canceledTour);
             ITourOccurrenceRepository.UndoDelete(canceledTour);
         }
-
         public bool IsGuideFree(int guideId, DateTime concreteDateTime, int duration)
         {
             bool isGuideFree = true;
@@ -360,6 +370,9 @@ namespace TravelAgency.Services
             }
             return isGuideFree;
         }
+        public int GetFinishedToursById(int id)
+        {
+            return ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id).Count;
+        }
     }
-
 }

@@ -60,6 +60,7 @@ namespace TravelAgency.Repositories
         public Voucher Update(Voucher voucher)
         {
             Voucher oldVoucher = vouchers.Find(x => x.Id == voucher.Id);
+            oldVoucher.GuideId = voucher.GuideId;
             oldVoucher.IsUsed = voucher.IsUsed;
             _serializer.ToCSV(FilePath, vouchers);
             return oldVoucher;

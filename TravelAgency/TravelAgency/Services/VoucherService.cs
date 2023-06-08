@@ -132,5 +132,18 @@ namespace TravelAgency.Services
         {
             IWonVoucherNotificationRepository.Update(notification);
         }
+
+        public void UpdateVouchers(int id)
+        {
+            foreach (Voucher voucher in IVoucherRepository.GetAll())
+            {
+                if (voucher.GuideId == id)
+                {
+                    voucher.GuideId = -1;
+                    IVoucherRepository.Update(voucher);
+                    return;
+                }
+            }
+        }
     }
 }

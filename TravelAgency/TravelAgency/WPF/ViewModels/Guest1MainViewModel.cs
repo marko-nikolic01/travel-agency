@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -183,6 +184,22 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1ForumSearchViewModel":
                     _guest1ForumSearchViewModel = new Guest1ForumSearchViewModel(NavigationCommand);
                     CurrentViewModel = _guest1ForumSearchViewModel;
+                    break;
+                case "guest1ReadForumViewModel1":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadForumViewModel1(NavigationCommand, _guest1ForumSearchViewModel.SelectedForum);
+                    break;
+                case "guest1ReadForumViewModel2":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadForumViewModel2(NavigationCommand, _guest1MyForumsViewModel.SelectedForum);
+                    break;
+                case "guest1ReadWriteForumViewModel1":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadWriteForumViewModel1(NavigationCommand, Guest, _guest1ForumSearchViewModel.SelectedForum);
+                    break;
+                case "guest1ReadWriteForumViewModel2":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadWriteForumViewModel2(NavigationCommand, Guest, _guest1MyForumsViewModel.SelectedForum);
                     break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
