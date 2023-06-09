@@ -165,7 +165,7 @@
                                 <ColumnDefinition Width="20"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Height="20" Source="../../Resources/Images/bell.png"></Image>
-                            <Image Grid.Column="0" Height="13" Source="../../Resources/Images/danger.png" Visibility="{Binding Path=HasNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                            <Image Grid.Column="0" Height="13" Source="../../Resources/Images/exclamationMark.png" Visibility="{Binding Path=HasNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
                             <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Notifikacije</TextBlock>
                             <Image Grid.Column="2" Height="20" Source="../../Resources/Images/next.png"></Image>
                         </Grid>
