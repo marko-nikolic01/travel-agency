@@ -316,7 +316,7 @@ namespace TravelAgency.WPF.Views
             if (MoveRequest.DateSpan != null)
             {
                 ReservationMoveService.CreateMoveRequest(MoveRequest);
-                Guest1Main.ReservationMoveRequests.Add(MoveRequest);
+                //Guest1Main.ReservationMoveRequests.Add(MoveRequest);
                 Close();
             }
             else
