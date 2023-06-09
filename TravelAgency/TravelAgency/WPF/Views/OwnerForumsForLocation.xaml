@@ -17,7 +17,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand, ElementName=root}"/>
         <KeyBinding Key="Return" Command="{Binding NavigateToForumCommand, ElementName=root}"/>
     </Page.InputBindings>
 

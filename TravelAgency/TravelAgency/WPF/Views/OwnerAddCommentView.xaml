@@ -13,7 +13,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding Path=NavigateBackCommand}"/>
-        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding AddCommentCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddCommentCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -67,7 +67,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Submit a comment"
-                                         KeyboardShortcutText="Ctrl+L"
+                                         KeyboardShortcutText="Ctrl+S"
                                          Margin="0 0 10 0"
                                          Click="AddComment_Click"/>
 

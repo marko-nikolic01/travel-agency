@@ -53,7 +53,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBack}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBack}"/>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddPhotoCommand}"/>
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>

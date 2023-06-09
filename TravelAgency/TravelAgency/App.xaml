@@ -18,11 +18,11 @@
                 <Setter Property="Background" Value="#222222"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Text" Value="Back"/>
-                <Setter Property="KeyboardShortcutText" Value="Backspace"/>
+                <Setter Property="KeyboardShortcutText" Value="Ctrl+B"/>
             </Style>
 
             <Style TargetType="controls:ButtonWithShortcut" x:Key="dialogBackButton" BasedOn="{StaticResource backButton}">
-                <Setter Property="KeyboardShortcutText" Value="Ctrl+Shift+Backspace"/>
+                
             </Style>
 
             <Style x:Key="h2" TargetType="TextBlock">
@@ -60,6 +60,8 @@
                 <Setter Property="IsReadOnly" Value="True"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="FontSize" Value="16"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

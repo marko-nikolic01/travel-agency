@@ -27,17 +27,36 @@ namespace TravelAgency.WPF.Pages
     public partial class OwnerReservationsView : Page
     {
         public MyICommand FocusOtherDataGrid { get; set; }
+        public MyICommand NavigateToReviewRequestCommand { get; set; }
 
         public OwnerReservationsViewModel ViewModel { get; set; }
 
         public OwnerReservationsView()
         {
             FocusOtherDataGrid = new MyICommand(Execute_FocusOtherDataGrid);
+            NavigateToReviewRequestCommand = new MyICommand(Execute_NavigateToReviewRequestCommand);
             InitializeComponent();
             ViewModel = new OwnerReservationsViewModel();
             DataContext = ViewModel;
 
+            Loaded += (s, e) => Keyboard.Focus(this);
+
+            requestsDataGrid.CommandBindings.Clear();
+            activeReservationsDataGrid.CommandBindings.Clear();
+            requestsDataGrid.InputBindings.Clear();
+            activeReservationsDataGrid.InputBindings.Clear();
+
             activeReservationsDataGrid.Focus();
+        }
+
+        private void Execute_NavigateToReviewRequestCommand()
+        {
+
+        }
+
+        private void AcceptMoveRequest_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AcceptRequestCommand.Execute();
         }
 
         private void Execute_FocusOtherDataGrid()

@@ -26,7 +26,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ScheduleRenovationCmd}"/>
     </Page.InputBindings>
 
