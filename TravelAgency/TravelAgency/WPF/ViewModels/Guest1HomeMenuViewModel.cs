@@ -14,10 +14,12 @@ namespace TravelAgency.WPF.ViewModels
     public class Guest1HomeMenuViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public MyICommand<string> NavigationCommand { get; private set; }
-
-        public Guest1HomeMenuViewModel(MyICommand<string> navigationCommand)
+        public MyICommand StartDemoCommand { get; private set; }
+        
+        public Guest1HomeMenuViewModel(MyICommand<string> navigationCommand, MyICommand startDemoCommand)
         {
             NavigationCommand = navigationCommand;
+            StartDemoCommand = startDemoCommand;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

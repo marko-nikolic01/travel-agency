@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1AccommodationSearchView"
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1ForumLocationSearchDemoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -31,10 +31,9 @@
                 </Style>
             </Style.Resources>
         </Style>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
         <converters:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
@@ -54,32 +53,22 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da rezervišem smeštaj?</Bold><LineBreak/><LineBreak/>
-                Klikom na dugme "Rezerviši"<LineBreak/>
-                možete početi sa rezervacijom.
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da pretražim smeštaje?</Bold><LineBreak/><LineBreak/>
-                Iznad podnaslova "Pretraga"<LineBreak/>
-                možete podesiti kriterijume<LineBreak/>
-                pretrage. Neke od kriterijuma<LineBreak/>
-                možete ostaviti prazne što<LineBreak/>
-                znači da se pretraga neće<LineBreak/>
-                izvršiti po njima. Kada podesite<LineBreak/>
-                kriterijume pretrage, klikom na<LineBreak/>
-                dugme "Pretraži" obavljate<LineBreak/>
-                pretragu. Pretragu možete<LineBreak/>
-                otkazati klikom na dugme<LineBreak/>
-                "Otkaži pretragu".
-            </TextBlock>
-            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
-                Klikom na dugme "Nazad"<LineBreak/>
-                se vraćate na prethodni<LineBreak/>
-                prozor.
-
-            </TextBlock>
+            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding StopDemoCommand}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/stop.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Zaustavi Demo</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -99,16 +88,16 @@
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
-                    <Bold>Smeštaji/Rezervacije</Bold>
+                    <Bold>Forumi</Bold>
                     <TextBlock.InputBindings>
-                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel" MouseAction="LeftClick"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
-                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Istražite i rezervišite</Bold></TextBlock>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Otvorite forum</Bold></TextBlock>
             </WrapPanel>
             <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -144,14 +133,9 @@
                     <RowDefinition Height="5"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Pretraga</TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Naziv:</TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Država:</TextBlock>
-                <TextBlock Grid.Row="3" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Grad:</TextBlock>
-                <TextBlock Grid.Row="4" Grid.Column="1" Height="27" Margin="0, 10. 0, 0" FontSize="13">Tip:</TextBlock>
-                <TextBlock Grid.Row="5" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Broj gostiju:</TextBlock>
-                <TextBlock Grid.Row="6" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Broj dana:</TextBlock>
-                <TextBox x:Name="textBoxName" Grid.Row="1" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" BorderBrush="Black" Text="{Binding Path=SearchFilter.NameFilter, Mode=TwoWay}"></TextBox>
-                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                <TextBlock Grid.Row="1" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Država:</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Grad:</TextBlock>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
                     <ComboBox x:Name="comboBoxCountry" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Countries}" SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.IsDeferredScrollingEnabled="True">
@@ -167,7 +151,7 @@
                         </ComboBox.ItemContainerStyle>
                     </ComboBox>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
                     <ComboBox x:Name="comboBoxCity" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" Text="{Binding Path=SelectedCity, Mode=TwoWay}"
                     IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.IsDeferredScrollingEnabled="True">
@@ -183,26 +167,6 @@
                         </ComboBox.ItemContainerStyle>
                     </ComboBox>
                 </Border>
-                <Border Grid.Row="4" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
-                    <ComboBox x:Name="comboBoxType" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" SelectedIndex="0" SelectedItem="{Binding Path=SearchFilter.TypeFilter, Mode=TwoWay}"
-                    ItemsSource="{Binding AccommodationTypes}" IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.IsDeferredScrollingEnabled="True">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                        <ComboBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ComboBoxItem}">
-                                <Setter Property="Background" Value="LightGray"/>
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
-                    </ComboBox>
-                </Border>
-                <xctk:IntegerUpDown x:Name="integerUpDownGuestNumber" Grid.Row="5" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"
-                                VerticalContentAlignment="Center" Value="{Binding Path=SearchFilter.GuestNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.GuestNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
-                <xctk:IntegerUpDown x:Name="integerUpDownDayNumber" Grid.Row="6" Grid.Column="2" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black" DefaultValue="0" Minimum="0"
-                                VerticalContentAlignment="Center" Value="{Binding Path=SearchFilter.DayNumberFilter, Mode=TwoWay}" Text="{Binding Path=SearchFilter.DayNumberFilter, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}"></xctk:IntegerUpDown>
                 <Button x:Name="buttonSearch" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                         Command="{Binding SearchCommand}">
                     <Button.Content>
@@ -231,7 +195,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                
+                <Border BorderBrush="Green" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="20" Grid.ColumnSpan="19" Visibility="{Binding Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -244,15 +208,21 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="5"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Smeštaji</TextBlock>
-                <ListView x:Name="listViewAccommodations" Grid.Row="1" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Accommodations}" SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
-                          ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Lokacije</TextBlock>
+                <ListView x:Name="listViewLocations" Grid.Row="1" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Grid.Row="1" Grid.Column="1" Width="470" Height="200">
+                            <Grid Grid.Row="1" Grid.Column="1" Width="470" Height="90">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="10"></ColumnDefinition>
-                                    <ColumnDefinition Width="160"></ColumnDefinition>
+                                    <ColumnDefinition Width="70"></ColumnDefinition>
                                     <ColumnDefinition Width="5"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
@@ -264,30 +234,14 @@
                                     <RowDefinition Height="10"></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
                                     <RowDefinition Height="10"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Border Grid.RowSpan="8" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
-                                <Border  Grid.Row="1" Grid.RowSpan="6" Grid.Column="1"  BorderThickness="1" BorderBrush="Black" Background="#cccccc">
-                                    <Image Source="{Binding Path=Photos[0], Converter={StaticResource AccommodationPhotoToBitmapImageConverter}}"></Image>
-                                </Border>
-                                <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Name, StringFormat='Naziv: {0}'}"></TextBlock>
-                                <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="Lokacija: {0}, {1}">
-                                            <Binding Path="Location.City" />
-                                            <Binding Path="Location.Country" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                                <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter}}"></TextBlock>
-                                <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=MaxGuests, StringFormat='Maksimalan broj gostiju: {0}'}"></TextBlock>
-                                <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=MinDays, StringFormat='Minimalan broj dana: {0}'}"></TextBlock>
-                                <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False"
-                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationSearchView}}" CommandParameter="guest1AccommodationReservationViewModel">
+                                <Border Grid.RowSpan="4" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
+                                <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/location.png"></Image>
+                                <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Country, StringFormat='Država: {0}'}"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=City, StringFormat='Grad: {0}'}"></TextBlock>
+                                <Button x:Name="buttonMakeReservation" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False"
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1ForumLocationSearchView}}" CommandParameter="guest1OpenForumViewModel">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
@@ -295,16 +249,11 @@
                                                 <ColumnDefinition Width="140"></ColumnDefinition>
                                                 <ColumnDefinition Width="20"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/plus.png"></Image>
-                                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Rezerviši</TextBlock>
+                                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/book.png"></Image>
+                                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Otvori forum</TextBlock>
                                         </Grid>
                                     </Button.Content>
                                 </Button>
-                                <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="6">
-                                    <Image Height="25" Width="25" Source="../../Resources/Images/star.png" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
-                                    <Rectangle Height="10" Visibility="{Binding Path=Owner.IsSuperOwner, Converter={StaticResource BooleanToVisibilityConverter}}"></Rectangle>
-                                    <Image Height="25" Width="25" Source="../../Resources/Images/maintenance.png" Visibility="{Binding Path=IsRenovated, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
-                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

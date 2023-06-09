@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1AccommodationSearchView"
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1AccommodationSearchDemoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -54,32 +54,22 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da rezervišem smeštaj?</Bold><LineBreak/><LineBreak/>
-                Klikom na dugme "Rezerviši"<LineBreak/>
-                možete početi sa rezervacijom.
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da pretražim smeštaje?</Bold><LineBreak/><LineBreak/>
-                Iznad podnaslova "Pretraga"<LineBreak/>
-                možete podesiti kriterijume<LineBreak/>
-                pretrage. Neke od kriterijuma<LineBreak/>
-                možete ostaviti prazne što<LineBreak/>
-                znači da se pretraga neće<LineBreak/>
-                izvršiti po njima. Kada podesite<LineBreak/>
-                kriterijume pretrage, klikom na<LineBreak/>
-                dugme "Pretraži" obavljate<LineBreak/>
-                pretragu. Pretragu možete<LineBreak/>
-                otkazati klikom na dugme<LineBreak/>
-                "Otkaži pretragu".
-            </TextBlock>
-            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
-                Klikom na dugme "Nazad"<LineBreak/>
-                se vraćate na prethodni<LineBreak/>
-                prozor.
-
-            </TextBlock>
+            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding StopDemoCommand}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/stop.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Zaustavi Demo</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -231,7 +221,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                
+                <Border BorderBrush="Green" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="19" Grid.ColumnSpan="19" Visibility="{Binding Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -272,7 +262,7 @@
                                 </Grid.RowDefinitions>
                                 <Border Grid.RowSpan="8" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
                                 <Border  Grid.Row="1" Grid.RowSpan="6" Grid.Column="1"  BorderThickness="1" BorderBrush="Black" Background="#cccccc">
-                                    <Image Source="{Binding Path=Photos[0], Converter={StaticResource AccommodationPhotoToBitmapImageConverter}}"></Image>
+                                    <Image Source="../../Resources/Images/istockphoto-1147544807-612x612.jpg"></Image>
                                 </Border>
                                 <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Name, StringFormat='Naziv: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
@@ -286,7 +276,7 @@
                                 <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter}}"></TextBlock>
                                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=MaxGuests, StringFormat='Maksimalan broj gostiju: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=MinDays, StringFormat='Minimalan broj dana: {0}'}"></TextBlock>
-                                <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False"
+                                <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False"
                                         Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationSearchView}}" CommandParameter="guest1AccommodationReservationViewModel">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">

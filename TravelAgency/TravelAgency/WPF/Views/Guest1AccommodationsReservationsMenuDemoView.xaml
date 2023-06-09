@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1HomeMenuView"
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1AccommodationsReservationsMenuDemoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -31,6 +31,7 @@
             </Style.Resources>
         </Style>
         <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
@@ -45,17 +46,14 @@
                 <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition Height="27"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
-                <Bold>Kako da nastavim?</Bold><LineBreak/><LineBreak/>
-                Klikom na jednu od ponuđenih<LineBreak/>
-                opcija odaberite gde želite da<LineBreak/>
-                nastavite.
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <Button x:Name="buttonBack" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    Command="{Binding StartDemoCommand}">
+            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding StopDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -63,8 +61,8 @@
                             <ColumnDefinition Width="140"></ColumnDefinition>
                             <ColumnDefinition Width="20"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/play.png"></Image>
-                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Demo</TextBlock>
+                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/stop.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Zaustavi Demo</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
@@ -87,9 +85,9 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Početna stranica</Bold></TextBlock>
-            <Button x:Name="buttonAccommodationsReservations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
+            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Smeštaji/Rezervacije</Bold></TextBlock>
+            <Button x:Name="buttonSearchAccommodations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationSearchViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -104,14 +102,14 @@
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/hotel.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Smeštaji/Rezervacije</Bold></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pretražite i rezervišite smeštaje. Pregledajte, izmenite ili otkažite rezervacije.</TextBlock>
+                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/search-location.png"></Image>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Istražite i rezervišite</Bold></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pronađite smeštaj koji vam odgovara i napravite rezervaciju.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonReviews" Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1ReviewsMenuViewModel">
+            <Button Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1WhereverWheneverSearchViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -126,14 +124,16 @@
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/medal-ribbon.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Recenzije</Bold></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Ocenite vlasnika i smeštaj. Pogledajte kako su vas drugi ocenili.</TextBlock>
+                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/globe.png"></Image>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Bilo gde/Bilo kada</Bold></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Zabavan način da rezervišete smeštaj. Unesite broj gostiju 
+                            i danai pogledajte ponudu iz celog sveta!
+                        </TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonForums" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel">
+            <Button x:Name="buttonMyReservations" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationsViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -148,14 +148,14 @@
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/comment.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Forumi</Bold></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Otvorite svoj forum ili učestvujte u diskusiji o lokacijama koje vas zanimaju.</TextBlock>
+                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/calendar.png"></Image>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Moje rezervacije</Bold></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pregledajte, menjajte ili otkažite svoje rezervacije.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonNotifications" Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1NotificationsViewModel">
+            <Button Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationMoveRequestsViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -170,14 +170,14 @@
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/bell.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Notifikacije</Bold></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pogledajte svoje notifikacije.</TextBlock>
+                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/exchange.png"></Image>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Moji zahtevi za izmenu rezervacija</Bold></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pogledajte status vaših zahteva za izmenu rezervacija.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonUserAccount" Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel">
+            <Button Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1ReportViewModel">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -192,12 +192,28 @@
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/user.png"></Image>
-                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Korisnički nalog</Bold></TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Pogledajte svoj korisnički nalog.</TextBlock>
+                        <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/report.png"></Image>
+                        <TextBlock Grid.Row="1" Grid.Column="3" FontSize="13"><Bold>Izveštaji o rezervacijama</Bold></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="11">Preuzmite izveštaj o zakazanim ili otkazanim rezervacijama u bilo kom vremenskom periodu.</TextBlock>
                     </Grid>
                 </Button.Content>
             </Button>
+            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="20" Source="../../Resources/Images/left-arrow.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Nazad</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Border BorderBrush="Green" BorderThickness="5" Grid.Row="{Binding Instruction.Row}" Grid.Column="{Binding Instruction.Column}" Grid.RowSpan="{Binding Instruction.RowSpan}" Grid.ColumnSpan="{Binding Instruction.ColumnSpan}" Visibility="{Binding Instruction.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1"></Border>
         </Grid>
     </DockPanel>
 </UserControl>
