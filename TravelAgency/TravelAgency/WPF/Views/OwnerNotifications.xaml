@@ -16,8 +16,8 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Return" Command="{Binding MarkAsReadCommand}"/>
-        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding MarkAllAsReadCommand}"/>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding MarkAsReadCommand}"/>
+        <KeyBinding Key="Return" Modifiers="Ctrl+Alt" Command="{Binding MarkAllAsReadCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -57,13 +57,13 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Mark as read"
-                                         KeyboardShortcutText="Enter"
+                                         KeyboardShortcutText="Ctrl+Enter"
                                          Margin="0 0 10 0"
                                          Click="MarkAsReadCommand_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Mark all as read"
-                                         KeyboardShortcutText="Ctrl+Enter"
+                                         KeyboardShortcutText="Ctrl+Alt+Enter"
                                          Margin="0 0 10 0"
                                          Click="MarkAllAsReadCommand_Click"/>
 

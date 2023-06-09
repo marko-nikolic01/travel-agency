@@ -23,7 +23,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Return" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -70,7 +70,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Go to a forum of the selected location"
-                                         KeyboardShortcutText="Enter"
+                                         KeyboardShortcutText="Ctrl+Enter"
                                          Click="NavigateToForumsForLocation_Click"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"/>

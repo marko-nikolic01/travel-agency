@@ -18,6 +18,10 @@
         </Style>
     </Page.Resources>
 
+    <Page.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl"/>
+    </Page.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -116,7 +120,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Rate guest"
-                                         KeyboardShortcutText="Enter"
+                                         KeyboardShortcutText="Ctrl+N"
                                          Margin="0 30 30 30"/>
 
             <controls:Tip Grid.Column="1"

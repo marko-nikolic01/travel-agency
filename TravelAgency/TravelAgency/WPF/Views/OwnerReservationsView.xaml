@@ -24,7 +24,8 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding AcceptRequestCommand}"/>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding AcceptRequestCommand}"/>
+        <KeyBinding Key="Delete" Modifiers="Ctrl"/>
     </Page.InputBindings>
 
     <Grid>
@@ -134,13 +135,13 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Accept request"
-                                         KeyboardShortcutText="Enter"
+                                         KeyboardShortcutText="Ctrl+Enter"
                                          Margin="0 0 10 0"
                                          Click="AcceptMoveRequest_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Reject request"
-                                         KeyboardShortcutText="Delete"
+                                         KeyboardShortcutText="Ctrl+Delete"
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="2"

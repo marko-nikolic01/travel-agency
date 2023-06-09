@@ -19,8 +19,8 @@
 
     <Page.InputBindings>
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand, ElementName=root}"/>
-        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
-        <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding DislikeCommentCommand}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DislikeCommentCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -140,13 +140,13 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Add comment"
-                                         KeyboardShortcutText="Ctrl+L"
+                                         KeyboardShortcutText="Ctrl+N"
                                          Margin="0 0 10 0"
                                          Click="NavigateToAddCommentCommand_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Dislike comment"
-                                         KeyboardShortcutText="Ctrl+U"
+                                         KeyboardShortcutText="Ctrl+D"
                                          Click="DislikeComment_Click"
                                          Margin="0 0 10 0"/>
 
