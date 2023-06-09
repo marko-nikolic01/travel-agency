@@ -352,5 +352,10 @@ namespace TravelAgency.Services
             }
             return result;
         }
+
+        public void BookRequest(int requestId, int guideId, DateOnly selectedDate)
+        {
+            ITourRequestRepository.BookTourRequest(requestId, guideId, selectedDate);
+        }
     }
 }

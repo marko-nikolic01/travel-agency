@@ -22,6 +22,8 @@ namespace TravelAgency.Domain.Models
         public RequestStatus Status { get; set; }
         public string GivenDate { get; set; }
         public int SpecialTourRequestId { get; set; }
+        public int GuideId { get; set; }
+        public bool CanBook { get; set; }
         public TourRequest()
         {
             GivenDate = "/";
@@ -36,13 +38,15 @@ namespace TravelAgency.Domain.Models
             MaxDate = maxDate;
             GuestId = guestId;
             Status = status;
+            CanBook = true;
+            GuideId = -1;
         }
         // kako da cuvam given date? kao string
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), LocationId.ToString(), Description, Language, GuestNumber.ToString(),
                                  MinDate.ToString("dd-MM-yyyy"), MaxDate.ToString("dd-MM-yyyy"), GuestId.ToString(),
-                                 ((int)Status).ToString(), SpecialTourRequestId.ToString(), GivenDate};
+                                 ((int)Status).ToString(), SpecialTourRequestId.ToString(), GivenDate, GuideId.ToString()};
             return csvValues;
         }
 
@@ -59,6 +63,7 @@ namespace TravelAgency.Domain.Models
             Status = (RequestStatus)Convert.ToInt32(values[8]);
             SpecialTourRequestId = int.Parse(values[9]);
             GivenDate = values[10];
+            GuideId = int.Parse(values[11]);
         }
 
         public bool Valid(string language, string numberOfGuests, DateOnly minDate, DateOnly maxDate)
@@ -102,6 +107,14 @@ namespace TravelAgency.Domain.Models
                 Status = RequestStatus.Pending;
                 SpecialTourRequestId = specialTourRequestId;
                 GivenDate = "/";
+                return true;
+            }
+            return false;
+        }
+        public bool CheckCanBook()
+        {
+            if(Status == RequestStatus.Pending)
+            {
                 return true;
             }
             return false;

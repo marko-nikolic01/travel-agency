@@ -21,6 +21,7 @@ namespace TravelAgency.WPF.ViewModels
         public RelayCommand NavigateToRequestsPageCommand { get; set; }
         public RelayCommand NavigateToRequestStatisticsPageCommand { get; set; }
         public RelayCommand NavigateToProfilePageCommand { get; set; }
+        public RelayCommand NavigateToSpecialRequestsPageCommand { get; set; }
         public int ActiveGuideId { get; set; }
         public GuideMainViewModel(NavigationService navigationService, int id)
         {
@@ -34,6 +35,7 @@ namespace TravelAgency.WPF.ViewModels
             NavigateToRequestsPageCommand = new RelayCommand(Execute_NavigateToRequestsStatisticsPageCommand, CanExecute_NavigateCommand);
             NavigateToRequestStatisticsPageCommand = new RelayCommand(Execute_NavigateToRequestStatisticsPageCommand, CanExecute_NavigateCommand);
             NavigateToProfilePageCommand = new RelayCommand(Execute_NavigateToProfilePageCommand, CanExecute_NavigateCommand);
+            NavigateToSpecialRequestsPageCommand = new RelayCommand(Execute_NavigateToSpecialRequestsPageCommand, CanExecute_NavigateCommand);
         }
         private void Execute_NavigateToRequestStatisticsPageCommand(object obj)
         {
@@ -73,6 +75,11 @@ namespace TravelAgency.WPF.ViewModels
         private void Execute_NavigateToProfilePageCommand(object obj)
         {
             Page create = new GuideProfile(ActiveGuideId, NavService);
+            NavService.Navigate(create);
+        }
+        private void Execute_NavigateToSpecialRequestsPageCommand(object obj)
+        {
+            Page create = new SpecialRequestsView(ActiveGuideId, NavService);
             NavService.Navigate(create);
         }
         private bool CanExecute_NavigateCommand(object obj)

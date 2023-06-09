@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TravelAgency.Serializer;
 
 namespace TravelAgency.Domain.Models
@@ -9,13 +10,13 @@ namespace TravelAgency.Domain.Models
     {
         public int Id { get; set; }
         public int GuestId { get; set; }
-        public List<TourRequest> TourRequests { get; set; }
+        public ObservableCollection<TourRequest> TourRequests { get; set; }
         public SpecialRequestStatus Status { get; set; }
         public int SerialNumber;
         public string SpecialTourRequestString { get; set; }
         public SpecialTourRequest() 
         {
-            TourRequests = new List<TourRequest>();
+            TourRequests = new ObservableCollection<TourRequest>();
         }
         public void BuildRequestString()
         {

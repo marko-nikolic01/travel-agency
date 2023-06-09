@@ -8,7 +8,7 @@ using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
-    class SpecialTourRequestService
+    public class SpecialTourRequestService
     {
 
         public ITourRequestRepository ITourRequestRepository { get; set; }
@@ -29,7 +29,7 @@ namespace TravelAgency.Services
             {
                 if(specialRequest.TourRequests.Count == 0)
                 {
-                    specialRequest.TourRequests = ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id);
+                    specialRequest.TourRequests = new System.Collections.ObjectModel.ObservableCollection<TourRequest>(ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id));
                 }
             }
         }
@@ -70,6 +70,10 @@ namespace TravelAgency.Services
         public List<SpecialTourRequest>? GetSpecialRequestForGuest(int guestId)
         {
             return ISpecialTourRequestRepository.GetByGuestId(guestId);
+        }
+        public List<SpecialTourRequest>? GetOpenSpecialRequest()
+        {
+            return ISpecialTourRequestRepository.GetAll();
         }
         public int GetNumberOfAllRequests(int guestId)
         {
