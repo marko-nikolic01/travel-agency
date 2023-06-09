@@ -20,7 +20,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="N" Modifiers="Ctrl"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding RateGuestCommand, ElementName=root}"/>
         <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
     </Page.InputBindings>
 
@@ -95,6 +95,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="reservationsDataGrid"
                           ItemsSource="{Binding Reservations}"
+                          SelectedItem="{Binding SelectedReservation}"
                           Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
@@ -125,7 +126,8 @@
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Rate guest"
                                          KeyboardShortcutText="Ctrl+N"
-                                         Margin="0 0 20 0"/>
+                                         Margin="0 0 20 0"
+                                         Click="RateGuest_Click"/>
 
             <controls:Tip Grid.Column="1"
                           Header="What are pending reservations?"

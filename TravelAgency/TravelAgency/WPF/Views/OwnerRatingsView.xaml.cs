@@ -23,16 +23,38 @@ namespace TravelAgency.WPF.Pages
     public partial class OwnerRatingsView : Page
     {
         public MyICommand FocusOtherDataGrid { get; set; }
+        public MyICommand RateGuestCommand { get; set; }
+
         public OwnerRatingsViewModel ViewModel { get; set; }
+
         public OwnerRatingsView()
         {
             FocusOtherDataGrid = new MyICommand(Execute_FocusOtherDataGrid);
+            RateGuestCommand = new MyICommand(Execute_RateGuestCommand);
             InitializeComponent();
             ViewModel = new OwnerRatingsViewModel();
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
             ratingsDataGrid.Loaded += FocusFirstDataGrid;
+        }
+
+        private void Execute_RateGuestCommand()
+        {
+            if (reservationsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Select a reservation.");
+                return;
+            }
+
+            OwnerRateGuestViewModel vm = new OwnerRateGuestViewModel(ViewModel.SelectedReservation, this.NavigationService);
+            OwnerRateGuestView page = new OwnerRateGuestView(vm);
+            this.NavigationService.Navigate(page);
+        }
+
+        private void RateGuest_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_RateGuestCommand();
         }
 
         private void FocusFirstDataGrid(object sender, RoutedEventArgs e)
