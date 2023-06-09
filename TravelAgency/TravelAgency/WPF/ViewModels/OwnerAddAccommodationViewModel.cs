@@ -135,7 +135,7 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            NewAccommodation = new Accommodation() { Owner = loggedInUser, OwnerId = loggedInUser.Id };
+            NewAccommodation = new Accommodation() { Owner = loggedInUser, OwnerId = loggedInUser.Id, IsOpen = true };
 
             IsEnabled = false;
 

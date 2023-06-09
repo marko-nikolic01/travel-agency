@@ -19,9 +19,10 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand,ElementName=root}"/>
-        <KeyBinding Key="Return" Command="{Binding ScheduleRenovationCommand, ElementName=root}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand,ElementName=root}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding ScheduleRenovationCommand, ElementName=root}"/>
         <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
+        <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -125,7 +126,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"
-                                         KeyboardShortcutText="Enter"
+                                         KeyboardShortcutText="Ctrl+N"
                                          Margin="0 16 10 16"
                                          Click="ScheduleRenovation_Click"/>
 

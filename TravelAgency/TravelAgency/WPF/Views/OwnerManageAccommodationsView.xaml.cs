@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -41,6 +42,7 @@ namespace TravelAgency.WPF.Pages
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            accommodationsListView.Loaded += PreselectFirstItem;
         }
 
         private void Execute_NavigateToManagingSuggestions()
@@ -78,6 +80,16 @@ namespace TravelAgency.WPF.Pages
         private void DeleteSelectedAccommodationCommand_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Execute_DeleteSelectedAccommodationCommand();
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (accommodationsListView.Items.Count > 0)
+            {
+                accommodationsListView.SelectedItem = accommodationsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)accommodationsListView.ItemContainerGenerator.ContainerFromItem(accommodationsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
     }
 }

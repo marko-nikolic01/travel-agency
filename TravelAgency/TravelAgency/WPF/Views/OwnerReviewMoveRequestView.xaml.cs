@@ -12,30 +12,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for OwnerScheduleRenovationView.xaml
+    /// Interaction logic for OwnerReviewMoveRequestView.xaml
     /// </summary>
-    public partial class OwnerScheduleRenovationView : Page
+    public partial class OwnerReviewMoveRequestView : Page
     {
-        public OwnerScheduleRenovationViewModel ViewModel { get; set; }
 
-        public OwnerScheduleRenovationView(OwnerScheduleRenovationViewModel viewModel)
+        public OwnerReviewMoveRequestViewModel ViewModel { get; set; }
+
+        public OwnerReviewMoveRequestView(OwnerReviewMoveRequestViewModel viewModel)
         {
             InitializeComponent();
             ViewModel = viewModel;
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
-            accommodationComboBox.Loaded += (object sender, RoutedEventArgs e) => accommodationComboBox.Focus();
+            explanationTextBox.Loaded += (s, e) => explanationTextBox.Focus();
         }
 
-        private void AddRenovation_Click(object sender, RoutedEventArgs e)
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ScheduleRenovationCmd.Execute();
+            ViewModel.NavigateBackCommand.Execute();
+        }
+
+        private void RejectRequest_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RejectRequestCommand.Execute();
         }
     }
 }
