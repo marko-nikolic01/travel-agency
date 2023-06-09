@@ -45,7 +45,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Todays tours" FontSize="20" FontWeight="DemiBold" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <Label Content="Live tour tracking" FontSize="20" FontWeight="DemiBold" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
         <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
                   ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" FontSize="14" AlternatingRowBackground="SeaShell">
             <DataGrid.Columns>

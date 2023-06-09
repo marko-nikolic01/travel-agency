@@ -271,5 +271,36 @@ namespace TravelAgency.Repositories
             }
             return existsInNotAcceptedRequests;
         }
+
+        public void BookTourRequest(int requestId, int guideId, DateOnly selectedDate)
+        {
+            TourRequest oldRequest = tourRequests.Find(t => t.Id == requestId);
+            oldRequest.Status = RequestStatus.Accepted;
+            oldRequest.GivenDate = selectedDate.ToString("dd/MM/yyyy");
+            oldRequest.GuideId = guideId;
+            _serializer.ToCSV(FilePath, tourRequests);
+        }
+
+        public List<TourRequest> GetAccepted(int specialId)
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.SpecialTourRequestId == specialId && request.Status == RequestStatus.Accepted)
+                    result.Add(request);
+            }
+            return result;
+        }
+
+        public List<TourRequest> GetAcceptedForGuide(int id)
+        {
+            List<TourRequest> result = new List<TourRequest>();
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.GuideId == id && request.Status == RequestStatus.Accepted)
+                    result.Add(request);
+            }
+            return result;
+        }
     }
 }

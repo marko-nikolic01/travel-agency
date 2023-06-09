@@ -24,6 +24,16 @@
         <Style TargetType="Border">
             <Setter Property="Background" Value="#0e1d32"></Setter>
         </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Padding" Value="5 0"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -123,7 +133,11 @@
             <Image Grid.Column="1" Grid.Row="2" Grid.RowSpan="7" Grid.ColumnSpan="4" Visibility="{Binding Path=DisplayTour , Converter={StaticResource VisibleNullConverter}}" Source="/Resources/Images/noTours.png"></Image>
         </Grid>
         <Label Foreground="#0e1d32" Grid.Row="13" FontSize="20" Grid.ColumnSpan="3" Content="Finished tours"></Label>
-        <DataGrid Grid.Row="14" Grid.ColumnSpan="7" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14" AlternatingRowBackground="SeaShell">
+        <DataGrid Grid.Row="14" Grid.ColumnSpan="7" ItemsSource="{Binding Path=FinishedTours}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Yellow"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0e1d32"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Language" Binding="{Binding Path=Tour.Language}"></DataGridTextColumn>
