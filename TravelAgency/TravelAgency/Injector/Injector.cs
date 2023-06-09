@@ -40,7 +40,8 @@ namespace TravelAgency.Injector
             { typeof(IWonVoucherNotificationRepository), new WonVoucherNotificationRepository() },
             { typeof(IForumRepository), new ForumRepository() },
             { typeof(ICommentRepository), new CommentRepository() },
-            { typeof(ICommentDislikeRepository), new CommentDislikeRepository() }
+            { typeof(ICommentDislikeRepository), new CommentDislikeRepository() },
+            { typeof(INotificationRepository), new NotificationRepository() }
         // Add more implementations here
         };
 

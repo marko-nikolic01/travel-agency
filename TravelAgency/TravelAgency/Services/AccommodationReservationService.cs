@@ -43,6 +43,11 @@ namespace TravelAgency.Services
             return ReservationRepository.GetAllNotCanceledByGuest(guest);
         }
 
+        public List<AccommodationReservation> GetCanceledByGuest(User guest)
+        {
+            return ReservationRepository.GetAllCanceledByGuest(guest);
+        }
+
         public bool CreateReservation(AccommodationReservation reservation)
         {
             if (reservation.IsValid)
