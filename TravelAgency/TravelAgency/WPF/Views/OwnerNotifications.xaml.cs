@@ -30,6 +30,7 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            notificationsListView.Loaded += PreselectFirstItem;
         }
 
         private void MarkAllAsReadCommand_Click(object sender, RoutedEventArgs e)
@@ -40,6 +41,16 @@ namespace TravelAgency.WPF.Views
         private void MarkAsReadCommand_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.MarkAsReadCommand.Execute();
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (notificationsListView.Items.Count > 0)
+            {
+                notificationsListView.SelectedItem = notificationsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)notificationsListView.ItemContainerGenerator.ContainerFromItem(notificationsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
     }
 }

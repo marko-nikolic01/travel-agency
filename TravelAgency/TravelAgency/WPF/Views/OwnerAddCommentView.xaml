@@ -47,6 +47,7 @@
                        Text="{Binding SelectedForum.Title}"
                        Style="{StaticResource formTextBlock}"/>
             <TextBox Grid.Row="1" Grid.Column="1"
+                     x:Name="commentTextBox"
                      Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource formTextBox}"
                      TextWrapping="WrapWithOverflow"/>

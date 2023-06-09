@@ -19,6 +19,7 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Text" Value="Back"/>
                 <Setter Property="KeyboardShortcutText" Value="Ctrl+B"/>
+                <Setter Property="Width" Value="90"/>
             </Style>
 
             <Style TargetType="controls:ButtonWithShortcut" x:Key="dialogBackButton" BasedOn="{StaticResource backButton}">

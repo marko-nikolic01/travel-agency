@@ -61,7 +61,9 @@
                 <DataGrid Grid.Row="1"
                           x:Name="activeReservationsDataGrid"
                           ItemsSource="{Binding AccommodationReservations}"
-                          Style="{StaticResource ownerDataGrid}">
+                          SelectionMode="Single"
+                          Style="{StaticResource ownerDataGrid}"
+                          SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding Accommodation.Name}"

@@ -31,6 +31,7 @@
                              Text="Notifications"/>
 
         <ListView Grid.Row="1"
+                  x:Name="notificationsListView"
                   ItemsSource="{Binding Notifications}"
                   SelectedItem="{Binding SelectedNotification}"
                   HorizontalContentAlignment="Stretch">

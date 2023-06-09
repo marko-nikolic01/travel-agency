@@ -28,6 +28,7 @@
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding Path=NavigateBackCommand, ElementName=root}"/>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding Path=NavigateToAddAccommodationCommand, ElementName=root}"/>
         <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding DeleteSelectedAccommodationCommand}"/>
+        <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>

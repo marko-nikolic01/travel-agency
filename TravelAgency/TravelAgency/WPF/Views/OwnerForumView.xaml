@@ -47,6 +47,7 @@
                        Style="{StaticResource h2}"/>
 
             <ListBox Grid.Row="1"
+                     x:Name="forumLocationsListView"
                      ItemsSource="{Binding Locations}"
                      SelectedItem="{Binding SelectedLocation}">
                 <ListBox.ItemTemplate>

@@ -32,6 +32,7 @@
                              Text="{Binding PageHeader}"/>
 
         <ListView Grid.Row="1"
+                  x:Name="forumsListView"
                   ItemsSource="{Binding Forums}"
                   SelectedItem="{Binding SelectedForum}"
                   HorizontalContentAlignment="Stretch">

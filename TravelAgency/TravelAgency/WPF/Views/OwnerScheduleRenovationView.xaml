@@ -89,6 +89,7 @@
                            Style="{StaticResource customFormTextBlock}"/>
 
                 <ComboBox Grid.Row="0" Grid.Column="1"
+                          x:Name="accommodationComboBox"
                           Style="{StaticResource formComboBox}"
                           ItemsSource="{Binding Accommodations}"
                           SelectedItem="{Binding SelectedAccommodation}"
@@ -101,6 +102,7 @@
                 </ComboBox>
 
                 <TextBox Grid.Row="2" Grid.Column="1"
+                         x:Name="descriptionTextBox"
                          Style="{StaticResource formTextBox}"
                          Text="{Binding NewAccommodationRenovation.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          Margin="0"

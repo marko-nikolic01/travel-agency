@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -40,13 +42,29 @@ namespace TravelAgency.WPF.Pages
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            activeReservationsDataGrid.Loaded += FocusFirstDataGrid;
+        }
 
-            requestsDataGrid.CommandBindings.Clear();
-            activeReservationsDataGrid.CommandBindings.Clear();
-            requestsDataGrid.InputBindings.Clear();
-            activeReservationsDataGrid.InputBindings.Clear();
+        private void FocusFirstDataGrid(object sender, RoutedEventArgs e)
+        {
+            if (activeReservationsDataGrid.Items.Count > 0)
+            {
+                activeReservationsDataGrid.SelectedItem = activeReservationsDataGrid.Items[0];
+                activeReservationsDataGrid.ScrollIntoView(activeReservationsDataGrid.Items[0]);
+                requestsDataGrid.SelectedItems.Clear();
+                activeReservationsDataGrid.Focus();
+            }
+        }
 
-            activeReservationsDataGrid.Focus();
+        private void FocusSecondDataGrid(object sender, RoutedEventArgs e)
+        {
+            if (requestsDataGrid.Items.Count > 0)
+            {
+                requestsDataGrid.SelectedItem = requestsDataGrid.Items[0];
+                requestsDataGrid.ScrollIntoView(requestsDataGrid.Items[0]);
+                activeReservationsDataGrid.SelectedItems.Clear();
+                requestsDataGrid.Focus();
+            }
         }
 
         private void Execute_NavigateToReviewRequestCommand()
@@ -63,17 +81,11 @@ namespace TravelAgency.WPF.Pages
         {
             if (activeReservationsDataGrid.IsFocused)
             {
-                if (activeReservationsDataGrid.Items.Count > 0)
-                {
-                    activeReservationsDataGrid.SelectedIndex = 0;
-                }               
+                FocusSecondDataGrid(null, null);              
             }
             else
             {
-                if (requestsDataGrid.Items.Count > 0)
-                {
-                    requestsDataGrid.SelectedIndex = 0;
-                }
+                FocusFirstDataGrid(null, null);
             }
         }
     }

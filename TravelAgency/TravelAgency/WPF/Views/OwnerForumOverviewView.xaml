@@ -45,6 +45,7 @@
                        Margin="0 0 0 10"/>
 
             <ListView Grid.Row="1"
+                      x:Name="commentsListView"
                       ItemsSource="{Binding Comments}"
                       SelectedItem="{Binding SelectedComment}"
                       HorizontalContentAlignment="Stretch"

@@ -14,6 +14,7 @@
     <Page.InputBindings>
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand,ElementName=root}"/>
         <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding NavigateToMonthStatsCommand,ElementName=root}"/>
+        <KeyBinding Key="Space" Command="{Binding FocusDataGrid,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
