@@ -17,6 +17,7 @@
     <None Remove="Resources\Images\Disliked.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\exclamation-mark.png" />
+    <None Remove="Resources\Images\exclamationMark.png" />
     <None Remove="Resources\Images\GuestDidntVisit.png" />
     <None Remove="Resources\Images\file.png" />
     <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
@@ -98,6 +99,7 @@
 	  </Resource>
 	  <Resource Include="Resources\Images\email.png" />
 	  <Resource Include="Resources\Images\exclamation-mark.png" />
+	  <Resource Include="Resources\Images\exclamationMark.png" />
 	  <Resource Include="Resources\Images\GuestDidntVisit.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Resource>
