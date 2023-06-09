@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:TravelAgency.WPF.Views"
         xmlns:viewModels="clr-namespace:TravelAgency.WPF.ViewModels"
+        xmlns:demo="clr-namespace:TravelAgency.WPF.ViewModels.Guest1Demo"
         xmlns:converters="clr-namespace:TravelAgency.Converters"
         mc:Ignorable="d"
         Title="Turisticka agencija" Height="600" Width="1200"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Icon="../../Resources/Images/International-Travel_43678.ico">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundButton">
             <Style.Resources>
@@ -275,6 +277,48 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewModels:Guest1ReportViewModel}">
                         <views:Guest1ReportView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1HomeMenuDemoViewModel}">
+                        <views:Guest1HomeMenuDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationsReservationsMenuDemoViewModel}">
+                        <views:Guest1AccommodationsReservationsMenuDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ReviewsMenuDemoViewModel}">
+                        <views:Guest1ReviewsMenuDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ForumsMenuDemoViewModel}">
+                        <views:Guest1ForumsMenuDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1NotificationsDemoViewModel}">
+                        <views:Guest1NotificationsDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1UserProfileDemoViewModel}">
+                        <views:Guest1UserProfileDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationSearchDemoViewModel}">
+                        <views:Guest1AccommodationSearchDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationDemoViewModel}">
+                        <views:Guest1AccommodationReservationDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1WhereverWheneverSearchDemoViewModel}">
+                        <views:Guest1WhereverWheneverSearchDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1WhereverWheneverReservationDemoViewModel}">
+                        <views:Guest1WhereverWheneverReservationDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationsDemoViewModel}">
+                        <views:Guest1AccommodationReservationsDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationMoveDemoViewModel}">
+                        <views:Guest1AccommodationReservationMoveDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationMoveRequestsDemoViewModel}">
+                        <views:Guest1AccommodationReservationMoveRequestsDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ReportDemoViewModel}">
+                        <views:Guest1ReportDemoView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

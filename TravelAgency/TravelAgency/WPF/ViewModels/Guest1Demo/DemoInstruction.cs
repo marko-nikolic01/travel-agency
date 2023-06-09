@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 
 namespace TravelAgency.WPF.ViewModels.Guest1Demo
@@ -16,6 +17,11 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         private int _rowSpan;
         private int _columnSpan;
         private string _text;
+        private int _height;
+        private int _width;
+        private HorizontalAlignment _horizontalAlignment;
+        private VerticalAlignment _verticalAlignment;
+        private bool _visibility;
 
         public int Row
         {
@@ -82,6 +88,71 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             }
         }
 
+        public int Height
+        {
+            get => _height;
+            set
+            {
+                if (value != _height)
+                {
+                    _height = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Width
+        {
+            get => _width;
+            set
+            {
+                if (value != _width)
+                {
+                    _width = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool Visibility
+        {
+            get => _visibility;
+            set
+            {
+                if (value != _visibility)
+                {
+                    _visibility = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get => _horizontalAlignment;
+            set
+            {
+                if (value != _horizontalAlignment)
+                {
+                    _horizontalAlignment = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public VerticalAlignment VerticalAlignment
+        {
+            get => _verticalAlignment;
+            set
+            {
+                if (value != _verticalAlignment)
+                {
+                    _verticalAlignment = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
         public DemoInstruction()
         {
             Row = 0;
@@ -89,6 +160,11 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             RowSpan = 0;
             ColumnSpan = 0;
             Text = "";
+            Height = 0;
+            Width = 0;
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Center;
+            Visibility = false;
         }
 
         public void UpdateInstruction(int row, int column, int rowSpan, int columnSpan, string text)
@@ -98,8 +174,20 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             RowSpan = rowSpan;
             ColumnSpan = columnSpan;
             Text = text;
+            Visibility = true;
         }
 
+        public void Align(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) 
+        {
+            HorizontalAlignment = horizontalAlignment;
+            VerticalAlignment = verticalAlignment;
+        }
+
+        public void SetDimensions(int height, int width)
+        {
+            Height = height;
+            Width = width;
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -15,21 +15,20 @@ using System.Windows.Forms;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.ViewModels.Guest1Demo;
 using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
     public class Guest1MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private CancellationTokenSource _canceller;
-
-
         private SuperGuestService _superGuestService;
         private NotificationService _notificationService;
+        private DemoController _demoController;
 
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
-        public MyICommand StopCommand { get; private set; }
+        public MyICommand StartDemoCommand { get; private set; }
 
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
         private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
@@ -63,6 +62,8 @@ namespace TravelAgency.WPF.ViewModels
                 }
             }
         }
+
+
 
         public ViewModelBase PreviousViewModel
         {
@@ -108,6 +109,8 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
+
+
         public bool HasNotifications
         {
             get => _hasNotifications;
@@ -125,6 +128,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             _superGuestService = new SuperGuestService();
             _notificationService = new NotificationService();
+            _demoController = new DemoController(this);
 
             Guest = guest;
             _superGuestService.CheckSuperGuest(Guest);
@@ -137,8 +141,8 @@ namespace TravelAgency.WPF.ViewModels
             }
 
             NavigationCommand = new MyICommand<string>(OnNavigation);
-            StopCommand = new MyICommand(OnStop);
-            _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
+            StartDemoCommand = new MyICommand(OnStartDemo);
+            _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand, StartDemoCommand);
             _guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
             _guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
             _guest1ForumsMenuViewModel = new Guest1ForumsMenuViewModel(NavigationCommand);
@@ -148,9 +152,9 @@ namespace TravelAgency.WPF.ViewModels
             StartTimer();
         }
 
-        private void OnStop()
+        private async void OnStartDemo()
         {
-            _canceller.Cancel();
+            _demoController.ExecuteDemo(CurrentViewModel);
         }
 
         public /*async*/ void OnNavigation(string destination)
