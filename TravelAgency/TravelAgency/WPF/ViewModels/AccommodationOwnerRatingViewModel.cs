@@ -30,7 +30,7 @@ namespace TravelAgency.WPF.ViewModels
             if (Rating.IsValid)
             {
                 RatingService.CreateRating(Rating);
-                Guest1Main.Stays.Remove(Stay);
+                //Guest1Main.Stays.Remove(Stay);
                 return true;
             }
             else

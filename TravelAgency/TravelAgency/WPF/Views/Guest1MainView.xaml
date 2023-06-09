@@ -8,8 +8,7 @@
         xmlns:converters="clr-namespace:TravelAgency.Converters"
         mc:Ignorable="d"
         Title="Turisticka agencija" Height="600" Width="1200"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-        Icon="../../Resources/Images/International-Travel_43678.ico">
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundButton">
             <Style.Resources>
@@ -165,7 +164,7 @@
                                 <ColumnDefinition Width="20"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Height="20" Source="../../Resources/Images/bell.png"></Image>
-                            <Image Grid.Column="0" Height="13" Source="../../Resources/Images/danger.png" Visibility="{Binding Path=HasNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                            <Image Grid.Column="0" Height="13" Source="../../Resources/Images/exclamationMark.png" Visibility="{Binding Path=HasNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
                             <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Notifikacije</TextBlock>
                             <Image Grid.Column="2" Height="20" Source="../../Resources/Images/next.png"></Image>
                         </Grid>
