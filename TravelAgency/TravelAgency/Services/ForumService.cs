@@ -25,6 +25,7 @@ namespace TravelAgency.Services
         public IAccommodationRepository AccommodationRepository { get; set; }
         public IAccommodationReservationRepository AccommodationReservationRepository { get; set; }
         public ICommentDislikeRepository CommentDislikeRepository { get; set; }
+        public INotificationRepository NotificationRepository { get; set; }
 
         public ForumService()
         {
@@ -35,6 +36,7 @@ namespace TravelAgency.Services
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             AccommodationReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             CommentDislikeRepository = Injector.Injector.CreateInstance<ICommentDislikeRepository>();
+            NotificationRepository = Injector.Injector.CreateInstance<INotificationRepository>();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
@@ -47,6 +49,7 @@ namespace TravelAgency.Services
             CommentRepository.LinkForums(ForumRepository.GetAll());
             CommentDislikeRepository.LinkUsers(UserRepository.GetAll());
             CommentDislikeRepository.LinkComments(CommentRepository.GetAll());
+            NotificationRepository.LinkUsers(UserRepository.GetAll());
         }
 
         public List<Forum> GetForums()
@@ -107,6 +110,33 @@ namespace TravelAgency.Services
                 PostCommentByGuest(forum, initialComment);
                 return true;
             }
+            return false;
+        }
+
+        private void SendNotifications(Forum forum)
+        {
+            foreach (var owner in UserRepository.GetOwners())
+            {
+                if (OwnerHasAccommodationOnLocation(owner, forum.Location))
+                {
+                    Notification notification = new Notification();
+                    notification.User = owner;
+                    notification.Text = "Forum opened for location: " + forum.Location.City;
+                    NotificationRepository.Save(notification);
+                }
+            }
+        }
+
+        private bool OwnerHasAccommodationOnLocation(User owner, Location location)
+        {
+            foreach (var accommodation in AccommodationRepository.GetActiveByOwner(owner))
+            {
+                if (accommodation.Location == location)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
