@@ -1,18 +1,8 @@
-﻿using Syncfusion.XPS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.Pages;
 using TravelAgency.WPF.ViewModels;
@@ -49,11 +39,6 @@ namespace TravelAgency.WPF.Views
             {
                 BestLocationsDataGrid.SelectedIndex = 0;
                 BestLocationsDataGrid.ScrollIntoView(BestLocationsDataGrid.Items[0]);
-                //WorstAccommodaionsDataGrid.SelectedItems.Clear();
-                //WorstAccommodaionsDataGrid.SelectedCells.Clear();
-                //var cellInfo = new DataGridCellInfo(BestLocationsDataGrid.Items[0], BestLocationsDataGrid.ColumnFromDisplayIndex(0));
-                //BestLocationsDataGrid.CurrentCell = cellInfo;
-                //MessageBox.Show(cellInfo.Item.ToString());
                 BestLocationsDataGrid.Focus();
             }
         }
@@ -64,8 +49,6 @@ namespace TravelAgency.WPF.Views
             {
                 WorstAccommodaionsDataGrid.SelectedIndex = 0;
                 WorstAccommodaionsDataGrid.ScrollIntoView(WorstAccommodaionsDataGrid.Items[0]);
-                //BestLocationsDataGrid.SelectedItems.Clear();
-                //BestLocationsDataGrid.SelectedCells.Clear();
                 WorstAccommodaionsDataGrid.Focus();
             }
         }

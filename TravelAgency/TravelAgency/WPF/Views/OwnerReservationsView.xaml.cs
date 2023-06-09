@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,6 +19,7 @@ using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.Pages
 {
@@ -62,19 +62,26 @@ namespace TravelAgency.WPF.Pages
             {
                 requestsDataGrid.SelectedItem = requestsDataGrid.Items[0];
                 requestsDataGrid.ScrollIntoView(requestsDataGrid.Items[0]);
-                activeReservationsDataGrid.SelectedItems.Clear();
                 requestsDataGrid.Focus();
             }
-        }
-
-        private void Execute_NavigateToReviewRequestCommand()
-        {
-
         }
 
         private void AcceptMoveRequest_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AcceptRequestCommand.Execute();
+        }
+
+        private void Execute_NavigateToReviewRequestCommand()
+        {
+            if (ViewModel.SelectedMoveRequest == null)
+            {
+                MessageBox.Show("Select a move request.");
+                return;
+            }
+
+            OwnerReviewMoveRequestViewModel vm = new OwnerReviewMoveRequestViewModel(ViewModel.SelectedMoveRequest.MoveRequest, NavigationService);
+            OwnerReviewMoveRequestView page = new OwnerReviewMoveRequestView(vm);
+            this.NavigationService.Navigate(page);
         }
 
         private void Execute_FocusOtherDataGrid()
@@ -87,6 +94,11 @@ namespace TravelAgency.WPF.Pages
             {
                 FocusFirstDataGrid(null, null);
             }
+        }
+
+        private void NavigateToReviewRequestCommand_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToReviewRequestCommand();
         }
     }
 }

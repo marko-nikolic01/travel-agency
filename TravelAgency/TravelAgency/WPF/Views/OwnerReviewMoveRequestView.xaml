@@ -1,0 +1,129 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerReviewMoveRequestView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerReviewMoveRequestView"
+      x:Name="root"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource formTextBox}">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
+        <Style TargetType="DatePicker" BasedOn="{StaticResource formDatePicker}">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
+        <converters:DateOnlyToDateTimeConverter x:Key="dateOnlyConverter"/>
+    </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding RejectRequestCommand}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Reservations > Move request review"/>
+
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+              Margin="0 0 0 20">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Accommodation:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Guest username:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Start date:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="End date:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="New start date:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0"
+                       Text="New end date:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="6" Grid.Column="0"
+                       Text="Explanation:"
+                       Style="{StaticResource formTextBlock}"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Text="{Binding SelectedMoveRequest.Reservation.Accommodation.Name}"/>
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     Text="{Binding SelectedMoveRequest.Reservation.Guest.Username}"/>
+            <DatePicker Grid.Row="2" Grid.Column="1"
+                        SelectedDate="{Binding SelectedMoveRequest.Reservation.DateSpan.StartDate, Converter={StaticResource dateOnlyConverter}}"/>
+            <DatePicker Grid.Row="3" Grid.Column="1"
+                        SelectedDate="{Binding SelectedMoveRequest.Reservation.DateSpan.EndDate, Converter={StaticResource dateOnlyConverter}}"/>
+            <DatePicker Grid.Row="4" Grid.Column="1"
+                        SelectedDate="{Binding SelectedMoveRequest.DateSpan.StartDate, Converter={StaticResource dateOnlyConverter}}"/>
+            <DatePicker Grid.Row="5" Grid.Column="1"
+                        SelectedDate="{Binding SelectedMoveRequest.DateSpan.EndDate, Converter={StaticResource dateOnlyConverter}}"/>
+            <TextBox Grid.Row="6" Grid.Column="1"
+                     Name="explanationTextBox"
+                     Text="{Binding ExplanationText, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="True"
+                     Height="100"/>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Style="{StaticResource backButton}"
+                                         Margin="0 0 10 0"
+                                         Click="NavigateBack_Click"/>
+
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Reject request"
+                                         KeyboardShortcutText="Ctrl+S"
+                                         Margin="0 0 10 0"
+                                         Click="RejectRequest_Click"/>
+
+            <controls:Tip Grid.Column="2"
+                          Header="When can I reject a request?"
+                          TipText="You can reject a request under any conditions, even if the datespan is available for rescheduling."/>
+        </Grid>
+    </Grid>
+</Page>
