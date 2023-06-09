@@ -113,7 +113,6 @@
 	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
-	  <Resource Include="Resources\Images\danger.png" />
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />

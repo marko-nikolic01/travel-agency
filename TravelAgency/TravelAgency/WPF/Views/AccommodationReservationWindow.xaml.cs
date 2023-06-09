@@ -316,7 +316,7 @@ namespace TravelAgency.WPF.Views
             if (Reservation.IsValid)
             {
                 ReservationService.CreateReservation(Reservation);
-                Guest1Main.Reservations.Add(Reservation);
+                //Guest1Main.Reservations.Add(Reservation);
                 Close();
             }
             else
