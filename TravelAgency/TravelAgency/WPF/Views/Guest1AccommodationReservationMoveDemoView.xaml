@@ -213,7 +213,7 @@
                     </Button.Content>
                 </Button>
                 <TextBox Grid.Row="6" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black"
-                        VerticalContentAlignment="Center" IsReadOnly="True">1</TextBox>
+                        VerticalContentAlignment="Center" IsReadOnly="True" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">1</TextBox>
                 <ListView BorderBrush="Black" BorderThickness="1" x:Name="listViewAvailableDateSpans" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding AvailableDateSpans}" SelectedItem="{Binding Path=MoveRequest.DateSpan}"
                           ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
                     <ListView.ItemTemplate>

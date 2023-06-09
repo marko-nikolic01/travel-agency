@@ -33,13 +33,11 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
                 do
                 {
                     Guest1HomeMenuDemoViewModel guest1HomeMenuDemoViewModel = new Guest1HomeMenuDemoViewModel(StopDemoCommand, _demoStopper);
-                    
                     _mainViewModel.CurrentViewModel = guest1HomeMenuDemoViewModel;
                     guest1HomeMenuDemoViewModel.ExecuteDemoStep1(); if (_demoStopper.Token.IsCancellationRequested) break;
                     
                     {
                         Guest1AccommodationsReservationsMenuDemoViewModel guest1AccommodationsReservationsMenuDemoViewModel = new Guest1AccommodationsReservationsMenuDemoViewModel(StopDemoCommand, _demoStopper);
-                        /*
                         _mainViewModel.CurrentViewModel = guest1AccommodationsReservationsMenuDemoViewModel;
                         guest1AccommodationsReservationsMenuDemoViewModel.ExecuteDemoStep1(); if (_demoStopper.Token.IsCancellationRequested) break;
 
@@ -65,27 +63,27 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
                             _mainViewModel.CurrentViewModel = guest1WhereverWheneverReservationDemoViewModel;
                             guest1WhereverWheneverReservationDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                         }
-                        */
+                        
                         _mainViewModel.CurrentViewModel = guest1AccommodationsReservationsMenuDemoViewModel;
                         guest1AccommodationsReservationsMenuDemoViewModel.ExecuteDemoStep3(); if (_demoStopper.Token.IsCancellationRequested) break;
 
-                        {/*
+                        {
                             Guest1AccommodationReservationsDemoViewModel Guest1AccommodationReservationsDemoViewModel = new Guest1AccommodationReservationsDemoViewModel(StopDemoCommand, _demoStopper);
                             _mainViewModel.CurrentViewModel = Guest1AccommodationReservationsDemoViewModel;
                             Guest1AccommodationReservationsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
 
                             Guest1AccommodationReservationMoveDemoViewModel guest1AccommodationReservationMoveDemoViewModell = new Guest1AccommodationReservationMoveDemoViewModel(StopDemoCommand, _demoStopper);
                             _mainViewModel.CurrentViewModel = guest1AccommodationReservationMoveDemoViewModell;
-                            guest1AccommodationReservationMoveDemoViewModell.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;*/
+                            guest1AccommodationReservationMoveDemoViewModell.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                         }
 
                         _mainViewModel.CurrentViewModel = guest1AccommodationsReservationsMenuDemoViewModel;
                         guest1AccommodationsReservationsMenuDemoViewModel.ExecuteDemoStep4(); if (_demoStopper.Token.IsCancellationRequested) break;
 
-                        {/*
+                        {
                             Guest1AccommodationReservationMoveRequestsDemoViewModel guest1AccommodationReservationMoveRequestsDemoViewModel = new Guest1AccommodationReservationMoveRequestsDemoViewModel(StopDemoCommand, _demoStopper);
                             _mainViewModel.CurrentViewModel = guest1AccommodationReservationMoveRequestsDemoViewModel;
-                            guest1AccommodationReservationMoveRequestsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;*/
+                            guest1AccommodationReservationMoveRequestsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                         }
 
                         _mainViewModel.CurrentViewModel = guest1AccommodationsReservationsMenuDemoViewModel;
@@ -97,34 +95,74 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
                             guest1ReportDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                         }
                     }
-                    /*
+                    
                     _mainViewModel.CurrentViewModel = guest1HomeMenuDemoViewModel;
                     guest1HomeMenuDemoViewModel.ExecuteDemoStep2(); if (_demoStopper.Token.IsCancellationRequested) break;
 
                     {
                         Guest1ReviewsMenuDemoViewModel guest1ReviewsMenuDemoViewModel = new Guest1ReviewsMenuDemoViewModel(StopDemoCommand, _demoStopper);
-
                         _mainViewModel.CurrentViewModel = guest1ReviewsMenuDemoViewModel;
                         guest1ReviewsMenuDemoViewModel.ExecuteDemoStep1(); if (_demoStopper.Token.IsCancellationRequested) break;
 
+                        {
+                            Guest1RateableStaysDemoViewModel guest1RateableStaysDemoViewModel = new Guest1RateableStaysDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1RateableStaysDemoViewModel;
+                            guest1RateableStaysDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+
+                            Guest1WriteReviewDemoViewModel guest1WriteReviewDemoViewModel = new Guest1WriteReviewDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1WriteReviewDemoViewModel;
+                            guest1WriteReviewDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        }
+
                         _mainViewModel.CurrentViewModel = guest1ReviewsMenuDemoViewModel;
                         guest1ReviewsMenuDemoViewModel.ExecuteDemoStep2(); if (_demoStopper.Token.IsCancellationRequested) break;
-                    }
 
+                        {
+                            Guest1ReviewsDemoViewModel guest1ReviewsDemoViewModel = new Guest1ReviewsDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1ReviewsDemoViewModel;
+                            guest1ReviewsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        }
+                    }
+                    
                     _mainViewModel.CurrentViewModel = guest1HomeMenuDemoViewModel;
                     guest1HomeMenuDemoViewModel.ExecuteDemoStep3(); if (_demoStopper.Token.IsCancellationRequested) break;
 
                     {
                         Guest1ForumsMenuDemoViewModel guest1ForumsMenuDemoViewModel = new Guest1ForumsMenuDemoViewModel(StopDemoCommand, _demoStopper);
-
                         _mainViewModel.CurrentViewModel = guest1ForumsMenuDemoViewModel;
                         guest1ForumsMenuDemoViewModel.ExecuteDemoStep1(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        
+                        {
+                            Guest1ForumLocationSearchDemoViewModel guest1ForumLocationSearchDemoViewModel = new Guest1ForumLocationSearchDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1ForumLocationSearchDemoViewModel;
+                            guest1ForumLocationSearchDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+
+                            Guest1OpenForumDemoViewModel guest1OpenForumDemoViewModel = new Guest1OpenForumDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1OpenForumDemoViewModel;
+                            guest1OpenForumDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        }
 
                         _mainViewModel.CurrentViewModel = guest1ForumsMenuDemoViewModel;
                         guest1ForumsMenuDemoViewModel.ExecuteDemoStep2(); if (_demoStopper.Token.IsCancellationRequested) break;
 
+                        {
+                            Guest1MyForumsDemoViewModel guest1MyForumsDemoViewModel = new Guest1MyForumsDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1MyForumsDemoViewModel;
+                            guest1MyForumsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        }
+
                         _mainViewModel.CurrentViewModel = guest1ForumsMenuDemoViewModel;
                         guest1ForumsMenuDemoViewModel.ExecuteDemoStep3(); if (_demoStopper.Token.IsCancellationRequested) break;
+
+                        {
+                            Guest1ForumSearchDemoViewModel guest1ForumSearchDemoViewModel = new Guest1ForumSearchDemoViewModel(StopDemoCommand, _demoStopper);
+                            _mainViewModel.CurrentViewModel = guest1ForumSearchDemoViewModel;
+                            guest1ForumSearchDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+
+                            Guest1ReadWriteForumDemoViewModel guest1ReadWriteForumDemoViewModel = new Guest1ReadWriteForumDemoViewModel(StopDemoCommand, _demoStopper, _mainViewModel.Guest);
+                            _mainViewModel.CurrentViewModel = guest1ReadWriteForumDemoViewModel;
+                            guest1ReadWriteForumDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
+                        }
                     }
                     
                     _mainViewModel.CurrentViewModel = guest1HomeMenuDemoViewModel;
@@ -132,7 +170,6 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
                     {
                         Guest1NotificationsDemoViewModel guest1NotificationsDemoViewModel = new Guest1NotificationsDemoViewModel(StopDemoCommand, _demoStopper);
-
                         _mainViewModel.CurrentViewModel = guest1NotificationsDemoViewModel;
                         guest1NotificationsDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                     }
@@ -142,14 +179,13 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
                     {
                         Guest1UserProfileDemoViewModel guest1UserProfileDemoViewModel = new Guest1UserProfileDemoViewModel(StopDemoCommand, _demoStopper, _mainViewModel.Guest);
-
                         _mainViewModel.CurrentViewModel = guest1UserProfileDemoViewModel;
                         guest1UserProfileDemoViewModel.ExecuteDemo(); if (_demoStopper.Token.IsCancellationRequested) break;
                     }
 
                     _mainViewModel.CurrentViewModel = guest1HomeMenuDemoViewModel;
                     guest1HomeMenuDemoViewModel.ExecuteDemoStep6(); if (_demoStopper.Token.IsCancellationRequested) break;
-                    */
+                    
                 } while (true);
             });
             _mainViewModel.CurrentViewModel = returnViewModel;

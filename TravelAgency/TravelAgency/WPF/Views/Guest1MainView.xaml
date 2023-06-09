@@ -320,6 +320,30 @@
                     <DataTemplate DataType="{x:Type demo:Guest1ReportDemoViewModel}">
                         <views:Guest1ReportDemoView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1RateableStaysDemoViewModel}">
+                        <views:Guest1RateableStaysDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1WriteReviewDemoViewModel}">
+                        <views:Guest1WriteReviewDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ReviewsDemoViewModel}">
+                        <views:Guest1ReviewsDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ForumLocationSearchDemoViewModel}">
+                        <views:Guest1ForumLocationSearchDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1OpenForumDemoViewModel}">
+                        <views:Guest1OpenForumDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1MyForumsDemoViewModel}">
+                        <views:Guest1MyForumsDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ForumSearchDemoViewModel}">
+                        <views:Guest1ForumSearchDemoView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type demo:Guest1ReadWriteForumDemoViewModel}">
+                        <views:Guest1ReadWriteForumDemoView/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </DockPanel>
