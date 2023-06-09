@@ -34,5 +34,8 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public int GetNumberOfAllRequests(int guestId);
         public bool ShouldNotifyGuestForLanguage(int guestId, string language);
         public bool ShouldNotifyGuestForLocation(int guestId, int locationId);
+        public void BookTourRequest(int requestId, int guideId, DateOnly selectedDate);
+        public List<TourRequest> GetAccepted(int specialId);
+        public List<TourRequest> GetAcceptedForGuide(int id);
     }
 }
