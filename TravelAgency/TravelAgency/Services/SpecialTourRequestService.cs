@@ -29,7 +29,7 @@ namespace TravelAgency.Services
             {
                 if(specialRequest.TourRequests.Count == 0)
                 {
-                    specialRequest.TourRequests = ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id);
+                    specialRequest.TourRequests = new System.Collections.ObjectModel.ObservableCollection<TourRequest>(ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id));
                 }
             }
         }

@@ -30,10 +30,10 @@
         <DataTemplate x:Key="SpecialRequestDataTemplate">
             <DataGrid ItemsSource="{Binding TourRequests}" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#0e1d32"
                        AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
-                          Style="{StaticResource FADataGridStyle}" FontSize="17">
+                          Style="{StaticResource FADataGridStyle}" FontSize="17" SelectedItem="{Binding Path=Datacontext.SelectedTourRequest, RelativeSource={RelativeSource AncestorType=Page}}">
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Yellow"/>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0e1d32"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0e1d32"/>
                     </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Country" Binding="{Binding Location.Country}">
@@ -71,7 +71,7 @@
                     <DataGridTemplateColumn Header="Book?">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="CancelButton" Margin="5" Content="Book" Command="{Binding Path= DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
+                                <Button Name="CancelButton" Margin="5" Content="Book" Command="{Binding Path= DataContext.BookTourRequestCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -90,16 +90,69 @@
             </Grid.RowDefinitions>
             <Button Width="110" Height="45" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="{Binding Path=CanceledTour , Converter={StaticResource NotNullTrueConverter}}" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="25 35 35 25" Content="Undo book" FontSize="20" Command="{Binding Path= UndoCancelCommand}"></Button>
 
-            <ListView Grid.Row="1" Margin="10" ItemTemplate="{StaticResource SpecialRequestDataTemplate}"
-                      ItemsSource="{Binding SpecialTourRequestList}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
+            <DataGrid Margin="5" RowDetailsVisibilityMode="Visible" Grid.Row="1" IsReadOnly="True"
+                  ItemsSource="{Binding Path=SpecialTourRequests}" AutoGenerateColumns="False" FontSize="15" AlternatingRowBackground="SeaShell">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Serial Number" Binding="{Binding Path=Id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Requests count" Binding="{Binding Path=TourRequests.Count}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding Path= DataContext.SelectedTourRequest, RelativeSource={RelativeSource AncestorType=Page}}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  Header="Location">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0}, {1}">
+                                            <Binding Path="Location.City"/>
+                                            <Binding Path="Location.Country"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Language" Binding="{Binding Language}"></DataGridTextColumn>
+                                <DataGridTemplateColumn Header="Book?">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Name="RowButton" Content="Book" Command="{Binding Path= DataContext.BookTourRequestCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridRow">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsChecked, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" Value="true">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=CanNotBeChecked, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}" Value="true">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=CurrentState, UpdateSourceTrigger=PropertyChanged}" Value="2">
+                                <DataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False"></Setter>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=ToShadow, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                                <DataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False"></Setter>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-
+                </DataGrid.Resources>
+            </DataGrid>
 
         </Grid>
     </Grid>
