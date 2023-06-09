@@ -108,6 +108,7 @@ namespace TravelAgency.Services
             {
                 ForumRepository.Save(forum);
                 PostCommentByGuest(forum, initialComment);
+                SendNotifications(forum);
                 return true;
             }
             return false;
@@ -299,7 +300,7 @@ namespace TravelAgency.Services
             int commentDislikeCount = GetCommentDislikeCount(comment);
             bool isCommentOfOwner = IsCommentOfOwner(comment);
             bool ownerDislikedComment = OwnerDislikedComment(owner, comment);
-            bool guestVisited = (user.Role == Roles.Guest1) ? DidUserVisitLocation(user, location) : true;
+            bool guestVisited = (user.Role == Roles.Owner) ? true : DidUserVisitLocation(user, location);
             var dto = new CommentWithDataDTO(comment, commentDislikeCount, isCommentOfOwner, ownerDislikedComment, guestVisited);
             return dto;
         }
@@ -322,7 +323,7 @@ namespace TravelAgency.Services
             return false;
         }
 
-        private bool IsCommentOfOwner(Comment comment)
+        public bool IsCommentOfOwner(Comment comment)
         {
             return comment.User.Role == Roles.Owner;
         }

@@ -42,7 +42,9 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -50,35 +52,66 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0"
-                  Margin="0 0 0 10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                       Text="Top 3 best locations"
+                       Style="{StaticResource h2}"/>
 
-                <TextBlock Grid.Row="0"
-                           Text="Top 3 best locations"
-                           Style="{StaticResource h2}"/>
+            <DataGrid Grid.Row="1" Grid.Column="0"
+                      x:Name="BestLocationsDataGrid"
+                      Style="{StaticResource ownerDataGrid}"
+                      ItemsSource="{Binding Top3BestLocations}"
+                      SelectedItem="{Binding SelectedLocation}"
+                      Margin="0 0 0 5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Location"
+                                        Width="*"
+                                        Binding="{Binding Location.City}"/>
+                    <DataGridTextColumn Header="Country"
+                                        Width="*"
+                                        Binding="{Binding Location.Country}"/>
+                    <DataGridTextColumn Header="Number of busy days"
+                                        Width="*"
+                                        Binding="{Binding NumberOfBusyDays}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <DataGrid Grid.Row="1"
-                          x:Name="BestLocationsDataGrid"
-                          Style="{StaticResource ownerDataGrid}"
-                          ItemsSource="{Binding Top3BestLocations}"
-                          SelectedItem="{Binding SelectedLocation}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Location"
-                                            Width="*"
-                                            Binding="{Binding Location.City}"/>
-                        <DataGridTextColumn Header="Country"
-                                            Width="*"
-                                            Binding="{Binding Location.Country}"/>
-                        <DataGridTextColumn Header="Number of busy days"
-                                            Width="*"
-                                            Binding="{Binding NumberOfBusyDays}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <controls:ButtonWithShortcut Grid.Row="1" Grid.Column="1"
+                                         Text="Add"
+                                         KeyboardShortcutText="Ctrl+N"
+                                         Click="AddAccommodation_Click"
+                                         Margin="10 0 0 0"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                       Text="Top 3 least busy accommodations"
+                       Style="{StaticResource h2}"
+                       Margin="0 5 0 10"/>
+
+            <DataGrid Grid.Row="3" Grid.Column="0"
+                      x:Name="WorstAccommodaionsDataGrid"
+                      Style="{StaticResource ownerDataGrid}"
+                      ItemsSource="{Binding Top3WorstAccommodations}"
+                      SelectedItem="{Binding SelectedAccommodation}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name"
+                                        Width="*"
+                                        Binding="{Binding Accommodation.Name}"/>
+                    <DataGridTextColumn Header="Location"
+                                        Width="*"
+                                        Binding="{Binding Accommodation.Location.City}"/>
+                    <DataGridTextColumn Header="Country"
+                                        Width="*"
+                                        Binding="{Binding Accommodation.Location.Country}"/>
+                    <DataGridTextColumn Header="Number of busy days"
+                                        Width="*"
+                                        Binding="{Binding NumberOfBusyDays}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <controls:ButtonWithShortcut Grid.Row="3" Grid.Column="1"
+                                         Text="Remove"
+                                         KeyboardShortcutText="Ctrl+Delete"
+                                         Click="DeleteSelectedAccommodationCommand_Click"
+                                         Margin="10 0 0 0"/>
 
             <Grid Grid.Row="1" Grid.Column="0"
                   Margin="0 10 0 0">
@@ -87,43 +120,14 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0"
-                           Text="Top 3 least busy accommodations"
-                           Style="{StaticResource h2}"/>
-
-                <DataGrid Grid.Row="1"
-                          x:Name="WorstAccommodaionsDataGrid"
-                          Style="{StaticResource ownerDataGrid}"
-                          ItemsSource="{Binding Top3WorstAccommodations}"
-                          SelectedItem="{Binding SelectedAccommodation}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name"
-                                            Width="*"
-                                            Binding="{Binding Accommodation.Name}"/>
-                        <DataGridTextColumn Header="Location"
-                                            Width="*"
-                                            Binding="{Binding Accommodation.Location.City}"/>
-                        <DataGridTextColumn Header="Country"
-                                            Width="*"
-                                            Binding="{Binding Accommodation.Location.Country}"/>
-                        <DataGridTextColumn Header="Number of busy days"
-                                            Width="*"
-                                            Binding="{Binding NumberOfBusyDays}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </Grid>
 
-            <controls:ButtonWithShortcut Grid.Row="0" Grid.Column="1"
-                                         Text="Add"
-                                         KeyboardShortcutText="Ctrl+N"
-                                         Style="{StaticResource bwsStyle}"
-                                         Click="AddAccommodation_Click"/>
-
-            <controls:ButtonWithShortcut Grid.Row="1" Grid.Column="1"
-                                         Text="Remove"
-                                         KeyboardShortcutText="Ctrl+Delete"
-                                         Style="{StaticResource bwsStyle}"
-                                         Click="DeleteSelectedAccommodationCommand_Click"/>
         </Grid>
 
         <Grid Grid.Row="2"

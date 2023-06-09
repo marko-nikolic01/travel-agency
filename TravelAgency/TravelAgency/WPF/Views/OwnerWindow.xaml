@@ -21,6 +21,7 @@
         <KeyBinding Key="D4" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="ratings"/>
         <KeyBinding Key="D5" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="forum"/>
         <KeyBinding Key="L" Modifiers="Ctrl+Alt" Command="{Binding LogOutCommand,ElementName=root}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl+Alt" Command="{Binding NavigateToNotificationsCommand,ElementName=root}"/>
     </Window.InputBindings>
 
     <Grid>
@@ -45,15 +46,17 @@
 
                 <controls:OwnerSidebarUserButton Grid.Row="0"
                                                  Text="Notifications"
-                                                 KeyboardShortcutText="Ctrl+B"
+                                                 KeyboardShortcutText="Ctrl+Alt+N"
                                                  Width="200"
-                                                 Margin="0 3"/>
+                                                 Margin="0 3"
+                                                 Click="NavigateToNotifications_Click"/>
 
                 <controls:OwnerSidebarUserButton Grid.Row="1"
                                                  Text="Log Out"
                                                  KeyboardShortcutText="Ctrl+Alt+L"
                                                  Width="200"
-                                                 Margin="0 3"/>
+                                                 Margin="0 3"
+                                                 Click="LogOutButton_Click"/>
             </Grid>
 
             <Separator Grid.Row="1" Margin="10 15"/>
@@ -94,7 +97,7 @@
 
         <Frame Grid.Column="1"
                x:Name="NavigationFrame"
-               Source="../Views/OwnerProfileView.xaml  "
+               Source="../Views/OwnerProfileView.xaml"
                NavigationUIVisibility="Hidden"
                Padding="30"
                Focusable="False"/>
