@@ -32,7 +32,7 @@
             </Style.Resources>
         </Style>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
         <converters:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
     </UserControl.Resources>

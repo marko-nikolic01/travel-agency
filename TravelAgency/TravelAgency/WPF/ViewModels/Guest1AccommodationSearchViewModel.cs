@@ -163,10 +163,10 @@ namespace TravelAgency.WPF.ViewModels
         private void InitializeLocations()
         {
             Countries = _locationService.GetCountries();
-            Countries.Insert(0, "Not specified");
+            Countries.Insert(0, "-");
             SelectedCountry = Countries[0];
             List<string> tempCities = _locationService.GetCities();
-            tempCities.Insert(0, "Not specified");
+            tempCities.Insert(0, "-");
             Cities = tempCities;
             SelectedCity = Cities[0];
         }
@@ -174,10 +174,10 @@ namespace TravelAgency.WPF.ViewModels
         private void InitializeAccommodationTypes()
         {
             AccommodationTypes = new ObservableCollection<string>();
-            AccommodationTypes.Add("Not specified");
-            AccommodationTypes.Add("Appartment");
-            AccommodationTypes.Add("House");
-            AccommodationTypes.Add("Hut");
+            AccommodationTypes.Add("-");
+            AccommodationTypes.Add("Apartman");
+            AccommodationTypes.Add("Kuća");
+            AccommodationTypes.Add("Koliba");
         }
 
         public void OnSearch()
@@ -193,10 +193,10 @@ namespace TravelAgency.WPF.ViewModels
             accommodations = _superOwnerService.SortBySuperOwnersFirst(accommodations);
             Accommodations = new ObservableCollection<Accommodation>(accommodations);
             SearchFilter.NameFilter = "";
-            SelectedCountry = "Not specified";
+            SelectedCountry = "-";
             UpdateLocationsData(true);
-            SelectedCity = "Not specified";
-            SearchFilter.TypeFilter = "Not specified";
+            SelectedCity = "-";
+            SearchFilter.TypeFilter = "-";
             SearchFilter.GuestNumberFilter = 0;
             SearchFilter.DayNumberFilter = 0;
         }
@@ -206,7 +206,7 @@ namespace TravelAgency.WPF.ViewModels
             if (updateCountry)
             {
                 List<string> tempCities;
-                if (SelectedCountry != "Not specified")
+                if (SelectedCountry != "-")
                 {
                     tempCities = _locationService.GetCitiesByCountry(SelectedCountry);
                 }
@@ -214,9 +214,9 @@ namespace TravelAgency.WPF.ViewModels
                 {
                     tempCities = _locationService.GetCities();
                 }
-                tempCities.Insert(0, "Not specified");
+                tempCities.Insert(0, "-");
                 Cities = tempCities;
-                SelectedCity = "Not specified";
+                SelectedCity = "-";
                 SearchFilter.CountryFilter = SelectedCountry;
             }
             SearchFilter.CityFilter = SelectedCity;

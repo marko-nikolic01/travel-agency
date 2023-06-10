@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
@@ -270,7 +271,7 @@ namespace TravelAgency.WPF.ViewModels
                 if (AvailableDateSpans.Count == 0)
                 {
                     AvailableDateSpans = new ObservableCollection<DateSpan>(_dateFinderService.FindAvailableDatesOutsideDateRange(FirstDate, LastDate, Accommodation));
-                    System.Windows.MessageBox.Show("There aren't any dates available in the specified date span! Pick one of our suggestions or adjust your search.");
+                    System.Windows.MessageBox.Show("Ne postoje slobodni datumi u opsegu datuma koji ste naveli. Odaberite neku od naših preporuka ili promenite opseg datuma.");
                 }
 
                 Reservation.DateSpan = null;
@@ -281,7 +282,16 @@ namespace TravelAgency.WPF.ViewModels
 
         public void OnMakeReservation()
         {
-            if (Reservation.IsValid)
+            if (!Reservation.IsValid) return;
+            string messageBoxText = "Da li ste sigurni da želite da rezervišete smeštaj?\nSmeštaj: " + Accommodation.Name + 
+                "\nLokacija: " + Accommodation.Location.City + ", " + Accommodation.Location.Country+
+                "\nTermin: " + Reservation.DateSpan.StartDate.ToString() + " - " + Reservation.DateSpan.EndDate.ToString();
+            string caption = "Rezervacija smeštaja";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
             {
                 _reservationService.CreateReservation(Reservation);
                 NavigationCommand.Execute("previousViewModel");
@@ -308,15 +318,15 @@ namespace TravelAgency.WPF.ViewModels
                 {
                     if (DayNumber < 0)
                     {
-                        return "* Number of days can't be negative";
+                        return "* Broj dana ne može biti negativan";
                     }
                     else if (DayNumber == 0)
                     {
-                        return "* Number of days is required";
+                        return "* Broj dana je obavezan";
                     }
                     else if (DayNumber < Accommodation.MinDays)
                     {
-                        return "* Number of guests is smaller than allowed";
+                        return "* Broj dana je manji od dozvoljenog";
                     }
                 }
                 else if (columnName == "FirstDate")
@@ -325,17 +335,17 @@ namespace TravelAgency.WPF.ViewModels
 
                     if (!isFutureDate)
                     {
-                        return "* First date must be a future date";
+                        return "* Početni datum mora biti u budućnosti";
                     }
 
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*First date can't be after last date";
+                        return "* Početni datum ne može biti posle krajnjeg datuma";
                     }
                     else if (dateSpanLength < DayNumber)
                     {
-                        return "*Date span can't be shorter than specified number of days";
+                        return "* Opseg datuma je kraći od broja dana";
                     }
 
                 }
@@ -344,17 +354,17 @@ namespace TravelAgency.WPF.ViewModels
                     bool isFutureDate = LastDate.CompareTo(DateTime.Now) > 0;
                     if (!isFutureDate)
                     {
-                        return "* Last date must be a future date";
+                        return "* Krajnji datum mora biti u budućnosti";
                     }
 
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*Last date can't be before first date";
+                        return "* Krajnji datum ne može biti pre početnog datuma";
                     }
                     else if (dateSpanLength < DayNumber)
                     {
-                        return "*Date span can't be shorter than specified number of days";
+                        return "* Opseg datuma je kraći od broja dana";
                     }
                 }
 

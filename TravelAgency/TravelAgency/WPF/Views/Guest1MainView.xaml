@@ -10,7 +10,8 @@
         mc:Ignorable="d"
         Title="Turisticka agencija" Height="600" Width="1200"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-        Icon="../../Resources/Images/International-Travel_43678.ico">
+        Icon="../../Resources/Images/International-Travel_43678.ico"
+        x:Name="root">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundButton">
             <Style.Resources>
@@ -50,6 +51,7 @@
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1NotificationsViewModel"/>
         <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel"/>
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StartDemoCommand}"/>
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding LogOutCommand, ElementName=root}"/>
     </Window.InputBindings>
     <Border BorderThickness="0, 1, 0, 0" BorderBrush="Black">
         <DockPanel>
@@ -203,7 +205,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonLogOut" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand" Click="ButtonLogOut_Click">
+                <Button ToolTip="Ctrl+X" x:Name="buttonLogOut" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand" Click="ButtonLogOut_Click">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>

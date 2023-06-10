@@ -33,7 +33,7 @@
         </Style>
         <converters:AccommodationReservationStartDateToVisibilityConverter x:Key="AccommodationReservationStartDateToVisibilityConverter"/>
         <converters:AccommodationReservationCancelabilityToVisibilityConverter x:Key="AccommodationReservationCancelabilityToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
     </UserControl.Resources>
     <UserControl.InputBindings>
