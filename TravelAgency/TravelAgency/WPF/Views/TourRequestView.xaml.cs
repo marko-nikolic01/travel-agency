@@ -13,7 +13,7 @@ namespace TravelAgency.WPF.Views
             InitializeComponent();
             DataContext = viewModel;
             if (requestMade)
-                MessageBox.Show("The request was made successfully.");
+                MessageBox.Show("The request was made successfully.", "Tour requests", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void CreateRequest_Click(object sender, RoutedEventArgs e)

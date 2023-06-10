@@ -27,7 +27,7 @@ namespace TravelAgency.WPF.Views
         {
             if (TourRequestFormViewModel.Valid())
             {
-                if(MessageBox.Show("Are you sure you want to make \nthis request?", "Tour request", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Are you sure you want to make \nthis request?", "Tour request", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     TourRequestFormViewModel.SubmitRequest();
                     TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId, true);
@@ -35,7 +35,7 @@ namespace TravelAgency.WPF.Views
                 }
             }
             else
-                MessageBox.Show("Invalid input");
+                MessageBox.Show("Invalid input", "Tour request", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {

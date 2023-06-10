@@ -31,7 +31,15 @@ namespace TravelAgency.WPF.Views
                 Close();
             }
         }
-
+        private void ShowDetails_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.SelectedTourOccurrence != null)
+            {
+                TourDetailedView tourDetailedView = new TourDetailedView(viewModel.SelectedTourOccurrence, viewModel.CurrentGuestId);
+                this.navigationService.Navigate(tourDetailedView);
+                Close();
+            }
+        }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();

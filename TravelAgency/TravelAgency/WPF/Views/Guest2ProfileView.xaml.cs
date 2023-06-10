@@ -1,16 +1,20 @@
 ﻿using System.Windows.Controls;
-using Syncfusion.Pdf;
-using Syncfusion.Pdf.Graphics;
-using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows;
 using TravelAgency.WPF.ViewModels;
-using Syncfusion.Pdf.Grid;
-using System.Data;
-using TravelAgency.Services;
-using TravelAgency.Domain.DTOs;
+using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using TravelAgency.Domain.Models;
+using System.Data;
+using TravelAgency.Domain.DTOs;
 
 namespace TravelAgency.WPF.Views
 {
@@ -26,34 +30,41 @@ namespace TravelAgency.WPF.Views
             viewModel = new Guest2ProfileViewModel(id);
             DataContext = viewModel;
         }
-        //Za generisanje i prikaz pdf dokumenata iskoriscen Syncfusion.Pdf.Wpf i Syncfusion.PdfViewer.Wpf NuGet
-        //https://www.syncfusion.com/
         private void GenerateReport_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             viewModel.PrepareData();
-            PdfDocument doc = new PdfDocument();
-            PdfPage page = doc.Pages.Add();
-            PdfGraphics graphics = page.Graphics;
-            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 16);
-            graphics.DrawString("Report on your presence on the tours \n" +
-                "from "+viewModel.StartDate.ToString()+"  to "+ viewModel.EndDate.ToString(), font, PdfBrushes.Black, new PointF(0, 0));
-            PdfGrid pdfGrid = new PdfGrid();
-            PdfGridStyle gridStyle = new PdfGridStyle();
-            gridStyle.CellPadding.All = 5;
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("Tour Name");
-            dataTable.Columns.Add("Date Time");
-            dataTable.Columns.Add("Status");
-            dataTable.Columns.Add("Key Point");
-            foreach(TourOccurrenceAttendanceDTO attendanceDTO in  viewModel.tourOccurrenceAttendanceDTOs) 
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            XFont titleFont;
+            XFont subTitleFont;
+            XFont regularFont;
+            titleFont = new XFont("Times New Roman", 24, XFontStyle.Regular);
+            regularFont = new XFont("Times New Roman", 13, XFontStyle.Regular);
+            subTitleFont = new XFont("Times New Roman", 13, XFontStyle.Bold);
+            PdfDocument PDFReport = new PdfDocument();
+            PdfPage page = PDFReport.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XTextFormatter tf = new XTextFormatter(gfx);
+            gfx.DrawString("Tour attendance report", titleFont, XBrushes.Black, new XRect(0, 20, page.Width, 20), XStringFormats.Center);
+            gfx.DrawString("User: "+viewModel.Username, regularFont, XBrushes.Black, new XPoint(20, 70), XStringFormats.TopLeft);
+            gfx.DrawString("Report creation date: "+ DateTime.Now.ToString("dd/MM/yyyy"), regularFont, XBrushes.Black, new XPoint(20, 90), XStringFormats.TopLeft);
+            gfx.DrawString("Report on presence on the tours " +
+                "from " + viewModel.StartDate.ToString("dd/MM/yyyy") + "  to " + viewModel.EndDate.ToString("dd/MM/yyyy"), subTitleFont, XBrushes.Black, new XPoint(100, 130), XStringFormats.TopLeft);
+            gfx.DrawString("Tour name                       Date and time                          Status                               Arrived at ", 
+                regularFont, XBrushes.Black, new XPoint(30, 160), XStringFormats.TopLeft);
+            gfx.DrawString("----------------------------------------------------------------------------------------------------------------", 
+                regularFont, XBrushes.Black, new XPoint(30, 175), XStringFormats.TopLeft);
+            int y = 200;
+            foreach (TourOccurrenceAttendanceDTO attendanceDTO in viewModel.tourOccurrenceAttendanceDTOs)
             {
-                dataTable.Rows.Add(new object[] { attendanceDTO.TourName, attendanceDTO.TourDateTime.ToString(), attendanceDTO.Status, attendanceDTO.ArrivalKeyPoint });
+                gfx.DrawString(attendanceDTO.TourName, regularFont, XBrushes.Black, new XPoint(30, y), XStringFormats.TopLeft);
+                gfx.DrawString(attendanceDTO.TourDateTime.ToString(), regularFont, XBrushes.Black, new XPoint(140, y), XStringFormats.TopLeft);
+                gfx.DrawString(attendanceDTO.Status, regularFont, XBrushes.Black, new XPoint(290, y), XStringFormats.TopLeft);
+                gfx.DrawString(attendanceDTO.ArrivalKeyPoint, regularFont, XBrushes.Black, new XPoint(450, y), XStringFormats.TopLeft);
+                gfx.DrawString("----------------------------------------------------------------------------------------------------------------",
+                    regularFont, XBrushes.Black, new XPoint(30, y+12), XStringFormats.TopLeft);
+                y += 35;
             }
-            pdfGrid.DataSource = dataTable;
-            pdfGrid.Style = gridStyle;
-            pdfGrid.Draw(page, new PointF(0, 60));
-            doc.Save(@"../../../ReportsPDF/Guest2Report.pdf");
-            doc.Close(true);
+            PDFReport.Save(@"../../../ReportsPDF/Guest2Report.pdf");
             Guest2ReportView reportView = new Guest2ReportView();
             this.NavigationService.Navigate(reportView);
         }

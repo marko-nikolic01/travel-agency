@@ -34,7 +34,7 @@ namespace TravelAgency.WPF.Views
         }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to reserve \nthis tour?", "Tour reservation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to reserve \nthis tour?", "Tour reservation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 voucherViewModel.UpdateVoucher(occurrence.Id);
                 tourReservationViewModel.SubmitReservation();
