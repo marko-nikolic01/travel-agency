@@ -47,31 +47,31 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
 
             text = "Pritiskom na obeleženo dugme nastavljate na pretragu smeštaja i rezervisanje.";
-            Instruction.UpdateInstruction(3, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(3, 1, 1, 1, text); Delay(3000);
         }
 
         public void ExecuteDemoStep2()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na pretragu smeštaja i rezervisanje u režimu \"Bilo gde/Bilo kada\".";
-            Instruction.UpdateInstruction(4, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(4, 1, 1, 1, text); Delay(3000);
         }
 
         public void ExecuteDemoStep3()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na rad sa rezervacijama.";
-            Instruction.UpdateInstruction(5, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(5, 1, 1, 1, text); Delay(3000);
         }
 
         public void ExecuteDemoStep4()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na prikaz Vaših zahteva za pomeranje rezervacija.";
-            Instruction.UpdateInstruction(6, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(6, 1, 1, 1, text); Delay(3000);
         }
 
         public void ExecuteDemoStep5()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na rad sa izveštajima.";
-            Instruction.UpdateInstruction(7, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(7, 1, 1, 1, text); Delay(3000);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

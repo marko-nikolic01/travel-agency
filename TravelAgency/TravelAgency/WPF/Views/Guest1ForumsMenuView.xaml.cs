@@ -24,6 +24,7 @@ namespace TravelAgency.WPF.Views
         public Guest1ForumsMenuView()
         {
             InitializeComponent();
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

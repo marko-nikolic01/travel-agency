@@ -29,6 +29,7 @@ namespace TravelAgency.WPF.ViewModels
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
         public MyICommand StartDemoCommand { get; private set; }
+        private bool _isDemoExecuting;
 
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
         private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
@@ -46,9 +47,23 @@ namespace TravelAgency.WPF.ViewModels
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
         private string _selectedTab;
+        private string _returnSelectedTab;
         private string _currentDateTime;
         private DateTime _date;
         private bool _hasNotifications;
+
+        public bool IsDemoExecuting
+        {
+            get => _isDemoExecuting;
+            set
+            {
+                if (value != _isDemoExecuting)
+                {
+                    _isDemoExecuting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ViewModelBase CurrentViewModel
         {
@@ -96,6 +111,19 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
+        public string ReturnSelectedTab
+        {
+            get => _returnSelectedTab;
+            set
+            {
+                if (value != _returnSelectedTab)
+                {
+                    _returnSelectedTab = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string CurrentDateTime
         {
             get => _currentDateTime;
@@ -129,6 +157,7 @@ namespace TravelAgency.WPF.ViewModels
             _superGuestService = new SuperGuestService();
             _notificationService = new NotificationService();
             _demoController = new DemoController(this);
+            IsDemoExecuting = false;
 
             Guest = guest;
             _superGuestService.CheckSuperGuest(Guest);
@@ -154,11 +183,17 @@ namespace TravelAgency.WPF.ViewModels
 
         private async void OnStartDemo()
         {
-            _demoController.ExecuteDemo(CurrentViewModel);
+            if (!IsDemoExecuting)
+            {
+                IsDemoExecuting = true;
+                ReturnSelectedTab = SelectedTab;
+                _demoController.ExecuteDemo(CurrentViewModel);
+            }
         }
 
-        public /*async*/ void OnNavigation(string destination)
+        public void OnNavigation(string destination)
         {
+            if (IsDemoExecuting) return;
             switch (destination)
             {
                 case "guest1HomeMenuViewModel":
@@ -174,17 +209,6 @@ namespace TravelAgency.WPF.ViewModels
                     SelectedTab = "Reviews";
                     break;
                 case "guest1ForumsMenuViewModel":
-                    /*_canceller = new CancellationTokenSource();
-                    await Task.Run(() =>
-                    {
-                        do
-                        {
-                            Console.WriteLine("Hello, world");
-                            if (_canceller.Token.IsCancellationRequested)
-                                break;
-
-                        } while (true);
-                    });*/
                     CurrentViewModel = _guest1ForumsMenuViewModel;
                     SelectedTab = "Forums";
                     break;

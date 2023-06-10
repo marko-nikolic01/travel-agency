@@ -47,13 +47,13 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
 
             text = "Pritiskom na obeleženo dugme nastavljate na ocenjivanje vlasnika i smeštaja.";
-            Instruction.UpdateInstruction(3, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(3, 1, 1, 1, text); Delay(3000);
         }
 
         public void ExecuteDemoStep2()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na prikaz Vaših ocena od strane vlasnika smeštaja u kojima ste boravili.";
-            Instruction.UpdateInstruction(4, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(4, 1, 1, 1, text); Delay(3000);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

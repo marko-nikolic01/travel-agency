@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.Views
         public Guest1MyForumsView()
         {
             InitializeComponent();
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
