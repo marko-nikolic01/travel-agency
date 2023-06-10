@@ -8,5 +8,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public List<SpecialTourRequest> GetAll();
         public List<SpecialTourRequest> GetByGuestId(int guestId);
         public SpecialTourRequest Save(SpecialTourRequest request);
+        public List<SpecialTourRequest> GetPendings();
     }
 }

@@ -73,7 +73,7 @@ namespace TravelAgency.Services
         }
         public List<SpecialTourRequest>? GetOpenSpecialRequest()
         {
-            return ISpecialTourRequestRepository.GetAll();
+            return ISpecialTourRequestRepository.GetPendings();
         }
         public int GetNumberOfAllRequests(int guestId)
         {

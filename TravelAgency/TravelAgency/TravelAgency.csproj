@@ -120,6 +120,7 @@
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
+	  <Resource Include="Resources\Images\logotip.ico" />
 	  <Resource Include="Resources\Images\ProfilePictureButton.jpeg" />
 	  <Resource Include="Resources\Images\graph.png" />
 	  <Resource Include="Resources\Images\ok.png" />

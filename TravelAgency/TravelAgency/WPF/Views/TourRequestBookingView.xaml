@@ -26,6 +26,15 @@
             <Setter Property="Background" Value="#0e1d32"></Setter>
             <Setter Property="CornerRadius" Value="5"></Setter>
         </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.Resources>
@@ -90,7 +99,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Date">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0:dd/MM/yy}-{1:dd/MM/yy}">
