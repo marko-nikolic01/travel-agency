@@ -96,7 +96,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             Comment.Text = "Komentar..."; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
 
             text = "Otvaranje foruma: Na kraju pritiskom na dugme \"Otvori forum\" završavate sa otvaranjem foruma.";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

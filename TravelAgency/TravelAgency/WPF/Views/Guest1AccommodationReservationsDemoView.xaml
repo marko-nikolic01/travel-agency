@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White" Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -36,6 +36,9 @@
         <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StopDemoCommand}" />
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -53,10 +56,10 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
+            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+D" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding StopDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -89,15 +92,11 @@
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
-                    <Bold>Smeštaji/Rezervacije</Bold>
-                    <TextBlock.InputBindings>
-                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
-                    </TextBlock.InputBindings></TextBlock>
+                    <Bold>Smeštaji/Rezervacije</Bold></TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Moje rezervacije</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -121,7 +120,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="5"></RowDefinition>
                 </Grid.RowDefinitions>
-                <ListView x:Name="listViewReservations" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Reservations}" SelectedItem="{Binding SelectedReservation, Mode=TwoWay}"
+                <ListView x:Name="listViewReservations" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Reservations}"
                           ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -159,8 +158,7 @@
                                 <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13">
                                     Termin: 11/11/3000 - 12/11/3000
                                 </TextBlock>
-                                <Button x:Name="buttonCancelReservation" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False"
-                                        Command="{Binding DataContext.CancelReservationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationReservationsView}}">
+                                <Button x:Name="buttonCancelReservation" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
@@ -174,8 +172,7 @@
                                     </Button.Content>
                                 </Button>
                                 <Button x:Name="buttonMoveReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Focusable="False"
-                                        Visibility="{Binding Path=DateSpan.StartDate, Converter={StaticResource AccommodationReservationStartDateToVisibilityConverter}}"
-                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationReservationsView}}" CommandParameter="guest1AccommodationReservationMoveViewModel">
+                                        Visibility="{Binding Path=DateSpan.StartDate, Converter={StaticResource AccommodationReservationStartDateToVisibilityConverter}}">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>

@@ -24,6 +24,7 @@ namespace TravelAgency.WPF.Views
         public Guest1AccommodationReservationsView()
         {
             InitializeComponent();
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
 
         private void ButtonCancelReservation_Click(object sender, RoutedEventArgs e)

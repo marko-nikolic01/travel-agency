@@ -213,7 +213,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             Visibility2 = true;
             text = "Pomeranje rezervacije: Biramo datum i zatražite izmenu rezervacije pritiskom na dugme \"Zatraži izmenu\".";
             Reservation.NumberOfGuests = 1;
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

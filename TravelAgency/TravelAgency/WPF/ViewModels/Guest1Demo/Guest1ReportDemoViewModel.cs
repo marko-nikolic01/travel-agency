@@ -140,7 +140,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             Visibility1 = false;
             Visibility2 = true;
             text = "Preuzimanje izveštaja: Kada podesimo opseg datuma imamo mogućnost da preuzmemo 2 tipa izveštaja. Prvi tip je izveštaj o zakazanim rezervacijama, a drugi tip je izveštaj o otkazanim rezervacijama. Pritiskom na dugme \"Preuzmi izveštaj\" možete preuzeti izveštaj u PDF formatu.";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

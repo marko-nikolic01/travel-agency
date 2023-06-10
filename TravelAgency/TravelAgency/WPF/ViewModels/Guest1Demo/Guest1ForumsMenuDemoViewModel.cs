@@ -59,7 +59,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         public void ExecuteDemoStep3()
         {
             string text = "Pritiskom na obeleženo dugme nastavljate na čitanje foruma i pisanje komentara.";
-            Instruction.UpdateInstruction(5, 1, 1, 1, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(5, 1, 1, 1, text); Delay(3000);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
