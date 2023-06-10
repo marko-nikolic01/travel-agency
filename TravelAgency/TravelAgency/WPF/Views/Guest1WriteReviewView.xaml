@@ -41,7 +41,7 @@
         </ControlTemplate>
         <converters:RadioButtonToIntegerConverter x:Key="RadioButtonToIntegerConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
     </UserControl.Resources>
     <UserControl.InputBindings>

@@ -43,7 +43,7 @@ namespace TravelAgency.WPF.Pages
         {
             if (reservationsDataGrid.SelectedItem == null)
             {
-                MessageBox.Show("Select a reservation.");
+                MessageBox.Show("Select a reservation.", "No reservation selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

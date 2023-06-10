@@ -128,7 +128,7 @@ namespace TravelAgency.WPF.ViewModels
 
             if (Accommodations.Count == 0)
             {
-                MessageBox.Show("You have no accommodations.");
+                MessageBox.Show("You have no accommodations.", "No accommodations", MessageBoxButton.OK, MessageBoxImage.Warning);
                 Execute_NavigateBackCommand();
             }
             else
@@ -175,12 +175,12 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (NewAccommodationRenovation.DateSpan == null)
             {
-                MessageBox.Show("Select a datespan.");
+                MessageBox.Show("Select a datespan.", "No datespan selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (NewAccommodationRenovation.Description == string.Empty)
             {
-                MessageBox.Show("Enter a description.");
+                MessageBox.Show("Enter a description.", "No description given", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -191,12 +191,12 @@ namespace TravelAgency.WPF.ViewModels
             if (renovationService.CanRenovationBeScheduled(NewAccommodationRenovation))
             {
                 renovationService.ScheduleRenovation(NewAccommodationRenovation);
-                MessageBox.Show("Successfully scheduled renovation!");
+                MessageBox.Show("Successfully scheduled renovation.", "Successful scheduling", MessageBoxButton.OK, MessageBoxImage.Information);
                 Execute_NavigateBackCommand();
             }
             else
             {
-                MessageBox.Show("Invalid request!");
+                MessageBox.Show("Invalid request.", "Request error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

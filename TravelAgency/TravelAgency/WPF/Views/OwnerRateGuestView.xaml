@@ -66,6 +66,7 @@
             <TextBox Grid.Row="0" Grid.Column="1"
                      Style="{StaticResource formTextBox}"
                      Text="{Binding SelectedReservation.Guest.Username}"
+                     VerticalAlignment="Top"
                      IsEnabled="False"/>
             <controls:RatingOptions Grid.Row="1" Grid.Column="1"
                                     Value="{Binding Cleanliness, Mode=TwoWay}"/>
@@ -101,7 +102,8 @@
                                          Click="RateGuest_Click"/>
 
             <controls:Tip Grid.Column="2"
-                          Header=""/>
+                          Header="How to see ratings of others for me?"
+                          TipText="Once you rate the guest you can see their rating if they rated you. Otherwise you can't see their rating of you. So be sure to rate your guests."/>
         </Grid>
     </Grid>
 </Page>

@@ -21,10 +21,10 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class TourGuestsStatisticsView : Page
     {
-        public TourGuestsStatisticsView(Domain.Models.TourOccurrence selectedTourOccurrence)
+        public TourGuestsStatisticsView(Domain.Models.TourOccurrence selectedTourOccurrence, NavigationService navService)
         {
             InitializeComponent();
-            this.DataContext = new TourStatisticsDetailsViewModel(selectedTourOccurrence);
+            this.DataContext = new TourStatisticsDetailsViewModel(selectedTourOccurrence, navService);
         }
     }
 }

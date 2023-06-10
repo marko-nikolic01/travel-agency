@@ -239,7 +239,16 @@ namespace TravelAgency.WPF.ViewModels
 
         public void OnMakeMoveRequest()
         {
-            if (MoveRequest.IsValid)
+            string messageBoxText = "Da li ste sigurni da želite da pošaljete zahtev za izmenu rezervacije?\nSmeštaj: " + MoveRequest.Reservation.Accommodation.Name +
+                "\nLokacija: " + MoveRequest.Reservation.Accommodation.Location.City + ", " + MoveRequest.Reservation.Accommodation.Location.Country +
+                "\nTrenutni termin: " + MoveRequest.Reservation.DateSpan.StartDate.ToString() + " - " + MoveRequest.Reservation.DateSpan.EndDate.ToString() +
+                "\nŽeljeni termin: " + MoveRequest.DateSpan.StartDate.ToString() + " - " + MoveRequest.DateSpan.EndDate.ToString();
+            string caption = "Zahtev za izmenu rezervacije";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
             {
                 _reservationMoveService.CreateMoveRequest(MoveRequest);
                 NavigationCommand.Execute("previousViewModel");
@@ -268,17 +277,17 @@ namespace TravelAgency.WPF.ViewModels
 
                     if (!isFutureDate)
                     {
-                        return "* First date must be a future date";
+                        return "* Početni datum mora biti u budućnosti";
                     }
 
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*First date can't be after last date";
+                        return "* Početni datum ne može biti posle krajnjeg datuma";
                     }
                     else if (dateSpanLength < MoveRequest.Reservation.DateSpan.DayCount)
                     {
-                        return "*Date span can't be shorter than specified number of days";
+                        return "* Opseg datuma je kraći od broja dana";
                     }
 
                 }
@@ -287,17 +296,17 @@ namespace TravelAgency.WPF.ViewModels
                     bool isFutureDate = LastDate.CompareTo(DateTime.Now) > 0;
                     if (!isFutureDate)
                     {
-                        return "* Last date must be a future date";
+                        return "* Krajnji datum mora biti u budućnosti";
                     }
 
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*Last date can't be before first date";
+                        return "* Krajnji datum ne može biti pre početnog datuma";
                     }
                     else if (dateSpanLength < MoveRequest.Reservation.DateSpan.DayCount)
                     {
-                        return "*Date span can't be shorter than specified number of days";
+                        return "* Opseg datuma je kraći od broja dana";
                     }
                 }
 

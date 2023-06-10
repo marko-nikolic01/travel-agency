@@ -14,6 +14,10 @@ namespace TravelAgency.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             AccommodationPhoto photo = (AccommodationPhoto)value;
+            if (photo == null)
+            {
+                photo = new AccommodationPhoto();
+            }
             Uri uri = new Uri(photo.Path, UriKind.RelativeOrAbsolute);
             BitmapImage image = new BitmapImage(uri);
             return image;

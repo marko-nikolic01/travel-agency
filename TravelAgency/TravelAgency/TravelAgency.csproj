@@ -30,6 +30,7 @@
     <None Remove="Resources\Images\NavRatings.png" />
     <None Remove="Resources\Images\NavReservations.png" />
     <None Remove="Resources\Images\NotDisliked.png" />
+    <None Remove="Resources\Images\OwnerHelp.png" />
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
@@ -115,6 +116,9 @@
 	  <Resource Include="Resources\Images\NotDisliked.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="Resources\Images\OwnerHelp.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
@@ -124,6 +128,7 @@
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
+	  <Resource Include="Resources\Images\logotip.ico" />
 	  <Resource Include="Resources\Images\ProfilePictureButton.jpeg" />
 	  <Resource Include="Resources\Images\graph.png" />
 	  <Resource Include="Resources\Images\ok.png" />

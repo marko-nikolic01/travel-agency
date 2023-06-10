@@ -20,6 +20,7 @@
         <KeyBinding Key="D3" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="reservations"/>
         <KeyBinding Key="D4" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="ratings"/>
         <KeyBinding Key="D5" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="forum"/>
+        <KeyBinding Key="D6" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="help"/>
         <KeyBinding Key="L" Modifiers="Ctrl+Alt" Command="{Binding LogOutCommand,ElementName=root}"/>
         <KeyBinding Key="N" Modifiers="Ctrl+Alt" Command="{Binding NavigateToNotificationsCommand,ElementName=root}"/>
     </Window.InputBindings>
@@ -92,6 +93,12 @@
                                                            KeyboardShortcutText="Ctrl+5"
                                                            Icon="../../Resources/Images/NavForum.png"
                                                            Command="{Binding NavigateToForumPageCommand}"/>
+
+                <customcontrols:OwnerSidebarNavRadioButton x:Name="helpRadioButton"
+                                                           Text="Help"
+                                                           KeyboardShortcutText="Ctrl+6"
+                                                           Icon="../../Resources/Images/OwnerHelp.png"
+                                                           Command="{Binding NavigateToHelpPageCommand}"/>
             </StackPanel>
         </Grid>
 

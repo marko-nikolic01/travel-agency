@@ -38,7 +38,7 @@
                 <TextBlock FontSize="7" Text="{Binding [0].ErrorContent}" Foreground="Red" VerticalAlignment="Top" />
             </StackPanel>
         </ControlTemplate>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <UserControl.InputBindings>

@@ -67,7 +67,7 @@ namespace TravelAgency.WPF.Views
             }
             else
             {
-                MessageBox.Show("Select a year.");
+                MessageBox.Show("Select a year.", "Year not selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

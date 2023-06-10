@@ -184,7 +184,7 @@ namespace TravelAgency.Domain.Models
                 {
                     if (Title == "")
                     {
-                        return "* Title is required";
+                        return "* Naslov je obavezan";
                     }
                 }
                 return null;

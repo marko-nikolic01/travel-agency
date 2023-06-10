@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
@@ -90,10 +91,23 @@ namespace TravelAgency.WPF.ViewModels
 
         public void OnCancelReservation()
         {
-            _reservationService.CancelReservation(SelectedReservation);
-            List<AccommodationReservation> reservations = _reservationService.GetByGuest(Guest);
-            SortByStartDate(reservations);
-            Reservations = new ObservableCollection<AccommodationReservation>(reservations);
+            string messageBoxText = "Da li ste sigurni da želite da otkažete rezervaciju?\nSmeštaj: " + SelectedReservation.Accommodation.Name +
+                "\nLokacija: " + SelectedReservation.Accommodation.Location.City + ", " + SelectedReservation.Accommodation.Location.Country +
+                "\nTermin: " + SelectedReservation.DateSpan.StartDate.ToString() + " - " + SelectedReservation.DateSpan.EndDate.ToString();
+            string caption = "Otkazivanje rezervacije";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
+            {
+                _reservationService.CancelReservation(SelectedReservation);
+                List<AccommodationReservation> reservations = _reservationService.GetByGuest(Guest);
+                SortByStartDate(reservations);
+                Reservations = new ObservableCollection<AccommodationReservation>(reservations);
+            }
+
+            
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

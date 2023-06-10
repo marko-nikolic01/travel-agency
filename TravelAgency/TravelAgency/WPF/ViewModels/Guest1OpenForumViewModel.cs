@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
@@ -89,6 +90,19 @@ namespace TravelAgency.WPF.ViewModels
         public void OnOpenForum()
         {
             if (Forum.IsValid && Comment.IsValid)
+            {
+                
+            }
+
+            if (!Forum.IsValid || !Comment.IsValid) return;
+            string messageBoxText = "Da li ste sigurni da otvorite forum?\nNaslov: " + Forum.Title +
+                "\nLokacija: " + Forum.Location.City + ", " + Forum.Location.Country;
+            string caption = "Otvaranje foruma";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
             {
                 _forumService.OpenForum(Forum, Comment);
                 NavigationCommand.Execute("previousViewModel");

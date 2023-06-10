@@ -56,7 +56,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedScheduledRenovation == null)
             {
-                MessageBox.Show("Select a renovation!");
+                MessageBox.Show("Select a renovation.", "No renovation selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else
             {
-                MessageBox.Show("Selected renovation can't be cancelled because it's less than 5 days due.");
+                MessageBox.Show("Selected renovation can't be cancelled because it's less than 5 days due.", "Canceling renovation", MessageBoxButton.OK, MessageBoxImage.Warning);
             }            
         }
 

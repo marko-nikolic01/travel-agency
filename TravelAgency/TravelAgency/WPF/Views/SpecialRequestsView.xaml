@@ -7,7 +7,7 @@
       xmlns:conv="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="430"
-      Title="Special Tour Requests">
+      Title="Special tour requests">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#ef4865"></Setter>

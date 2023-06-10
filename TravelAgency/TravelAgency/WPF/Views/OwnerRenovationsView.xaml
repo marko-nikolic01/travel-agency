@@ -22,6 +22,7 @@
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand,ElementName=root}"/>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding ScheduleRenovationCommand, ElementName=root}"/>
         <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding CancelRenovationCommand,ElementName=root}"/>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding NavigateToGeneratePDFReport,ElementName=root}"/>
         <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
     </Page.InputBindings>
 
@@ -116,27 +117,34 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Style="{StaticResource backButton}"
-                                         Margin="0 16 10 16"
+                                         Margin="0 0 10 0"
                                          Click="GoBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"
                                          KeyboardShortcutText="Ctrl+N"
-                                         Margin="0 16 10 16"
+                                         Margin="0 0 10 0"
                                          Click="ScheduleRenovation_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Cancel renovation"
                                          KeyboardShortcutText="Ctrl+Delete"
-                                         Margin="0 16 20 16"
+                                         Margin="0 0 10 0"
                                          Click="CancelRenovationButton_Click"/>
 
-            <controls:Tip Grid.Column="3"
+            <controls:ButtonWithShortcut Grid.Column="3"
+                                         Text="Generate PDF report"
+                                         KeyboardShortcutText="Ctrl+R"
+                                         Margin="0 0 10 0"
+                                         Click="NavigateToGeneratePDFReport_Click"/>
+
+            <controls:Tip Grid.Column="4"
                           Header="Which renovations can be canceled?"
                           TipText="Only renovations that are due in 5 days or more can be cancelled."/>
         </Grid>

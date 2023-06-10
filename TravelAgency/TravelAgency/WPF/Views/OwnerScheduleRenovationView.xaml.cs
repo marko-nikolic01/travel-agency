@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -31,6 +32,11 @@ namespace TravelAgency.WPF.Views
 
             Loaded += (s, e) => Keyboard.Focus(this);
             accommodationComboBox.Loaded += (object sender, RoutedEventArgs e) => accommodationComboBox.Focus();
+        }
+
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.NavigateBackCommand.Execute();
         }
 
         private void AddRenovation_Click(object sender, RoutedEventArgs e)

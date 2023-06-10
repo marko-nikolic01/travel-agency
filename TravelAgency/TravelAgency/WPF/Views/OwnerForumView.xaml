@@ -23,7 +23,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
+        <KeyBinding Key="Return" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -71,14 +71,14 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Text="Go to a forum of the selected location"
-                                         KeyboardShortcutText="Ctrl+Enter"
+                                         KeyboardShortcutText="Enter"
                                          Click="NavigateToForumsForLocation_Click"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"/>
 
             <controls:Tip Grid.Column="1"
-                          Header="Which forums can I comment on?"
-                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation. To comment on a forum select a location and then press Enter."
+                          Header="Which forums can I see?"
+                          TipText="You can only see forums for locations in which you have at least 1 accommodation. When a new forum opens for any of your locations you will get a notification."
                           Margin="15 0 0 0"/>
         </Grid>
     </Grid>

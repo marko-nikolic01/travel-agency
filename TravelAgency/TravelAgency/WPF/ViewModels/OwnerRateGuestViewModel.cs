@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Navigation;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
@@ -126,7 +126,7 @@ namespace TravelAgency.WPF.ViewModels
             newRating.Cleanliness = Cleanliness;
 
             ratingService.CreateNew(newRating);
-            MessageBox.Show("Guest rated successfully.");
+            MessageBox.Show("Guest rated successfully.", "Successful rating", MessageBoxButton.OK, MessageBoxImage.Information);
             Execute_NavigateBack();
         }
 

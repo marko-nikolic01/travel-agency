@@ -166,10 +166,10 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         {
             Locations = new ObservableCollection<Location>(_locationService.GetAllLocations());
             Countries = _locationService.GetCountries();
-            Countries.Insert(0, "Not specified");
+            Countries.Insert(0, "-");
             SelectedCountry = Countries[0];
             List<string> tempCities = _locationService.GetCities();
-            tempCities.Insert(0, "Not specified");
+            tempCities.Insert(0, "-");
             Cities = tempCities;
             SelectedCity = Cities[0];
         }
@@ -186,9 +186,9 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         public void OnCancelSearch()
         {
             Locations = new ObservableCollection<Location>(_locationService.GetAllLocations());
-            SelectedCountry = "Not specified";
+            SelectedCountry = "-";
             UpdateLocationsData(true);
-            SelectedCity = "Not specified";
+            SelectedCity = "-";
         }
 
         public void UpdateLocationsData(bool updateCountry)
@@ -196,7 +196,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             if (updateCountry)
             {
                 List<string> tempCities;
-                if (SelectedCountry != "Not specified")
+                if (SelectedCountry != "-")
                 {
                     tempCities = _locationService.GetCitiesByCountry(SelectedCountry);
                 }
@@ -204,9 +204,9 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
                 {
                     tempCities = _locationService.GetCities();
                 }
-                tempCities.Insert(0, "Not specified");
+                tempCities.Insert(0, "-");
                 Cities = tempCities;
-                SelectedCity = "Not specified";
+                SelectedCity = "-";
             }
         }
 
