@@ -38,6 +38,7 @@
     <None Remove="Resources\Images\paintwork.png" />
     <None Remove="Resources\Images\play.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
+    <None Remove="Resources\Images\question.png" />
     <None Remove="Resources\Images\Renovations.png" />
     <None Remove="Resources\Images\stop.png" />
     <None Remove="Resources\Images\SuperOwnerMedal.png" />
@@ -120,6 +121,7 @@
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
 	  <Resource Include="Resources\Images\play.png" />
+	  <Resource Include="Resources\Images\question.png" />
 	  <Resource Include="Resources\Images\stop.png" />
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
@@ -187,6 +189,7 @@
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
 	  <Resource Include="Resources\Images\noTours.png"></Resource>
+	  <Resource Include="Resources\Images\successIcon.png"></Resource>
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

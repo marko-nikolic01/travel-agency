@@ -81,7 +81,7 @@
                     <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>

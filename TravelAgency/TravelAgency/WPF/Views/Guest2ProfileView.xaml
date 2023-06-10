@@ -60,7 +60,7 @@
         <Grid Grid.Column="2" Grid.Row="4" Margin="10 -30 0 0" Grid.RowSpan="4">
             <GroupBox HorizontalAlignment="Left" Height="250" Width="350" BorderBrush="#213efc" BorderThickness="2">
                 <GroupBox.Header>
-                    <Label>Generate report</Label>
+                    <Label>Generate tour attendance report</Label>
                 </GroupBox.Header>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin=" 10 30 0 0">

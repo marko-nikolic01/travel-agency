@@ -38,7 +38,10 @@ namespace TravelAgency.Repositories
             }
             return result;
         }
-
+        public List<TourRequest> GetAllIncludingSpecial()
+        {
+            return tourRequests;
+        }
         public List<TourRequest> GetPendings()
         {
             List<TourRequest> result = new List<TourRequest>();

@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.Views
         public Guest1WhereverWheneverSearchDemoView()
         {
             InitializeComponent();
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

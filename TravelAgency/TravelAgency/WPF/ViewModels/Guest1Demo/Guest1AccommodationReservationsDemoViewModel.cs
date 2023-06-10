@@ -70,7 +70,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             OnCancelReservation();
 
             text = "Izmena rezervacije: Nastavljamo na izmenu rezervacije pritiskom na dugme \"Izmeni\".";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

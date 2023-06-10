@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:TravelAgency.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White"
+             Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -30,6 +31,14 @@
             </Style.Resources>
         </Style>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="I" Modifiers="Ctrl+Alt" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationSearchViewModel"/>
+        <KeyBinding Key="B" Modifiers="Ctrl+Alt" Command="{Binding NavigationCommand}" CommandParameter="guest1WhereverWheneverSearchViewModel"/>
+        <KeyBinding Key="R" Modifiers="Ctrl+Alt" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationsViewModel"/>
+        <KeyBinding Key="M" Modifiers="Ctrl+Alt" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationMoveRequestsViewModel"/>
+        <KeyBinding Key="X" Modifiers="Ctrl+Alt" Command="{Binding NavigationCommand}" CommandParameter="guest1ReportViewModel"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel"/>
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -46,7 +55,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
                 <Bold>Kako da nastavim?</Bold><LineBreak/><LineBreak/>
                 Klikom na jednu od ponuđenih<LineBreak/>
@@ -79,7 +88,7 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Smeštaji/Rezervacije</Bold></TextBlock>
-            <Button x:Name="buttonSearchAccommodations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+            <Button ToolTip="Ctrl+Alt+I" x:Name="buttonSearchAccommodations" Grid.Row="3" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationSearchViewModel">
                 <Button.Content>
                     <Grid>
@@ -101,7 +110,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+            <Button ToolTip="Ctrl+Alt+B" Grid.Row="4" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1WhereverWheneverSearchViewModel">
                 <Button.Content>
                     <Grid>
@@ -125,7 +134,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonMyReservations" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+            <Button ToolTip="Ctrl+Alt+R" x:Name="buttonMyReservations" Grid.Row="5" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationsViewModel">
                 <Button.Content>
                     <Grid>
@@ -147,7 +156,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+            <Button ToolTip="Ctrl+Alt+M" Grid.Row="6" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationReservationMoveRequestsViewModel">
                 <Button.Content>
                     <Grid>
@@ -169,7 +178,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
+            <Button ToolTip="Ctrl+Alt+X" Grid.Row="7" Grid.Column="1"  Height="70" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonBig}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1ReportViewModel">
                 <Button.Content>
                     <Grid>
@@ -191,7 +200,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+N" x:Name="buttonBack" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">

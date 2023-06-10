@@ -37,7 +37,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             }
         }
 
-        public bool Visibility1
+        public bool Visibility
         {
             get => _visibility;
             set
@@ -104,10 +104,10 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
         public void ExecuteDemo()
         {
-            Visibility1 = true;
+            Visibility = true;
             string text = "Rezervacija: Biramo datum i rezervišemo smeštaj pritiskom na dugme \"Rezerviši\".";
             Reservation.NumberOfGuests = 1;
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

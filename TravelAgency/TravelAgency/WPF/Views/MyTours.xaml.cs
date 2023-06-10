@@ -11,7 +11,7 @@ namespace TravelAgency.WPF.Views
         public MyTours(int guestId, bool tourRated = false)
         {
             if(tourRated)
-                MessageBox.Show("Tour successfully rated.");
+                MessageBox.Show("Tour successfully rated.", "My tours", MessageBoxButton.OK, MessageBoxImage.Information);
             InitializeComponent();
             myToursViewModel = new MyToursViewModel(guestId);
             DataContext = myToursViewModel;

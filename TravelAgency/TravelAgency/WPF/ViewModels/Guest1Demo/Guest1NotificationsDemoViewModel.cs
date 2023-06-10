@@ -63,7 +63,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         public void ExecuteDemo()
         {
             string text = "Ovde možete videti sve svoje notifikacije.";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text);    Delay(3000);    if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text);    Delay(3000);
         }
 
         private void InitializeData()

@@ -64,7 +64,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         public void ExecuteDemo()
         {
             string text = "Ovde možete videti sve smeštaje u kojima ste bili u poslednjih 5 dana. Pritiskom na dugme \"Napiši recenziju\" nastavljamo na pisanje recenzije";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

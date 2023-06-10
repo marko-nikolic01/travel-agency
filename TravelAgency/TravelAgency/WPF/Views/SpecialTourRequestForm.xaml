@@ -24,7 +24,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="95"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
@@ -33,13 +33,14 @@
         <Grid Grid.Row="0">
             <Label Margin="20 20 0 0" FontSize="24" Content="Creating tour request"></Label>
         </Grid>
+        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="20 55" x:Name="requestTxt" Content="{Binding CurrentRequest}" HorizontalAlignment="Left" />
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
@@ -48,6 +49,7 @@
                 <ColumnDefinition Width="5*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
             <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Country" HorizontalAlignment="Left" />
             <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="City" HorizontalAlignment="Left"/>
             <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Language" HorizontalAlignment="Left"/>
@@ -86,7 +88,7 @@
                 <DatePicker Width="320" HorizontalAlignment="Left" Margin="20 0" Height="40" SelectedDate="{Binding Path=MaxDate}"></DatePicker>
                 <Label FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="{Binding MaxDateValid, UpdateSourceTrigger=PropertyChanged}"></Label>
             </StackPanel>
-            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="6" Grid.Column="1" Margin="20 0 0 30" Width="600" HorizontalAlignment="Left" Text="{Binding Description}"/>
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="6" Grid.Column="1" Height="60" Margin="0,10,0,30" Width="600" HorizontalAlignment="Center" Text="{Binding Description}"/>
             <Grid Grid.Column="2" Grid.Row="3">
                 <Button Margin="0" Width="40" Height="40" HorizontalAlignment="Center" x:Name="NumGuestBtn" VerticalAlignment="Center" Command="{Binding FirstHelpCommand}">
                     <Image Source="../../Resources/Images/questionmark.png"></Image>

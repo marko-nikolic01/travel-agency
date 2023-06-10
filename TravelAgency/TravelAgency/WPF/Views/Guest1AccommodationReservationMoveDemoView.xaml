@@ -8,7 +8,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White" Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -41,6 +41,9 @@
         <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StopDemoCommand}" />
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -58,10 +61,10 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
+            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+D" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding StopDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -95,22 +98,15 @@
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Smeštaji/Rezervacije</Bold>
-                    <TextBlock.InputBindings>
-                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
-                    </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Moje rezervacije</Bold>
-                    <TextBlock.InputBindings>
-                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="previousViewModel" MouseAction="LeftClick"/>
-                    </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Izmeni</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="previousViewModel">
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -146,8 +142,8 @@
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Black" Background="#cccccc">
                     <Image Source="../../Resources/Images/istockphoto-1147544807-612x612.jpg"></Image>
                 </Border>
-                <Button x:Name="buttonPreviousPhoto" Grid.Row="2" Grid.Column="1" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand" Command="{Binding PreviousPhotoCommand}">Prethodna</Button>
-                <Button x:Name="buttonNextPhoto" Grid.Row="2" Grid.Column="2" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand" Command="{Binding NextPhotoCommand}">Sledeća</Button>
+                <Button x:Name="buttonPreviousPhoto" Grid.Row="2" Grid.Column="1" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Prethodna</Button>
+                <Button x:Name="buttonNextPhoto" Grid.Row="2" Grid.Column="2" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Sledeća</Button>
                 <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">Naziv: Smeštaj</TextBlock>
                 <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">
                     Lokacija: Novi Sad, Serbia
@@ -188,18 +184,29 @@
                 <TextBlock Grid.Row="3" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Krajnji datum pretrage:</TextBlock>
                 <TextBlock x:Name="textBlockGuestNumber" Grid.Row="6" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">Broj gostiju:</TextBlock>
                 <TextBlock x:Name="textBlockAvailableDates" Grid.Row="7" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">Dostupni datumi:</TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black"
+                <TextBox IsReadOnly="True" Cursor="Arrow" Grid.Row="1" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black"
                                 VerticalContentAlignment="Center">2</TextBox>
                 <Border Grid.Row="2" Grid.Column="3" Height="24" Width="150" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerFirstDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        Text="{Binding Path=FirstDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}"></DatePicker>
+                    <DatePicker Cursor="Arrow" x:Name="datePickerFirstDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=FirstDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}">
+                        <DatePicker.Resources>
+                            <Style TargetType="DatePickerTextBox">
+                                <Setter Property="IsReadOnly" Value="True"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="3" Height="24" Width="150" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerLastDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        Text="{Binding Path=LastDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}"></DatePicker>
+                    <DatePicker Cursor="Arrow" x:Name="datePickerLastDate" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=LastDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}" DisplayDateStart="{Binding Path=Tomorrow, Mode=TwoWay}">
+                        <DatePicker.Resources>
+                            <Style TargetType="DatePickerTextBox">
+                                <Setter Property="IsReadOnly" Value="True"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
                 </Border>
-                <Button x:Name="buttonFindDates" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                        Command="{Binding FindAvailableDatesCommand}">
+                <Button x:Name="buttonFindDates" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -212,9 +219,9 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <TextBox Grid.Row="6" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black"
+                <TextBox Cursor="Arrow" Grid.Row="6" Grid.Column="3" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0" FontSize="13" Background="White" BorderBrush="Black"
                         VerticalContentAlignment="Center" IsReadOnly="True" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">1</TextBox>
-                <ListView BorderBrush="Black" BorderThickness="1" x:Name="listViewAvailableDateSpans" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding AvailableDateSpans}" SelectedItem="{Binding Path=MoveRequest.DateSpan}"
+                <ListView BorderBrush="Black" BorderThickness="1" x:Name="listViewAvailableDateSpans" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding AvailableDateSpans}"
                           ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Visibility="{Binding Path=FoundDates, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -242,8 +249,7 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <Button x:Name="buttonMakeReservation" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                                        Command="{Binding DataContext.MakeMoveRequestCommand, RelativeSource={RelativeSource AncestorType=local:Guest1AccommodationReservationMoveView}}">
+                                <Button x:Name="buttonMakeReservation" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                                     <Button.Content>
                                         <Grid HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
