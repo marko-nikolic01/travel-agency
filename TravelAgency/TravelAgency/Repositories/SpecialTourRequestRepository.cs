@@ -53,5 +53,11 @@ namespace TravelAgency.Repositories
             _serializer.ToCSV(FilePath, specialRequests);
             return specialTourRequest;
         }
+        public void Update(SpecialTourRequest specialTourRequest)
+        {
+            SpecialTourRequest oldSpecialTourRequest = specialRequests.Find(t => t.Id == specialTourRequest.Id);
+            oldSpecialTourRequest.Status = specialTourRequest.Status;
+            _serializer.ToCSV(FilePath, specialRequests);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace TravelAgency.Services
         }
         private void CheckIfRequestsAreInvalid()
         {
-            foreach (var request in ITourRequestRepository.GetAll())
+            foreach (var request in ITourRequestRepository.GetAllIncludingSpecial())
                 request.CheckIfExpired();
         }
 
