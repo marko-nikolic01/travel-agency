@@ -41,7 +41,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedNotification == null)
             {
-                MessageBox.Show("Select a notification.");
+                MessageBox.Show("Select a notification.", "No notification selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

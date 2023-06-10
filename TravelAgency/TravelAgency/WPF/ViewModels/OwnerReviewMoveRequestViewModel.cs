@@ -57,7 +57,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (ExplanationText == string.Empty)
             {
-                MessageBox.Show("Enter an explanation.");
+                MessageBox.Show("Enter an explanation.", "No explanation given", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

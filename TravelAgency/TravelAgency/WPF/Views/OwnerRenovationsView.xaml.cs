@@ -88,7 +88,7 @@ namespace TravelAgency.WPF.Views
             }
             else
             {
-                MessageBox.Show("You have no accommodations.");
+                MessageBox.Show("You have no accommodations.", "No accommodations", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

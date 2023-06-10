@@ -55,31 +55,31 @@ namespace TravelAgency.WPF.ViewModels
 
             if (SelectedComment == null)
             {
-                MessageBox.Show("Select a comment.");
+                MessageBox.Show("Select a comment.", "No comment selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (forumService.OwnerDislikedComment(loggedInUser, SelectedComment.Comment))
             {
-                MessageBox.Show("You have already disliked this comment.");
+                MessageBox.Show("You have already disliked this comment.", "Comment disliked", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (forumService.DidUserVisitLocation(SelectedComment.Comment.User, SelectedForum.Location))
             {
-                MessageBox.Show("You cannot dislike a comment of an user that visited the location.");
+                MessageBox.Show("You cannot dislike a comment of an user that visited the location.", "Dislike error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (forumService.IsCommentOfOwner(SelectedComment.Comment))
             {
-                MessageBox.Show("You cannot dislike comment of an owner.");
+                MessageBox.Show("You cannot dislike comment of an owner.", "Dislike error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!forumService.CanOwnerDislikeComment(loggedInUser, SelectedComment.Comment))
             {
-                MessageBox.Show("You cannot dislike this comment.");
+                MessageBox.Show("You cannot dislike this comment.", "Dislike error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

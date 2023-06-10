@@ -74,7 +74,7 @@
 
             <controls:Tip Grid.Column="2"
                           Header="Who can see my comment?"
-                          TipText="Everybody who visits this forum can see your comment. Your comment will be emphasized with a little icon so others can see that you are an owner that has an accommodation in this location."/>
+                          TipText="Everybody who visits this forum can see your comment. Your comments will be highlighted so others can see that you are an owner that has an accommodation in this location."/>
         </Grid>
     </Grid>
 </Page>

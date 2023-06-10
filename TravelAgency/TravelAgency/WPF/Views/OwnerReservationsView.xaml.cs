@@ -75,7 +75,7 @@ namespace TravelAgency.WPF.Pages
         {
             if (ViewModel.SelectedMoveRequest == null)
             {
-                MessageBox.Show("Select a move request.");
+                MessageBox.Show("Select a move request.", "No move request selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

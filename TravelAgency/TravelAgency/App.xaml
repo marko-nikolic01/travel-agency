@@ -19,11 +19,7 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Text" Value="Back"/>
                 <Setter Property="KeyboardShortcutText" Value="Ctrl+B"/>
-                <Setter Property="Width" Value="90"/>
-            </Style>
-
-            <Style TargetType="controls:ButtonWithShortcut" x:Key="dialogBackButton" BasedOn="{StaticResource backButton}">
-                
+                <Setter Property="MinWidth" Value="90"/>
             </Style>
 
             <Style x:Key="h2" TargetType="TextBlock">
@@ -39,6 +35,7 @@
             <Style x:Key="formTextBox" TargetType="TextBox">
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Margin" Value="0 0 0 5"/>
+                <Setter Property="TextWrapping" Value="NoWrap"/>
             </Style>
 
             <Style x:Key="formComboBox" TargetType="ComboBox">
