@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Navigation;
 using TravelAgency.Domain.Models;
@@ -171,13 +171,13 @@ namespace TravelAgency.WPF.ViewModels
 
             if (!locationService.CountryExists(SelectedCountry))
             {
-                MessageBox.Show("Select a valid country.");
+                MessageBox.Show("Select a valid country.", "Selected country not valid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!locationService.CityExists(SelectedCity))
             {
-                MessageBox.Show("Select a valid city.");
+                MessageBox.Show("Select a valid city.", "Selected city not valid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -186,7 +186,7 @@ namespace TravelAgency.WPF.ViewModels
 
             if (Photos.Count < 1)
             {
-                MessageBox.Show("Add at least 1 photo.");
+                MessageBox.Show("Add at least 1 photo.", "No photos added", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -197,7 +197,7 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            MessageBox.Show("Fields not valid!");
+            MessageBox.Show("Fields not valid!", "Invalid fields", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Execute_NavigateBack()
@@ -214,7 +214,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else
             {
-                MessageBox.Show("None photo selected!");
+                MessageBox.Show("Select a photo.", "No photo selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -228,7 +228,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else
             {
-                MessageBox.Show("Photo empty!");
+                MessageBox.Show("Enter a photo link.", "No photo link given", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

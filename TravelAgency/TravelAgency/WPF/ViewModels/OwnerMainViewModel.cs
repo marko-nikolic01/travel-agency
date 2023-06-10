@@ -32,7 +32,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void Execute_NavigateToHelpPageCommand(object obj)
         {
-            NavigationService.Navigate(new Uri("WPF/Views/OwnerProfileView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerHelpView.xaml", UriKind.Relative));
         }
 
         private void Execute_NavigateToMyProfilePageCommand(object obj)

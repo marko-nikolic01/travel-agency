@@ -4,11 +4,60 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="625" d:DesignWidth="840"
       Title="OwnerHelpView">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Help"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:Tip Grid.Row="0" Grid.Column="0"
+                          Margin="0 0 10 10"
+                          Header="How to navigate through input fields?"
+                          TipText="To navigate to the next input field use TAB and to navigate to the previous field use SHIFT+TAB. You can navigate through all fields using this method: text inputs, date inputs, tables, lists... It may be not the most intuitive way to navigate, but it gets the job done in any situation."/>
+
+            <controls:Tip Grid.Row="0" Grid.Column="1"
+                          Margin="10 0 0 10"
+                          Header="How to select a radio-button option?"
+                          TipText="To select a radio-button option use LEFT and RIGHT arrow keys and press SPACE to select it. That applies for selecting accommodation type or rating guests (1 to 5)."/>
+
+            <controls:Tip Grid.Row="1" Grid.Column="0"
+                          Margin="0 10 10 10"
+                          Header="How to use numeric inputs?"
+                          TipText="To increase and decrease value in numeric fields use UP and DOWN arrow keys."/>
+
+            <controls:Tip Grid.Row="1" Grid.Column="1"
+                          Margin="10 10 0 10"
+                          Header="How to select a date?"
+                          TipText="To select a date from a date picker press a combination of keyboard keys ALT and DOWN arrow key to open the date picker. Then select a date with arrows on your keyboard. Once you select a date confirm your selection with ENTER or SPACE."/>
+
+            <controls:Tip Grid.Row="2" Grid.Column="0"
+                          Margin="0 10 10 0"
+                          Header="How to select an option from a dropdown menu?"
+                          TipText="To select an option from a dropdown menu press a combination of keyboard keys ALT and DOWN arrow key. Then select an option with arrow keys on your keyboard. You can also start typing in the desired option if the menu is editable. To confirm selection press ENTER."/>
+
+            <controls:Tip Grid.Row="2" Grid.Column="1"
+                          Margin="10 10 0 0"
+                          Header="How to switch between tables?"
+                          TipText="If a page has 2 tables to switch between them press SPACE once."/>
+        </Grid>
     </Grid>
 </Page>

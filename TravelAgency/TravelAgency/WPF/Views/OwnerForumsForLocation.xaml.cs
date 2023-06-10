@@ -53,7 +53,7 @@ namespace TravelAgency.WPF.Views
         {
             if (ViewModel.SelectedForum == null)
             {
-                MessageBox.Show("Select a forum.");
+                MessageBox.Show("Select a forum.", "No forum selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

@@ -45,7 +45,7 @@ namespace TravelAgency.WPF.Views
         {
             if (ViewModel.SelectedLocation == null)
             {
-                MessageBox.Show("Select a location.");
+                MessageBox.Show("Select a location.", "No location selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

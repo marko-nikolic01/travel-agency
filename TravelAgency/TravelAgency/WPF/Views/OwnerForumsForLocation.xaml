@@ -18,7 +18,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand, ElementName=root}"/>
-        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding NavigateToForumCommand, ElementName=root}"/>
+        <KeyBinding Key="Return" Command="{Binding NavigateToForumCommand, ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -112,7 +112,7 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Open the selected forum"
-                                         KeyboardShortcutText="Ctrl+Enter"
+                                         KeyboardShortcutText="Enter"
                                          Click="NavigateToForumCommand_Click"
                                          Margin="0 0 10 0"/>
 

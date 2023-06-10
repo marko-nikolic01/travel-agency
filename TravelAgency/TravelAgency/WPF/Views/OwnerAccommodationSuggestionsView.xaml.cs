@@ -79,7 +79,7 @@ namespace TravelAgency.WPF.Views
         {
             if (BestLocationsDataGrid.SelectedItem ==  null)
             {
-                MessageBox.Show("Select a location.");
+                MessageBox.Show("Select a location.", "No location selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

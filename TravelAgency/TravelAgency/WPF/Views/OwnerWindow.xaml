@@ -97,7 +97,7 @@
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="helpRadioButton"
                                                            Text="Help"
                                                            KeyboardShortcutText="Ctrl+6"
-                                                           Icon="../../Resources/Images/NavForum.png"
+                                                           Icon="../../Resources/Images/OwnerHelp.png"
                                                            Command="{Binding NavigateToHelpPageCommand}"/>
             </StackPanel>
         </Grid>

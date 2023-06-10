@@ -120,7 +120,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
@@ -132,10 +131,6 @@
             <controls:Tip Grid.Column="1"
                           Header="What are pending reservations?"
                           TipText="Pending reservations are reservations that have ended in the past 5 days and that can be rated. Be sure to rate your guests as you can only se their ratings for you if you rate them first!"/>
-            <controls:Tip Grid.Column="2"
-                          Header="How to switch between lists and select ratings?"
-                          TipText="To switch between lists use SPACE key and to select a certain row use UP and DOWN arrow keys."
-                          Margin="10 0 0 0"/>
         </Grid>
     </Grid>
 </Page>
