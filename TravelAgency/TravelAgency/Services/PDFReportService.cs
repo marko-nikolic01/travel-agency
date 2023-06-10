@@ -24,7 +24,7 @@ namespace TravelAgency.Services
         private XFont titleFont;
         private XStringFormat format;
 
-        public PDFReportService() 
+        public PDFReportService()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             regularFont = new XFont("Times New Roman", 13, XFontStyle.Regular);
@@ -86,7 +86,7 @@ namespace TravelAgency.Services
 
         public void WriteCanceledAccommodationReservationReport(User guest, List<AccommodationReservation> reservations, DateTime startDate, DateTime endDate)
         {
-            
+
             PdfDocument PDFReport = new PdfDocument();
             PdfPage page = PDFReport.AddPage();
 
@@ -155,6 +155,55 @@ namespace TravelAgency.Services
             string link = "../../../ReportsPDF/GuideReport" + guide.Id.ToString() + selectedTourOccurrence.Id.ToString() + ".pdf";
             PDFReport.Save(link);
             return link;
+        }
+
+        public void GenerateAccommodationRenovationsReport(User owner, DateTime startDate, DateTime endDate)
+        {
+            GenerateAccommodationRenovationsReport(owner, DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
+        }
+
+        public void GenerateAccommodationRenovationsReport(User owner, DateOnly startDate, DateOnly endDate)
+        {
+            RenovationService renovationService = new RenovationService();
+
+            var report = renovationService.GetRenovationsReport(owner, startDate, endDate);
+
+            int margin = 30;
+
+            PdfDocument PDFReport = new PdfDocument();
+            PdfPage page = PDFReport.AddPage();
+
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XTextFormatter tf = new XTextFormatter(gfx);
+
+            gfx.DrawImage(XImage.FromFile("../../../Resources/Images/International-Travel_43678.ico"), 20, 10, 70, 70);
+            gfx.DrawString(report.Header, titleFont, XBrushes.Black, new XRect(0, 20, page.Width, 20), XStringFormats.Center);
+            gfx.DrawString("Report date: " + report.ReportDate.ToShortDateString(), regularFont, XBrushes.Black, new XPoint(margin, 90), XStringFormats.TopLeft);
+            gfx.DrawString("Owner: " + report.Owner.Name, regularFont, XBrushes.Black, new XPoint(margin, 110), XStringFormats.TopLeft);
+            gfx.DrawString("Datespan: " + report.ReportDateSpan.StartDate.ToShortDateString() + " to " + report.ReportDateSpan.EndDate.ToShortDateString(), regularFont, XBrushes.Black, new XPoint(margin, 130), XStringFormats.TopLeft);
+            gfx.DrawString("Renovations: " + report.RenovationsCount, regularFont, XBrushes.Black, new XPoint(margin, 150), XStringFormats.TopLeft);
+            gfx.DrawString("Renovation days: " + report.RenovationDaysCount, regularFont, XBrushes.Black, new XPoint(margin, 170), XStringFormats.TopLeft);
+
+            string sentence = "Between " + report.ReportDateSpan.StartDate.ToShortDateString() + " and " + report.ReportDateSpan.EndDate.ToShortDateString() + " there were " + report.RenovationsCount.ToString() + " renovations. " +
+                "Total day count of those renovations is " + report.RenovationDaysCount.ToString() + ".";
+
+            tf.DrawString(sentence, regularFont, XBrushes.Black, new XRect(margin, 220, page.Width - 10, 40), format);
+
+            int tablePosition = 260;
+
+            gfx.DrawString("Accommodation", boldFont, XBrushes.Black, new XRect(margin, tablePosition, 50, 20), XStringFormats.TopLeft);
+            gfx.DrawString("No. renovations", boldFont, XBrushes.Black, new XRect(250, tablePosition, 50, 20), XStringFormats.TopLeft);
+            gfx.DrawString("Renovation days", boldFont, XBrushes.Black, new XRect(450, tablePosition, 50, 20), XStringFormats.TopLeft);
+            int index = 1;
+            foreach (var accommodation in report.AccommodationStats)
+            {
+                gfx.DrawString(accommodation.Accommodation.Name, regularFont, XBrushes.Black, new XRect(margin, tablePosition + (index * 20), 50, 20), XStringFormats.TopLeft);
+                gfx.DrawString(accommodation.ScheduledRenovationsCount.ToString(), regularFont, XBrushes.Black, new XRect(250, tablePosition + (index * 20), 50, 20), XStringFormats.TopLeft);
+                gfx.DrawString(accommodation.RenovationDaysCount.ToString(), regularFont, XBrushes.Black, new XRect(450, tablePosition + (index * 20), 50, 20), XStringFormats.TopLeft);
+                index++;
+            }
+
+            SaveReport(PDFReport);
         }
     }
 }

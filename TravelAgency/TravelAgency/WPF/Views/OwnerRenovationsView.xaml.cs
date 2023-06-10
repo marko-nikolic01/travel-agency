@@ -29,6 +29,7 @@ namespace TravelAgency.WPF.Views
         public MyICommand NavigateBackCommand { get; set; }
         public MyICommand CancelRenovationCommand { get; set; }
         public MyICommand ScheduleRenovationCommand { get; set; }
+        public MyICommand NavigateToGeneratePDFReport { get; set; }
 
         public OwnerRenovationsView()
         {
@@ -36,6 +37,7 @@ namespace TravelAgency.WPF.Views
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
             CancelRenovationCommand = new MyICommand(Execute_CancelRenovationCommand);
             ScheduleRenovationCommand = new MyICommand(Execute_ScheduleRenovationCommand);
+            NavigateToGeneratePDFReport = new MyICommand(Execute_NavigateToGeneratePDFReport);
 
             InitializeComponent();
 
@@ -44,6 +46,11 @@ namespace TravelAgency.WPF.Views
 
             Loaded += (s, e) => Keyboard.Focus(this);
             scheduledRenovationsDataGrid.Loaded += FocusFirstDataGrid;
+        }
+
+        private void Execute_NavigateToGeneratePDFReport()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerPDFReportView.xaml", UriKind.Relative));
         }
 
         private void FocusFirstDataGrid(object sender, RoutedEventArgs e)
@@ -116,6 +123,11 @@ namespace TravelAgency.WPF.Views
         private void ScheduleRenovation_Click(object sender, RoutedEventArgs e)
         {
             Execute_ScheduleRenovationCommand();
+        }
+
+        private void NavigateToGeneratePDFReport_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToGeneratePDFReport();
         }
     }
 }

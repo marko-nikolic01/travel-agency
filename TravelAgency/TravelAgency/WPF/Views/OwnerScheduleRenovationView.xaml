@@ -231,7 +231,8 @@
 
             <controls:ButtonWithShortcut Grid.Column="0"
                                          Style="{StaticResource backButton}"
-                                         Margin="0 20 5 20"/>
+                                         Margin="0 20 5 20"
+                                         Click="NavigateBack_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Schedule a renovation"

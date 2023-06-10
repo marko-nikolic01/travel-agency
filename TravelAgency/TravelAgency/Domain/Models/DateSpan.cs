@@ -74,5 +74,10 @@ namespace TravelAgency.Domain.Models
             StartDate = startDate;
             EndDate = endDate;
         }
+
+        public int DaysCount()
+        {
+            return EndDate.DayNumber - StartDate.DayNumber;
+        }
     }
 }
