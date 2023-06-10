@@ -21,6 +21,15 @@
             <Setter Property="Foreground" Value="#FFFFFF"></Setter>
             <Setter Property="Background" Value="#ef4865"></Setter>
         </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.Resources>

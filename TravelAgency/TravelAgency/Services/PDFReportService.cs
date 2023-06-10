@@ -116,7 +116,6 @@ namespace TravelAgency.Services
 
             SaveReport(PDFReport);
         }
-
         public string WriteTourStatisticsReport(User guide, TourOccurrence selectedTourOccurrence, int guestsUnder18, int guests18to50, int guestsAbove50, double guestsUsedVoucher, double guestsNotUsedVoucher)
         {
             PdfDocument PDFReport = new PdfDocument();

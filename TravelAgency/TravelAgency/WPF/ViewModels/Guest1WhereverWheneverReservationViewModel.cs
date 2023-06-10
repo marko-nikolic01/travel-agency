@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
@@ -189,7 +190,16 @@ namespace TravelAgency.WPF.ViewModels
 
         public void OnMakeReservation()
         {
-            if (Reservation.IsValid)
+            if (!Reservation.IsValid) return;
+            string messageBoxText = "Da li ste sigurni da želite da rezervišete smeštaj?\nSmeštaj: " + Accommodation.Name +
+                "\nLokacija: " + Accommodation.Location.City + ", " + Accommodation.Location.Country +
+                "\nTermin: " + Reservation.DateSpan.StartDate.ToString() + " - " + Reservation.DateSpan.EndDate.ToString();
+            string caption = "Rezervacija smeštaja";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
             {
                 _reservationService.CreateReservation(Reservation);
                 NavigationCommand.Execute("previousViewModel");

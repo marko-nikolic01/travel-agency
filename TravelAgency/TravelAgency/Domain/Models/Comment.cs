@@ -118,7 +118,7 @@ namespace TravelAgency.Domain.Models
                 {
                     if (Text == "")
                     {
-                        return "* Comment body is required";
+                        return "* Tekst komentara je obavezan";
                     }
                 }
                 return null;

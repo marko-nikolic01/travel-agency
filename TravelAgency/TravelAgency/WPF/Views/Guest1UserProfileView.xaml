@@ -111,7 +111,7 @@
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Korisnički nalog</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+X" x:Name="buttonBack" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Click="Button_Click">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">

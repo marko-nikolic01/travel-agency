@@ -98,7 +98,7 @@ namespace TravelAgency.Domain.Models
                 {
                     if (Description == "")
                     {
-                        return "You must describe the state of the accommodation";
+                        return "* Opis stanja smeštaja je obavezan";
                     }
                 }
                 else if (columnName == "UrgencyLevel")

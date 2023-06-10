@@ -33,7 +33,7 @@
         </Style>
         <converters:DaysLeftForRatingConverter x:Key="DaysLeftForRatingConverter"/>
         <converters:DaysLeftForRatingToVisibilityConverter x:Key="DaysLeftForRatingToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
     </UserControl.Resources>
     <UserControl.InputBindings>
