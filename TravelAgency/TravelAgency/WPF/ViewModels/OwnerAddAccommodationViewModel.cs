@@ -95,6 +95,7 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged(nameof(Photos));
             }
         }
+
         private string photoLink;
 
         public string PhotoLink
@@ -120,6 +121,7 @@ namespace TravelAgency.WPF.ViewModels
         }
 
 
+
         public OwnerAddAccommodationViewModel(NavigationService navigationService)
         {
             NavigationService = navigationService;
@@ -137,9 +139,10 @@ namespace TravelAgency.WPF.ViewModels
 
             NewAccommodation = new Accommodation() { Owner = loggedInUser, OwnerId = loggedInUser.Id, IsOpen = true };
 
+            Photos = new ObservableCollection<AccommodationPhoto>();
+
             IsEnabled = false;
 
-            Photos = new ObservableCollection<AccommodationPhoto>();
             PhotoLink = string.Empty;
 
             Countries = locationService.GetCountries();
@@ -207,6 +210,7 @@ namespace TravelAgency.WPF.ViewModels
             if (SelectedPhoto != null)
             {
                 Photos.Remove(SelectedPhoto);
+                OnPropertyChanged(nameof(Photos));
             }
             else
             {
@@ -219,6 +223,7 @@ namespace TravelAgency.WPF.ViewModels
             if (PhotoLink != string.Empty)
             {
                 Photos.Add(new AccommodationPhoto() { Path = PhotoLink });
+                OnPropertyChanged(nameof(Photos));
                 PhotoLink = string.Empty;
             }
             else

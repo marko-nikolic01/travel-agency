@@ -118,7 +118,7 @@
 
             <controls:Tip Grid.Column="2"
                           Header="What does the star symbol represent?"
-                          TipText="The icon emphasizes that the forum is very useful. That means it has 20 or more comments from guests or 10 or more comments from owners."/>
+                          TipText="The icon emphasizes that the forum is very useful. That means that it has 20 or more comments from guests or 10 or more comments from owners."/>
         </Grid>
     </Grid>
 </Page>

@@ -78,6 +78,10 @@ namespace TravelAgency.WPF.Views
                     forumRadioButton.IsChecked = true;
                     ViewModel.NavigateToForumPageCommand.Execute(null);
                     break;
+                case "help":
+                    forumRadioButton.IsChecked = true;
+                    ViewModel.NavigateToForumPageCommand.Execute(null);
+                    break;
                 default:
                     MessageBox.Show("Ne radi :(");
                     break;
