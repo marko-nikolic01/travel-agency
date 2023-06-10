@@ -94,7 +94,7 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if (!IsValid())
                 {
-                    MessageBox.Show("Number of guests must be a non negative number");
+                    MessageBox.Show("Number of guests must be a non negative number", "Offerred tours", MessageBoxButton.OK, MessageBoxImage.Error);
                     Guests = "";
                     return;
                 }

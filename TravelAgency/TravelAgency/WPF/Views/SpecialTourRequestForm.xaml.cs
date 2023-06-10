@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -11,9 +12,11 @@ namespace TravelAgency.WPF.Views
     public partial class SpecialTourRequestForm : Page
     {
         ViewModelIterator viewModelIterator;
-        public SpecialTourRequestForm(int guestId)
+        NavigationService navService;
+        public SpecialTourRequestForm(int guestId, NavigationService navigationService)
         {
             InitializeComponent();
+            navService = navigationService;
             viewModelIterator = new ViewModelIterator(guestId);
             DataContext = viewModelIterator.GetViewModelInstance();
             BackButton.DataContext = viewModelIterator;
@@ -66,7 +69,7 @@ namespace TravelAgency.WPF.Views
                 if (MessageBox.Show("Are you sure you want to make \nthis request?", "Special tour request", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     viewModelIterator.SaveSpecialTourRequest();
-                    SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId, true);
+                    SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId, navService, true);
                     this.NavigationService.Navigate(view);
                 }
             }
@@ -75,7 +78,7 @@ namespace TravelAgency.WPF.Views
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId);
+            SpecialTourRequestsView view = new SpecialTourRequestsView(viewModelIterator.currentGuestId, navService);
             this.NavigationService.Navigate(view);
         }
     }

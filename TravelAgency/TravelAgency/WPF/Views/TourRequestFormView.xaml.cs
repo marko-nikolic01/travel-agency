@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -10,9 +11,11 @@ namespace TravelAgency.WPF.Views
     public partial class TourRequestFormView : Page
     {
         public TourRequestFormViewModel TourRequestFormViewModel { get; set; }
-        public TourRequestFormView(int id)
+        NavigationService navService;
+        public TourRequestFormView(int id, NavigationService navigationService)
         {
             InitializeComponent();
+            navService = navigationService;
             TourRequestFormViewModel = new TourRequestFormViewModel(id);
             DataContext = TourRequestFormViewModel;
             ToolTipViewModel toolTipViewModel = new ToolTipViewModel();
@@ -30,7 +33,7 @@ namespace TravelAgency.WPF.Views
                 if (MessageBox.Show("Are you sure you want to make \nthis request?", "Tour request", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     TourRequestFormViewModel.SubmitRequest();
-                    TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId, true);
+                    TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId, navService, true);
                     this.NavigationService.Navigate(requestView);
                 }
             }
@@ -39,7 +42,7 @@ namespace TravelAgency.WPF.Views
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId);
+            TourRequestView requestView = new TourRequestView(TourRequestFormViewModel.guestId, navService);
             this.NavigationService.Navigate(requestView);
         }
     }

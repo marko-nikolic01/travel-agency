@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:i = "http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024" Background="Azure"
       Title="CreatedRequestsStatistics">
@@ -66,8 +67,24 @@
                 <ColumnDefinition Width="80"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1">
-                <RadioButton Margin="0,20,0,0" GroupName="RbGroup" Checked="RadioButton_Checked" IsChecked="{Binding LanguageSelected}">Language</RadioButton>
-                <RadioButton Margin="0,20,0,0" GroupName="RbGroup" Checked="RadioButton_Checked" IsChecked="{Binding LocationSelected}">Location</RadioButton>
+                <RadioButton Margin="0,20,0,0" GroupName="RbGroup" IsChecked="{Binding LanguageSelected}">
+                    Languages
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked" >
+                            <i:InvokeCommandAction 
+				                Command="{Binding RadioButtonCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton Margin="0,20,0,0" GroupName="RbGroup" IsChecked="{Binding LocationSelected}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked" >
+                            <i:InvokeCommandAction 
+				                Command="{Binding RadioButtonCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    Location
+                </RadioButton>
             </StackPanel>
             <Grid Grid.Column="2" Visibility="{Binding LanguageChartVisibility}">
             <lvc:CartesianChart

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -17,6 +19,7 @@ namespace TravelAgency.WPF.ViewModels
             set { tourRequestHelpClicked = value; OnPropertyChanged(); }
         }
         public ButtonCommandNoParameter TourRequestHelpCommand { get; set; }
+        public ButtonCommandNoParameter CreateRequestCommand { get; set; }
         public List<SpecialTourRequest> SpecialTourRequestList { get; set; }
         SpecialTourRequestService service;
         int currentGuestId;
@@ -26,13 +29,16 @@ namespace TravelAgency.WPF.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         }
-        public SpecialTourRequestsViewModel(int id) 
+        public NavigationService NavigationService { get; set; }
+        public SpecialTourRequestsViewModel(int id, NavigationService navService) 
         {
+            NavigationService = navService;
             currentGuestId = id;
             new TourRequestService();
             service = new SpecialTourRequestService();
             SpecialTourRequestList = service.GetSpecialRequestForGuest(currentGuestId);
             TourRequestHelpCommand = new ButtonCommandNoParameter(TourRequestClick);
+            CreateRequestCommand = new ButtonCommandNoParameter(CreateRequestClick);
             DisplayTitle();
         }
         private void TourRequestClick()
@@ -47,6 +53,11 @@ namespace TravelAgency.WPF.ViewModels
                 request.SerialNumber = i++;
                 request.BuildRequestString();
             }
+        }
+        public void CreateRequestClick()
+        {
+            SpecialTourRequestForm tourRequestForm = new SpecialTourRequestForm(currentGuestId, NavigationService);
+            NavigationService.Navigate(tourRequestForm);
         }
     }
 }
