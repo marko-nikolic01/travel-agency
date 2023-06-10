@@ -41,12 +41,12 @@ namespace TravelAgency.WPF.Views
         {
             if (HelpGrid.Height == 0)
             {
-                DoubleAnimation heightAnimation = new DoubleAnimation(550, new Duration(TimeSpan.FromSeconds(0.5)));
+                DoubleAnimation heightAnimation = new DoubleAnimation(680, new Duration(TimeSpan.FromSeconds(0.6)));
                 HelpGrid.BeginAnimation(HeightProperty, heightAnimation);
             }
             else
             {
-                DoubleAnimation heightAnimation = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(0.2)));
+                DoubleAnimation heightAnimation = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(0.3)));
                 HelpGrid.BeginAnimation(HeightProperty, heightAnimation);
             }
         }

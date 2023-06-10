@@ -85,5 +85,15 @@ namespace TravelAgency.WPF.Controls
         {
             InitializeComponent();
         }
+
+        public event RoutedEventHandler Click;
+
+        void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Click != null)
+            {
+                this.Click(this, e);
+            }
+        }
     }
 }

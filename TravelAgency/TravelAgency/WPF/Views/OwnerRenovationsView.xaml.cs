@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class OwnerRenovationsView : Page
     {
+        public MyICommand FocusOtherDataGrid { get; set; }
         public OwnerRenovationsViewModel ViewModel { get; set; }
 
         public MyICommand NavigateBackCommand { get; set; }
@@ -31,6 +32,7 @@ namespace TravelAgency.WPF.Views
 
         public OwnerRenovationsView()
         {
+            FocusOtherDataGrid = new MyICommand(Execute_FocusOtherDataGrid);
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
             CancelRenovationCommand = new MyICommand(Execute_CancelRenovationCommand);
             ScheduleRenovationCommand = new MyICommand(Execute_ScheduleRenovationCommand);
@@ -41,9 +43,39 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            scheduledRenovationsDataGrid.Loaded += FocusFirstDataGrid;
+        }
 
-            scheduledRenovationsDataGrid.CommandBindings.Clear();
-            pastRenovationsDataGrid.CommandBindings.Clear();
+        private void FocusFirstDataGrid(object sender, RoutedEventArgs e)
+        {
+            if (scheduledRenovationsDataGrid.Items.Count > 0)
+            {
+                scheduledRenovationsDataGrid.SelectedItem = scheduledRenovationsDataGrid.Items[0];
+                scheduledRenovationsDataGrid.ScrollIntoView(scheduledRenovationsDataGrid.Items[0]);
+                scheduledRenovationsDataGrid.Focus();
+            }
+        }
+
+        private void FocusSecondDataGrid(object sender, RoutedEventArgs e)
+        {
+            if (pastRenovationsDataGrid.Items.Count > 0)
+            {
+                pastRenovationsDataGrid.SelectedItem = pastRenovationsDataGrid.Items[0];
+                pastRenovationsDataGrid.ScrollIntoView(pastRenovationsDataGrid.Items[0]);
+                pastRenovationsDataGrid.Focus();
+            }
+        }
+
+        private void Execute_FocusOtherDataGrid()
+        {
+            if (scheduledRenovationsDataGrid.IsFocused)
+            {
+                FocusSecondDataGrid(null, null);
+            }
+            else
+            {
+                FocusFirstDataGrid(null, null);
+            }
         }
 
         private void Execute_ScheduleRenovationCommand()
@@ -56,7 +88,7 @@ namespace TravelAgency.WPF.Views
             }
             else
             {
-                MessageBox.Show("You have no accommodations.");
+                MessageBox.Show("You have no accommodations.", "No accommodations", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

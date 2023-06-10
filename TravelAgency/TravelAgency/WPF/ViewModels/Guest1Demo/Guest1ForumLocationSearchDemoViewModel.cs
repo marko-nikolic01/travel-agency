@@ -154,7 +154,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
             Visibility = false;
             text = "Otvaranje foruma: Biramo lokaciju i nastavljamo na otvaranje foruma pritiskom na dugme \"Otvori forum\".";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

@@ -22,6 +22,7 @@ namespace TravelAgency.Services
             LinkSpecialTourRequests();
             LinkRequestLocation();
             UpdateSpecialRequestStatus();
+            CheckIfRequestAccepted();
         }
         private void LinkSpecialTourRequests()
         {
@@ -54,6 +55,29 @@ namespace TravelAgency.Services
                     {
                         specialRequest.Status = SpecialRequestStatus.Invalid;
                         break;
+                    }
+                }
+            }
+        }
+        private void CheckIfRequestAccepted()
+        {
+            foreach (SpecialTourRequest specialRequest in ISpecialTourRequestRepository.GetAll())
+            {
+                if (specialRequest.Status != SpecialRequestStatus.Accepted)
+                {
+                    bool save = true;
+                    foreach (TourRequest request in specialRequest.TourRequests)
+                    {
+                        if (request.Status != RequestStatus.Accepted)
+                        {
+                            save = false;
+                            break;
+                        }
+                    }
+                    if (save)
+                    {
+                        specialRequest.Status = SpecialRequestStatus.Accepted;
+                        ISpecialTourRequestRepository.Update(specialRequest);
                     }
                 }
             }

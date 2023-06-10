@@ -152,7 +152,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
             Visibility = false;
             text = "Čitanje i pisanje komentara: Biramo forum i pritiskom na dugme \"Čitaj i komentariši/Čitaj\" ulazimo u forum gde možemo učestvovati u diskusiji sa drugim korisnicima.";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()
@@ -163,18 +163,19 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
 
         private void InitializeForums()
         {
-            Forums = new ObservableCollection<Forum>();
+            List<Forum> forums = new List<Forum>();
             Forum forum = new Forum();
             forum.Location = new Location();
             forum.Location.Country = "Serbia";
             forum.Location.City = "Novi Sad";
-            Forums.Add(forum);
+            forums.Add(forum);
             forum = new Forum();
             forum.Location = new Location();
             forum.Location.Country = "Croatia";
             forum.Location.City = "Zagreb";
             forum.Close();
-            Forums.Add(forum);
+            forums.Add(forum);
+            Forums = new ObservableCollection<Forum>(forums);
         }
 
         private void InitializeLocations()

@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.Views
         public Guest1ReviewsView()
         {
             InitializeComponent();
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

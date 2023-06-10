@@ -26,7 +26,7 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ScheduleRenovationCmd}"/>
     </Page.InputBindings>
 
@@ -89,6 +89,7 @@
                            Style="{StaticResource customFormTextBlock}"/>
 
                 <ComboBox Grid.Row="0" Grid.Column="1"
+                          x:Name="accommodationComboBox"
                           Style="{StaticResource formComboBox}"
                           ItemsSource="{Binding Accommodations}"
                           SelectedItem="{Binding SelectedAccommodation}"
@@ -101,6 +102,7 @@
                 </ComboBox>
 
                 <TextBox Grid.Row="2" Grid.Column="1"
+                         x:Name="descriptionTextBox"
                          Style="{StaticResource formTextBox}"
                          Text="{Binding NewAccommodationRenovation.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          Margin="0"
@@ -201,17 +203,20 @@
                     <TextBox Grid.Column="1"
                              Text="{Binding SelectedDateSpan.StartDate, Converter={StaticResource dateToString}}"
                              Style="{StaticResource formTextBox}"
+                             Focusable="False"
                              IsReadOnly="True"/>
 
                     <TextBlock Grid.Column="2"
                                Text="to"
                                Style="{StaticResource formTextBlock}"
                                Margin="10 0"
+                               Focusable="False"
                                HorizontalAlignment="Center"/>
 
                     <TextBox Grid.Column="3"
                              Text="{Binding SelectedDateSpan.EndDate, Converter={StaticResource dateToString}}"
                              Style="{StaticResource formTextBox}"
+                             Focusable="False"
                              IsReadOnly="True"/>
                 </Grid>
             </Grid>
@@ -225,7 +230,7 @@
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
-                                         Style="{StaticResource dialogBackButton}"
+                                         Style="{StaticResource backButton}"
                                          Margin="0 20 5 20"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:TravelAgency.WPF.Views"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1024"
-      Title="FinishedTourDetailedView" Background="White">
+      Title="FinishedTourDetailedView" Background="Azure">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
@@ -83,7 +83,10 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Visibility="{Binding LabelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">You already rated this tour</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding LabelVisibility}">
+                <Label FontSize="18" FontWeight="Bold" >This tour is already rated</Label>
+                <Image Source="../../Resources/Images/successIcon.png" Margin="0 -10 0 0" Width="50" Height="50"></Image>
+            </StackPanel>
             <Button Visibility="{Binding ButtonVisibility}" Foreground="White" Background="#4681f4" Grid.Column="0"
                     Click="RateTour_Click" Width="374" Height="43" >Rate this tour</Button>
             <Button Grid.Column="1" Click="Exit_Click" Background="#4681f4" Foreground="White" Width="374" Height="43" Content="Exit" />

@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White" Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -43,6 +43,9 @@
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
         <converters:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StopDemoCommand}" />
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -60,10 +63,10 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
+            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
-            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+D" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding StopDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -97,15 +100,11 @@
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
                     <Bold>Smeštaji/Rezervacije</Bold>
-                    <TextBlock.InputBindings>
-                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel" MouseAction="LeftClick"/>
-                    </TextBlock.InputBindings>
                 </TextBlock>
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Izveštaji o rezervacijama</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -144,12 +143,24 @@
                 <TextBlock Grid.Row="1" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Početni datum:</TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13" >Krajni datum:</TextBlock>
                 <Border Grid.Row="1" Grid.Column="2" Height="24" Width="130" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerFirstDate" Height="24" Width="130" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        Text="{Binding Path=FirstDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
+                    <DatePicker Cursor="Arrow" x:Name="datePickerFirstDate" Height="24" Width="130" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=FirstDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}">
+                        <DatePicker.Resources>
+                            <Style TargetType="DatePickerTextBox">
+                                <Setter Property="IsReadOnly" Value="True"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" Height="24" Width="130" Margin="0, 8, 0, 0" BorderThickness="1" BorderBrush="Black">
-                    <DatePicker x:Name="datePickerLastDate" Height="24" Width="130" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
-                        Text="{Binding Path=LastDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}"></DatePicker>
+                    <DatePicker Cursor="Arrow" x:Name="datePickerLastDate" Height="24" Width="130" HorizontalAlignment="Right" FontSize="13" Background="White" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center"
+                        Text="{Binding Path=LastDate, Mode=TwoWay, TargetNullValue='', ValidatesOnDataErrors=True}">
+                        <DatePicker.Resources>
+                            <Style TargetType="DatePickerTextBox">
+                                <Setter Property="IsReadOnly" Value="True"/>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
                 </Border>
                 <Border BorderBrush="Green" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="19" Visibility="{Binding Visibility1, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
             </Grid>
@@ -173,8 +184,7 @@
                 <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                     <TextBlock Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12">Broj zakazanih rezervacija u označenom periodu:</TextBlock>
                     <TextBlock Width="30" Margin="5, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12">1</TextBlock>
-                    <Button Margin="10, 0, 0, 0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                            Command="{Binding ReportReservationsCommand}">
+                    <Button Margin="10, 0, 0, 0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                         <Button.Content>
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
@@ -193,8 +203,7 @@
                 <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
                     <TextBlock Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12">Broj otkazanih rezervacija u označenom periodu:</TextBlock>
                     <TextBlock Width="30" Margin="5, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12">1</TextBlock>
-                    <Button Margin="10, 0, 0, 0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                            Command="{Binding ReportCanceledReservationsCommand}">
+                    <Button Margin="10, 0, 0, 0" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
                         <Button.Content>
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>

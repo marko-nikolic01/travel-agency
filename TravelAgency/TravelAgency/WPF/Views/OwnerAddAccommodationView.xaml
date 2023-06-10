@@ -19,13 +19,7 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 30 5"/>
         </Style>
-        
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-            <Setter Property="MaxWidth" Value="235"/>
-        </Style>
-        
+
         <Style TargetType="xctk:IntegerUpDown">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
@@ -43,6 +37,8 @@
         </Style>
 
         <converters:EnumBooleanConverter x:Key="radioButtonConverter"/>
+        <converters:PhotoListToImageSourceListConverter x:Key="photosConverter"/>
+        <converters:AccommodationPhotoToBitmapImageConverter x:Key="photoconv"/>
 
         <ControlTemplate x:Key="ValidationTemplate">
             <Grid>
@@ -53,10 +49,12 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Modifiers="Ctrl+Shift" Command="{Binding NavigateBack}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBack}"/>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddPhotoCommand}"/>
-        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>
+        <KeyBinding Key="J" Modifiers="Ctrl" Command="{Binding NextPhotoCommand,ElementName=root}"/>
+        <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding PreviousPhotoCommand,ElementName=root}"/>
     </Page.InputBindings>
     
     <Grid>
@@ -71,11 +69,12 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0"
+                  Margin="0 0 15 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -85,37 +84,36 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Name"
+                           Text="Name:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Country"
+                           Text="Country:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="City"
+                           Text="City:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Type"
+                           Text="Type:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="4" Grid.Column="0"
-                           Text="Maximum no. guests"
+                           Text="Maximum no. guests:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="5" Grid.Column="0"
-                           Text="Minimum no. days"
+                           Text="Minimum no. days:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="6" Grid.Column="0"
                            Text="No. days to cancel:"
                            Style="{StaticResource formTextBlock}"/>
                 <TextBlock Grid.Row="7" Grid.Column="0"
-                           Text="Photos of accommodation"
+                           Text="Photos of accommodation:"
                            Style="{StaticResource formTextBlock}"/>
 
                 <TextBox Grid.Row="0" Grid.Column="1"
@@ -186,78 +184,33 @@
 
                 <TextBox Grid.Row="7" Grid.Column="1"
                          Text="{Binding PhotoLink,UpdateSourceTrigger=PropertyChanged}"
-                         
+                         Style="{StaticResource formTextBox}"
                          Margin="0 0 0 5"/>
 
                 <Grid Grid.Row="8" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <ListBox Grid.Row="1"
-                             Width="235"
-                             ItemsSource="{Binding Photos}"
-                             SelectedItem="{Binding SelectedPhoto}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <Grid Grid.Row="2"
-                          Margin="0 5 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <controls:ButtonWithShortcut Grid.Column="0"
-                                                     Text="Add photo"
-                                                     KeyboardShortcutText="Ctrl+N"
-                                                     Margin="0 0 2 0"
-                                                     Click="AddPhoto_Click"/>
-
-                        <controls:ButtonWithShortcut Grid.Column="1"
-                                                     Text="Remove photo"
-                                                     KeyboardShortcutText="Ctrl+D"
-                                                     Margin="2 0 0 0"
-                                                     Click="RemovePhoto_Click"/>
-                    </Grid>
-                </Grid>
-
-                <Grid Grid.Row="9" Grid.ColumnSpan="2"
-                      Margin="0 5 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <controls:ButtonWithShortcut Grid.Column="0"
-                                                 Margin="0 0 2 0"
-                                                 Style="{StaticResource dialogBackButton}"
-                                                 KeyboardShortcutText="Ctrl+Shift+Backspace"
-                                                 Click="GoBack_Click"/>
+                                                 Text="Add photo"
+                                                 KeyboardShortcutText="Ctrl+N"
+                                                 Margin="0 0 5 0"
+                                                 Click="AddPhoto_Click"/>
 
                     <controls:ButtonWithShortcut Grid.Column="1"
-                                                 Text="Add"
-                                                 Margin="0 0 2 0"
-                                                 KeyboardShortcutText="Ctrl+S"
-                                                 Click="AddAccommodation_Click"/>
+                                                 Text="Remove photo"
+                                                 KeyboardShortcutText="Ctrl+T"
+                                                 Margin="5 0 0 0"
+                                                 Click="RemovePhoto_Click"/>
                 </Grid>
+                
             </Grid>
 
             <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
 
-                <controls:Tip Grid.Row="0"
+                <!--<controls:Tip Grid.Row="0"
                               Header="How to navigate through input fields?"
                               TipText="To navigate to the next input field use Tab and to navigate to the previous field use Shift+Tab."
                               Margin="15 0 0 5"/>
@@ -275,8 +228,41 @@
                 <controls:Tip Grid.Row="3"
                               Header="How to add and remove photos?"
                               TipText="To add a photo, copy the link to the field and press Ctrl+A. To remove a photo navigate to the list of photos (using Tab and Shift+Tab) and with UP and DOWN arrow keys select a photo. Then press Ctrl+D."
-                              Margin="15 5 0 0"/>
+                              Margin="15 5 0 0"/>-->
+
+                <controls:PhotosViewer Grid.Row="1"
+                                       x:Name="photoViewer"
+                                       Images="{Binding Photos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       SelectedItem="{Binding SelectedPhoto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
             </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 20 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Margin="0 0 5 0"
+                                         Style="{StaticResource backButton}"
+                                         HorizontalAlignment="Stretch"
+                                         Click="GoBack_Click"/>
+
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Add"
+                                         Margin="5 0 10 0"
+                                         KeyboardShortcutText="Ctrl+S"
+                                         HorizontalAlignment="Stretch"
+                                         Click="AddAccommodation_Click"/>
+
+            <controls:Tip Grid.Column="2"
+                          Header="Having difficulties with navigating through fields?"
+                          TipText="If you're struggling with keyboard commands, head over to the Help page. There you can troubleshoot some of your problems with commands."/>
         </Grid>
     </Grid>
 </Page>

@@ -25,6 +25,7 @@ namespace TravelAgency.Services
         public IAccommodationRepository AccommodationRepository { get; set; }
         public IAccommodationReservationRepository AccommodationReservationRepository { get; set; }
         public ICommentDislikeRepository CommentDislikeRepository { get; set; }
+        public INotificationRepository NotificationRepository { get; set; }
 
         public ForumService()
         {
@@ -35,6 +36,7 @@ namespace TravelAgency.Services
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             AccommodationReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             CommentDislikeRepository = Injector.Injector.CreateInstance<ICommentDislikeRepository>();
+            NotificationRepository = Injector.Injector.CreateInstance<INotificationRepository>();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
@@ -47,6 +49,7 @@ namespace TravelAgency.Services
             CommentRepository.LinkForums(ForumRepository.GetAll());
             CommentDislikeRepository.LinkUsers(UserRepository.GetAll());
             CommentDislikeRepository.LinkComments(CommentRepository.GetAll());
+            NotificationRepository.LinkUsers(UserRepository.GetAll());
         }
 
         public List<Forum> GetForums()
@@ -105,8 +108,36 @@ namespace TravelAgency.Services
             {
                 ForumRepository.Save(forum);
                 PostCommentByGuest(forum, initialComment);
+                SendNotifications(forum);
                 return true;
             }
+            return false;
+        }
+
+        private void SendNotifications(Forum forum)
+        {
+            foreach (var owner in UserRepository.GetOwners())
+            {
+                if (OwnerHasAccommodationOnLocation(owner, forum.Location))
+                {
+                    Notification notification = new Notification();
+                    notification.User = owner;
+                    notification.Text = "Forum opened for location: " + forum.Location.City;
+                    NotificationRepository.Save(notification);
+                }
+            }
+        }
+
+        private bool OwnerHasAccommodationOnLocation(User owner, Location location)
+        {
+            foreach (var accommodation in AccommodationRepository.GetActiveByOwner(owner))
+            {
+                if (accommodation.Location == location)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -269,7 +300,7 @@ namespace TravelAgency.Services
             int commentDislikeCount = GetCommentDislikeCount(comment);
             bool isCommentOfOwner = IsCommentOfOwner(comment);
             bool ownerDislikedComment = OwnerDislikedComment(owner, comment);
-            bool guestVisited = (user.Role == Roles.Guest1) ? DidUserVisitLocation(user, location) : true;
+            bool guestVisited = (user.Role == Roles.Owner) ? true : DidUserVisitLocation(user, location);
             var dto = new CommentWithDataDTO(comment, commentDislikeCount, isCommentOfOwner, ownerDislikedComment, guestVisited);
             return dto;
         }
@@ -292,7 +323,7 @@ namespace TravelAgency.Services
             return false;
         }
 
-        private bool IsCommentOfOwner(Comment comment)
+        public bool IsCommentOfOwner(Comment comment)
         {
             return comment.User.Role == Roles.Owner;
         }

@@ -13,7 +13,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="Backspace" Command="{Binding Path=NavigateBackCommand}"/>
-        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding AddCommentCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddCommentCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -47,6 +47,7 @@
                        Text="{Binding SelectedForum.Title}"
                        Style="{StaticResource formTextBlock}"/>
             <TextBox Grid.Row="1" Grid.Column="1"
+                     x:Name="commentTextBox"
                      Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource formTextBox}"
                      TextWrapping="WrapWithOverflow"/>
@@ -67,13 +68,13 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Submit a comment"
-                                         KeyboardShortcutText="Ctrl+L"
+                                         KeyboardShortcutText="Ctrl+S"
                                          Margin="0 0 10 0"
                                          Click="AddComment_Click"/>
 
             <controls:Tip Grid.Column="2"
                           Header="Who can see my comment?"
-                          TipText="Everybody who visits this forum can see your comment. Your comment will be emphasized with a little icon so others can see that you are an owner that has an accommodation in this location."/>
+                          TipText="Everybody who visits this forum can see your comment. Your comments will be highlighted so others can see that you are an owner that has an accommodation in this location."/>
         </Grid>
     </Grid>
 </Page>

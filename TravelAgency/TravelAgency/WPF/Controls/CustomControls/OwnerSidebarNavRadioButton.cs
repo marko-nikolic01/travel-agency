@@ -78,6 +78,18 @@ namespace TravelAgency.WPF.Controls.CustomControls
             DependencyProperty.Register("Icon", typeof(ImageSource), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(null));
 
 
+
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(Brushes.Transparent));
+
+
         static OwnerSidebarNavRadioButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(OwnerSidebarNavRadioButton), new FrameworkPropertyMetadata(typeof(OwnerSidebarNavRadioButton)));

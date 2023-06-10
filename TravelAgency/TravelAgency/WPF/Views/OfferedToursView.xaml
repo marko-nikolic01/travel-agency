@@ -108,12 +108,12 @@
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Date and time" 
                                         Binding="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" ></DataGridTextColumn>
                         <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Language" Binding="{Binding Tour.Language}"></DataGridTextColumn>
-                        <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Max guests" Binding="{Binding Tour.MaxGuestNumber}"></DataGridTextColumn>
-                        <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Current guests" Binding="{Binding Guests.Count}"></DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Details">
+                        <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Spots" Binding="{Binding Tour.MaxGuestNumber}"></DataGridTextColumn>
+                        <DataGridTextColumn ElementStyle="{StaticResource stil}" Header="Reserved" Binding="{Binding Guests.Count}"></DataGridTextColumn>
+                        <DataGridTemplateColumn Header="Details" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="ShowDetails_Click" Background="#4681f4" Foreground="White" Margin="4">
+                                    <Button Click="ShowDetails_Click" Background="#4681f4" Foreground="White" Width="120" Margin="4">
                                         <Button.Resources>
                                             <Style TargetType="Border">
                                                 <Setter Property="CornerRadius" Value="10"></Setter>

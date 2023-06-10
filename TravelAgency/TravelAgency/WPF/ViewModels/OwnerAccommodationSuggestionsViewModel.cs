@@ -45,7 +45,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedAccommodation == null)
             {
-                MessageBox.Show("Select an accommodation.");
+                MessageBox.Show("Select an accommodation.", "No accommodation selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

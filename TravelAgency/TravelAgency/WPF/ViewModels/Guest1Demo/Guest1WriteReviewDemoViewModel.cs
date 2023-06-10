@@ -123,7 +123,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             RenovationRecommendation.UrgencyLevel = UrgencyLevel.LEVEL3; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
 
             text = "Na kraju pritiskom na dugme \"Pošalji recenziju\" završavamo sa pisanjem recenzije.";
-            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            Instruction.UpdateInstruction(0, 0, 0, 0, text); Delay(3000);
         }
 
         private void InitializeData()

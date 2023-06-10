@@ -98,10 +98,10 @@
                             <DataGridTextColumn Header="Date and time" ElementStyle="{StaticResource stil}" Binding="{Binding DateTime, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Duration (hours)" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Duration}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Language" ElementStyle="{StaticResource stil}" Binding="{Binding Tour.Language}"></DataGridTextColumn>
-                            <DataGridTemplateColumn Header="Details">
+                            <DataGridTemplateColumn Header="Details" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Background="#4681f4" Foreground="White" Click="ShowDetails_Click" Margin="4">
+                                        <Button Background="#4681f4" Foreground="White" Click="ShowDetails_Click" Width="120" Margin="4">
                                             <Button.Resources>
                                                 <Style TargetType="Border">
                                                     <Setter Property="CornerRadius" Value="10"></Setter>

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Navigation;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
@@ -64,13 +64,13 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (CommentText == string.Empty)
             {
-                MessageBox.Show("You must write a comment.");
+                MessageBox.Show("You must write a comment.", "No comment given", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             forumService.AddCommentToForum(CommentText, SelectedForum, loggedInUser);
             BackPage = new OwnerForumOverviewView(new OwnerForumOverviewViewModel(SelectedForum));
-            MessageBox.Show("Comment submited successfully.");
+            MessageBox.Show("Comment submited successfully.", "Comment submission", MessageBoxButton.OK, MessageBoxImage.Information);
             Execute_NavigateBackCommand();
         }
 

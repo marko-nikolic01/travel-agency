@@ -18,9 +18,9 @@
     </Page.Resources>
 
     <Page.InputBindings>
-        <KeyBinding Key="Backspace" Command="{Binding NavigateBackCommand, ElementName=root}"/>
-        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
-        <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding DislikeCommentCommand}"/>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigateToAddCommentCommand, ElementName=root}"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DislikeCommentCommand}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -45,6 +45,7 @@
                        Margin="0 0 0 10"/>
 
             <ListView Grid.Row="1"
+                      x:Name="commentsListView"
                       ItemsSource="{Binding Comments}"
                       SelectedItem="{Binding SelectedComment}"
                       HorizontalContentAlignment="Stretch"
@@ -91,8 +92,14 @@
                                            VerticalAlignment="Center"
                                            Margin="0 0 10 0"/>
 
-
-                                    <Image Grid.Column="3"
+                                    <Grid Grid.Column="3"
+                                          Visibility="{Binding IsOwner, Converter={StaticResource invertedBooleanToVisibility}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Image Grid.Column="0"
                                            Source="../../Resources/Images/NotDisliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
                                            Height="22"
@@ -100,17 +107,18 @@
                                            VerticalAlignment="Center"/>
 
 
-                                    <Image Grid.Column="3"
+                                        <Image Grid.Column="0"
                                            Source="../../Resources/Images/Disliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
                                            Height="23"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"/>
 
-                                    <TextBlock Grid.Column="4"
+                                        <TextBlock Grid.Column="4"
                                                Text="{Binding DislikesCount}"
                                                FontSize="16"
                                                Margin="6 0 0 0"/>
+                                    </Grid>
                                 </Grid>
 
                                 <TextBlock Grid.Row="1"
@@ -140,19 +148,19 @@
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Add comment"
-                                         KeyboardShortcutText="Ctrl+L"
+                                         KeyboardShortcutText="Ctrl+N"
                                          Margin="0 0 10 0"
                                          Click="NavigateToAddCommentCommand_Click"/>
 
             <controls:ButtonWithShortcut Grid.Column="2"
                                          Text="Dislike comment"
-                                         KeyboardShortcutText="Ctrl+U"
+                                         KeyboardShortcutText="Ctrl+D"
                                          Click="DislikeComment_Click"
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="3"
-                          Header="What does the star symbol represent?"
-                          TipText="The star symbol represents that this forum has at least 10 comments by owners or 20 comments by guests and that that forum is considered to be helpful."/>
+                          Header="Which comments can I dislike?"
+                          TipText="You can only dislike comments from guests that have not visited the location. Their comments are highlighted with an icon."/>
         </Grid>
     </Grid>
 </Page>
