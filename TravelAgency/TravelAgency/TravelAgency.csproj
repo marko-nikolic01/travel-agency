@@ -35,8 +35,10 @@
     <None Remove="Resources\Images\OwnerStatistics.png" />
     <None Remove="Resources\Images\padlock.png" />
     <None Remove="Resources\Images\paintwork.png" />
+    <None Remove="Resources\Images\play.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
     <None Remove="Resources\Images\Renovations.png" />
+    <None Remove="Resources\Images\stop.png" />
     <None Remove="Resources\Images\SuperOwnerMedal.png" />
     <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\book.png" />
@@ -113,6 +115,8 @@
 	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
+	  <Resource Include="Resources\Images\play.png" />
+	  <Resource Include="Resources\Images\stop.png" />
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />

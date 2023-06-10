@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+             xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
              Background="White">
@@ -29,6 +30,7 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
@@ -53,7 +55,7 @@
                 nastavite.
             </TextBlock>
             <Button x:Name="buttonBack" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    >
+                    Command="{Binding StartDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -61,7 +63,7 @@
                             <ColumnDefinition Width="140"></ColumnDefinition>
                             <ColumnDefinition Width="20"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/play-button-arrowhead.png"></Image>
+                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/play.png"></Image>
                         <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Demo</TextBlock>
                     </Grid>
                 </Button.Content>

@@ -30,6 +30,7 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            accommodationComboBox.Loaded += (object sender, RoutedEventArgs e) => accommodationComboBox.Focus();
         }
 
         private void AddRenovation_Click(object sender, RoutedEventArgs e)

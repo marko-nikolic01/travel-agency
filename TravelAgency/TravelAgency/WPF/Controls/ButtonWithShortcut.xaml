@@ -7,7 +7,31 @@
              mc:Ignorable="d" 
              x:Name="root"
              d:DesignHeight="450" d:DesignWidth="800"
-             Focusable="False">
+             Focusable="False"
+             VerticalAlignment="Center">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type local:ButtonWithShortcut}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.Setters>
+                        <Setter Property="Background" Value="LightGray"/>
+                    </Trigger.Setters>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Button Command="{Binding Command, ElementName=root}"
                 HorizontalContentAlignment="Center"
@@ -15,7 +39,8 @@
                 Background="Transparent"
                 BorderThickness="0"
                 Click="Button_Click"
-                Focusable="False">
+                Focusable="False"
+                Cursor="Hand">
             <Button.Content>
                 <Border BorderThickness="1"
                         BorderBrush="Black"

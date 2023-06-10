@@ -36,6 +36,17 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
             
             Loaded += (s, e) => Keyboard.Focus(this);
+            commentsListView.Loaded += PreselectFirstItem;
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (commentsListView.Items.Count > 0)
+            {
+                commentsListView.SelectedItem = commentsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)commentsListView.ItemContainerGenerator.ContainerFromItem(commentsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
 
         private void Execute_NavigateToAddCommentCommand()

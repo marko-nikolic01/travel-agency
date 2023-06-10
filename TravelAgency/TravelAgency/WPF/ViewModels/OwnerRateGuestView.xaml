@@ -1,0 +1,107 @@
+﻿<Page x:Class="TravelAgency.WPF.ViewModels.OwnerRateGuestView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.ViewModels"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerRateGuestView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.InputBindings>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding RateGuestCommand}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Ratings > Rate guest"/>
+
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Guest:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Cleanliness:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Rule compliance:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="Noisiness:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="Friendliness:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0"
+                       Text="Responsivenes:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="6" Grid.Column="0"
+                       Text="Comment:"
+                       Style="{StaticResource formTextBlock}"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Style="{StaticResource formTextBox}"
+                     Text="{Binding SelectedReservation.Guest.Username}"
+                     IsEnabled="False"/>
+            <controls:RatingOptions Grid.Row="1" Grid.Column="1"
+                                    Value="{Binding Cleanliness, Mode=TwoWay}"/>
+            <controls:RatingOptions Grid.Row="2" Grid.Column="1"
+                                    Value="{Binding Compliance, Mode=TwoWay}"/>
+            <controls:RatingOptions Grid.Row="3" Grid.Column="1"
+                                    Value="{Binding Noisiness, Mode=TwoWay}"/>
+            <controls:RatingOptions Grid.Row="4" Grid.Column="1"
+                                    Value="{Binding Friendliness, Mode=TwoWay}"/>
+            <controls:RatingOptions Grid.Row="5" Grid.Column="1"
+                                    Value="{Binding Responsivenes, Mode=TwoWay}"/>
+            <TextBox Grid.Row="6" Grid.Column="1"
+                     Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 30 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Style="{StaticResource backButton}"
+                                         Margin="0 0 10 0"
+                                         Click="NavigateBack_Click"/>
+
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Rate guest"
+                                         KeyboardShortcutText="Ctrl+S"
+                                         Margin="0 0 10 0"
+                                         Click="RateGuest_Click"/>
+
+            <controls:Tip Grid.Column="2"
+                          Header=""/>
+        </Grid>
+    </Grid>
+</Page>

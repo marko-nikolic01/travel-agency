@@ -31,6 +31,7 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            commentTextBox.Loaded += (object sender, RoutedEventArgs e) => commentTextBox.Focus();
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)

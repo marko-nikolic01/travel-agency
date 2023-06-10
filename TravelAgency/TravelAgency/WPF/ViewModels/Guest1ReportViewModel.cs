@@ -149,7 +149,7 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (this.IsValid)
             {
-                _reportService.WriteCanceledAccommodationReservationReport(Guest, _reservations, FirstDate, LastDate);
+                _reportService.WriteCanceledAccommodationReservationReport(Guest, _canceledReservations, FirstDate, LastDate);
             }
         }
 

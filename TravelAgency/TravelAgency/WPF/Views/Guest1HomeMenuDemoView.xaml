@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+             xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
              Background="White">
@@ -29,6 +30,7 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
@@ -46,10 +48,10 @@
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
-            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction}">
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
             </TextBlock>
             <Button x:Name="buttonBack" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
-                    >
+                    Command="{Binding StopDemoCommand}">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -193,7 +195,8 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Border BorderBrush="Green" BorderThickness="5" Grid.Row="{Binding Row}" Grid.Column="{Binding Column}" Grid.RowSpan="{Binding RowSpan}" Grid.ColumnSpan="{Binding ColumnSpan}"></Border>
+            <Border BorderBrush="Green" BorderThickness="5" Grid.Row="{Binding Instruction.Row}" Grid.Column="{Binding Instruction.Column}" Grid.RowSpan="{Binding Instruction.RowSpan}" Grid.ColumnSpan="{Binding Instruction.ColumnSpan}" Visibility="{Binding Instruction.Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1"></Border>
         </Grid>
     </DockPanel>
 </UserControl>
