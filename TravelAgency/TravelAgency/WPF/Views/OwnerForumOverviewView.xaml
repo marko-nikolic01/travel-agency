@@ -92,8 +92,14 @@
                                            VerticalAlignment="Center"
                                            Margin="0 0 10 0"/>
 
-
-                                    <Image Grid.Column="3"
+                                    <Grid Grid.Column="3"
+                                          Visibility="{Binding IsOwner, Converter={StaticResource invertedBooleanToVisibility}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Image Grid.Column="0"
                                            Source="../../Resources/Images/NotDisliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
                                            Height="22"
@@ -101,17 +107,18 @@
                                            VerticalAlignment="Center"/>
 
 
-                                    <Image Grid.Column="3"
+                                        <Image Grid.Column="0"
                                            Source="../../Resources/Images/Disliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
                                            Height="23"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"/>
 
-                                    <TextBlock Grid.Column="4"
+                                        <TextBlock Grid.Column="4"
                                                Text="{Binding DislikesCount}"
                                                FontSize="16"
                                                Margin="6 0 0 0"/>
+                                    </Grid>
                                 </Grid>
 
                                 <TextBlock Grid.Row="1"
