@@ -50,7 +50,7 @@ namespace TravelAgency.Services
 
         private List<Accommodation> FilterByCountry(string countryFilter, List<Accommodation> accommodations)
         {
-            if (countryFilter != "Not specified")
+            if (countryFilter != "Not specified" && countryFilter != "-")
             {
                 return accommodations.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryFilter.ToLower())).ToList();
             }
@@ -59,7 +59,7 @@ namespace TravelAgency.Services
 
         private List<Accommodation> FilterByCity(string cityFilter, List<Accommodation> accommodations)
         {
-            if (cityFilter != "Not specified")
+            if (cityFilter != "Not specified" && cityFilter != "-")
             {
                 return accommodations.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityFilter.ToLower())).ToList();
             }
@@ -71,10 +71,13 @@ namespace TravelAgency.Services
             switch (typeFilter)
             {
                 case "Appartment":
+                case "Apartman":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT).ToList();
                 case "House":
+                case "Kuća":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HOUSE).ToList();
                 case "Hut":
+                case "Koliba":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HUT).ToList();
             }
             return accommodations;

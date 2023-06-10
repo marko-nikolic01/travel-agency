@@ -163,7 +163,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             SearchFilter.NameFilter = "Smeštaj";    Delay(3000);    if (_demoStopper.Token.IsCancellationRequested) return;
             SelectedCountry = "Serbia"; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
             SelectedCity = "Novi Sad"; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
-            SearchFilter.TypeFilter = "Appartment"; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
+            SearchFilter.TypeFilter = "Apartman"; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
             SearchFilter.GuestNumberFilter = 1; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
             SearchFilter.DayNumberFilter = 1; Delay(3000); if (_demoStopper.Token.IsCancellationRequested) return;
 
@@ -208,10 +208,10 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         private void InitializeLocations()
         {
             Countries = _locationService.GetCountries();
-            Countries.Insert(0, "Not specified");
+            Countries.Insert(0, "-");
             SelectedCountry = Countries[0];
             List<string> tempCities = _locationService.GetCities();
-            tempCities.Insert(0, "Not specified");
+            tempCities.Insert(0, "-");
             Cities = tempCities;
             SelectedCity = Cities[0];
         }
@@ -219,10 +219,10 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
         private void InitializeAccommodationTypes()
         {
             AccommodationTypes = new ObservableCollection<string>();
-            AccommodationTypes.Add("Not specified");
-            AccommodationTypes.Add("Appartment");
-            AccommodationTypes.Add("House");
-            AccommodationTypes.Add("Hut");
+            AccommodationTypes.Add("-");
+            AccommodationTypes.Add("Apartman");
+            AccommodationTypes.Add("Kuća");
+            AccommodationTypes.Add("Koliba");
         }
 
         public void OnSearch()
@@ -252,10 +252,10 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             accommdation.Location.Country = "Croatia";
             Accommodations.Add(accommdation);
             SearchFilter.NameFilter = "";
-            SelectedCountry = "Not specified";
+            SelectedCountry = "-";
             UpdateLocationsData(true);
-            SelectedCity = "Not specified";
-            SearchFilter.TypeFilter = "Not specified";
+            SelectedCity = "-";
+            SearchFilter.TypeFilter = "-";
             SearchFilter.GuestNumberFilter = 0;
             SearchFilter.DayNumberFilter = 0;
         }
@@ -265,7 +265,7 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
             if (updateCountry)
             {
                 List<string> tempCities;
-                if (SelectedCountry != "Not specified")
+                if (SelectedCountry != "-")
                 {
                     tempCities = _locationService.GetCitiesByCountry(SelectedCountry);
                 }
@@ -273,9 +273,9 @@ namespace TravelAgency.WPF.ViewModels.Guest1Demo
                 {
                     tempCities = _locationService.GetCities();
                 }
-                tempCities.Insert(0, "Not specified");
+                tempCities.Insert(0, "-");
                 Cities = tempCities;
-                SelectedCity = "Not specified";
+                SelectedCity = "-";
                 SearchFilter.CountryFilter = SelectedCountry;
             }
             SearchFilter.CityFilter = SelectedCity;

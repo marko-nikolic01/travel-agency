@@ -226,7 +226,7 @@ namespace TravelAgency.Domain.Models
                 {
                     if (Comment == "")
                     {
-                        return "You must leave a comment";
+                        return "* Komentar je obavezan";
                     }
                 }
 

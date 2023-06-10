@@ -283,11 +283,29 @@ namespace TravelAgency.WPF.ViewModels
                     }
                     _ratingService.CreateRating(Rating);
                     _renovationService.RecommendRenovation(Rating, RenovationRecommendation);
-                    NavigationCommand.Execute("guest1RateableStaysViewModel");
+                    string messageBoxText = "Ocena i preporuka za renoviraje su uspešno formirani.";
+                    string caption = "Ocenjivanje vlasnika i smeštaja";
+                    MessageBoxButton button = MessageBoxButton.OK;
+                    MessageBoxImage icon = MessageBoxImage.Information;
+                    MessageBoxResult result;
+                    result = MessageBox.Show(messageBoxText, caption, button, icon);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        NavigationCommand.Execute("guest1RateableStaysViewModel");
+                    }
                     return;
                 }
                 _ratingService.CreateRating(Rating);
-                NavigationCommand.Execute("guest1RateableStaysViewModel");
+                string messageBoxText1 = "Ocena je uspešno formirana.";
+                string caption1 = "Ocenjivanje vlasnika i smeštaja";
+                MessageBoxButton button1 = MessageBoxButton.OK;
+                MessageBoxImage icon1 = MessageBoxImage.Information;
+                MessageBoxResult result1;
+                result1 = MessageBox.Show(messageBoxText1, caption1, button1, icon1);
+                if (result1 == MessageBoxResult.OK)
+                {
+                    NavigationCommand.Execute("guest1RateableStaysViewModel");
+                }
                 return;
             }
         }

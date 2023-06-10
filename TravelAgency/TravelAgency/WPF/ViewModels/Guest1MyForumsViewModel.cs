@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
@@ -87,9 +87,18 @@ namespace TravelAgency.WPF.ViewModels
 
         private void OnCloseForum()
         {
-            _forumService.CloseForum(SelectedForum);
-            InitializeForums();
-
+            string messageBoxText = "Da li ste sigurni da želite da zatvorite forum?\nNaslov: " + SelectedForum.Title +
+                "\nLokacija: " + SelectedForum.Location.City + ", " + SelectedForum.Location.Country;
+            string caption = "Zatvaranje foruma";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            if (result == MessageBoxResult.Yes)
+            {
+                _forumService.CloseForum(SelectedForum);
+                InitializeForums();
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

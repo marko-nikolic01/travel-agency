@@ -255,7 +255,7 @@ namespace TravelAgency.WPF.ViewModels
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*First date can't be after last date";
+                        return "* Početni datum ne može biti posle krajnjeg datuma";
                     }
 
                 }
@@ -264,7 +264,7 @@ namespace TravelAgency.WPF.ViewModels
                     int dateSpanLength = (DateOnly.FromDateTime(LastDate)).DayNumber - (DateOnly.FromDateTime(FirstDate)).DayNumber + 1;
                     if (dateSpanLength <= 0)
                     {
-                        return "*Last date can't be before first date";
+                        return "* Krajnji datum ne može biti pre početnog datuma";
                     }
                 }
 

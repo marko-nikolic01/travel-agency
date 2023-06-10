@@ -33,12 +33,13 @@
         </Style>
         <converters:AccommodationReservationStartDateToVisibilityConverter x:Key="AccommodationReservationStartDateToVisibilityConverter"/>
         <converters:AccommodationReservationCancelabilityToVisibilityConverter x:Key="AccommodationReservationCancelabilityToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
         <converters:ReservationMoveRequestStatusToTextColorConverter x:Key="ReservationMoveRequestStatusToTextColorConverter"/>
         <converters:ReservationMoveRequestStatusToVisibilityConverter1 x:Key="ReservationMoveRequestStatusToVisibilityConverter1"/>
         <converters:ReservationMoveRequestStatusToVisibilityConverter2 x:Key="ReservationMoveRequestStatusToVisibilityConverter2"/>
         <converters:ReservationMoveRequestStatusToVisibilityConverter3 x:Key="ReservationMoveRequestStatusToVisibilityConverter3"/>
+        <converters:MoveRequestStatusToStringConverter x:Key="MoveRequestStatusToStringConverter"/>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel"/>
@@ -198,7 +199,7 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Status, StringFormat='Status: {0}'}" Foreground="{Binding Path=Status, Converter={StaticResource ReservationMoveRequestStatusToTextColorConverter}}"></TextBlock>
+                                <TextBlock Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Status, Converter={StaticResource MoveRequestStatusToStringConverter}, StringFormat='Status: {0}'}" Foreground="{Binding Path=Status, Converter={StaticResource ReservationMoveRequestStatusToTextColorConverter}}"></TextBlock>
                                 <Image Grid.Column="7" Grid.Row="1" Source="../../Resources/Images/timer.png" Visibility="{Binding Path=Status, Converter={StaticResource ReservationMoveRequestStatusToVisibilityConverter1}}"></Image>
                                 <Image Grid.Column="7" Grid.Row="1" Source="../../Resources/Images/accept-circular-button-outline.png" Visibility="{Binding Path=Status, Converter={StaticResource ReservationMoveRequestStatusToVisibilityConverter2}}"></Image>
                                 <Image Grid.Column="7" Grid.Row="1" Source="../../Resources/Images/cross-button.png" Visibility="{Binding Path=Status, Converter={StaticResource ReservationMoveRequestStatusToVisibilityConverter3}}"></Image>
