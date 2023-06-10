@@ -21,8 +21,8 @@ namespace TravelAgency.WPF.Views
         private void ShowAcceptedTour_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             notificationsViewModel.RemoveRequestNotification();
-            OfferedToursView tours = new OfferedToursView(notificationsViewModel.currentGuestId, false);
-            this.NavigationService.Navigate(tours);
+            TourDetailedView tour = new TourDetailedView(notificationsViewModel.TourOccurrence, notificationsViewModel.currentGuestId);
+            this.NavigationService.Navigate(tour);
         }
         private void ShowNewTour_Click(object sender, System.Windows.RoutedEventArgs e)
         {

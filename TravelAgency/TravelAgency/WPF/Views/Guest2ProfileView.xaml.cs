@@ -4,17 +4,11 @@ using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using TravelAgency.Domain.Models;
-using System.Data;
 using TravelAgency.Domain.DTOs;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace TravelAgency.WPF.Views
 {
@@ -32,6 +26,12 @@ namespace TravelAgency.WPF.Views
         }
         private void GenerateReport_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            if(viewModel.StartDate > viewModel.EndDate)
+            {
+
+                System.Windows.MessageBox.Show("Start date must be lower than end date", "Tour attendance report", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             viewModel.PrepareData();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             XFont titleFont;

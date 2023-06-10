@@ -83,6 +83,7 @@ namespace TravelAgency.WPF.ViewModels
         public string[] BarLabelsLocation { get; set; }
         public Func<double, string> FormatterLocation { get; set; }
         public ButtonCommandNoParameter GraphHelpCommand { get; set; }
+        public ButtonCommandNoParameter RadioButtonCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -101,6 +102,7 @@ namespace TravelAgency.WPF.ViewModels
             FillOptions();
             FillChartColumns();
             GraphHelpCommand = new ButtonCommandNoParameter(GraphClick);
+            RadioButtonCommand = new ButtonCommandNoParameter(ChangeChart);
             UpdateHelpText();
         }
         private void GraphClick()

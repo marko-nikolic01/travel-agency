@@ -316,7 +316,7 @@ namespace TravelAgency.Services
                 ITourOccurrenceRepository.UpdateTourOccurrence(tourOccurrence);
             }
         }
-        public void AcceptRequest(TourRequest request, DateTime dateTime, int GuideId, ObservableCollection<string> keyPoints, int duration)
+        public int AcceptRequest(TourRequest request, DateTime dateTime, int GuideId, ObservableCollection<string> keyPoints, int duration)
         {
             Tour newTour = GenerateNewTour(request, duration);
             ITourRepository.Save(newTour);
@@ -327,6 +327,7 @@ namespace TravelAgency.Services
             {
                 SaveKeyPoint(keyPoint, newTourOccurrence);
             }
+            return newTourOccurrence.Id;
         }
         private TourOccurrence GenerateNewTourOccurrence(Tour newTour, DateTime dateTime)
         {

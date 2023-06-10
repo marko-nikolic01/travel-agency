@@ -134,9 +134,9 @@ namespace TravelAgency.WPF.ViewModels
                 MessageBox.Show("You are not free in the time you entered!");
                 return;
             }
-            TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id, KeyPoints, Duration);
+            int occurrenceId = TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id, KeyPoints, Duration);
             TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime);
-            TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId));
+            TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId, occurrenceId));
 
             Page page = new TourRequestBookingView(ActiveGuide.Id, NavigationService);
             NavigationService.Navigate(page);

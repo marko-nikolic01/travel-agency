@@ -66,7 +66,7 @@
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="3" x:Name="tbDuration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Label Grid.Row="0" Grid.Column="4" HorizontalContentAlignment="Center">Language</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="4" Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}" x:Name="tbLanguage" TextChanged="Search_TextChanged"></TextBox>
-            <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Guests</Label>
+            <Label Grid.Row="0" Grid.Column="5" HorizontalContentAlignment="Center">Free spots</Label>
             <TextBox Margin="10,0,10,15" Grid.Row="1" Grid.Column="5" x:Name="tbNumOfGuests" Text="{Binding Guests, UpdateSourceTrigger=PropertyChanged}" TextChanged="Search_TextChanged"></TextBox>
             <Button Margin="10,-5,10,15" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="6" x:Name="SearchHelpButton" Command="{Binding FirstHelpCommand}">
                 <Image Source="../../Resources/Images/questionmark.png"></Image>

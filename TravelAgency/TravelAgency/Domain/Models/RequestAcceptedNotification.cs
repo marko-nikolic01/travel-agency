@@ -17,23 +17,24 @@ namespace TravelAgency.Domain.Models
         public int GuestId { get; set; }
         public int RequestId { get; set; }
         public bool IsSeen { get; set; }
-
+        public int OccurrenceId { get; set; }
         public RequestAcceptedNotification()
         {
         }
 
-        public RequestAcceptedNotification(DateTime dateTime, int guideId, int requestId, bool isSeen, int guestId)
+        public RequestAcceptedNotification(DateTime dateTime, int guideId, int requestId, bool isSeen, int guestId, int occurrenceId)
         {
             DateTime = dateTime;
             GuideId = guideId;
             RequestId = requestId;
             IsSeen = isSeen;
             GuestId = guestId;
+            OccurrenceId = occurrenceId;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(),  DateTime.ToString("dd-MM-yyyy HH-mm"), GuideId.ToString(), RequestId.ToString(), IsSeen.ToString(), GuestId.ToString() };
+            string[] csvValues = { Id.ToString(),  DateTime.ToString("dd-MM-yyyy HH-mm"), GuideId.ToString(), RequestId.ToString(), IsSeen.ToString(), GuestId.ToString(), OccurrenceId.ToString() };
             return csvValues;
         }
 
@@ -45,6 +46,7 @@ namespace TravelAgency.Domain.Models
             RequestId = int.Parse(values[3]);
             IsSeen = bool.Parse(values[4]);
             GuestId = int.Parse(values[5]);
+            OccurrenceId = int.Parse(values[6]);
         }
     }
 }

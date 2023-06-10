@@ -18,8 +18,8 @@
 18|9|Key point2|False
 19|10|Key point1|False
 20|10|Key point2|False
-21|11|kjssd|False
-22|11|okods|False
+21|11|kjssd|True
+22|11|okods|True
 23|12|kjssd|False
 24|12|sfs|False
 25|13|kjssd|False
@@ -37,3 +37,5 @@
 37|18|fed3|True
 38|19|kp1|False
 39|19|kp2|False
+40|20|kjssd|False
+41|20|fdsa|False

@@ -51,8 +51,8 @@
                 <ColumnDefinition Width="3*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock FontSize="20" Margin="20 0" Grid.Column="0" Grid.Row="0">Choose voucher<LineBreak/>(optionally)</TextBlock>
-            <Label Margin="20 0" Grid.Column="0" Grid.Row="1">Number of guests:</Label>
+            <TextBlock FontSize="20" Margin="20 0" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Choose voucher<LineBreak/>(optionally)</TextBlock>
+            <Label Margin="20 0" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Number of guests:</Label>
             <ListBox Grid.Column="1" Margin="10" Grid.Row="0" Height="80" ItemsSource="{Binding Vouchers}" Name="vouchersList"
                  SelectedValue="{Binding SelectedVoucher}" 
                  DisplayMemberPath="VoucherString" />
@@ -73,7 +73,7 @@
                     </Border>
                 </Popup>
                 <Button Content="Deselect" Grid.Column="2" Grid.Row="0" Background="#4681f4" Foreground="White" Width="150" Height="30" HorizontalAlignment="Center" Click="Deselect_Click"></Button>
-                <Label Margin="20 0 0 0" Grid.Column="0" Grid.Row="2">Guests which will come:</Label>
+                <Label Margin="20 0 0 0" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Guests which will come:</Label>
             <xctk:IntegerUpDown Minimum="1" Margin="10" Grid.Column="1" TextAlignment="Left" Grid.Row="1" FontSize="20" Name="myUpDownControl" Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Column="2" FontSize="20" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=SpotsLeft}"></TextBlock>
             <TextBox Margin="10" Grid.Column="1" Grid.Row="2" Name="GuestUsernameText" Text="{Binding Path=GuestName}"></TextBox>
