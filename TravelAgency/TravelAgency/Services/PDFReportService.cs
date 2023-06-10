@@ -4,6 +4,7 @@ using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
@@ -187,7 +188,7 @@ namespace TravelAgency.Services
             string sentence = "Between " + report.ReportDateSpan.StartDate.ToShortDateString() + " and " + report.ReportDateSpan.EndDate.ToShortDateString() + " there were " + report.RenovationsCount.ToString() + " renovations. " +
                 "Total day count of those renovations is " + report.RenovationDaysCount.ToString() + ".";
 
-            tf.DrawString(sentence, regularFont, XBrushes.Black, new XRect(margin, 220, page.Width - 10, 40), format);
+            tf.DrawString(sentence, regularFont, XBrushes.Black, new XRect(margin, 210, page.Width - 10, 40), format);
 
             int tablePosition = 260;
 
