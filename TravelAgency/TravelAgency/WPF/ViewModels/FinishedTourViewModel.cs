@@ -1,4 +1,5 @@
-﻿using TravelAgency.Domain.Models;
+﻿using System;
+using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 
 namespace TravelAgency.WPF.ViewModels
@@ -10,7 +11,7 @@ namespace TravelAgency.WPF.ViewModels
         public string TourName { get; set; }
         public string Location { get; set; }
         public string Language { get; set; }
-        public string Date { get; set; }
+        public DateTime DateTime { get; set; }
         public string Description { get; set; }
         public string Duration { get; set; }
         public string KeyPointOfArrival { get; set; }
@@ -34,7 +35,7 @@ namespace TravelAgency.WPF.ViewModels
             TourName = tourOccurrence.Tour.Name;
             Location = tourOccurrence.Tour.Location.Country+", "+ tourOccurrence.Tour.Location.City;
             Language = tourOccurrence.Tour.Language;
-            Date = tourOccurrence.DateTime.ToString();
+            DateTime = tourOccurrence.DateTime;
             Description = tourOccurrence.Tour.Description;
             Duration = tourOccurrence.Tour.Duration+" hours";
             TourName = tourOccurrence.Tour.Name;
