@@ -159,8 +159,8 @@
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="3"
-                          Header="What does the star symbol represent?"
-                          TipText="The star symbol represents that this forum has at least 10 comments by owners or 20 comments by guests and that that forum is considered to be helpful."/>
+                          Header="Which comments can I dislike?"
+                          TipText="You can only dislike comments from guests that have not visited the location. Their comments are highlighted with an icon."/>
         </Grid>
     </Grid>
 </Page>

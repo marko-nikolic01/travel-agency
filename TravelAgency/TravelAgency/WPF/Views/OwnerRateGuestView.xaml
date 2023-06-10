@@ -66,6 +66,7 @@
             <TextBox Grid.Row="0" Grid.Column="1"
                      Style="{StaticResource formTextBox}"
                      Text="{Binding SelectedReservation.Guest.Username}"
+                     VerticalAlignment="Top"
                      IsEnabled="False"/>
             <controls:RatingOptions Grid.Row="1" Grid.Column="1"
                                     Value="{Binding Cleanliness, Mode=TwoWay}"/>

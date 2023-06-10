@@ -127,7 +127,7 @@
 
             <controls:Tip Grid.Column="2"
                           Header="How to get statistics for a particular year?"
-                          TipText="To get statistics for a particular year select an accommodation, select a year and press Enter."/>
+                          TipText="To get statistics for a particular year select an accommodation, select a year and press Ctrl+Enter."/>
         </Grid>
     </Grid>
 </Page>

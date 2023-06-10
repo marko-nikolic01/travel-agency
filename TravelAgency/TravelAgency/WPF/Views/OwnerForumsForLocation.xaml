@@ -117,8 +117,8 @@
                                          Margin="0 0 10 0"/>
 
             <controls:Tip Grid.Column="2"
-                          Header="What can I do with forums?"
-                          TipText="You can select a forum and leave a helpful comment. You can also read comments of other people (guests or owners). If you find a comment not useful or incorrect you can report it."/>
+                          Header="What does the star symbol represent?"
+                          TipText="The icon emphasizes that the forum is very useful. That means it has 20 or more comments from guests or 10 or more comments from owners."/>
         </Grid>
     </Grid>
 </Page>
