@@ -307,6 +307,11 @@ namespace TravelAgency.Services
 
         public void PostCommentByOwnerToForum(string commentText, Forum forum, User user)
         {
+            if (!OwnerHasAccommodationOnLocation(user, forum.Location))
+            {
+                return;
+            }
+
             Comment newComment = new Comment();
             newComment.Text = commentText;
             newComment.OwnsAccommodationOnLocation = true;

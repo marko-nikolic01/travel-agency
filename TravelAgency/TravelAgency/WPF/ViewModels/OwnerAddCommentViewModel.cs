@@ -68,7 +68,7 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            forumService.AddCommentToForum(CommentText, SelectedForum, loggedInUser);
+            forumService.PostCommentByOwnerToForum(CommentText, SelectedForum, loggedInUser);
             BackPage = new OwnerForumOverviewView(new OwnerForumOverviewViewModel(SelectedForum));
             MessageBox.Show("Comment submited successfully.", "Comment submission", MessageBoxButton.OK, MessageBoxImage.Information);
             Execute_NavigateBackCommand();
