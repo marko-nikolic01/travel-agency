@@ -100,6 +100,10 @@ namespace TravelAgency.WPF.Views
             set
             {
                 selectedPhoto = value;
+                if(selectedPhoto != -1)
+                {
+                    PhotosEnabled = true;
+                }
                 OnPropertyChanged();
             }
         }
@@ -110,6 +114,10 @@ namespace TravelAgency.WPF.Views
             set
             {
                 selectedKeyPoint = value;
+                if(selectedKeyPoint != -1)
+                {
+                    KeyPointsEnabled = true;
+                }
                 OnPropertyChanged();
             }
         }
@@ -120,6 +128,10 @@ namespace TravelAgency.WPF.Views
             set
             {
                 selectedDateTime = value;
+                if(SelectedDateTime != -1)
+                {
+                    DateTimesEnabled = true;
+                }
                 OnPropertyChanged();
             }
         }
@@ -130,6 +142,16 @@ namespace TravelAgency.WPF.Views
             set
             {
                 photosEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool canPreview;
+        public bool CanPreview
+        {
+            get { return canPreview; }
+            set
+            {
+                canPreview = value;
                 OnPropertyChanged();
             }
         }
@@ -196,6 +218,7 @@ namespace TravelAgency.WPF.Views
             PhotosEnabled = false;
             KeyPointsEnabled = false;
             DateTimesEnabled = false;
+            CanPreview = false;
         }
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
@@ -206,7 +229,6 @@ namespace TravelAgency.WPF.Views
             ListKeyPoints.Items.Add(KeyPointsText.Text);
             KeyPointsText.Clear();
             KeyPointsText.Focus();
-            KeyPointsEnabled = true;
         }
 
         private void AddDateTime_Click(object sender, RoutedEventArgs e)
@@ -217,9 +239,7 @@ namespace TravelAgency.WPF.Views
             }
             ListDateTimes.Items.Add(DateCalendar.Text + " " + Time.Text);
             DateCalendar.Focus();
-            DateTimesEnabled = true;
         }
-
         private void AddImages_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ImageText.Text))
@@ -229,7 +249,7 @@ namespace TravelAgency.WPF.Views
             ListPhotos.Items.Add(ImageText.Text);
             ImageText.Clear();
             ImageText.Focus();
-            PhotosEnabled = true;
+            CanPreview = true;
         }
         private void RemoveKeyPoint_Click(object sender, RoutedEventArgs e)
         {
@@ -239,10 +259,7 @@ namespace TravelAgency.WPF.Views
             }
             KeyPointsText.Focus();
             SelectedKeyPoint = -1;
-            if (ListKeyPoints.Items.Count == 0)
-            {
-                KeyPointsEnabled = false;
-            }
+            KeyPointsEnabled = false;
         }
         private void RemoveDateTime_Click(object sender, RoutedEventArgs e)
         {
@@ -251,10 +268,7 @@ namespace TravelAgency.WPF.Views
                 ListDateTimes.Items.RemoveAt(SelectedDateTime);
             }
             SelectedDateTime = -1;
-            if (ListDateTimes.Items.Count == 0)
-            {
-                DateTimesEnabled = false;
-            }
+            DateTimesEnabled = false;
         }
         private void RemoveImage_Click(object sender, RoutedEventArgs e)
         {
@@ -264,9 +278,14 @@ namespace TravelAgency.WPF.Views
             }
             ImageText.Focus();
             SelectedPhoto = -1;
-            if(ListPhotos.Items.Count == 0)
+            PhotosEnabled = false;
+            if(ListPhotos.Items.Count > 0)
             {
-                PhotosEnabled = false;
+                CanPreview = true;
+            }
+            else
+            {
+                CanPreview = false;
             }
         }
         private void PreView_Click(object sender, RoutedEventArgs e)
