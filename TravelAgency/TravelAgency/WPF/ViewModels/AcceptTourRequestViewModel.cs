@@ -66,6 +66,30 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
+        private bool canRemove;
+        public bool CanRemove
+        {
+            get { return canRemove; }
+            set
+            {
+                canRemove = value;
+                OnPropertyChanged();
+            }
+        }
+        private string selectedKeyPoint;
+        public string SelectedKeyPoint
+        {
+            get { return selectedKeyPoint; }
+            set
+            {
+                selectedKeyPoint = value;
+                if(selectedKeyPoint != null)
+                {
+                    CanRemove = true;
+                }
+                OnPropertyChanged();
+            }
+        }
         private int duration;
         public int Duration
         {
@@ -80,6 +104,7 @@ namespace TravelAgency.WPF.ViewModels
         public ButtonCommandNoParameter ConfirmCommand { get; set; }
         public ButtonCommandNoParameter CancelCommand { get; set; }
         public ButtonCommandNoParameter AddCommand { get; set; }
+        public ButtonCommandNoParameter RemoveCommand { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public TourRequestService TourRequestService { get; set; }
         public NavigationService NavigationService { get; set; }
@@ -90,6 +115,7 @@ namespace TravelAgency.WPF.ViewModels
             NavigationService = navigationService;
             KeyPoints = new ObservableCollection<string>();
             AddCommand = new ButtonCommandNoParameter(AddKeyPoint);
+            RemoveCommand = new ButtonCommandNoParameter(RemoveKeyPoint);
             ActiveGuide = new UserService().GetById(id);
             TourRequest = selectedRequest;
             ConfirmCommand = new ButtonCommandNoParameter(Confirm);
@@ -99,11 +125,23 @@ namespace TravelAgency.WPF.ViewModels
             IsTimeSelected = false;
             EndDate = TourRequest.MaxDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
             StartDate = TourRequest.MinDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
+            CanRemove = false;
         }
         public void AddKeyPoint()
         {
             KeyPoints.Add(KeyPoint);
             KeyPoint = "";
+        }
+        public void RemoveKeyPoint()
+        {
+            if(SelectedKeyPoint != null)
+            {
+                if (KeyPoints.Count > 0)
+                {
+                    KeyPoints.Remove(SelectedKeyPoint);
+                }
+            }
+            CanRemove = false;
         }
         private void Cancel()
         {

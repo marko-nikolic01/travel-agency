@@ -143,7 +143,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Grid.Row="14" Grid.Column="3" Margin="0 7 10 7" Content="Preview" Width="50" Click="PreView_Click" IsEnabled="{Binding PhotosEnabled}">
+        <Button Grid.Row="14" Grid.Column="3" Margin="0 7 10 7" Content="Preview" Width="50" Click="PreView_Click" IsEnabled="{Binding CanPreview}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
