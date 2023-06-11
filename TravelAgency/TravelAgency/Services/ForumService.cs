@@ -104,7 +104,7 @@ namespace TravelAgency.Services
 
         public bool OpenForum(Forum forum, Comment initialComment)
         {
-            if (initialComment.Text != "")
+            if (initialComment.IsValid && forum.IsValid)
             {
                 ForumRepository.Save(forum);
                 PostCommentByGuest(forum, initialComment);
@@ -149,27 +149,17 @@ namespace TravelAgency.Services
 
         public void PostCommentByGuest(Forum forum, Comment comment)
         {
-            if (comment.Text != "" && !forum.Closed)
+            if (comment.IsValid && !forum.Closed)
             {
                 comment.Forum = forum;
                 forum.Comments.Add(comment);
-                CountImportantComments(forum, comment);
+                if (DidUserVisitLocation(comment.User, forum.Location))
+                {
+                    comment.LocationVisited = true;
+                    forum.CommentsByVisitors++;
+                    ForumRepository.SaveAll();
+                }
                 CommentRepository.Save(comment);
-                ForumRepository.SaveAll();
-            }
-        }
-
-        public void CountImportantComments(Forum forum, Comment comment)
-        {
-            if (DidUserVisitLocation(comment.User, forum.Location))
-            {
-                comment.LocationVisited = true;
-                forum.CommentsByVisitors++;
-            }
-            if (IsUserAccommodationOwner(comment.User, forum.Location))
-            {
-                comment.OwnsAccommodationOnLocation = true;
-                forum.CommentsByAccommodationOwners++;
             }
         }
 
@@ -179,19 +169,6 @@ namespace TravelAgency.Services
             foreach (AccommodationReservation reservation in accommodationReservations)
             {
                 if (location == reservation.Accommodation.Location)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public bool IsUserAccommodationOwner(User user, Location location)
-        {
-            List<Accommodation> accommodations = AccommodationRepository.GetActiveByOwner(user);
-            foreach (Accommodation accommodation in accommodations)
-            {
-                if (location == accommodation.Location)
                 {
                     return true;
                 }
@@ -328,22 +305,29 @@ namespace TravelAgency.Services
             return comment.User.Role == Roles.Owner;
         }
 
-        public void AddCommentToForum(string commentText, Forum forum, User user)
+        public void PostCommentByOwnerToForum(string commentText, Forum forum, User user)
         {
+            if (!OwnerHasAccommodationOnLocation(user, forum.Location))
+            {
+                return;
+            }
+
             Comment newComment = new Comment();
             newComment.Text = commentText;
             newComment.OwnsAccommodationOnLocation = true;
-            AddCommentToForum(newComment, forum, user);
+            forum.CommentsByAccommodationOwners++;
+            forum.Comments.Add(newComment);
+            PostCommentByOwnerToForum(newComment, forum, user);
         }
 
-        public void AddCommentToForum(Comment comment, Forum forum, User user)
+        public void PostCommentByOwnerToForum(Comment comment, Forum forum, User user)
         {
             comment.Forum = forum;
             comment.User = user;
-            AddCommentToForum(comment);
+            PostCommentByOwnerToForum(comment);
         }
 
-        public void AddCommentToForum(Comment comment)
+        public void PostCommentByOwnerToForum(Comment comment)
         {
             CommentRepository.Save(comment);
         }
