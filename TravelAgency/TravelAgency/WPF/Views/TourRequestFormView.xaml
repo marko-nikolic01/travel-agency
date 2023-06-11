@@ -50,8 +50,8 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Margin="20 0" Content="Country" HorizontalAlignment="Left" />
                 <Label Grid.Row="1" Grid.Column="0" Margin="20 0" Content="City" HorizontalAlignment="Left"/>
-                <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Language" HorizontalAlignment="Left"/>
-                <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Number of guests" HorizontalAlignment="Left"/>
+                <Label Grid.Row="2" Grid.Column="0" Margin="20 0" Content="Language*" HorizontalAlignment="Left"/>
+                <Label Grid.Row="3" Grid.Column="0" Margin="20 0" Content="Number of guests*" HorizontalAlignment="Left"/>
                 <Label Grid.Row="4" Grid.Column="0" Margin="20 0" Content="Min date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="5" Grid.Column="0" Margin="20 0" Content="Max date" HorizontalAlignment="Left"/>
                 <Label Grid.Row="6" Grid.Column="0" Margin="20 0" Content="Description" HorizontalAlignment="Left"/>

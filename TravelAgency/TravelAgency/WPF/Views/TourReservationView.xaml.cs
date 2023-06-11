@@ -18,9 +18,9 @@ namespace TravelAgency.WPF.Views
         public TourReservationView(TourOccurrence tourOccurrence, int guestId)
         {
             InitializeComponent();
+            voucherViewModel = new VoucherViewModel(guestId);
             tourReservationViewModel = new TourReservationViewModel(tourOccurrence, guestId);
             DataContext = tourReservationViewModel;
-            voucherViewModel = new VoucherViewModel(guestId);
             vouchersList.DataContext = voucherViewModel;
             occurrence = tourOccurrence;
             id = guestId;

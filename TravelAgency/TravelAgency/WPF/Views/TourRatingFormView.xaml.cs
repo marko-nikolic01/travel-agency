@@ -23,7 +23,7 @@ namespace TravelAgency.WPF.Views
             TourImgBtn.DataContext = toolTipViewModel;
             popup2.DataContext = toolTipViewModel;
             CommentBtn.DataContext = toolTipViewModel;
-            popup2.DataContext = toolTipViewModel;
+            popup3.DataContext = toolTipViewModel;
         }
         private void SubmitRating_Click(object sender, RoutedEventArgs e)
         {
