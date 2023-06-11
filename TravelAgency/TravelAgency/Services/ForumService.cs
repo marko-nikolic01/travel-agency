@@ -305,22 +305,24 @@ namespace TravelAgency.Services
             return comment.User.Role == Roles.Owner;
         }
 
-        public void AddCommentToForum(string commentText, Forum forum, User user)
+        public void PostCommentByOwnerToForum(string commentText, Forum forum, User user)
         {
             Comment newComment = new Comment();
             newComment.Text = commentText;
             newComment.OwnsAccommodationOnLocation = true;
-            AddCommentToForum(newComment, forum, user);
+            forum.CommentsByAccommodationOwners++;
+            forum.Comments.Add(newComment);
+            PostCommentByOwnerToForum(newComment, forum, user);
         }
 
-        public void AddCommentToForum(Comment comment, Forum forum, User user)
+        public void PostCommentByOwnerToForum(Comment comment, Forum forum, User user)
         {
             comment.Forum = forum;
             comment.User = user;
-            AddCommentToForum(comment);
+            PostCommentByOwnerToForum(comment);
         }
 
-        public void AddCommentToForum(Comment comment)
+        public void PostCommentByOwnerToForum(Comment comment)
         {
             CommentRepository.Save(comment);
         }
