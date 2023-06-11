@@ -58,18 +58,6 @@ namespace TravelAgency.WPF.ViewModels
             TourOccurrences = new ObservableCollection<TourOccurrence>(occurrenceService.GetOfferedTours());
             currentGuestId = id;
             occurrenceService.Subscribe(this);
-            SetSelectedTourOccurrence(selectedTourOccurrenceId);
-        }
-        private void SetSelectedTourOccurrence(int occurrenceId)
-        {
-            if(occurrenceId != -1)
-            {
-                foreach(TourOccurrence occurrence in TourOccurrences)
-                {
-                    if(occurrence.Id == occurrenceId) 
-                        SelectedTourOccurrence = occurrence;
-                }
-            }
         }
         public bool CanTourBeReserved()
         {

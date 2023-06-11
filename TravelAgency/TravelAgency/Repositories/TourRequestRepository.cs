@@ -79,12 +79,13 @@ namespace TravelAgency.Repositories
             }
         }
 
-        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime)
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime, int id)
         {
             NotifyObservers();
             TourRequest oldRequest = tourRequests.Find(t => t.Id == request.Id);
             oldRequest.Status = RequestStatus.Accepted;
             oldRequest.GivenDate = givenDateTime.ToString("dd/MM/yyyy");
+            oldRequest.GuideId = id;
             _serializer.ToCSV(FilePath, tourRequests);
             NotifyObservers();
         }
@@ -283,6 +284,14 @@ namespace TravelAgency.Repositories
             oldRequest.GuideId = guideId;
             _serializer.ToCSV(FilePath, tourRequests);
         }
+        public void UndoBookTourRequest(int requestId)
+        {
+            TourRequest oldRequest = tourRequests.Find(t => t.Id == requestId);
+            oldRequest.Status = RequestStatus.Pending;
+            oldRequest.GivenDate = "/";
+            oldRequest.GuideId = -1;
+            _serializer.ToCSV(FilePath, tourRequests);
+        }
 
         public List<TourRequest> GetAccepted(int specialId)
         {
@@ -304,6 +313,16 @@ namespace TravelAgency.Repositories
                     result.Add(request);
             }
             return result;
+        }
+
+        public int GetSpecialByRequestId(int bookedRequest)
+        {
+            foreach (TourRequest request in tourRequests)
+            {
+                if (request.Id == bookedRequest)
+                    return request.SpecialTourRequestId;
+            }
+            return -1;
         }
     }
 }

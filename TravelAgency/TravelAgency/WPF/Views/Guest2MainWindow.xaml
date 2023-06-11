@@ -208,7 +208,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding MenuVisible}">
                 <Button Content="Offered Tours" Width="170" Command="{Binding NavigateToOfferedToursCommand}" BorderBrush="#FFBAB8B8"/>
                 <Button Content="My Tours" Width="170" Command="{Binding NavigateToMyToursCommand}" BorderBrush="#FFBBB8B8"/>
                 <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Width="180" FontSize="20" HorizontalContentAlignment="Center" Padding="0 14" IsDropDownOpen="{Binding ComboBoxOpen}">
@@ -226,7 +226,7 @@
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding MenuVisible}" HorizontalAlignment="Right">
                 <Button Width="170" Command="{Binding NavigateToNotificationsCommand}" BorderBrush="#FFC5C2C2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding NotificationsImageSource}" Height="25" Width="25"/>
@@ -256,7 +256,7 @@
             </StackPanel>
         </Grid>
         <Frame NavigationUIVisibility="Hidden" Grid.Row="1" x:Name="frame" Source="Guest2ProfileView.xaml" />
-        <Grid x:Name="HelpGrid" Grid.Row="1" Background="Azure" VerticalAlignment="Bottom">
+        <Grid x:Name="HelpGrid" Grid.Row="1" Background="#FF02D4D4" VerticalAlignment="Bottom">
             <StackPanel>
                 <Border BorderBrush="#636360" BorderThickness="2"> 
                 <Grid>

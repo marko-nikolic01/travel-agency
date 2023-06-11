@@ -140,7 +140,7 @@
                                 <TextBlock Padding="10" FontSize="14">
                             To make a reservation select tour from the<LineBreak/>table, then click
                                     on "make a reservation"<LineBreak/>button.<LineBreak/>
-                            To see photos of tour click on "show photos" <LineBreak/>button in corresponding row.
+                            To see more details of tour click on "more<LineBreak/>details" button in corresponding row.
                                 </TextBlock>
                             </StackPanel>
                         </Canvas>

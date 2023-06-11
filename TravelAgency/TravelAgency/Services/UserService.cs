@@ -13,6 +13,7 @@ namespace TravelAgency.Services
     public class UserService
     {
         public IUserRepository IUserRepository { get; set; }
+        public ISuperGuideRepository ISuperGuideRepository { get; set; }
         public ITourOccurrenceRepository ITourOccurrenceRepository { get; set; }
         public ITourRepository ITourRepository { get; set; }
         public ITourRatingRepository ITourRatingRepository { get; set; }
@@ -23,6 +24,7 @@ namespace TravelAgency.Services
             ITourOccurrenceRepository = Injector.Injector.CreateInstance<ITourOccurrenceRepository>();
             ITourRatingRepository = Injector.Injector.CreateInstance<ITourRatingRepository>();
             ITourRepository = Injector.Injector.CreateInstance<ITourRepository>();
+            ISuperGuideRepository = Injector.Injector.CreateInstance<ISuperGuideRepository>();
             LinkTourOccurrences();
             CheckSuperGuideStatus();
         }
@@ -35,9 +37,22 @@ namespace TravelAgency.Services
                 {
                     if (user.IsSuperGuide)
                     {
-                        if (!((GetFinishedToursByLanguageForGuide(user.Id, user.Language) >= 20) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, user.Language) > 4)))
+                        SuperGuide superGuide = ISuperGuideRepository.GetByUserId(user.Id);
+                        if(superGuide.EndDate > DateTime.Now)
                         {
-                            InvalidateSuperGuideStatus(user);
+                            return;
+                        }
+                        else
+                        {
+                            if (!((GetFinishedToursByLanguageForGuide(user.Id, user.Language) >= 20) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, user.Language) > 4)))
+                            {
+                                InvalidateSuperGuideStatus(user);
+                            }
+                            else
+                            {
+                                superGuide.EndDate = superGuide.EndDate.AddYears(1);
+                                ISuperGuideRepository.Save(superGuide);
+                            }
                         }
                     }
                     foreach(var language in GetUniqueLanguagesForGuide(user.Id))
@@ -45,6 +60,10 @@ namespace TravelAgency.Services
                         if((GetFinishedToursByLanguageForGuide(user.Id, language) >= 20) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, language) > 4))
                         {
                             SetSuperGuideStatus(user, language);
+                            SuperGuide superGuide = new SuperGuide();
+                            superGuide.GuidesId = user.Id;
+                            superGuide.EndDate = DateTime.Now.AddYears(1);
+                            ISuperGuideRepository.Save(superGuide) ;
                             return;
                         }
                     }

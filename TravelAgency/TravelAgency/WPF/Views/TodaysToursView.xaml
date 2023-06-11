@@ -32,18 +32,18 @@
             <conv:NotReadyStartConverter x:Key="NotReadyStartConverter"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="38"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition ></RowDefinition>
-            <RowDefinition ></RowDefinition>
-            <RowDefinition ></RowDefinition>
-            <RowDefinition ></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -54,8 +54,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Live tour tracking" FontSize="20" FontWeight="DemiBold" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-        <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
+        <Label Content="Live tour tracking" FontSize="20" FontWeight="DemiBold" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
                   ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" FontSize="14" AlternatingRowBackground="WhiteSmoke">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
@@ -71,14 +71,26 @@
                 <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="start" Margin="5" Content="Start" Click="StartButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotReadyStartConverter}}"></Button>
+                            <Button Name="start" Margin="5" Content="Start" Click="StartButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotReadyStartConverter}}">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="end" Margin="5" Content="End" Click="StopButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotActiveConverter}}" ></Button>
+                            <Button Name="end" Margin="5" Content="End" Click="StopButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotActiveConverter}}" >
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -92,7 +104,13 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Name="RowButton" Content="Check!" Click="RowButton_Click"></Button>
+                                        <Button Name="RowButton" Content="Check!" Click="RowButton_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -136,6 +154,7 @@
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
+        <Label VerticalAlignment="Top" Foreground="#0e1d32" HorizontalAlignment="Left" Content="Hint: Click on button 'Check' after arriving at that checkpoint" Grid.Row="5" FontWeight="ExtraLight" FontSize="16" Grid.ColumnSpan="7"></Label>
         <Label Content="Guests at active tour" FontSize="20" Grid.Row="6" Grid.ColumnSpan="4" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
         <DataGrid FontSize="14" AlternatingRowBackground="WhiteSmoke" CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
             <DataGrid.Columns>
@@ -154,5 +173,6 @@
                 </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label VerticalAlignment="Top" Foreground="#0e1d32" HorizontalAlignment="Left" Content="Hint: Choose the arrival point from the comboboxes" Grid.Row="11" FontWeight="ExtraLight" FontSize="16" Grid.ColumnSpan="6"></Label>
     </Grid>
 </Page>

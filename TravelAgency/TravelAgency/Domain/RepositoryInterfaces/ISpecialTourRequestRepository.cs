@@ -10,6 +10,6 @@ namespace TravelAgency.Domain.RepositoryInterfaces
         public SpecialTourRequest Save(SpecialTourRequest request);
         public List<SpecialTourRequest> GetPendings();
         public void Update(SpecialTourRequest request);
-
+        public void UndoIfAccepted(int specialRequest);
     }
 }

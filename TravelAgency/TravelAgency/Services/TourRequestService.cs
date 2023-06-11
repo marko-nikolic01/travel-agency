@@ -81,9 +81,9 @@ namespace TravelAgency.Services
         {
             ITourRequestRepository.Subscribe(observer);
         }
-        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime)
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime, int id)
         {
-            ITourRequestRepository.UpdateRequestStatus(request, givenDateTime);
+            ITourRequestRepository.UpdateRequestStatus(request, givenDateTime, id);
         }
         public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
         {
@@ -356,6 +356,13 @@ namespace TravelAgency.Services
         public void BookRequest(int requestId, int guideId, DateOnly selectedDate)
         {
             ITourRequestRepository.BookTourRequest(requestId, guideId, selectedDate);
+        }
+
+        public void UndoBookRequest(int bookedRequest)
+        {
+            ITourRequestRepository.UndoBookTourRequest(bookedRequest);
+            int specialRequest = ITourRequestRepository.GetSpecialByRequestId(bookedRequest);
+            ISpecialTourRequestRepository.UndoIfAccepted(specialRequest);
         }
     }
 }

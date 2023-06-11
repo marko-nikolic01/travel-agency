@@ -71,5 +71,15 @@ namespace TravelAgency.Repositories
             oldSpecialTourRequest.Status = specialTourRequest.Status;
             _serializer.ToCSV(FilePath, specialRequests);
         }
+
+        public void UndoIfAccepted(int specialRequest)
+        {
+            SpecialTourRequest oldSpecialTourRequest = specialRequests.Find(t => t.Id == specialRequest);
+            if(oldSpecialTourRequest.Status == SpecialRequestStatus.Accepted)
+            {
+                oldSpecialTourRequest.Status = SpecialRequestStatus.Pending;
+            }
+            _serializer.ToCSV(FilePath, specialRequests);
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Repositories;
 using TravelAgency.WPF.Views;
@@ -47,9 +48,11 @@ namespace TravelAgency.WPF.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         private int guestId;
-        public IntroductionWizardViewModel(int id) 
+        NavigationService NavigationService { get; set; }
+        public IntroductionWizardViewModel(NavigationService navService, int guestId) 
         {
-            guestId = id;
+            this.guestId = guestId;
+            NavigationService = navService;
             NextCommand = new ButtonCommandNoParameter(Next);
             BackCommand = new ButtonCommandNoParameter(Back);
             NextButtonText = "Next";
@@ -67,8 +70,9 @@ namespace TravelAgency.WPF.ViewModels
             {
                 ProgramStatusRepository repository = new ProgramStatusRepository();
                 repository.SetProgramStatus();
-                Guest2MainWindow guest2Main = new Guest2MainWindow(guestId);
-                guest2Main.Show();
+                Guest2MainViewModel.MenuVisible = "Visible";
+                Guest2ProfileView guest2 = new Guest2ProfileView(guestId, NavigationService);
+                NavigationService.Navigate(guest2);
             }
         }
         private void Back()
