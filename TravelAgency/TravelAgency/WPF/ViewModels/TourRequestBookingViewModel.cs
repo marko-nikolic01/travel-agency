@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -131,6 +132,26 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
+        private DateTime end;
+        public DateTime End
+        {
+            get { return end; }
+            set
+            {
+                end = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime start;
+        public DateTime Start
+        {
+            get { return start; }
+            set
+            {
+                start = value;
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
         public User ActiveGuide { get; set; }
         public TourRequest SelectedRequest { get; set; }
@@ -140,7 +161,7 @@ namespace TravelAgency.WPF.ViewModels
         public TourRequestService TourRequestService { get; set; }
         public LocationService LocationService { get; set; }
         public NavigationService NavigationService { get; set; }
-        public string TodaysDate { get; set; }
+        public DateTime TodaysDate { get; set; }
         public TourRequestBookingViewModel(int activeGuideId, NavigationService navService)
         {
             NavigationService = navService;
@@ -156,9 +177,15 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCountry = Countries[0];
             LocationService = new LocationService();
             Countries.AddRange(TourRequestService.GetUniqueCountriesForPendings());
-            StartDate = DateTime.Now.ToString("G");
-            EndDate = DateTime.Now.AddYears(1).ToString("G");
-            TodaysDate = DateTime.Now.ToString("G");
+            StartDate = DateTime.Now.ToString("G", new CultureInfo("en-US"));
+            EndDate = DateTime.Now.AddYears(1).ToString("G", new CultureInfo("en-US"));
+            TodaysDate = DateTime.Today;
+            Start = DateTime.Today;
+            End = DateTime.Today.AddYears(1);
+            //cultureinfo from stackoverflow
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -183,16 +210,20 @@ namespace TravelAgency.WPF.ViewModels
             {
                 tourRequests = tourRequests.Where(t => t.Location.City.Contains(SelectedCity)).ToList();
             }
-            if (StartDate != null)
+            //if (StartDate != null)
+            //{
+            //    DateTime date = DateTime.ParseExact(StartDate, "G", new CultureInfo("en-US"));
+            //    string dateTime = date.ToString("dd-MM-yyyy");
+            //    tourRequests = tourRequests.Where(t => t.MaxDate >= DateOnly.ParseExact(dateTime, "dd-MM-yyyy")).ToList();
+            //}
+            if (Start != null)
             {
-                DateTime date = DateTime.ParseExact(StartDate, "G", new CultureInfo("en-US"));
-                string dateTime = date.ToString("dd-MM-yyyy");
+                string dateTime = Start.ToString("dd-MM-yyyy");
                 tourRequests = tourRequests.Where(t => t.MaxDate >= DateOnly.ParseExact(dateTime, "dd-MM-yyyy")).ToList();
             }
-            if (EndDate != null)
+            if (End != null)
             {
-                DateTime date = DateTime.ParseExact(EndDate, "G", new CultureInfo("en-US"));
-                string dateTime = date.ToString("dd-MM-yyyy");
+                string dateTime = End.ToString("dd-MM-yyyy");
                 tourRequests = tourRequests.Where(t => t.MinDate <= DateOnly.ParseExact(dateTime, "dd-MM-yyyy")).ToList();
             }
             TourRequests = new ObservableCollection<TourRequest>(tourRequests);
@@ -202,8 +233,8 @@ namespace TravelAgency.WPF.ViewModels
             NumberOfGuests = 0;
             SelectedCountry = Countries[0];
             SelectedCity = Cities[0];
-            StartDate = null;
-            EndDate = null;
+            Start = DateTime.Today;
+            End = DateTime.Today.AddYears(1);
             Language = "";
             TourRequests = new ObservableCollection<TourRequest>(TourRequestService.GetPendings());
         }
