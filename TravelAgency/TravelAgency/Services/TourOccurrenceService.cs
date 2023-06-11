@@ -188,7 +188,10 @@ namespace TravelAgency.Services
         }
         public List<TourOccurrence> GetOfferedTours()
         {
-            return ITourOccurrenceRepository.GetOffered();
+            List <TourOccurrence> OfferedTours = new List<TourOccurrence>();
+            OfferedTours = ITourOccurrenceRepository.GetOffered();
+            OfferedTours = OfferedTours.OrderBy(o => o.Guide.IsSuperGuide).ToList();
+            return OfferedTours;
         }
         public List<TourOccurrence> GetFinishedOccurrencesForGuide(int guideId)
         {
