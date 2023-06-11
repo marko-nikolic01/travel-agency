@@ -57,7 +57,7 @@
                 </Button.Resources>
             </Button>
             <Label Margin="-20 0 0 0" Content="Create new tour" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="20" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-            <Button IsEnabled="{Binding Path=CanceledTour , Converter={StaticResource NotNullTrueConverter}}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="25 35 25 35" Content="Undo cancel" FontSize="20" Command="{Binding Path= UndoCancelCommand}">
+            <Button Height="45" IsEnabled="{Binding Path=CanceledTour , Converter={StaticResource NotNullTrueConverter}}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="25 15 25 15" Content="Undo cancel" FontSize="20" Command="{Binding Path= UndoCancelCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>

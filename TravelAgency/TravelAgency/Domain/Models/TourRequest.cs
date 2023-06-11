@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using TravelAgency.Domain.RepositoryInterfaces;
 using TravelAgency.Serializer;
 
@@ -18,15 +20,25 @@ namespace TravelAgency.Domain.Models
         public DateOnly MaxDate { get; set; }
         public int GuestId { get; set; }
         public User Guest { get; set; }
-
         public RequestStatus Status { get; set; }
         public string GivenDate { get; set; }
         public int SpecialTourRequestId { get; set; }
         public int GuideId { get; set; }
-        public bool CanBook { get; set; }
+
+        private bool canBook;
+        public bool CanBook
+        {
+            get { return canBook; }
+            set 
+            { 
+                canBook = value;
+            }
+        }
+
         public TourRequest()
         {
             GivenDate = "/";
+            GuideId = -1;
         }
         public TourRequest(Location location, string description, string language, int guestNumber, DateOnly minDate, DateOnly maxDate, int guestId, RequestStatus status)
         {

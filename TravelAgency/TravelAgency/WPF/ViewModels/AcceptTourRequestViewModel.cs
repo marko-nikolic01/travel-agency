@@ -98,6 +98,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public User ActiveGuide { get; set; }   
         public ButtonCommandNoParameter ConfirmCommand { get; set; }
+        public ButtonCommandNoParameter CancelCommand { get; set; }
         public ButtonCommandNoParameter AddCommand { get; set; }
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public TourRequestService TourRequestService { get; set; }
@@ -105,11 +106,12 @@ namespace TravelAgency.WPF.ViewModels
         public AcceptTourRequestViewModel(Domain.Models.TourRequest selectedRequest, int id, NavigationService navigationService)
         {
             NavigationService = navigationService;
-            KeyPoints = new ObservableCollection<string>() { "kjssd" };
+            KeyPoints = new ObservableCollection<string>();
             AddCommand = new ButtonCommandNoParameter(AddKeyPoint);
             ActiveGuide = new UserService().GetById(id);
             TourRequest = selectedRequest;
             ConfirmCommand = new ButtonCommandNoParameter(Confirm);
+            CancelCommand = new ButtonCommandNoParameter(Cancel);
             TourRequestService = new TourRequestService();
             TourOccurrenceService = new TourOccurrenceService();
             IsTimeSelected = false;
@@ -118,6 +120,11 @@ namespace TravelAgency.WPF.ViewModels
         {
             KeyPoints.Add(KeyPoint);
             KeyPoint = "";
+        }
+        private void Cancel()
+        {
+            Page page = new TourRequestBookingView(ActiveGuide.Id, NavigationService);
+            NavigationService.Navigate(page);
         }
         private void Confirm()
         {
@@ -135,7 +142,7 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
             int occurrenceId = TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id, KeyPoints, Duration);
-            TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime);
+            TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime, ActiveGuide.Id);
             TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId, occurrenceId));
 
             Page page = new TourRequestBookingView(ActiveGuide.Id, NavigationService);

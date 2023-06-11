@@ -79,14 +79,14 @@
         <DatePicker  FontSize="18" Grid.Row="8" Grid.Column="1" Name="DateCalendar" Margin="10" DisplayDateEnd="{Binding TourRequest.MaxDate}" DisplayDateStart="{Binding Path=TourRequest.MinDate}" SelectedDate="{Binding Path=SelectedDate}" ></DatePicker>
         <xctk:TimePicker FontSize="18" Format="Custom" FormatString="HH:mm" Grid.Row="9" Grid.Column="1" Margin="10" Name="Time" StartTime="{Binding Path=StartTime}" EndTime="{Binding Path=EndTime}" Value="{Binding Path=SelectedTime}">
         </xctk:TimePicker>
-        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}">
+        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="70 10 10 10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="15"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="10" FontSize="18" Content="Cancel">
+        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="40 10 10 10" FontSize="18" Content="Cancel" Command="{Binding Path=CancelCommand}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="15"/>

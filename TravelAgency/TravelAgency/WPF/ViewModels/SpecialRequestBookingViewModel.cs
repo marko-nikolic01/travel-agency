@@ -21,7 +21,18 @@ namespace TravelAgency.WPF.ViewModels
         public UserService UserService { get; set; }
         public TourRequestService TourRequestService { get; set; }
         public User ActiveGuide { get; set; }
-        public DateOnly SelectedDate { get; set; }
+
+        private DateOnly selectedDate;
+        public DateOnly SelectedDate
+        {
+            get { return selectedDate; }
+            set 
+            {
+                isSelected = true;
+                selectedDate = value;
+            }
+        }
+        private bool isSelected { get; set; }
         public ButtonCommandNoParameter ConfirmCommand { get; set; }
         public ButtonCommandNoParameter CancelCommand { get; set; }
         public NavigationService NavigationService { get; set; }
@@ -36,11 +47,17 @@ namespace TravelAgency.WPF.ViewModels
             FreeDates = GuideScheduleService.GetFreeDates(ActiveGuide.Id, TourRequest.MinDate, TourRequest.MaxDate, TourRequest.SpecialTourRequestId);
             ConfirmCommand = new ButtonCommandNoParameter(Confirm);
             CancelCommand = new ButtonCommandNoParameter(Cancel);
+            isSelected = false;
         }
         public void Confirm()
         {
+            if(!isSelected)
+            {
+                MessageBox.Show("You have to choose a date!", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             TourRequestService.BookRequest(TourRequest.Id, ActiveGuide.Id, SelectedDate);
-            Page specialRequests = new SpecialRequestsView(ActiveGuide.Id, NavigationService);
+            Page specialRequests = new SpecialRequestsView(ActiveGuide.Id, NavigationService, TourRequest.Id);
             NavigationService.Navigate(specialRequests);
         }
 
