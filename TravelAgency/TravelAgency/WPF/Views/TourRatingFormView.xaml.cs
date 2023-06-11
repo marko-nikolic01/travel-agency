@@ -27,7 +27,7 @@ namespace TravelAgency.WPF.Views
         }
         private void SubmitRating_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to rate \nthis tour?", "Tour rating", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to rate \nthis tour?", "Tour rating", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 viewModel.SubmitRating();
                 MyTours myTours = new MyTours(currentGuestId, true);

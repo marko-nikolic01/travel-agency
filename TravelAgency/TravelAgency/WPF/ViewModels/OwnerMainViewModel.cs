@@ -17,6 +17,7 @@ namespace TravelAgency.WPF.ViewModels
         public RelayCommand NavigateToReservationsPageCommand { get; set; }
         public RelayCommand NavigateToRatingsPageCommand { get; set; }
         public RelayCommand NavigateToForumPageCommand { get; set; }
+        public RelayCommand NavigateToHelpPageCommand { get; set; }
 
         public OwnerMainViewModel(NavigationService navigationService)
         {
@@ -26,6 +27,12 @@ namespace TravelAgency.WPF.ViewModels
             NavigateToReservationsPageCommand = new RelayCommand(Execute_NavigateToReservationsPageCommand, CanExecute_NavigateCommand);
             NavigateToRatingsPageCommand = new RelayCommand(Execute_NavigateToRatingsPageCommand, CanExecute_NavigateCommand);
             NavigateToForumPageCommand = new RelayCommand(Execute_NavigateToForumPageCommand, CanExecute_NavigateCommand);
+            NavigateToHelpPageCommand = new RelayCommand(Execute_NavigateToHelpPageCommand, CanExecute_NavigateCommand);
+        }
+
+        private void Execute_NavigateToHelpPageCommand(object obj)
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerHelpView.xaml", UriKind.Relative));
         }
 
         private void Execute_NavigateToMyProfilePageCommand(object obj)

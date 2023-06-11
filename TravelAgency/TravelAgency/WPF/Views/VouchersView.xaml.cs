@@ -22,12 +22,10 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class VouchersView : Page
     {
-        VoucherViewModel voucherViewModel;
         public VouchersView(int guestId)
         {
             InitializeComponent();
-            voucherViewModel = new VoucherViewModel(guestId);
-            this.DataContext = voucherViewModel;
+            this.DataContext = new VoucherViewModel(guestId);
         }
     }
 }

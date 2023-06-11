@@ -122,11 +122,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void ViewDetails()
         {
-            //TourStatisticsDetailsViewModel viewModel = new TourStatisticsDetailsViewModel(SelectedTourOccurrence);
-            //TourStatisticsDetailsView tourStatisticsDetailsView = new TourStatisticsDetailsView();
-            //tourStatisticsDetailsView.DataContext = viewModel;
-            //tourStatisticsDetailsView.ShowDialog();
-            Page details = new TourGuestsStatisticsView(SelectedTourOccurrence);
+            Page details = new TourGuestsStatisticsView(SelectedTourOccurrence, NavService);
             NavService.Navigate(details);
         }
         private void ShowNextPhoto()

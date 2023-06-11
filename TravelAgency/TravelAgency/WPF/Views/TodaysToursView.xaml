@@ -16,6 +16,15 @@
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="#0e1d32"></Setter>
         </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.Resources>
@@ -47,7 +56,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="Live tour tracking" FontSize="20" FontWeight="DemiBold" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
         <DataGrid x:Name="TourOccurrenceGrid" RowDetailsVisibilityMode="Collapsed" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" IsReadOnly="True"
-                  ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" FontSize="14" AlternatingRowBackground="SeaShell">
+                  ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" FontSize="14" AlternatingRowBackground="WhiteSmoke">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Location" Width="*">
@@ -76,7 +85,7 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding KeyPoints}" SelectedItem="{Binding Path= DataContext.SelectedKeyPoint, RelativeSource={RelativeSource AncestorType=Page}}">
+                    <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" ItemsSource="{Binding KeyPoints}" SelectedItem="{Binding Path= DataContext.SelectedKeyPoint, RelativeSource={RelativeSource AncestorType=Page}}" AlternatingRowBackground="WhiteSmoke">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn IsReadOnly="True" Binding="{Binding Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"></DataGridCheckBoxColumn>
                             <DataGridTextColumn Binding="{Binding Path=Name}"></DataGridTextColumn>
@@ -103,6 +112,9 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Height" Value="0"/>
+                            </Style>
                         </DataGrid.Resources>
                     </DataGrid>
                 </DataTemplate>
@@ -125,7 +137,7 @@
             </DataGrid.Resources>
         </DataGrid>
         <Label Content="Guests at active tour" FontSize="20" Grid.Row="6" Grid.ColumnSpan="4" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-        <DataGrid FontSize="14" AlternatingRowBackground="SeaShell" CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
+        <DataGrid FontSize="14" AlternatingRowBackground="WhiteSmoke" CanUserAddRows="False" x:Name="fd" AutoGenerateColumns="False" ItemsSource="{Binding Path=Guests}" SelectedItem="{Binding Path=ChosenGuest}" Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="*"></DataGridTextColumn>
                 <!-- Idea for the DataGridComboBoxColumn taken from StackOverflow-->

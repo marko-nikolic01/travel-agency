@@ -10,7 +10,7 @@ namespace TravelAgency.WPF.Views
         public OfferedToursView(int guestId, bool tourReserved, int selectedTourOccurrenceId = -1)
         {
             if (tourReserved)
-                MessageBox.Show("Tour successfully reserved.");
+                MessageBox.Show("Tour successfully reserved.", "Tour reservation", MessageBoxButton.OK, MessageBoxImage.Information);
             toursViewModel = new OfferedToursViewModel(guestId, selectedTourOccurrenceId);
             InitializeComponent();
             DataContext = toursViewModel;

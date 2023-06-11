@@ -78,7 +78,7 @@ namespace TravelAgency.WPF.ViewModels
         private void Execute_NavigateToSpecialRequestsCommand(object obj)
         {
             ComboBoxOpen = false;
-            Page specialRequests = new SpecialTourRequestsView(currentGuestId);
+            Page specialRequests = new SpecialTourRequestsView(currentGuestId, NavService);
             NavService.Navigate(specialRequests);
             UpdateHelpText("SpecialRequestsHelp");
         }
@@ -97,7 +97,7 @@ namespace TravelAgency.WPF.ViewModels
         private void Execute_NavigateToRequestsCommand(object obj)
         {
             ComboBoxOpen = false;
-            Page requests = new TourRequestView(currentGuestId);
+            Page requests = new TourRequestView(currentGuestId, NavService);
             NavService.Navigate(requests);
             UpdateHelpText("RequestsHelp");
         }

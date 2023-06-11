@@ -129,9 +129,10 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void RemoveRequestNotification()
         {
+            TourOccurrenceService occurrenceService = new TourOccurrenceService();
             if (RequestNotification != null)
             {
-                // ovde trenutno ne mogu da dobijem koji touroccurrenceId na osnovu requesta
+                TourOccurrence = occurrenceService.GetById(RequestNotification.OccurrenceId);
                 RequestNotification.IsSeen = true;
                 tourRequestService.UpdateNotification(RequestNotification);
                 RequestAcceptedNotifications.Remove(RequestNotification);

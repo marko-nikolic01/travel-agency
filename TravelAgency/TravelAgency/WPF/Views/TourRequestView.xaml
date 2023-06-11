@@ -81,7 +81,7 @@
                     <DataGridTextColumn Header="Min Date" ElementStyle="{StaticResource stil}" Binding="{Binding MinDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Max Date" ElementStyle="{StaticResource stil}" Binding="{Binding MaxDate, StringFormat='{}{0:dd/MM/yyyy}'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Status" ElementStyle="{StaticResource stil}" Binding="{Binding Status}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Given Date" ElementStyle="{StaticResource stil}" Binding="{Binding GivenDate}"></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
@@ -95,8 +95,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="CreateRequest_Click" Content="Create new request"/>
-            <Button Grid.Column="1" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="ShowStatistics_Click" Content="Show statistics"/>
+            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Command="{Binding NewRequestCommand}" Content="Create new request"/>
+            <Button Grid.Column="1" Background="#4681f4" Foreground="White" Width="374" Height="43" Command="{Binding StatisticsCommand}" Content="Show statistics"/>
         </Grid>
     </Grid>
 </Page>

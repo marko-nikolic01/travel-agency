@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Navigation;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
+using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -16,8 +19,11 @@ namespace TravelAgency.WPF.ViewModels
         private AccommodationOwnerRatingService ownerRatingService;
         private AccommodationGuestRatingService guestRatingService;
 
+        private NavigationService navigationService;
+
         public ObservableCollection<AccommodationOwnerRating> OwnerRatings { get; set; }
         public ObservableCollection<AccommodationReservation> Reservations { get; set; }
+        public AccommodationReservation SelectedReservation { get; set; }
 
         public OwnerRatingsViewModel()
         {

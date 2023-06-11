@@ -48,6 +48,11 @@ namespace TravelAgency.Services
             }
             NotificationRepository.SaveAll();
         }
-        
+
+        public void MarkAsSeen(Notification notification)
+        {
+            notification.Seen = true;
+            NotificationRepository.SaveAll();
+        }
     }
 }

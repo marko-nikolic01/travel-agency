@@ -36,6 +36,7 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            forumsListView.Loaded += PreselectFirstItem;
         }
 
         private void Execute_NavigateBack()
@@ -52,7 +53,7 @@ namespace TravelAgency.WPF.Views
         {
             if (ViewModel.SelectedForum == null)
             {
-                MessageBox.Show("Select a forum.");
+                MessageBox.Show("Select a forum.", "No forum selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -64,6 +65,16 @@ namespace TravelAgency.WPF.Views
         private void NavigateToForumCommand_Click(object sender, RoutedEventArgs e)
         {
             Execute_NavigateToForumCommand();
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (forumsListView.Items.Count > 0)
+            {
+                forumsListView.SelectedItem = forumsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)forumsListView.ItemContainerGenerator.ContainerFromItem(forumsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
     }
 }

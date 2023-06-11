@@ -15,7 +15,7 @@ namespace TravelAgency.WPF.ViewModels
         private string guestsNumber;
         private string spotsLeft;
         private string guestsLeft;
-        private bool addEnabled;
+        private string addVisible;
         private bool submitEnabled;
         public string TourDescription { get; set; }
         public string GuestName { get => guestName; 
@@ -35,8 +35,8 @@ namespace TravelAgency.WPF.ViewModels
         }
         public string SpotsLeft { get => spotsLeft;
                                   set { if (value != spotsLeft) { spotsLeft = value; OnPropertyChanged(); } } }
-        public bool IsAddButtonEnabled { get => addEnabled;
-                                         set { if (value != addEnabled) { addEnabled = value; OnPropertyChanged(); } } }
+        public string AddButtonVisible { get => addVisible;
+                                         set { if (value != addVisible) { addVisible = value; OnPropertyChanged(); } } }
         public bool IsSubmitButtonEnabled { get => submitEnabled;
             set { if (value != submitEnabled) { submitEnabled = value; OnPropertyChanged(); } } }
         public ObservableCollection<string> GuestsList { get; set; }
@@ -56,7 +56,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public TourReservationViewModel(TourOccurrence occurrence, int guestId)
         {
-            IsAddButtonEnabled = false;
+            AddButtonVisible = "Hidden";
             IsSubmitButtonEnabled = true;
             tourOccurrence = occurrence;
             userService = new UserService();
@@ -76,7 +76,7 @@ namespace TravelAgency.WPF.ViewModels
             if (SelectedGuest != null && SelectedGuest != GuestsList[0])
             {
                 GuestsList.Remove(SelectedGuest);
-                IsAddButtonEnabled = true;
+                AddButtonVisible = "Visible";
                 IsSubmitButtonEnabled = false;
                 HowManyGuestsLeft();
             }
@@ -95,12 +95,12 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (GuestsList.Count == int.Parse(GuestsNumber))
             {
-                IsAddButtonEnabled = false;
+                AddButtonVisible = "Hidden";
                 IsSubmitButtonEnabled = true;
             }
             else
             {
-                IsAddButtonEnabled = true;
+                AddButtonVisible = "Visible";
                 IsSubmitButtonEnabled = false;
             }
         }
@@ -155,19 +155,19 @@ namespace TravelAgency.WPF.ViewModels
             {
                 for (int i = GuestsList.Count - 1; i >= currentGuestNumber; i--)
                     GuestsList.RemoveAt(i);
-                IsAddButtonEnabled = false;
+                AddButtonVisible = "Hidden";
                 IsSubmitButtonEnabled = true;
             }
             else if (currentGuestNumber > GuestsList.Count)
             {
-                IsAddButtonEnabled = true;
+                AddButtonVisible = "Visible";
                 IsSubmitButtonEnabled = false;
                 int x = currentGuestNumber - GuestsList.Count;
-                GuestsLeft = "Add "+x+" more \n guests";
+                GuestsLeft = "Add "+x+" more guests";
             }
             else
             {
-                IsAddButtonEnabled = false;
+                AddButtonVisible = "Hidden";
                 IsSubmitButtonEnabled = true;
                 GuestsLeft = "";
             }
@@ -177,7 +177,7 @@ namespace TravelAgency.WPF.ViewModels
             int currentGuestNumber = int.Parse(GuestsNumber);
             int x;
             if ((x = currentGuestNumber - GuestsList.Count) > 0)
-                GuestsLeft = "Add " + x + " more \n guests";
+                GuestsLeft = "Add " + x + " more guests";
             else
                 GuestsLeft = "";
         }

@@ -39,11 +39,11 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedAccommodation == null)
             {
-                MessageBox.Show("Select an accommodation.");
+                MessageBox.Show("Select an accommodation.", "No accommodation selected.", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var response = MessageBox.Show("Are you sure you want to remove this accommodation:\n" + SelectedAccommodation.Name, "Removing accommodation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var response = MessageBox.Show("Are you sure you want to remove this accommodation:\n" + SelectedAccommodation.Name + "?", "Removing accommodation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (response == MessageBoxResult.Yes)
             {

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
@@ -22,10 +12,14 @@ namespace TravelAgency.WPF.Pages
     /// </summary>
     public partial class OwnerAddAccommodationView : Page
     {
+        public MyICommand NextPhotoCommand { get; set; }
+        public MyICommand PreviousPhotoCommand { get; set; }
         public OwnerAddAccommodationViewModel ViewModel { get; set; }
 
         public OwnerAddAccommodationView(OwnerAddAccommodationViewModel viewModel)
         {
+            NextPhotoCommand = new MyICommand(Execute_NextPhotoCommand);
+            PreviousPhotoCommand = new MyICommand(Execute_PreviousPhotoCommand);
             InitializeComponent();
             ViewModel = viewModel;
             DataContext = ViewModel;
@@ -33,6 +27,16 @@ namespace TravelAgency.WPF.Pages
             Loaded += (s, e) => Keyboard.Focus(this);
 
             nameTextBox.Focus();
+        }
+
+        private void Execute_PreviousPhotoCommand()
+        {
+            photoViewer.Execute_PreviousPhotoCommand();
+        }
+
+        private void Execute_NextPhotoCommand()
+        {
+            photoViewer.Execute_NextPhotoCommand();
         }
 
         public OwnerAddAccommodationView(OwnerAddAccommodationViewModel viewModel, string preselectedCountry, string preselectedCity) : this(viewModel)

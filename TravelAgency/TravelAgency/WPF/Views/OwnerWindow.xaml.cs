@@ -25,12 +25,14 @@ namespace TravelAgency.WPF.Views
     public partial class OwnerWindow : Window
     {
         public MyICommand<string> NavigateCommand { get; set; }
+        public MyICommand NavigateToNotificationsCommand { get; set; }
         public MyICommand LogOutCommand { get; set; }
         public OwnerMainViewModel ViewModel { get; set; }
 
         public OwnerWindow()
         {
             NavigateCommand = new MyICommand<string>(OnNavigateCommandExecuted);
+            NavigateToNotificationsCommand = new MyICommand(Execute_NavigateToNotificationsCommand);
             LogOutCommand = new MyICommand(Execute_LogOutCommand);
             InitializeComponent();
             ViewModel = new OwnerMainViewModel(NavigationFrame.NavigationService);
@@ -76,10 +78,24 @@ namespace TravelAgency.WPF.Views
                     forumRadioButton.IsChecked = true;
                     ViewModel.NavigateToForumPageCommand.Execute(null);
                     break;
+                case "help":
+                    helpRadioButton.IsChecked = true;
+                    ViewModel.NavigateToHelpPageCommand.Execute(null);
+                    break;
                 default:
                     MessageBox.Show("Ne radi :(");
                     break;
             }
+        }
+
+        private void Execute_NavigateToNotificationsCommand()
+        {
+            this.NavigationFrame.Navigate(new Uri("WPF/Views/OwnerNotifications.xaml", UriKind.Relative));
+        }
+
+        private void NavigateToNotifications_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToNotificationsCommand();
         }
     }
 }

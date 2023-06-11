@@ -34,6 +34,18 @@ namespace TravelAgency.Repositories
         {
             return specialRequests;
         }
+        public List<SpecialTourRequest> GetPendings()
+        {
+            var result = new List<SpecialTourRequest>();
+            foreach (var specialRequest in specialRequests)
+            {
+                if(specialRequest.Status == SpecialRequestStatus.Pending)
+                {
+                    result.Add(specialRequest);
+                }
+            }
+            return result;
+        }
         public List<SpecialTourRequest> GetByGuestId(int guestId)
         {
             List<SpecialTourRequest> result = new List<SpecialTourRequest>();
@@ -52,6 +64,12 @@ namespace TravelAgency.Repositories
             specialRequests.Add(specialTourRequest);
             _serializer.ToCSV(FilePath, specialRequests);
             return specialTourRequest;
+        }
+        public void Update(SpecialTourRequest specialTourRequest)
+        {
+            SpecialTourRequest oldSpecialTourRequest = specialRequests.Find(t => t.Id == specialTourRequest.Id);
+            oldSpecialTourRequest.Status = specialTourRequest.Status;
+            _serializer.ToCSV(FilePath, specialRequests);
         }
     }
 }

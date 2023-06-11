@@ -47,6 +47,7 @@
                        Style="{StaticResource h2}"/>
 
             <ListBox Grid.Row="1"
+                     x:Name="forumLocationsListView"
                      ItemsSource="{Binding Locations}"
                      SelectedItem="{Binding SelectedLocation}">
                 <ListBox.ItemTemplate>
@@ -58,7 +59,6 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
         </Grid>
 
@@ -77,8 +77,8 @@
                                          VerticalAlignment="Center"/>
 
             <controls:Tip Grid.Column="1"
-                          Header="Which forums can I comment on?"
-                          TipText="You can only comment on forums for locations in which you have at least 1 accommodation. To comment on a forum select a location and then press Enter."
+                          Header="Which forums can I see?"
+                          TipText="You can only see forums for locations in which you have at least 1 accommodation. When a new forum opens for any of your locations you will get a notification."
                           Margin="15 0 0 0"/>
         </Grid>
     </Grid>

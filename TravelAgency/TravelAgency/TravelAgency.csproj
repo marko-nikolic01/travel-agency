@@ -30,6 +30,7 @@
     <None Remove="Resources\Images\NavRatings.png" />
     <None Remove="Resources\Images\NavReservations.png" />
     <None Remove="Resources\Images\NotDisliked.png" />
+    <None Remove="Resources\Images\OwnerHelp.png" />
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
@@ -80,6 +81,8 @@
 
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+
     <PackageReference Include="PdfSharp" Version="1.50.5147" />
 
     <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.5" />
@@ -113,6 +116,9 @@
 	  <Resource Include="Resources\Images\NotDisliked.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="Resources\Images\OwnerHelp.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
@@ -122,6 +128,7 @@
 	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
+	  <Resource Include="Resources\Images\logotip.ico" />
 	  <Resource Include="Resources\Images\ProfilePictureButton.jpeg" />
 	  <Resource Include="Resources\Images\graph.png" />
 	  <Resource Include="Resources\Images\ok.png" />
@@ -185,6 +192,7 @@
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
 	  <Resource Include="Resources\Images\noTours.png"></Resource>
+	  <Resource Include="Resources\Images\successIcon.png"></Resource>
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

@@ -33,6 +33,7 @@ namespace TravelAgency.WPF.Views
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            forumLocationsListView.Loaded += PreselectFirstItem;
         }
 
         private void NavigateToForumsForLocation_Click(object sender, RoutedEventArgs e)
@@ -44,13 +45,23 @@ namespace TravelAgency.WPF.Views
         {
             if (ViewModel.SelectedLocation == null)
             {
-                MessageBox.Show("Select a location.");
+                MessageBox.Show("Select a location.", "No location selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             OwnerForumsForLocationViewModel vm = new OwnerForumsForLocationViewModel(ViewModel.SelectedLocation);
             OwnerForumsForLocation page = new OwnerForumsForLocation(vm);
             this.NavigationService.Navigate(page);
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (forumLocationsListView.Items.Count > 0)
+            {
+                forumLocationsListView.SelectedItem = forumLocationsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)forumLocationsListView.ItemContainerGenerator.ContainerFromItem(forumLocationsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
     }
 }

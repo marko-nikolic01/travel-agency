@@ -50,13 +50,20 @@ namespace TravelAgency.Repositories
         {
             _users = _serializer.FromCSV(FilePath);
             User user = _users.FirstOrDefault(u => u.Username == username);
-            if (user.IsDeleted)
+            if(user != null)
             {
-                return null;
+                if (user.IsDeleted)
+                {
+                    return null;
+                }
+                else
+                {
+                    return user;
+                }
             }
             else
             {
-                return user;
+                return null;
             }
         }
 

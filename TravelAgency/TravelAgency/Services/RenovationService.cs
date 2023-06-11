@@ -170,5 +170,105 @@ namespace TravelAgency.Services
         {
             return accommodationDateFinderService.IsDateSpanAvailable(renovation.Accommodation, renovation.DateSpan.StartDate, renovation.DateSpan.EndDate);
         }
+
+        public AccommodationRenovationsReportDTO GetRenovationsReport(User owner, DateTime startDate, DateTime endDate)
+        {
+            return GetRenovationsReport(owner, DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
+        }
+
+        public AccommodationRenovationsReportDTO GetRenovationsReport(User owner, DateOnly startDate, DateOnly endDate)
+        {
+            var report = new AccommodationRenovationsReportDTO();
+            report.Owner = owner;
+            report.ReportDate = DateOnly.FromDateTime(DateTime.Now);
+            report.ReportDateSpan = new DateSpan(startDate, endDate);
+            report.Header = "Renovations report";
+            report.AccommodationStats = new List<AccommodationWithRenovationStatsDTO>();
+
+            foreach (var accommodation in AccommodationRepository.GetActiveByOwner(owner))
+            {
+                var dto = GetRenovationStatsForAccommodationInsideDateSpan(accommodation, startDate, endDate);
+                report.AccommodationStats.Add(dto);
+            }
+
+            report.RenovationDaysCount = SumRenovationDays(report);
+            report.RenovationsCount = SumRenovationCount(report);
+
+            return report;
+        }
+
+        public int SumRenovationCount(AccommodationRenovationsReportDTO dto)
+        {
+            int sum = 0;
+            foreach (var item in dto.AccommodationStats)
+            {
+                sum += item.ScheduledRenovationsCount;
+            }
+            return sum;
+        }
+
+        public int SumRenovationDays(AccommodationRenovationsReportDTO dto)
+        {
+            int sum = 0;
+            foreach (var item in dto.AccommodationStats)
+            {
+                sum += item.RenovationDaysCount;
+            }
+            return sum;
+        }
+
+        private AccommodationWithRenovationStatsDTO GetRenovationStatsForAccommodationInsideDateSpan(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
+        {
+            var dto = new AccommodationWithRenovationStatsDTO();
+            dto.Accommodation = accommodation;
+            dto.ScheduledRenovationsCount = GetRenovationsCountForAccommodationInsideDateSpan(accommodation, startDate, endDate);
+            dto.RenovationDaysCount = GetRenovationDaysCountForAccommodationInsideDateSpan(accommodation, startDate, endDate);
+            dto.Renovations = GetRenovationsForAccommodationInDateSpan(accommodation, startDate, endDate);
+
+            return dto;
+        }
+
+        private int GetRenovationsCountForAccommodationInsideDateSpan(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
+        {
+            return GetRenovationsForAccommodationInDateSpan(accommodation, startDate, endDate).Count;
+        }
+
+        private int GetRenovationDaysCountForAccommodationInsideDateSpan(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
+        {
+            int count = 0;
+            foreach (var renovation in GetRenovationsForAccommodationInDateSpan(accommodation, startDate, endDate))
+            {
+                count += renovation.DateSpan.DaysCount();
+            }
+            return count;
+        }
+
+        private List<AccommodationRenovation> GetRenovationsForAccommodationInDateSpan(Accommodation accommodation, DateOnly startDate, DateOnly endDate)
+        {
+            var renovations = new List<AccommodationRenovation>();
+            foreach (var renovation in RenovationRepository.GetByAccommodation(accommodation))
+            {
+                if (IsRenovationInsideDateSpan(renovation, startDate, endDate))
+                {
+                    renovations.Add(renovation);
+                }
+            }
+            return renovations;
+        }
+
+        private bool IsRenovationInsideDateSpan(AccommodationRenovation renovation, DateOnly startDate, DateOnly endDate)
+        {
+            return IsDateSpanInsideDateSpan(renovation.DateSpan, startDate, endDate);
+        }
+
+        private bool IsDateSpanInsideDateSpan(DateSpan dateSpan, DateOnly startDate, DateOnly endDate)
+        {
+            return IsDateInsideDateSpan(dateSpan.StartDate, startDate, endDate) && IsDateInsideDateSpan(dateSpan.EndDate, startDate, endDate);
+        }
+
+        private bool IsDateInsideDateSpan(DateOnly date, DateOnly startDate, DateOnly endDate)
+        {
+            return date.CompareTo(startDate) >= 0 && date.CompareTo(endDate) <= 0;
+        }
     }
 }

@@ -1,30 +1,18 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
 {
     public partial class TourRequestView : Page
     {
-        TourRequestViewModel viewModel;
-        public TourRequestView(int id, bool requestMade = false)
+        public TourRequestView(int id, NavigationService navigationService, bool requestMade = false)
         {
-            viewModel = new TourRequestViewModel(id);
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = new TourRequestViewModel(id, navigationService);
             if (requestMade)
-                MessageBox.Show("The request was made successfully.");
-        }
-
-        private void CreateRequest_Click(object sender, RoutedEventArgs e)
-        {
-            TourRequestFormView requestFormView = new TourRequestFormView(viewModel.guestId);
-            this.NavigationService.Navigate(requestFormView);
-        }
-        private void ShowStatistics_Click(object sender, RoutedEventArgs e)
-        {
-            CreatedRequestsStatistics requestsStatistics = new CreatedRequestsStatistics(viewModel.guestId);
-            this.NavigationService.Navigate(requestsStatistics);
+                MessageBox.Show("The request was made successfully.", "Tour requests", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

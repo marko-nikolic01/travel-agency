@@ -76,12 +76,12 @@ namespace TravelAgency.WPF.ViewModels
             TourReservationService reservationService = new TourReservationService();
             if (SelectedTourOccurrence == null)
             {
-                MessageBox.Show("You must choose a tour.");
+                MessageBox.Show("You must choose a tour", "Offered tours", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else if (reservationService.IsTourReserved(currentGuestId, SelectedTourOccurrence.Id))
             {
-                MessageBox.Show("You already have reservation for this tour.");
+                MessageBox.Show("You already have reservation for this tour", "Offered tours", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             else
@@ -94,7 +94,7 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if (!IsValid())
                 {
-                    MessageBox.Show("Number of guests must be a non negative number");
+                    MessageBox.Show("Number of guests must be a non negative number", "Offerred tours", MessageBoxButton.OK, MessageBoxImage.Error);
                     Guests = "";
                     return;
                 }
