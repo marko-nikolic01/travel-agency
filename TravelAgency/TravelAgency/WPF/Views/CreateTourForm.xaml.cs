@@ -62,13 +62,13 @@ namespace TravelAgency.WPF.Views
                 if (value.Equals(Countries[0]))
                 {
                     Cities.Clear();
-                    Cities.Add("< select a city >");
+                    Cities.Add("<select a city>");
                     IsCountrySelected = false;
                 }
                 else
                 {
                     Cities.Clear();
-                    Cities.Add("< select a city >");
+                    Cities.Add("<select a city>");
                     foreach (var city in LocationService.GetCitiesByCountry(value))
                     {
                         Cities.Add(city);
@@ -100,6 +100,38 @@ namespace TravelAgency.WPF.Views
             set
             {
                 selectedPhoto = value;
+                if(selectedPhoto != -1)
+                {
+                    PhotosEnabled = true;
+                }
+                OnPropertyChanged();
+            }
+        }
+        private int selectedKeyPoint;
+        public int SelectedKeyPoint
+        {
+            get { return selectedKeyPoint; }
+            set
+            {
+                selectedKeyPoint = value;
+                if(selectedKeyPoint != -1)
+                {
+                    KeyPointsEnabled = true;
+                }
+                OnPropertyChanged();
+            }
+        }
+        private int selectedDateTime;
+        public int SelectedDateTime
+        {
+            get { return selectedDateTime; }
+            set
+            {
+                selectedDateTime = value;
+                if(SelectedDateTime != -1)
+                {
+                    DateTimesEnabled = true;
+                }
                 OnPropertyChanged();
             }
         }
@@ -113,6 +145,36 @@ namespace TravelAgency.WPF.Views
                 OnPropertyChanged();
             }
         }
+        private bool canPreview;
+        public bool CanPreview
+        {
+            get { return canPreview; }
+            set
+            {
+                canPreview = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool keyPointsEnabled;
+        public bool KeyPointsEnabled
+        {
+            get { return keyPointsEnabled; }
+            set
+            {
+                keyPointsEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool dateTimesEnabled;
+        public bool DateTimesEnabled
+        {
+            get { return dateTimesEnabled; }
+            set
+            {
+                dateTimesEnabled = value;
+                OnPropertyChanged();
+            }
+        }
         public LocationService LocationService { get; set; }
         private bool CreatingTourForLanguage;
         private bool CreatingTourForLocation;
@@ -123,9 +185,9 @@ namespace TravelAgency.WPF.Views
             ActiveGuide = new UserService().GetById(id);
             CreatingTourForLocation = false;
             CreatingTourForLanguage = false;
-            Cities = new ObservableCollection<string>() { "< select a city >" };
+            Cities = new ObservableCollection<string>() { "<select a city>" };
             SelectedCity = Cities[0];
-            Countries = new List<string>() { "< select a country >" };
+            Countries = new List<string>() { "<select a country>" };
             SelectedCountry = Countries[0];
             LocationService = new LocationService();
             Countries.AddRange(LocationService.GetCountries());
@@ -151,7 +213,12 @@ namespace TravelAgency.WPF.Views
 
             NavService = navService;
             SelectedPhoto = -1;
+            SelectedKeyPoint = -1;
+            SelectedDateTime = -1;
             PhotosEnabled = false;
+            KeyPointsEnabled = false;
+            DateTimesEnabled = false;
+            CanPreview = false;
         }
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
@@ -173,7 +240,6 @@ namespace TravelAgency.WPF.Views
             ListDateTimes.Items.Add(DateCalendar.Text + " " + Time.Text);
             DateCalendar.Focus();
         }
-
         private void AddImages_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ImageText.Text))
@@ -183,9 +249,27 @@ namespace TravelAgency.WPF.Views
             ListPhotos.Items.Add(ImageText.Text);
             ImageText.Clear();
             ImageText.Focus();
-            PhotosEnabled = true;
+            CanPreview = true;
         }
-
+        private void RemoveKeyPoint_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedKeyPoint != -1 && ListKeyPoints.Items.Count > 0)
+            {
+                ListKeyPoints.Items.RemoveAt(SelectedKeyPoint);
+            }
+            KeyPointsText.Focus();
+            SelectedKeyPoint = -1;
+            KeyPointsEnabled = false;
+        }
+        private void RemoveDateTime_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedDateTime != -1 && ListDateTimes.Items.Count > 0)
+            {
+                ListDateTimes.Items.RemoveAt(SelectedDateTime);
+            }
+            SelectedDateTime = -1;
+            DateTimesEnabled = false;
+        }
         private void RemoveImage_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedPhoto != -1 && ListPhotos.Items.Count > 0)
@@ -194,9 +278,14 @@ namespace TravelAgency.WPF.Views
             }
             ImageText.Focus();
             SelectedPhoto = -1;
-            if(ListPhotos.Items.Count == 0)
+            PhotosEnabled = false;
+            if(ListPhotos.Items.Count > 0)
             {
-                PhotosEnabled = false;
+                CanPreview = true;
+            }
+            else
+            {
+                CanPreview = false;
             }
         }
         private void PreView_Click(object sender, RoutedEventArgs e)
@@ -218,6 +307,7 @@ namespace TravelAgency.WPF.Views
             }
             ProcessInputs(NewTour);
             SaveTours();
+            MessageBox.Show("Tour created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page tours = new TodaysToursView(ActiveGuide.Id);
             NavService.Navigate(tours);
         }
@@ -265,17 +355,17 @@ namespace TravelAgency.WPF.Views
         {
             if (ListKeyPoints.Items.Count < 2)
             {
-                MessageBox.Show("You have to enter at least two key points!");
+                MessageBox.Show("You have to enter at least two key points!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (ListPhotos.Items.Count == 0)
             {
-                MessageBox.Show("You have to enter at least one photo link!");
+                MessageBox.Show("You have to enter at least one photo link!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (ListDateTimes.Items.Count == 0)
             {
-                MessageBox.Show("You have to enter at least one date and time!");
+                MessageBox.Show("You have to enter at least one date and time!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;
@@ -285,16 +375,16 @@ namespace TravelAgency.WPF.Views
         {
             if (selectedCountry.Equals(Countries[0]))
             {
-                MessageBox.Show("Select a country");
+                MessageBox.Show("Select a country", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (SelectedCity.Equals(Cities[0])){
-                MessageBox.Show("Select a city");
+                MessageBox.Show("Select a city", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (NewTour.IsValid == false)
             {
-                MessageBox.Show("Tour entry is wrong");
+                MessageBox.Show("Tour entry is wrong", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;

@@ -56,7 +56,7 @@ namespace TravelAgency.Services
 
             foreach (var accommodationReservation in ReservationRepository.GetAll())
             {
-                if (IsValidForRating(accommodationReservation, GuestRatingRepository.GetAll()) && accommodationReservation.Accommodation.OwnerId == owner.Id)
+                if (IsValidForRating(accommodationReservation, GuestRatingRepository.GetAll()) && accommodationReservation.Accommodation.Owner.Id == owner.Id)
                 {
                     unrated.Add(accommodationReservation);
                     continue;
@@ -88,7 +88,7 @@ namespace TravelAgency.Services
         {
             foreach (var accommodationGuestRating in accommodationGuestRatings)
             {
-                if (accommodationReservation.Id == accommodationGuestRating.AccommodationReservationId)
+                if (accommodationReservation.Id == accommodationGuestRating.AccommodationReservation.Id)
                 {
                     return true;
                 }
@@ -109,7 +109,7 @@ namespace TravelAgency.Services
             { 
                 foreach (var guestRating in GuestRatingRepository.GetAll())
                 {
-                    if (guestRating.AccommodationReservationId == ownerRating.AccommodationReservationId && guest.Id == guestRating.AccommodationReservation.GuestId)
+                    if (guestRating.AccommodationReservation.Id == ownerRating.AccommodationReservation.Id && guest.Id == guestRating.AccommodationReservation.Guest.Id)
                     {
                         guestRatings.Add(guestRating);
                         break;

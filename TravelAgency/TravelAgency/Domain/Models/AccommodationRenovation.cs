@@ -12,8 +12,7 @@ namespace TravelAgency.Domain.Models
     public class AccommodationRenovation : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int AccommodationId { get; set; }
-        public Accommodation? Accommodation { get; set; }
+        public Accommodation Accommodation { get; set; }
         private DateSpan dateSpan;
         public DateSpan DateSpan
         {
@@ -34,7 +33,7 @@ namespace TravelAgency.Domain.Models
         public AccommodationRenovation()
         {
             Id = -1;
-            AccommodationId = -1;
+            Accommodation = new Accommodation();
             DateSpan = new DateSpan();
             Description = string.Empty;
         }
@@ -42,7 +41,7 @@ namespace TravelAgency.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            AccommodationId = Convert.ToInt32(values[1]);
+            Accommodation.Id = Convert.ToInt32(values[1]);
             DateSpan.StartDate = DateOnly.ParseExact(values[2], "dd/MM/yyyy");
             DateSpan.EndDate = DateOnly.ParseExact(values[3], "dd/MM/yyyy");
             Description = values[4];
@@ -53,7 +52,7 @@ namespace TravelAgency.Domain.Models
             string[] csvValues =
             {
                 Id.ToString(),
-                AccommodationId.ToString(),
+                Accommodation.Id.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
                 Description

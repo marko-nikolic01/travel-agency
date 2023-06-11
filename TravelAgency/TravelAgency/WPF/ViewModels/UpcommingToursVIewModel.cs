@@ -76,12 +76,13 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedTourOccurrence.DateTime < DateTime.Now.AddDays(2))
             {
-                MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours");
+                MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 CanceledTour = TourOccurrenceService.CancelTour(SelectedTourOccurrence, ActiveGuide.Id);
+                MessageBox.Show("Tour has been successfuly canceled", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

@@ -117,7 +117,7 @@ namespace TravelAgency.WPF.ViewModels
         public void Execute_RateGuestCommand()
         {
             AccommodationGuestRating newRating = new AccommodationGuestRating();
-            newRating.AccommodationReservationId = SelectedReservation.Id;
+            newRating.AccommodationReservation.Id = SelectedReservation.Id;
             newRating.AccommodationReservation = SelectedReservation;
             newRating.Compliance = Compliance;
             newRating.Comment = Comment;

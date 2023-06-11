@@ -38,7 +38,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (User user in owners)
                 {
-                    if (accommodation.OwnerId == user.Id)
+                    if (accommodation.Owner.Id == user.Id)
                     {
                         accommodation.Owner = user;
                         break;
@@ -53,7 +53,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (Location location in locations)
                 {
-                    if (accommodation.LocationId == location.Id)
+                    if (accommodation.Location.Id == location.Id)
                     {
                         accommodation.Location = location;
                         break;
@@ -87,7 +87,7 @@ namespace TravelAgency.Repositories
 
         public List<Accommodation> GetActiveByOwner(User owner)
         {
-            return GetActive().FindAll(c => c.OwnerId == owner.Id);
+            return GetActive().FindAll(c => c.Owner.Id == owner.Id);
         }
 
         public List<Accommodation> GetActive()

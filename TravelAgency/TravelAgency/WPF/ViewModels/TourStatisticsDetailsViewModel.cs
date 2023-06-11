@@ -13,6 +13,11 @@ using System.Windows;
 using TravelAgency.WPF.Views;
 using System.Windows.Navigation;
 using System.Windows.Controls;
+using System.Windows.Ink;
+using Syncfusion.XPS;
+using System.Drawing;
+using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -43,12 +48,16 @@ namespace TravelAgency.WPF.ViewModels
             var voucherService = new VoucherService();
             SeriesCollectionVouchers = new SeriesCollection();
             int used = voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
-            SeriesCollectionVouchers.Add(new PieSeries { Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) } });
+            SeriesCollectionVouchers.Add(new PieSeries { Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) }, Fill=Brushes.PeachPuff });
             int notUsed = TourOccurrenceAttendanceService.GetGuestsNumberByTour(tourOccurrence.Id) - voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
-            SeriesCollectionVouchers.Add(new PieSeries { Title = "Not used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) } });
+            SeriesCollectionVouchers.Add(new PieSeries { Title = "Not used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) }, Fill=Brushes.YellowGreen });
             GuestsUsedVoucher = (double)used / TourOccurrenceAttendanceService.GetGuestsNumberByTour(SelectedTourOccurrence.Id);
             GuestsNotUsedVoucher = 1 - GuestsUsedVoucher;
-            SeriesCollectionAges = new SeriesCollection { new ColumnSeries { Values = new ChartValues<int> { GuestsUnder18, Guests18to50, GestsAbove50 } } };
+            SeriesCollectionAges = new SeriesCollection() {
+                new ColumnSeries() {
+                    Values = new ChartValues<int>() { GuestsUnder18, Guests18to50, GestsAbove50 }
+                } 
+            };
             PDFReportService = new PDFReportService();
             UserService = new UserService();
             ActiveGuide = UserService.GetLoggedInUser();
@@ -57,6 +66,7 @@ namespace TravelAgency.WPF.ViewModels
         public void GenerateReport()
         {
             string link = PDFReportService.WriteTourStatisticsReport(ActiveGuide, SelectedTourOccurrence, GuestsUnder18, Guests18to50, GestsAbove50, GuestsUsedVoucher, GuestsNotUsedVoucher);
+            MessageBox.Show("Report has been successfuly generated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page w = new GuideReportView(link);
             NavigationService.Navigate(w);
         }

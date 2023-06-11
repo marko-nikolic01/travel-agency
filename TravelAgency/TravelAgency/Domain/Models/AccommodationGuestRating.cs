@@ -13,7 +13,6 @@ namespace TravelAgency.Domain.Models
     public class AccommodationGuestRating : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int AccommodationReservationId { get; set; }
         private int cleanliness;
         public int Cleanliness
         {
@@ -97,7 +96,7 @@ namespace TravelAgency.Domain.Models
         public AccommodationGuestRating()
         {
             Id = -1;
-            AccommodationReservationId = -1;
+            AccommodationReservation = new AccommodationReservation();
             Compliance = 1;
             Cleanliness = 1;
             Noisiness = 1;
@@ -106,24 +105,12 @@ namespace TravelAgency.Domain.Models
             Comment = "";
         }
 
-        public AccommodationGuestRating(int id, int accommodationReservationId, int cleanliness, int compliance, int noisiness, int friendliness, int responsivenes, string comment)
-        {
-            Id = id;
-            AccommodationReservationId = accommodationReservationId;
-            Cleanliness = cleanliness;
-            Compliance = compliance;
-            Noisiness = noisiness;
-            Friendliness = friendliness;
-            Responsivenes = responsivenes;
-            Comment = comment;
-        }
-
         public string[] ToCSV()
         {
             string[] csvValues =
             {
                 Id.ToString(),
-                AccommodationReservationId.ToString(),
+                AccommodationReservation.Id.ToString(),
                 Cleanliness.ToString(),
                 Compliance.ToString(),
                 Noisiness.ToString(),
@@ -137,7 +124,7 @@ namespace TravelAgency.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            AccommodationReservationId = Convert.ToInt32(values[1]);
+            AccommodationReservation.Id = Convert.ToInt32(values[1]);
             Cleanliness = Convert.ToInt32(values[2]);
             Compliance = Convert.ToInt32(values[3]);
             Noisiness = Convert.ToInt32(values[4]);

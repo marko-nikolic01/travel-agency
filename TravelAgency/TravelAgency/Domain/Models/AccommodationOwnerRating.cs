@@ -13,9 +13,7 @@ namespace TravelAgency.Domain.Models
     public class AccommodationOwnerRating : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int AccommodationReservationId { get; set; }
         public AccommodationReservation AccommodationReservation { get; set; }
-        public int RenovationReccommendationId { get; set; }
         public RenovationRecommendation RenovationRecommendation { get; set; }
         private int accommodationCleanliness;
         private int accommodationComfort;
@@ -106,8 +104,9 @@ namespace TravelAgency.Domain.Models
         public AccommodationOwnerRating()
         {
             Id = -1;
-            AccommodationReservationId = -1;
-            RenovationReccommendationId = -1;
+            AccommodationReservation = new AccommodationReservation();
+            RenovationRecommendation = new RenovationRecommendation();
+            RenovationRecommendation.Id = -1;
             AccommodationCleanliness = 1;
             AccommodationComfort = 1;
             AccommodationLocation = 1;
@@ -120,8 +119,8 @@ namespace TravelAgency.Domain.Models
         public AccommodationOwnerRating(AccommodationReservation reservation)
         {
             Id = -1;
-            AccommodationReservationId = reservation.Id;
-            RenovationReccommendationId = -1;
+            RenovationRecommendation = new RenovationRecommendation();
+            RenovationRecommendation.Id = -1;
             AccommodationReservation = reservation;
             AccommodationCleanliness = 1;
             AccommodationComfort = 1;
@@ -132,26 +131,13 @@ namespace TravelAgency.Domain.Models
             Photos = new List<AccommodationRatingPhoto>();
         }
 
-        public AccommodationOwnerRating(int id, int accommodationReservationId, int accommodationCleanliness, int accommodationComfort, int accommodationLocation, int ownerCorrectness, int ownerResponsiveness, string comment)
-        {
-            Id = id;
-            AccommodationReservationId = accommodationReservationId;
-            AccommodationCleanliness = accommodationCleanliness;
-            AccommodationComfort = accommodationComfort;
-            AccommodationLocation = accommodationLocation;
-            OwnerCorrectness = ownerCorrectness;
-            OwnerResponsiveness = ownerResponsiveness;
-            Comment = comment;
-            Photos = new List<AccommodationRatingPhoto>();
-        }
-
         public string[] ToCSV()
         {
             string[] csvValues =
             {
                 Id.ToString(),
-                AccommodationReservationId.ToString(),
-                RenovationReccommendationId.ToString(),
+                AccommodationReservation.Id.ToString(),
+                RenovationRecommendation.Id.ToString(),
                 AccommodationCleanliness.ToString(),
                 AccommodationComfort.ToString(),
                 AccommodationLocation.ToString(),
@@ -165,8 +151,8 @@ namespace TravelAgency.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            AccommodationReservationId = Convert.ToInt32(values[1]);
-            RenovationReccommendationId = Convert.ToInt32(values[2]);
+            AccommodationReservation.Id = Convert.ToInt32(values[1]);
+            RenovationRecommendation.Id = Convert.ToInt32(values[2]);
             AccommodationCleanliness = Convert.ToInt32(values[3]);
             AccommodationComfort = Convert.ToInt32(values[4]);
             AccommodationLocation = Convert.ToInt32(values[5]);

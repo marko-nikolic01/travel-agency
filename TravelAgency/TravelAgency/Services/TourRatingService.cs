@@ -99,5 +99,46 @@ namespace TravelAgency.Services
             sum /= (double)ratingsCount;
             return sum;
         }
+        public double GetAverageGradesForLanguage(int id, string l)
+        {
+            double sum = 0.0;
+            int ratingsCount = 0;
+            foreach (var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id))
+            {
+                if (tourOccurrence.Tour.Language.Equals(l))
+                {
+                    foreach (var tourRating in ITourRatingRepository.GetRatingsByTourOccurrenceId(tourOccurrence.Id))
+                    {
+                        sum += tourRating.GuideLanguage;
+                        sum += tourRating.GuideKnowledge;
+                        sum += tourRating.Interesting;
+                        ratingsCount++;
+                    }
+                }
+            }
+            sum /= 3.0;
+            sum /= (double)ratingsCount;
+            return sum;
+        }
+        public string[] GetUniqeLanguages(int id)
+        {
+            HashSet<string> uniqueLanguages = new HashSet<string>();
+            foreach (var r in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id))
+            {
+                uniqueLanguages.Add(r.Tour.Language);
+            }
+            return uniqueLanguages.ToArray<string>();
+        }
+        
+        
+        public Dictionary<string, double> GetAverageGradesForLanguages(int id)
+        {
+            Dictionary<string, double> grades = new Dictionary<string, double>();
+            foreach(string l in GetUniqeLanguages(id))
+            {
+                grades[l] = GetAverageGradesForLanguage(id, l);
+            }
+            return grades;
+        }
     }
 }

@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TravelAgency.WPF.Views" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" xmlns:conv="clr-namespace:TravelAgency.Converters"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="750" d:DesignWidth="430"
       Title="My profile">
     <Page.Resources>
         <Style TargetType="Label">
@@ -84,23 +84,29 @@
                 <Label Foreground="#FFFFFF" Content="Super guide status:" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="3"></Label>
                 <Image Margin="0 0 20 0" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="3" Source="/Resources/Images/SuperGuideMedal.png" Visibility="{Binding Path=Guide.IsSuperGuide , Converter={StaticResource VisibleTrueConverter}}"></Image>
                 <Label Margin="0 0 20 0" Foreground="#FFFFFF" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="3" Content="Not a super guide" Visibility="{Binding Path=Guide.IsSuperGuide , Converter={StaticResource VisibleFalseConverter}}"></Label>
-                <lvc:CartesianChart Foreground="#FFFFFF" Grid.Row="4" Grid.Column="0" Series="{Binding SeriesCollectionAges}" Margin="10 0 0 0">
+                <lvc:CartesianChart Foreground="DarkOliveGreen" Grid.Row="4" Grid.Column="0" Series="{Binding SeriesCollectionGrades}" Margin="10 0 0 0" LegendLocation="None">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Language">
+                        <lvc:Axis Title="Language" Labels="{Binding Labels}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="1"></lvc:Separator>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Average grade" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
-                <lvc:CartesianChart Foreground="#FFFFFF" Grid.Row="4" Grid.Column="1" Series="{Binding SeriesCollectionAges}" Margin="10 0 0 0">
+                <lvc:CartesianChart Foreground="DarkOliveGreen" Grid.Row="4" Grid.Column="1" Series="{Binding SeriesCollectionFinished}" Margin="10 0 0 0" LegendLocation="None">
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Language">
+                        <lvc:Axis Title="Language" Labels="{Binding LabelsFinished}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Step="1"></lvc:Separator>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Finished tours" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
             </Grid>
         </Border>
@@ -126,6 +132,11 @@
                             <TextBlock Text="Resign" VerticalAlignment="Center" DockPanel.Dock="Right"></TextBlock>
                         </DockPanel>
                     </Button.Content>
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
                 </Button>
             </Grid>
         </GroupBox>

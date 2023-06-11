@@ -345,6 +345,7 @@ namespace TravelAgency.Services
         private Tour GenerateNewTour(TourRequest request, int duration)
         {
             Tour newTour = new Tour();
+            newTour.Name = "Requested";
             newTour.Language = request.Language;
             newTour.Description = request.Description;
             newTour.MaxGuestNumber = request.GuestNumber;
@@ -379,6 +380,36 @@ namespace TravelAgency.Services
         public int GetFinishedToursById(int id)
         {
             return ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id).Count;
+        }
+        public double GetFinishedForLanguage(int id, string l)
+        {
+            double sum = 0.0;
+            foreach (var tourOccurrence in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id))
+            {
+                if (tourOccurrence.Tour.Language.Equals(l))
+                {
+                    sum++;
+                }
+            }
+            return sum;
+        }
+        public string[] GetUniqeLanguages(int id)
+        {
+            HashSet<string> uniqueLanguages = new HashSet<string>();
+            foreach (var r in ITourOccurrenceRepository.GetFinishedOccurrencesForGuide(id))
+            {
+                uniqueLanguages.Add(r.Tour.Language);
+            }
+            return uniqueLanguages.ToArray<string>();
+        }
+        public Dictionary<string, double> GetFinishedForLanguages(int id)
+        {
+            Dictionary<string, double> stats = new Dictionary<string, double>();
+            foreach (string l in GetUniqeLanguages(id))
+            {
+                stats[l] = GetFinishedForLanguage(id, l);
+            }
+            return stats;
         }
     }
 }
