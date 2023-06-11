@@ -126,6 +126,11 @@
                             <TextBlock Text="Resign" VerticalAlignment="Center" DockPanel.Dock="Right"></TextBlock>
                         </DockPanel>
                     </Button.Content>
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
                 </Button>
             </Grid>
         </GroupBox>

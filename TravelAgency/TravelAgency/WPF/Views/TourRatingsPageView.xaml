@@ -55,7 +55,13 @@
                     <DataGridTemplateColumn Header="Reviews" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Page}}"></Button>
+                                <Button Name="View" Margin="5" Content="View" Command="{Binding Path= DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=Page}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

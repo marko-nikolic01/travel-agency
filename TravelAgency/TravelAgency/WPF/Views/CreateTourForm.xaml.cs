@@ -62,13 +62,13 @@ namespace TravelAgency.WPF.Views
                 if (value.Equals(Countries[0]))
                 {
                     Cities.Clear();
-                    Cities.Add("< select a city >");
+                    Cities.Add("<select a city>");
                     IsCountrySelected = false;
                 }
                 else
                 {
                     Cities.Clear();
-                    Cities.Add("< select a city >");
+                    Cities.Add("<select a city>");
                     foreach (var city in LocationService.GetCitiesByCountry(value))
                     {
                         Cities.Add(city);
@@ -123,9 +123,9 @@ namespace TravelAgency.WPF.Views
             ActiveGuide = new UserService().GetById(id);
             CreatingTourForLocation = false;
             CreatingTourForLanguage = false;
-            Cities = new ObservableCollection<string>() { "< select a city >" };
+            Cities = new ObservableCollection<string>() { "<select a city>" };
             SelectedCity = Cities[0];
-            Countries = new List<string>() { "< select a country >" };
+            Countries = new List<string>() { "<select a country>" };
             SelectedCountry = Countries[0];
             LocationService = new LocationService();
             Countries.AddRange(LocationService.GetCountries());

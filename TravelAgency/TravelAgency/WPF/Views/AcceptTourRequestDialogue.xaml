@@ -63,7 +63,12 @@
         <Label Content="Enter keypoint: " Grid.Row="4"></Label>
         <TextBox Grid.Row="4" Margin="5"  Grid.Column="1" Text="{Binding Path=KeyPoint}" FontSize="18"></TextBox>
         <Button Grid.Column="2" Grid.Row="4" Margin="4" Command="{Binding Path=AddCommand}" Width="30" Height="30">
-            <Image Source="../../Resources/Images/add.png"></Image>
+            <Image Source="../../Resources/Images/plus.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
         </Button>
         <ListBox Grid.Row="5" Grid.Column="1" Margin="5" Grid.RowSpan="2" ItemsSource="{Binding KeyPoints}" FontSize="18"></ListBox>
         <Label Content="Keypoints: " Grid.Row="5"></Label>
@@ -74,7 +79,19 @@
         <DatePicker  FontSize="18" Grid.Row="8" Grid.Column="1" Name="DateCalendar" Margin="10" DisplayDateEnd="{Binding TourRequest.MaxDate}" DisplayDateStart="{Binding Path=TourRequest.MinDate}" SelectedDate="{Binding Path=SelectedDate}" ></DatePicker>
         <xctk:TimePicker FontSize="18" Format="Custom" FormatString="HH:mm" Grid.Row="9" Grid.Column="1" Margin="10" Name="Time" StartTime="{Binding Path=StartTime}" EndTime="{Binding Path=EndTime}" Value="{Binding Path=SelectedTime}">
         </xctk:TimePicker>
-        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}"></Button>
-        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="10" FontSize="18" Content="Cancel"></Button>
+        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="10" FontSize="18" Content="Cancel">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

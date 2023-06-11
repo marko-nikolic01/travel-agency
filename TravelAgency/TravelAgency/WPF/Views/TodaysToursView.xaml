@@ -71,14 +71,26 @@
                 <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="start" Margin="5" Content="Start" Click="StartButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotReadyStartConverter}}"></Button>
+                            <Button Name="start" Margin="5" Content="Start" Click="StartButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotReadyStartConverter}}">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="end" Margin="5" Content="End" Click="StopButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotActiveConverter}}" ></Button>
+                            <Button Name="end" Margin="5" Content="End" Click="StopButton_Click" IsEnabled="{Binding Path=CurrentState , Converter={StaticResource NotActiveConverter}}" >
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -92,7 +104,13 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Name="RowButton" Content="Check!" Click="RowButton_Click"></Button>
+                                        <Button Name="RowButton" Content="Check!" Click="RowButton_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
