@@ -140,6 +140,7 @@ namespace TravelAgency.WPF.ViewModels
         public TourRequestService TourRequestService { get; set; }
         public LocationService LocationService { get; set; }
         public NavigationService NavigationService { get; set; }
+        public string TodaysDate { get; set; }
         public TourRequestBookingViewModel(int activeGuideId, NavigationService navService)
         {
             NavigationService = navService;
@@ -155,6 +156,9 @@ namespace TravelAgency.WPF.ViewModels
             SelectedCountry = Countries[0];
             LocationService = new LocationService();
             Countries.AddRange(TourRequestService.GetUniqueCountriesForPendings());
+            StartDate = DateTime.Now.ToString("d");
+            EndDate = DateTime.Now.AddYears(1).ToString("d");
+            TodaysDate = DateTime.Now.ToString("d");
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

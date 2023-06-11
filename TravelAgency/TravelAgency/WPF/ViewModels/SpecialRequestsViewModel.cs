@@ -12,10 +12,11 @@ using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Views;
 using System.Windows.Controls;
+using System.ComponentModel;
 
 namespace TravelAgency.WPF.ViewModels
 {
-    public class SpecialRequestsViewModel
+    public class SpecialRequestsViewModel : INotifyPropertyChanged
     {
         public User ActiveGuide { get; set; }
         public UserService UserService { get; set; }
@@ -23,11 +24,40 @@ namespace TravelAgency.WPF.ViewModels
         public TourRequestService TourRequestService { get; set; }
         public SpecialTourRequestService SpecialTourRequestService { get; set; }
         public TourRequest SelectedTourRequest { get; set; }
-        public int BookedRequest { get; set; }
-        public ObservableCollection<SpecialTourRequest> SpecialTourRequests { get; set; }
+        private int bookedRequest;
+        public int BookedRequest
+        {
+            get { return bookedRequest; }
+            set 
+            { 
+                bookedRequest = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+
+        private ObservableCollection<SpecialTourRequest> specialTourRequests;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public ObservableCollection<SpecialTourRequest> SpecialTourRequests
+        {
+            get { return specialTourRequests; }
+            set 
+            { 
+                specialTourRequests = value;
+                OnPropertyChanged();
+            }
+        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public ButtonCommandNoParameter BookTourRequestCommand { get; set; }
+        public ButtonCommandNoParameter UndoBookCommand { get; set; }
         public NavigationService NavService { get; set; }
-        public SpecialRequestsViewModel(int activeGuideId, NavigationService navService)
+        public SpecialRequestsViewModel(int activeGuideId, NavigationService navService, int requestId)
         {
             UserService = new UserService();
             GuideScheduleService = new GuideScheduleService();
@@ -37,8 +67,16 @@ namespace TravelAgency.WPF.ViewModels
             SpecialTourRequestService = new SpecialTourRequestService();
             SpecialTourRequests = new ObservableCollection<SpecialTourRequest>(SpecialTourRequestService.GetOpenSpecialRequest());
             BookTourRequestCommand = new ButtonCommandNoParameter(Book);
+            UndoBookCommand = new ButtonCommandNoParameter(UndoBook);
             CheckCanBook();
-            BookedRequest = -1;
+            if(requestId != -1)
+            {
+                BookedRequest = requestId;
+            }
+            else
+            {
+                BookedRequest = -1;
+            }
         }
 
         private void CheckCanBook()
@@ -50,6 +88,10 @@ namespace TravelAgency.WPF.ViewModels
                     if (tourRequest.CheckCanBook() && IsGuideFree(tourRequest))
                     {
                         tourRequest.CanBook = true;
+                    }
+                    else
+                    {
+                        tourRequest.CanBook = false;
                     }
                 }
             }
@@ -68,6 +110,13 @@ namespace TravelAgency.WPF.ViewModels
         {
             Page booking = new SpecialRequestBookingView(ActiveGuide.Id, NavService, SelectedTourRequest);
             NavService.Navigate(booking);
+        }
+        public void UndoBook()
+        {
+            TourRequestService.UndoBookRequest(BookedRequest);
+            BookedRequest = -1;
+            SpecialTourRequests = new ObservableCollection<SpecialTourRequest>(SpecialTourRequestService.GetOpenSpecialRequest());
+            CheckCanBook();
         }
     }
 }

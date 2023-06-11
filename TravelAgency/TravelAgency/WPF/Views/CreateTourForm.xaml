@@ -68,7 +68,13 @@
         <Label Grid.Row="10" Grid.Column="0" Content="Date and time:" FontSize="13"></Label>
         <Label Grid.Row="13" Grid.Column="0" Content="Duration:" FontSize="13"></Label>
         <Label Grid.Row="14" Grid.Column="0" Content="Images:" FontSize="13"></Label>
-        <Button Grid.Column="3" Grid.Row="16" Margin="5 5 10 5" Width="50" Content="Create" FontSize="15" Click="Create_Click"></Button>
+        <Button Grid.Column="3" Grid.Row="16" Margin="5 5 10 5" Width="50" Content="Create" FontSize="15" Click="Create_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=NewTour.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
 
@@ -79,29 +85,71 @@
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=NewTour.Language, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" ></TextBox>
-        <xctk:IntegerUpDown Margin="0 7 0 7" Grid.Row="6" Grid.Column="1" Name="MaxGuests" Text="{Binding Path=NewTour.MaxGuestNumberInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+        <xctk:IntegerUpDown AllowTextInput="False" Margin="0 7 0 7" Grid.Row="6" Grid.Column="1" Name="MaxGuests" Text="{Binding Path=NewTour.MaxGuestNumberInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
         <TextBox Grid.Row="7" Grid.Column="1" Name="KeyPointsText"></TextBox>
-        <Button Grid.Row="7" Grid.Column="2" Width="30" Margin="10 7 0 7" Click="AddKeyPoint_Click" HorizontalAlignment="Left">
-            <Image Source="/Resources/Images/add.png"></Image>
+        <Button Grid.Row="7" Grid.Column="2" Width="25" Margin="10 7 0 7" Click="AddKeyPoint_Click" HorizontalAlignment="Left">
+            <Image Source="/Resources/Images/plus.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <ListBox Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Name="ListKeyPoints"></ListBox>
+        <Button Grid.Row="7" Grid.Column="2" Margin="0 7 12 7" HorizontalAlignment="Right" Width="25" Click="RemoveKeyPoint_Click" IsEnabled="{Binding KeyPointsEnabled}">
+            <Image Source="/Resources/Images/cross-button.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <ListBox Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Name="ListKeyPoints" SelectedIndex="{Binding SelectedKeyPoint}"></ListBox>
         <DatePicker SelectedDateChanged="DateCalendar_SelectedDateChanged" Grid.Row="10" Grid.Column="1" Name="DateCalendar" Margin="0 7 0 7"></DatePicker>
-        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="10" Grid.Column="2" Margin="10 7 0 7" Name="Time" Width="95" Grid.ColumnSpan="2" HorizontalAlignment="Left"></xctk:TimePicker>
-        <Button Grid.Row="10" Grid.Column="3" Margin="0 7 10 7" Width="30" Click="AddDateTime_Click" HorizontalAlignment="Right">
-            <Image Source="/Resources/Images/add.png"></Image>
+        <xctk:TimePicker Format="Custom" FormatString="HH:mm" Grid.Row="10" Grid.Column="2" Margin="10 7 0 7" Name="Time" Width="70" Grid.ColumnSpan="2" HorizontalAlignment="Left"></xctk:TimePicker>
+        <Button Grid.Row="10" Grid.Column="3" Margin="0 7 10 7" Width="25" Click="AddDateTime_Click" HorizontalAlignment="Left">
+            <Image Source="/Resources/Images/plus.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <ListBox Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Name="ListDateTimes"></ListBox>
+        <Button Grid.Row="10" Grid.Column="3" Margin="0 7 10 7" HorizontalAlignment="Right" Width="25" Click="RemoveDateTime_Click" IsEnabled="{Binding DateTimesEnabled}">
+            <Image Source="/Resources/Images/cross-button.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <ListBox Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Name="ListDateTimes" SelectedIndex="{Binding SelectedDateTime}"></ListBox>
         <xctk:IntegerUpDown Margin="0 7 0 7" Grid.Row="13" Grid.Column="1" Name="Duration" Text="{Binding Path=NewTour.DurationInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></xctk:IntegerUpDown>
         <TextBox Grid.Row="14" Grid.Column="1" Name="ImageText"></TextBox>
-        <Button Grid.Row="14" Grid.Column="2" Margin="10 7 0 7" HorizontalAlignment="Left" Width="30" Click="AddImages_Click">
-            <Image Source="/Resources/Images/add.png"></Image>
+        <Button Grid.Row="14" Grid.Column="2" Margin="10 7 0 7" HorizontalAlignment="Left" Width="25" Click="AddImages_Click">
+            <Image Source="/Resources/Images/plus.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <Button Grid.Row="14" Grid.Column="2" Margin="0 7 10 7" HorizontalAlignment="Right" Width="30" Click="RemoveImage_Click" IsEnabled="{Binding PhotosEnabled}">
+        <Button Grid.Row="14" Grid.Column="2" Margin="0 7 12 7" HorizontalAlignment="Right" Width="25" Click="RemoveImage_Click" IsEnabled="{Binding PhotosEnabled}">
             <Image Source="/Resources/Images/cross-button.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <Button Grid.Row="14" Grid.Column="3" Margin="0 7 10 7" Content="Preview" Width="50" Click="PreView_Click" IsEnabled="{Binding PhotosEnabled}"></Button>
+        <Button Grid.Row="14" Grid.Column="3" Margin="0 7 10 7" Content="Preview" Width="50" Click="PreView_Click" IsEnabled="{Binding PhotosEnabled}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <ListBox Grid.Row="15" Grid.Column="1" Grid.RowSpan="2" Name="ListPhotos" SelectedIndex="{Binding SelectedPhoto}"></ListBox>
     </Grid>
 </Page>
