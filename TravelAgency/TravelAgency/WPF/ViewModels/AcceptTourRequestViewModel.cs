@@ -26,8 +26,6 @@ namespace TravelAgency.WPF.ViewModels
         private DateTime selectedTime;
         private bool IsTimeSelected { get; set; }
         private string selectedDate;
-        private TimeSpan startTime;
-        private TimeSpan endTime;
         public event PropertyChangedEventHandler? PropertyChanged;
         public DateTime SelectedTime
         {
@@ -36,24 +34,6 @@ namespace TravelAgency.WPF.ViewModels
             {
                 IsTimeSelected = true;
                 selectedTime = value;
-                OnPropertyChanged();
-            }
-        }
-        public TimeSpan StartTime
-        {
-            get { return startTime; }
-            set
-            {
-                startTime = value;
-                OnPropertyChanged();
-            }
-        }
-        public TimeSpan EndTime
-        {
-            get { return endTime; }
-            set
-            {
-                endTime = value;
                 OnPropertyChanged();
             }
         }
@@ -103,6 +83,8 @@ namespace TravelAgency.WPF.ViewModels
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public TourRequestService TourRequestService { get; set; }
         public NavigationService NavigationService { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public AcceptTourRequestViewModel(Domain.Models.TourRequest selectedRequest, int id, NavigationService navigationService)
         {
             NavigationService = navigationService;
@@ -115,6 +97,8 @@ namespace TravelAgency.WPF.ViewModels
             TourRequestService = new TourRequestService();
             TourOccurrenceService = new TourOccurrenceService();
             IsTimeSelected = false;
+            EndDate = TourRequest.MaxDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
+            StartDate = TourRequest.MinDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
         }
         public void AddKeyPoint()
         {
@@ -138,13 +122,13 @@ namespace TravelAgency.WPF.ViewModels
 
             if (!TourOccurrenceService.IsGuideFree(ActiveGuide.Id, concreteDateTime, Duration))
             {
-                MessageBox.Show("You are not free in the time you entered!");
+                MessageBox.Show("You are not free in the time you entered!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             int occurrenceId = TourOccurrenceService.AcceptRequest(TourRequest, concreteDateTime, ActiveGuide.Id, KeyPoints, Duration);
             TourRequestService.UpdateRequestStatus(TourRequest, concreteDateTime, ActiveGuide.Id);
             TourRequestService.SaveNotification(new RequestAcceptedNotification(concreteDateTime, ActiveGuide.Id, TourRequest.Id, false, TourRequest.GuestId, occurrenceId));
-
+            MessageBox.Show("Tour request has been successfully booked", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page page = new TourRequestBookingView(ActiveGuide.Id, NavigationService);
             NavigationService.Navigate(page);
         }
@@ -153,22 +137,22 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedDate == null)
             {
-                MessageBox.Show("Select date please!");
+                MessageBox.Show("Select date please!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             if (!IsTimeSelected)
             {
-                MessageBox.Show("Select time please!");
+                MessageBox.Show("Select time please!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             if (KeyPoints.Count < 2)
             {
-                MessageBox.Show("Enter at least 2 Key Points!");
+                MessageBox.Show("Enter at least 2 Key Points!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             if (Duration <= 0)
             {
-                MessageBox.Show("Enter duration!");
+                MessageBox.Show("Enter duration!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             DateTime date = DateTime.ParseExact(SelectedDate, "G", new CultureInfo("en-US"));
@@ -178,7 +162,7 @@ namespace TravelAgency.WPF.ViewModels
             DateTime dT2 = TourRequest.MaxDate.ToDateTime(TimeOnly.Parse("10:00 PM"));
             if (concreteDateTime < dT1 || concreteDateTime > dT2)
             {
-                MessageBox.Show("wrong date!");
+                MessageBox.Show("wrong date!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;

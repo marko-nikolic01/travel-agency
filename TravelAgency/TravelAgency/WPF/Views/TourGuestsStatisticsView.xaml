@@ -124,7 +124,7 @@
         <TextBlock Grid.Row="16" Margin="15 0 0 0" Grid.ColumnSpan="2" Text="{Binding Path=GuestsUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
         <Label Grid.Row="17" Content="Did not use:" Grid.ColumnSpan="2"></Label>
         <TextBlock Grid.Row="18" Margin="15 0 0 0"  Text="{Binding Path=GuestsNotUsedVoucher, StringFormat=0.00%, Mode=OneWay}"></TextBlock>
-        <lvc:PieChart Foreground="#FFFFFF" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="4" LegendLocation="Bottom" Series="{Binding SeriesCollectionVouchers}"></lvc:PieChart>
+        <lvc:PieChart Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="4" LegendLocation="Bottom" Series="{Binding SeriesCollectionVouchers}"></lvc:PieChart>
 
         <Button Grid.Column="1" Grid.Row="20" Grid.ColumnSpan="3" Margin="20 5 5 0" FontSize="17" Command="{Binding Path=GenerateReportCommand}">
             <Button.Content>

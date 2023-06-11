@@ -102,13 +102,16 @@ namespace TravelAgency.WPF.ViewModels
         }
         public void Resign()
         {
-            UserService.DeleteUser(Guide.Id);
-            TourOccurrenceService.CancelAllTours(Guide.Id);
-            VoucherService.UpdateVouchers(Guide.Id);
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Window w = Application.Current.Windows[0];
-            w.Close();
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                UserService.DeleteUser(Guide.Id);
+                TourOccurrenceService.CancelAllTours(Guide.Id);
+                VoucherService.UpdateVouchers(Guide.Id);
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                Window w = Application.Current.Windows[0];
+                w.Close();
+            }
         }
     }
 }

@@ -64,7 +64,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14"  AlternatingRowBackground="WhiteSmoke">
+            <DataGrid Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="4" ItemsSource="{Binding Path=TourOccurrences}" SelectedItem="{Binding Path=SelectedTourOccurrence}" AutoGenerateColumns="False" IsReadOnly="True" FontSize="14"  AlternatingRowBackground="WhiteSmoke">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Tour.Name}" Header="Name"></DataGridTextColumn>
                     <DataGridTextColumn  Header="Location" Width="*">

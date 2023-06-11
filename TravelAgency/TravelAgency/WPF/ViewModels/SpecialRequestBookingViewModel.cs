@@ -57,6 +57,7 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
             TourRequestService.BookRequest(TourRequest.Id, ActiveGuide.Id, SelectedDate);
+            MessageBox.Show("Tour has been successfuly booked", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page specialRequests = new SpecialRequestsView(ActiveGuide.Id, NavigationService, TourRequest.Id);
             NavigationService.Navigate(specialRequests);
         }

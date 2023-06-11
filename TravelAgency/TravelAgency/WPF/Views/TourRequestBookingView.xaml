@@ -67,11 +67,11 @@
             <Label Grid.Row="2" Content="Language:" Grid.ColumnSpan="2"></Label>
             <TextBox Grid.Row="2" Grid.Column="1" Margin="5 10 -20 10" Text="{Binding Path=Language, Mode=TwoWay}"></TextBox>
             <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Guests number:" Margin="25 0 0 0"></Label>
-            <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Margin="25 10 10 10" Value="{Binding Path=NumberOfGuests, Mode=TwoWay}" Text="{Binding Path=NumberOfGuests, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}" DefaultValue="0" Minimum="0" ></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown AllowTextInput="False" Grid.Row="2" Grid.Column="3" Margin="25 10 10 10" Value="{Binding Path=NumberOfGuests, Mode=TwoWay}" Text="{Binding Path=NumberOfGuests, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}" DefaultValue="0" Minimum="0" ></xctk:IntegerUpDown>
             <Label Grid.Row="3" Content="Start date:" Grid.ColumnSpan="2"></Label>
-            <DatePicker Grid.Row="3" Grid.Column="1" Margin="5 10 -20 10" SelectedDate="{Binding StartDate}"></DatePicker>
+            <DatePicker DisplayDateEnd="{Binding EndDate}" Grid.Row="3" Grid.Column="1" Margin="5 10 -20 10" SelectedDate="{Binding StartDate}" DisplayDateStart="{Binding TodaysDate}"></DatePicker>
             <Label Grid.Row="3" Grid.Column="2" Margin="25 0 0 0"  Content="End date:"></Label>
-            <DatePicker SelectedDate="{Binding EndDate}" Grid.Row="3" Grid.Column="3" Margin="-20 10 10 10"></DatePicker>
+        <DatePicker DisplayDateStart="{Binding StartDate}" SelectedDate="{Binding EndDate}" Grid.Row="3" Grid.Column="3" Margin="-20 10 10 10"></DatePicker>
             <Button Grid.RowSpan="2" Grid.Column="3" Grid.Row="4" Margin="5 25 10 25" Command="{Binding Path= FilterCommand}">
                 <Button.Content>
                     <DockPanel>

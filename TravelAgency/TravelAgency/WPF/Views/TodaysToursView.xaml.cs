@@ -159,7 +159,7 @@ namespace TravelAgency.WPF.Views
         {
             if (SelectedTourOccurrence.Guests.Count == 0)
             {
-                MessageBox.Show("No guests have reserved this tour, therefore it can't be started!");
+                MessageBox.Show("No guests have reserved this tour, therefore it can't be started!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;
@@ -218,7 +218,7 @@ namespace TravelAgency.WPF.Views
             Guests.Clear();
             UpdateKeyPoints();
             TourOccurrenceService.UpdateTourOccurrence(SelectedTourOccurrence.Id);
-            MessageBox.Show("Tour ended!");
+            MessageBox.Show("Tour ended!","Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void UpdateKeyPoints()
         {

@@ -72,6 +72,7 @@
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="Foreground" Value="#FFFFFF"/>
                                     <Setter Property="Background" Value="#0e1d32"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 </Style>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Background" Value="#FFFFFF"></Setter>
@@ -85,7 +86,7 @@
                         <Setter Property="Background" Value="WhiteSmoke"></Setter>
                     </Style>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#FFFFFF"/>
+                        <Setter Property="Background" Value="Ivory"/>
                         <Setter Property="Foreground" Value="#0e1d32"/>
                     </Style>
                 </DataGrid.Resources>

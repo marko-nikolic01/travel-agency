@@ -342,6 +342,7 @@ namespace TravelAgency.Services
         private Tour GenerateNewTour(TourRequest request, int duration)
         {
             Tour newTour = new Tour();
+            newTour.Name = "Requested";
             newTour.Language = request.Language;
             newTour.Description = request.Description;
             newTour.MaxGuestNumber = request.GuestNumber;

@@ -66,6 +66,7 @@ namespace TravelAgency.WPF.ViewModels
         public void GenerateReport()
         {
             string link = PDFReportService.WriteTourStatisticsReport(ActiveGuide, SelectedTourOccurrence, GuestsUnder18, Guests18to50, GestsAbove50, GuestsUsedVoucher, GuestsNotUsedVoucher);
+            MessageBox.Show("Report has been successfuly generated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page w = new GuideReportView(link);
             NavigationService.Navigate(w);
         }

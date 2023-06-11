@@ -103,6 +103,26 @@ namespace TravelAgency.WPF.Views
                 OnPropertyChanged();
             }
         }
+        private int selectedKeyPoint;
+        public int SelectedKeyPoint
+        {
+            get { return selectedKeyPoint; }
+            set
+            {
+                selectedKeyPoint = value;
+                OnPropertyChanged();
+            }
+        }
+        private int selectedDateTime;
+        public int SelectedDateTime
+        {
+            get { return selectedDateTime; }
+            set
+            {
+                selectedDateTime = value;
+                OnPropertyChanged();
+            }
+        }
         private bool photosEnabled;
         public bool PhotosEnabled
         {
@@ -110,6 +130,26 @@ namespace TravelAgency.WPF.Views
             set
             {
                 photosEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool keyPointsEnabled;
+        public bool KeyPointsEnabled
+        {
+            get { return keyPointsEnabled; }
+            set
+            {
+                keyPointsEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool dateTimesEnabled;
+        public bool DateTimesEnabled
+        {
+            get { return dateTimesEnabled; }
+            set
+            {
+                dateTimesEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -151,7 +191,11 @@ namespace TravelAgency.WPF.Views
 
             NavService = navService;
             SelectedPhoto = -1;
+            SelectedKeyPoint = -1;
+            SelectedDateTime = -1;
             PhotosEnabled = false;
+            KeyPointsEnabled = false;
+            DateTimesEnabled = false;
         }
         private void AddKeyPoint_Click(object sender, RoutedEventArgs e)
         {
@@ -162,6 +206,7 @@ namespace TravelAgency.WPF.Views
             ListKeyPoints.Items.Add(KeyPointsText.Text);
             KeyPointsText.Clear();
             KeyPointsText.Focus();
+            KeyPointsEnabled = true;
         }
 
         private void AddDateTime_Click(object sender, RoutedEventArgs e)
@@ -172,6 +217,7 @@ namespace TravelAgency.WPF.Views
             }
             ListDateTimes.Items.Add(DateCalendar.Text + " " + Time.Text);
             DateCalendar.Focus();
+            DateTimesEnabled = true;
         }
 
         private void AddImages_Click(object sender, RoutedEventArgs e)
@@ -185,7 +231,31 @@ namespace TravelAgency.WPF.Views
             ImageText.Focus();
             PhotosEnabled = true;
         }
-
+        private void RemoveKeyPoint_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedKeyPoint != -1 && ListKeyPoints.Items.Count > 0)
+            {
+                ListKeyPoints.Items.RemoveAt(SelectedKeyPoint);
+            }
+            KeyPointsText.Focus();
+            SelectedKeyPoint = -1;
+            if (ListKeyPoints.Items.Count == 0)
+            {
+                KeyPointsEnabled = false;
+            }
+        }
+        private void RemoveDateTime_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedDateTime != -1 && ListDateTimes.Items.Count > 0)
+            {
+                ListDateTimes.Items.RemoveAt(SelectedDateTime);
+            }
+            SelectedDateTime = -1;
+            if (ListDateTimes.Items.Count == 0)
+            {
+                DateTimesEnabled = false;
+            }
+        }
         private void RemoveImage_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedPhoto != -1 && ListPhotos.Items.Count > 0)
@@ -218,6 +288,7 @@ namespace TravelAgency.WPF.Views
             }
             ProcessInputs(NewTour);
             SaveTours();
+            MessageBox.Show("Tour created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Page tours = new TodaysToursView(ActiveGuide.Id);
             NavService.Navigate(tours);
         }
@@ -265,17 +336,17 @@ namespace TravelAgency.WPF.Views
         {
             if (ListKeyPoints.Items.Count < 2)
             {
-                MessageBox.Show("You have to enter at least two key points!");
+                MessageBox.Show("You have to enter at least two key points!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (ListPhotos.Items.Count == 0)
             {
-                MessageBox.Show("You have to enter at least one photo link!");
+                MessageBox.Show("You have to enter at least one photo link!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (ListDateTimes.Items.Count == 0)
             {
-                MessageBox.Show("You have to enter at least one date and time!");
+                MessageBox.Show("You have to enter at least one date and time!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;
@@ -285,16 +356,16 @@ namespace TravelAgency.WPF.Views
         {
             if (selectedCountry.Equals(Countries[0]))
             {
-                MessageBox.Show("Select a country");
+                MessageBox.Show("Select a country", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (SelectedCity.Equals(Cities[0])){
-                MessageBox.Show("Select a city");
+                MessageBox.Show("Select a city", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             else if (NewTour.IsValid == false)
             {
-                MessageBox.Show("Tour entry is wrong");
+                MessageBox.Show("Tour entry is wrong", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;
