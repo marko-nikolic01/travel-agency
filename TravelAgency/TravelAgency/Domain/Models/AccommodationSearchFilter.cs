@@ -105,17 +105,6 @@ namespace TravelAgency.Domain.Models
             DayNumberFilter = 0;
         }
 
-        
-        public AccommodationSearchFilter(string nameFilter, string countryFilter, string cityFilter, string typeFilter, int guestNumberFilter, int dayNumberFilter)
-        {
-            NameFilter = nameFilter;
-            CountryFilter = countryFilter;
-            CityFilter = cityFilter;
-            TypeFilter = typeFilter;
-            GuestNumberFilter = guestNumberFilter;
-            DayNumberFilter = dayNumberFilter;
-        }
-
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

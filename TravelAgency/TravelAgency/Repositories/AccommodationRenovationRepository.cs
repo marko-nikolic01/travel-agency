@@ -30,7 +30,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (Accommodation accommodation in accommodations)
                 {
-                    if (renovation.AccommodationId == accommodation.Id)
+                    if (renovation.Accommodation.Id == accommodation.Id)
                     {
                         renovation.Accommodation = accommodation;
                         break;
@@ -73,7 +73,7 @@ namespace TravelAgency.Repositories
 
             foreach (AccommodationRenovation renovation in renovations)
             {
-                if (renovation.AccommodationId == id)
+                if (renovation.Accommodation.Id == id)
                 {
                     filtered.Add(renovation);
                 }
@@ -88,7 +88,7 @@ namespace TravelAgency.Repositories
 
             foreach (var renovation in renovations)
             {
-                if (renovation.Accommodation.OwnerId == owner.Id)
+                if (renovation.Accommodation.Owner.Id == owner.Id)
                 {
                     filtered.Add(renovation);
                 }

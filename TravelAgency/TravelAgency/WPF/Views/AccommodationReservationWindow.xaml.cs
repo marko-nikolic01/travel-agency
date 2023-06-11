@@ -91,7 +91,7 @@ namespace TravelAgency.WPF.Views
 
             Guest = guest;
             Accommodation = accommodation;
-            Reservation = new AccommodationReservation(Accommodation.Id, Accommodation, Guest.Id, Guest);
+            Reservation = new AccommodationReservation(Accommodation, Guest);
 
             DayNumber = Accommodation.MinDays;
             FirstDate = DateTime.Now.Date;

@@ -13,7 +13,6 @@ namespace TravelAgency.Domain.Models
     public class AccommodationReservationMoveRequest : ISerializable, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int ReservationId { get; set; }
         public AccommodationReservation Reservation { get; set; }
         public AccommodationReservationMoveRequestStatus Status { get; set; }
         public bool StatusChanged { get; set; }
@@ -44,7 +43,7 @@ namespace TravelAgency.Domain.Models
         public AccommodationReservationMoveRequest()
         {
             Id = -1;
-            ReservationId = -1;
+            Reservation = new AccommodationReservation();
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
             RejectionExplanation = "";
@@ -55,7 +54,6 @@ namespace TravelAgency.Domain.Models
         public AccommodationReservationMoveRequest(AccommodationReservation reservation)
         {
             Id = -1;
-            ReservationId = reservation.Id;
             Reservation = reservation;
             Status = AccommodationReservationMoveRequestStatus.WAITING;
             StatusChanged = false;
@@ -83,7 +81,7 @@ namespace TravelAgency.Domain.Models
             string[] csvValues =
             {
                 Id.ToString(),
-                ReservationId.ToString(),
+                Reservation.Id.ToString(),
                 Convert.ToInt32(Status).ToString(),
                 Convert.ToInt32(StatusChanged).ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
@@ -97,7 +95,7 @@ namespace TravelAgency.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            ReservationId = Convert.ToInt32(values[1]);
+            Reservation.Id = Convert.ToInt32(values[1]);
             Status = (AccommodationReservationMoveRequestStatus)Convert.ToInt32(values[2]);
             StatusChanged = Convert.ToBoolean(Convert.ToInt32(values[3]));
             DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");

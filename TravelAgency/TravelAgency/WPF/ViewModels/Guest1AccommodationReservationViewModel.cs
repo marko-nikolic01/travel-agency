@@ -206,7 +206,7 @@ namespace TravelAgency.WPF.ViewModels
 
             Guest = guest;
             Accommodation = accommodation;
-            Reservation = new AccommodationReservation(accommodation.Id, accommodation, Guest.Id, Guest);
+            Reservation = new AccommodationReservation(accommodation, Guest);
 
             InitializeData();
         }

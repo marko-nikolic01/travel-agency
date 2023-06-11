@@ -27,7 +27,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (AccommodationReservation reservation in reservations)
                 {
-                    if (moveRequest.ReservationId == reservation.Id)
+                    if (moveRequest.Reservation.Id == reservation.Id)
                     {
                         moveRequest.Reservation = reservation;
                         if (moveRequest.CheckExpiration())
@@ -76,7 +76,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationReservationMoveRequest> GetWaitingByOwner(User owner)
         {
-            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.OwnerId == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING && !mr.Reservation.Canceled);
+            return _moveRequests.FindAll(mr => mr.Reservation.Accommodation.Owner.Id == owner.Id && mr.Status == AccommodationReservationMoveRequestStatus.WAITING && !mr.Reservation.Canceled);
         }
 
         public int NextId()
@@ -124,7 +124,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationReservationMoveRequest> GetByReservation(AccommodationReservation reservation)
         {
-            return _moveRequests.FindAll(mr => mr.ReservationId == reservation.Id);
+            return _moveRequests.FindAll(mr => mr.Reservation.Id == reservation.Id);
         }
     }
 }

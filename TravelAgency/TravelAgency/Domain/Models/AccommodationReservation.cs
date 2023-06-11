@@ -17,9 +17,7 @@ namespace TravelAgency.Domain.Models
     public class AccommodationReservation : ISerializable, IDataErrorInfo
     {
         public int Id { get; set; }
-        public int AccommodationId { get; set; }
         public Accommodation Accommodation { get; set; }
-        public int GuestId { get; set; }
         public User Guest { get; set; }
         public bool Canceled { get; set; }
         private int _numberOfGuests;
@@ -62,29 +60,17 @@ namespace TravelAgency.Domain.Models
         public AccommodationReservation()
         {
             Id = -1;
-            AccommodationId = -1;
-            GuestId = -1;
+            Accommodation = new Accommodation();
+            Guest = new User();
             NumberOfGuests = -1;
             DateSpan = new DateSpan();
             Canceled = false;
         }
 
-        public AccommodationReservation(int id, int accommodationId, int guestId, int numberOfGuests, DateSpan dateSpan)
-        {
-            Id = id;
-            AccommodationId = accommodationId;
-            GuestId = guestId;
-            NumberOfGuests = numberOfGuests;
-            DateSpan = dateSpan;
-            Canceled = false;
-        }
-
-        public AccommodationReservation(int accommodationId, Accommodation accommodation, int guestId, User guest)
+        public AccommodationReservation(Accommodation accommodation,User guest)
         {
             Id = -1;
-            AccommodationId = accommodationId;
             Accommodation = accommodation;
-            GuestId = guestId;
             Guest = guest;
             NumberOfGuests = -1;
             Canceled = false;
@@ -95,8 +81,8 @@ namespace TravelAgency.Domain.Models
             string[] csvValues =
             {
                 Id.ToString(),
-                AccommodationId.ToString(),
-                GuestId.ToString(),
+                Accommodation.Id.ToString(),
+                Guest.Id.ToString(),
                 NumberOfGuests.ToString(),
                 DateSpan.StartDate.ToString("dd/MM/yyyy"),
                 DateSpan.EndDate.ToString("dd/MM/yyyy"),
@@ -108,8 +94,8 @@ namespace TravelAgency.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            AccommodationId = Convert.ToInt32(values[1]);
-            GuestId = Convert.ToInt32(values[2]);
+            Accommodation.Id = Convert.ToInt32(values[1]);
+            Guest.Id = Convert.ToInt32(values[2]);
             NumberOfGuests = Convert.ToInt32(values[3]);
             DateSpan.StartDate = DateOnly.ParseExact(values[4], "dd/MM/yyyy");
             DateSpan.EndDate = DateOnly.ParseExact(values[5], "dd/MM/yyyy");

@@ -137,7 +137,8 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            NewAccommodation = new Accommodation() { Owner = loggedInUser, OwnerId = loggedInUser.Id, IsOpen = true };
+            NewAccommodation = new Accommodation() { Owner = loggedInUser, IsOpen = true };
+            NewAccommodation.Owner.Id = loggedInUser.Id;
 
             Photos = new ObservableCollection<AccommodationPhoto>();
 
@@ -182,7 +183,7 @@ namespace TravelAgency.WPF.ViewModels
             }
 
             NewAccommodation.Location = locationService.GetLocationForCountryAndCity(SelectedCountry, SelectedCity);
-            NewAccommodation.LocationId = NewAccommodation.Location.Id;
+            NewAccommodation.Location.Id = NewAccommodation.Location.Id;
 
             if (Photos.Count < 1)
             {
