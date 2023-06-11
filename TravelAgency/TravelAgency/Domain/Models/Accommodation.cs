@@ -29,8 +29,7 @@ namespace TravelAgency.Domain.Models
                 }
             }
         }
-        public int OwnerId { get; set; }
-        public int LocationId { get; set; }
+
         private AccommodationType type;
         public AccommodationType Type
         {
@@ -84,8 +83,8 @@ namespace TravelAgency.Domain.Models
             }
         }
 
-        public User? Owner { get; set; }
-        public Location? Location { get; set; }
+        public User Owner { get; set; }
+        public Location Location { get; set; }
         public List<AccommodationPhoto> Photos { get; set; }
 
         private bool isRenovated;
@@ -107,27 +106,12 @@ namespace TravelAgency.Domain.Models
         {
             Id = -1;
             Name = "";
-            OwnerId = -1;
-            LocationId = -1;
+            Owner = new User();
+            Location = new Location();
             Type = AccommodationType.APARTMENT;
             MaxGuests = 1;
             MinDays = 1;
             DaysToCancel = 1;
-
-            Photos = new List<AccommodationPhoto>();
-        }
-
-        public Accommodation(int id, string name, int ownerId, int locationId, AccommodationType type, int maxGuests, int minDays, int daysToCancel, bool isClosed)
-        {
-            Id = id;
-            Name = name;
-            OwnerId = ownerId;
-            LocationId = locationId;
-            Type = type;
-            MaxGuests = maxGuests;
-            MinDays = minDays;
-            DaysToCancel = daysToCancel;
-            IsOpen = isClosed;
 
             Photos = new List<AccommodationPhoto>();
         }
@@ -138,8 +122,8 @@ namespace TravelAgency.Domain.Models
             {
                 Id.ToString(),
                 Name,
-                OwnerId.ToString(),
-                LocationId.ToString(),
+                Owner.Id.ToString(),
+                Location.Id.ToString(),
                 Convert.ToInt32(Type).ToString(),
                 MaxGuests.ToString(),
                 MinDays.ToString(),
@@ -153,8 +137,8 @@ namespace TravelAgency.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            OwnerId = int.Parse(values[2]);
-            LocationId = int.Parse(values[3]);
+            Owner.Id = int.Parse(values[2]);
+            Location.Id = int.Parse(values[3]);
             Type = (AccommodationType)Convert.ToInt32(values[4]);
             MaxGuests = Convert.ToInt32(values[5]);
             MinDays = Convert.ToInt32(values[6]);

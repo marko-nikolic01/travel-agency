@@ -135,7 +135,7 @@ namespace TravelAgency.Domain.Models
 
         private void MarkAsUseful()
         {
-            if ((CommentsByVisitors >= 20) || (CommentsByAccommodationOwners >= 10))
+            if ((CommentsByVisitors >= 20) && (CommentsByAccommodationOwners >= 10))
             {
                 Useful = true;
             }

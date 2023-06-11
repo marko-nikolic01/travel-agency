@@ -140,7 +140,8 @@ namespace TravelAgency.WPF.ViewModels
 
                 SelectedAccommodation = Accommodations[0];
 
-                NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
+                NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, Description = "" };
+                NewAccommodationRenovation.Accommodation.Id = SelectedAccommodation.Id;
             }
         }
 
@@ -184,7 +185,7 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            NewAccommodationRenovation.AccommodationId = SelectedAccommodation.Id;
+            NewAccommodationRenovation.Accommodation.Id = SelectedAccommodation.Id;
             NewAccommodationRenovation.Accommodation = SelectedAccommodation;
             NewAccommodationRenovation.DateSpan = SelectedDateSpan;
 

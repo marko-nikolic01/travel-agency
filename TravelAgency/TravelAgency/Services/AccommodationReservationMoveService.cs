@@ -97,9 +97,9 @@ namespace TravelAgency.Services
         {
             foreach (var reservation in ReservationRepository.GetAll())
             {
-                if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId)
+                if (reservation.Accommodation.Id == moveRequest.Reservation.Accommodation.Id)
                 {
-                    if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId &&
+                    if (reservation.Accommodation.Id == moveRequest.Reservation.Accommodation.Id &&
                         AreDateSpansOverlapping(moveRequest.DateSpan, reservation.DateSpan) &&
                         reservation != moveRequest.Reservation)
                     {

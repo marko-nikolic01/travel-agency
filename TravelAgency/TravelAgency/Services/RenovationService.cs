@@ -50,7 +50,7 @@ namespace TravelAgency.Services
             {
                 recommendation.RatingId = rating.Id;
                 RecommendationRepository.Save(recommendation);
-                rating.RenovationReccommendationId = recommendation.Id;
+                rating.RenovationRecommendation.Id = recommendation.Id;
                 rating.RenovationRecommendation = recommendation;
                 RatingRepository.SaveAll();
                 return true;

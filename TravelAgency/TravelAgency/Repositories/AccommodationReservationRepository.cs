@@ -33,7 +33,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (Accommodation accommodation in accommodations)
                 {
-                    if (accommodationReservation.AccommodationId == accommodation.Id)
+                    if (accommodationReservation.Accommodation.Id == accommodation.Id)
                     {
                         accommodationReservation.Accommodation = accommodation;
                         break;
@@ -48,7 +48,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (User guest in guests)
                 {
-                    if (accommodationReservation.GuestId == guest.Id)
+                    if (accommodationReservation.Guest.Id == guest.Id)
                     {
                         accommodationReservation.Guest = guest;
                         break;
@@ -116,7 +116,7 @@ namespace TravelAgency.Repositories
 
             foreach (AccommodationReservation reservation in _accommodationReservations)
             {
-                if (reservation.AccommodationId == accommodation.Id)
+                if (reservation.Accommodation.Id == accommodation.Id)
                 {
                     reservations.Add(reservation);
                 }
@@ -145,7 +145,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationReservation> GetByOwner(User owner)
         {
-            return _accommodationReservations.FindAll(ar => ar.Accommodation.OwnerId == owner.Id);
+            return _accommodationReservations.FindAll(ar => ar.Accommodation.Owner.Id == owner.Id);
         }
 
         public List<AccommodationReservation> GetActiveByOwner(User owner)

@@ -226,7 +226,7 @@ namespace TravelAgency.Services
                 var date = rating.AccommodationReservation.DateSpan.StartDate;
                 if (date.Year == year && date.Month == month)
                 {
-                    if (rating.RenovationReccommendationId != -1)
+                    if (rating.RenovationRecommendation.Id != -1)
                     {
                         count++;
                     }

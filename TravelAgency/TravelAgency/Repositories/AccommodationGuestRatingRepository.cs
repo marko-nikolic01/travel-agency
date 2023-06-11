@@ -27,7 +27,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (var accommodationReservation in reservations)
                 {
-                    if (accommodationGuestRating.AccommodationReservationId == accommodationReservation.Id)
+                    if (accommodationGuestRating.AccommodationReservation.Id == accommodationReservation.Id)
                     {
                         accommodationGuestRating.AccommodationReservation = accommodationReservation;
                     }
@@ -59,7 +59,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationGuestRating> GetByOwner(User owner)
         {
-            return accommodationGuestRatings.FindAll(agr => agr.AccommodationReservation.Accommodation.OwnerId == owner.Id);
+            return accommodationGuestRatings.FindAll(agr => agr.AccommodationReservation.Accommodation.Owner.Id == owner.Id);
         }
 
         public int GetRatingsCountByOwner(User owner)
