@@ -32,6 +32,7 @@
 
         <ListView Grid.Row="1"
                   x:Name="notificationsListView"
+                  Style="{DynamicResource ownerListView}"
                   ItemsSource="{Binding Notifications}"
                   SelectedItem="{Binding SelectedNotification}"
                   HorizontalContentAlignment="Stretch">

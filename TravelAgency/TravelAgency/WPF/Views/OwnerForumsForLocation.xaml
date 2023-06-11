@@ -34,6 +34,7 @@
         <ListView Grid.Row="1"
                   x:Name="forumsListView"
                   ItemsSource="{Binding Forums}"
+                  Style="{DynamicResource ownerListView}"
                   SelectedItem="{Binding SelectedForum}"
                   HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>

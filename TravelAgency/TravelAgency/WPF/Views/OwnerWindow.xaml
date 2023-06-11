@@ -10,9 +10,14 @@
         xmlns:customcontrols="clr-namespace:TravelAgency.WPF.Controls.CustomControls"
         mc:Ignorable="d"
         x:Name="root"
-        Title="OwnerWindow"
+        Title="Travel agency"
         Height="700" Width="1200"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource sidebarUserButton}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../../Themes/Dark.xaml"/>
+    </Window.Resources>
 
     <Window.InputBindings>
         <KeyBinding Key="D1" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="profile"/>
@@ -31,7 +36,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="LightGray" Margin="0">
+        <Grid Grid.Column="0" Background="{DynamicResource sidebarNavColor}" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -63,41 +68,47 @@
             <Separator Grid.Row="1" Margin="10 15"/>
 
             <StackPanel Grid.Row="2">
+
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="myProfileRadioButton"
                                                            Text="My Profile"
                                                            KeyboardShortcutText="Ctrl+1"
-                                                           Icon="../../Resources/Images/NavProfile.png"
-                                                           IsChecked="True"
+                                                           IconGeometry="{DynamicResource profile}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToMyProfilePageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="accommodationsRadioButton"
                                                            Text="Accommodations"
                                                            KeyboardShortcutText="Ctrl+2"
-                                                           Icon="../../Resources/Images/NavAccommodations.png"
+                                                           IconGeometry="{DynamicResource accommodations}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToAccommodationsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="reservationsRadioButton" 
                                                            Text="Reservations"
                                                            KeyboardShortcutText="Ctrl+3"
-                                                           Icon="../../Resources/Images/NavReservations.png"
+                                                           IconGeometry="{DynamicResource reservations}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToReservationsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="ratingsRadioButton"
                                                            Text="Ratings"
                                                            KeyboardShortcutText="Ctrl+4"
-                                                           Icon="../../Resources/Images/NavRatings.png"
+                                                           IconGeometry="{DynamicResource ratings}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToRatingsPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="forumRadioButton"
                                                            Text="Forum"
                                                            KeyboardShortcutText="Ctrl+5"
-                                                           Icon="../../Resources/Images/NavForum.png"
+                                                           IconGeometry="{DynamicResource forum}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToForumPageCommand}"/>
 
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="helpRadioButton"
                                                            Text="Help"
                                                            KeyboardShortcutText="Ctrl+6"
-                                                           Icon="../../Resources/Images/OwnerHelp.png"
+                                                           IconGeometry="{DynamicResource help}"
+                                                           Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToHelpPageCommand}"/>
             </StackPanel>
         </Grid>
@@ -107,6 +118,7 @@
                Source="../Views/OwnerProfileView.xaml"
                NavigationUIVisibility="Hidden"
                Padding="30"
+               Background="{DynamicResource sidebarSelectedNavColor}"
                Focusable="False"/>
     </Grid>
 </Window>

@@ -41,12 +41,14 @@
             <local:ButtonWithShortcut Grid.Column="0"
                                       Text="Previous photo"
                                       KeyboardShortcutText="Ctrl+J"
-                                      Click="PreviousPhoto"/>
+                                      Click="PreviousPhoto"
+                                      Margin="0 0 5 0"/>
 
             <local:ButtonWithShortcut Grid.Column="1"
                                       Text="Next photo"
                                       KeyboardShortcutText="Ctrl+K"
-                                      Click="NextPhoto"/>
+                                      Click="NextPhoto"
+                                      Margin="5 0 0 0"/>
         </Grid>
     </Grid>
 </UserControl>

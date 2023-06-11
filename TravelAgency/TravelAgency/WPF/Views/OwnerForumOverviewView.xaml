@@ -48,6 +48,7 @@
                       x:Name="commentsListView"
                       ItemsSource="{Binding Comments}"
                       SelectedItem="{Binding SelectedComment}"
+                      Style="{DynamicResource ownerListView}"
                       HorizontalContentAlignment="Stretch"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>

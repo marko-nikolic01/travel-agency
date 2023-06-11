@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+                    xmlns:customcontrols="clr-namespace:TravelAgency.WPF.Controls.CustomControls">
+
+    <SolidColorBrush Color="#F4EEE0" x:Key="sidebarIconColor"/>
+    <SolidColorBrush Color="#1a1a1a" x:Key="sidebarNavColor"/>
+    <SolidColorBrush Color="#1e1e1e" x:Key="sidebarUserButton"/>
+    <SolidColorBrush Color="#2d2d2d" x:Key="sidebarHoverNavColor"/>
+    <SolidColorBrush Color="#383838" x:Key="sidebarSelectedNavColor"/>
+    <SolidColorBrush Color="White" x:Key="textColor"/>
+
+</ResourceDictionary>
