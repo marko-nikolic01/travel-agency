@@ -48,9 +48,9 @@
                 <RowDefinition ></RowDefinition>
                 <RowDefinition ></RowDefinition>
                 <RowDefinition ></RowDefinition>
-                <RowDefinition Height="5"></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
                 <RowDefinition Height="290"></RowDefinition>
-                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"></ColumnDefinition>
@@ -69,9 +69,9 @@
             <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Guests number:" Margin="25 0 0 0"></Label>
             <xctk:IntegerUpDown AllowTextInput="False" Grid.Row="2" Grid.Column="3" Margin="25 10 10 10" Value="{Binding Path=NumberOfGuests, Mode=TwoWay}" Text="{Binding Path=NumberOfGuests, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}" DefaultValue="0" Minimum="0" ></xctk:IntegerUpDown>
             <Label Grid.Row="3" Content="Start date:" Grid.ColumnSpan="2"></Label>
-            <DatePicker DisplayDateEnd="{Binding EndDate}" Grid.Row="3" Grid.Column="1" Margin="5 10 -20 10" SelectedDate="{Binding StartDate}" DisplayDateStart="{Binding TodaysDate}"></DatePicker>
+        <DatePicker Name="calendar1" DisplayDateStart="{Binding TodaysDate}" DisplayDateEnd="{Binding End}" Grid.Row="3" Grid.Column="1" Margin="5 10 -20 10" SelectedDate="{Binding Start}" ></DatePicker>
             <Label Grid.Row="3" Grid.Column="2" Margin="25 0 0 0"  Content="End date:"></Label>
-        <DatePicker DisplayDateStart="{Binding StartDate}" SelectedDate="{Binding EndDate}" Grid.Row="3" Grid.Column="3" Margin="-20 10 10 10"></DatePicker>
+        <DatePicker DisplayDateStart="{Binding Start}" SelectedDate="{Binding End}" Grid.Row="3" Grid.Column="3" Margin="-20 10 10 10"></DatePicker>
             <Button Grid.RowSpan="2" Grid.Column="3" Grid.Row="4" Margin="5 25 10 25" Command="{Binding Path= FilterCommand}">
                 <Button.Content>
                     <DockPanel>
@@ -133,5 +133,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label VerticalAlignment="Top" Foreground="#0e1d32" HorizontalAlignment="Left" Content="Hint: Click on 'Book' button to book the tour" Grid.Row="9" FontWeight="ExtraLight" FontSize="16" Grid.ColumnSpan="5"></Label>
     </Grid>
 </Page>
