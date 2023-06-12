@@ -40,12 +40,24 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
-        public TourOccurrence? SelectedTourOccurrence { get; set; }
+        private TourOccurrence selectedTourOccurrence;
+
+        public TourOccurrence SelectedTourOccurrence
+        {
+            get { return selectedTourOccurrence; }
+            set 
+            {
+                selectedTourOccurrence = value;
+                OnPropertyChanged(); 
+            }
+        }
+
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public NavigationService NavService { get; set; }
         public ButtonCommandNoParameter CancelCommand { get; set; }
         public ButtonCommandNoParameter CreateCommand { get; set; }
         public ButtonCommandNoParameter UndoCancelCommand { get; set; }
+        public ButtonCommandNoParameter ShowCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public UpcommingToursVIewModel(int id, NavigationService navService)
@@ -58,6 +70,7 @@ namespace TravelAgency.WPF.ViewModels
             CancelCommand = new ButtonCommandNoParameter(CancelTour);
             CreateCommand = new ButtonCommandNoParameter(CreateNewTour);
             UndoCancelCommand = new ButtonCommandNoParameter(UndoCancelTour);
+            ShowCommand = new ButtonCommandNoParameter(Show);
             CanceledTour = -1;
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -85,7 +98,19 @@ namespace TravelAgency.WPF.ViewModels
                 MessageBox.Show("Tour has been successfuly canceled", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
+        private void Show()
+        {
+            if(SelectedTourOccurrence != null)
+            {
+                Window s = new ShowTourDets(SelectedTourOccurrence, ActiveGuide.Id);
+                s.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select a tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            
+        }
         private void CreateNewTour()
         {
             Page create = new CreateTourForm(ActiveGuide.Id, NavService);

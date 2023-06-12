@@ -29,6 +29,7 @@
     <Grid>
         <Grid>
             <Grid.Resources>
+                <conv:VisibleNotNullConverter x:Key="VisibleNotNullConverter"/>
                 <conv:NotNullTrueConverter x:Key="NotNullTrueConverter"/>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -39,13 +40,14 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height='60'></RowDefinition>
             </Grid.RowDefinitions>
             <Button FontSize="20" Grid.Row="1" Height="40" Width="40" Command="{Binding Path= CreateCommand}">
                 <Image Source="/Resources/Images/plus.png"></Image>
@@ -91,6 +93,13 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Hint: Click on 'Cancel' button to cancel the tour" Grid.Row="6" FontWeight="ExtraLight" FontSize="16" Grid.ColumnSpan="5"></Label>
+            <Button Content="Show tour details"  Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Height="40" Width="100" Command="{Binding Path= ShowCommand}" Visibility="{Binding Path=SelectedTourOccurrence , Converter={StaticResource VisibleNotNullConverter}}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Grid>
 </Page>
