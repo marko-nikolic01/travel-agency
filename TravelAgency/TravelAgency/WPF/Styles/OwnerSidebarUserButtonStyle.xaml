@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:TravelAgency.WPF.Controls">
 
     <Style TargetType="controls:OwnerSidebarUserButton">
-        <Setter Property="Background" Value="{DynamicResource sidebarHoverNavColor}"/>
+        <Setter Property="Background" Value="{DynamicResource sidebarUserButton}"/>
         <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
 
         <Style.Triggers>

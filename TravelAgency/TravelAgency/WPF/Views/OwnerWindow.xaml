@@ -80,7 +80,7 @@
                                 BorderBrush="Black"
                                 Padding="15 7"
                                 CornerRadius="20"
-                                Background="{DynamicResource sidebarHoverNavColor}">
+                                Background="{DynamicResource sidebarUserButton}">
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>

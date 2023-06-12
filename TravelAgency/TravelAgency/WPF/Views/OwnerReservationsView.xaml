@@ -13,12 +13,6 @@
       Style="{StaticResource pageStyle}">
 
     <Page.Resources>
-        <Style x:Key="h2" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-            <Setter Property="Focusable" Value="False"/>
-        </Style>
-
         <converters:BooleanToAvailability x:Key="booleanToAvailability"/>
     </Page.Resources>
 
