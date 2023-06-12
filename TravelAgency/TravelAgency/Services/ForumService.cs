@@ -316,6 +316,7 @@ namespace TravelAgency.Services
             newComment.Text = commentText;
             newComment.OwnsAccommodationOnLocation = true;
             forum.CommentsByAccommodationOwners++;
+            ForumRepository.SaveAll();
             forum.Comments.Add(newComment);
             PostCommentByOwnerToForum(newComment, forum, user);
         }
