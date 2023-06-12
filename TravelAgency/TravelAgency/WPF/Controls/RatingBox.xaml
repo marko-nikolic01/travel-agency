@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Border BorderThickness="3"
-            BorderBrush="Black"
+            BorderBrush="{Binding BorderColor,ElementName=root}"
             CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
@@ -25,7 +25,7 @@
 
             <Border Grid.Row="1"
                     BorderThickness="0 3 0 0"
-                    BorderBrush="Black">
+                    BorderBrush="{Binding BorderColor,ElementName=root}">
                 <TextBlock Text="{Binding Value,ElementName=root}"
                            FontSize="30"
                            FontWeight="Bold"

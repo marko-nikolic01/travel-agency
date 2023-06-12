@@ -15,26 +15,6 @@
       Style="{StaticResource pageStyle}">
 
     <Page.Resources>
-        <Style x:Key="formTextBlock" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 0 30 5"/>
-        </Style>
-
-        <Style TargetType="xctk:IntegerUpDown">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-        </Style>
-        
-        <Style TargetType="ComboBox">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-        </Style>
-        
-        <Style TargetType="RadioButton">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0 0 10 0"/>    
-        </Style>
 
         <converters:EnumBooleanConverter x:Key="radioButtonConverter"/>
         <converters:PhotoListToImageSourceListConverter x:Key="photosConverter"/>
@@ -51,7 +31,7 @@
     <Page.InputBindings>
         <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBack}"/>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddPhotoCommand}"/>
-        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
+        <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding RemovePhotoCommand}"/>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddAccommodationCommand}"/>
         <KeyBinding Key="J" Modifiers="Ctrl" Command="{Binding NextPhotoCommand,ElementName=root}"/>
         <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding PreviousPhotoCommand,ElementName=root}"/>
@@ -128,6 +108,7 @@
                           VirtualizingPanel.IsVirtualizing="True"
                           SelectedItem="{Binding SelectedCountry, Mode=TwoWay}"
                           ItemsSource="{Binding Countries}"
+                          Style="{DynamicResource formComboBox}"
                           IsTextSearchEnabled="True"
                           IsEditable="True">
                     <ComboBox.ItemsPanel>
@@ -143,6 +124,7 @@
                           IsEnabled="{Binding IsEnabled}"
                           SelectedItem="{Binding SelectedCity, Mode=TwoWay}"
                           ItemsSource="{Binding Cities}"
+                          Style="{DynamicResource formComboBox}"
                           IsTextSearchEnabled="True"
                           IsEditable="True">
                     <ComboBox.ItemsPanel>
@@ -158,27 +140,33 @@
 
                     <RadioButton Content="Apartment"
                                  GroupName="AccommodationType"
-                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.APARTMENT}}"/>
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.APARTMENT}}"
+                                 Style="{DynamicResource formRadioButton}"/>
                     <RadioButton Content="House"
                                  GroupName="AccommodationType"
-                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HOUSE}}"/>
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HOUSE}}"
+                                 Style="{DynamicResource formRadioButton}"/>
                     <RadioButton Content="Hut"
                                  GroupName="AccommodationType"
-                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HUT}}"/>
+                                 IsChecked="{Binding NewAccommodation.Type, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static model:AccommodationType.HUT}}"
+                                 Style="{DynamicResource formRadioButton}"/>
                 </StackPanel>
 
                 <xctk:IntegerUpDown Grid.Row="4" Grid.Column="1"
                                     Value="{Binding NewAccommodation.MaxGuests}"
+                                    Style="{DynamicResource formIntegerUpDown}"
                                     Minimum="1"
                                     Increment="1"/>
 
                 <xctk:IntegerUpDown Grid.Row="5" Grid.Column="1"
                                     Value="{Binding NewAccommodation.MinDays}"
+                                    Style="{DynamicResource formIntegerUpDown}"
                                     Minimum="1"
                                     Increment="1"/>
 
                 <xctk:IntegerUpDown Grid.Row="6" Grid.Column="1"
                                     Value="{Binding NewAccommodation.DaysToCancel}"
+                                    Style="{DynamicResource formIntegerUpDown}"
                                     Minimum="1"
                                     Increment="1"/>
 
@@ -201,7 +189,7 @@
 
                     <controls:ButtonWithShortcut Grid.Column="1"
                                                  Text="Remove photo"
-                                                 KeyboardShortcutText="Ctrl+T"
+                                                 KeyboardShortcutText="Ctrl+H"
                                                  Margin="5 0 0 0"
                                                  Click="RemovePhoto_Click"/>
                 </Grid>
@@ -209,26 +197,6 @@
             </Grid>
 
             <Grid Grid.Column="1">
-
-                <!--<controls:Tip Grid.Row="0"
-                              Header="How to navigate through input fields?"
-                              TipText="To navigate to the next input field use Tab and to navigate to the previous field use Shift+Tab."
-                              Margin="15 0 0 5"/>
-
-                <controls:Tip Grid.Row="1"
-                              Header="How to select accommodation type?"
-                              TipText="To select an accommodation type use LEFT and RIGHT arrow keys and press SPACE to select it."
-                              Margin="15 5 0 5"/>
-
-                <controls:Tip Grid.Row="2"
-                              Header="How to use numeric fields?"
-                              TipText="To increase and decrease value in numeric fields use UP and DOWN arrow keys."
-                              Margin="15 5 0 5"/>
-
-                <controls:Tip Grid.Row="3"
-                              Header="How to add and remove photos?"
-                              TipText="To add a photo, copy the link to the field and press Ctrl+A. To remove a photo navigate to the list of photos (using Tab and Shift+Tab) and with UP and DOWN arrow keys select a photo. Then press Ctrl+D."
-                              Margin="15 5 0 0"/>-->
 
                 <controls:PhotosViewer Grid.Row="1"
                                        x:Name="photoViewer"

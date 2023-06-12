@@ -56,11 +56,11 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Start date:"
-                           Style="{StaticResource formTextBlock}"/>
+                           Style="{DynamicResource formTextBlock}"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0"
                            Text="End date:"
-                           Style="{StaticResource formTextBlock}"/>
+                           Style="{DynamicResource formTextBlock}"/>
 
                 <DatePicker Grid.Row="0" Grid.Column="1"
                             SelectedDate="{Binding SelectedStartDate}"/>
@@ -68,7 +68,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="to"
                            VerticalAlignment="Center"
-                           Style="{StaticResource formTextBlock}"/>
+                           Style="{DynamicResource formTextBlock}"/>
 
                 <DatePicker Grid.Row="2" Grid.Column="1"
                             SelectedDate="{Binding SelectedEndDate}"/>

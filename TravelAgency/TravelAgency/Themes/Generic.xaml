@@ -25,6 +25,13 @@
                                    Margin="0 0 15 0"
                                    Focusable="False"/>
 
+                            <Path Grid.Column="0"
+                                  Data="{TemplateBinding IconGeometry}"
+                                  Fill="{TemplateBinding IconColor}"
+                                  VerticalAlignment="Center"
+                                  Margin="0 0 15 0"
+                                  Focusable="False"/>
+
                             <TextBlock Grid.Column="1"
                                        Text="{TemplateBinding Text}"
                                        FontSize="18"

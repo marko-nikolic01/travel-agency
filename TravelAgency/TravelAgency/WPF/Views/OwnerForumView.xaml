@@ -46,11 +46,12 @@
                        Text="Forums for my locations"
                        Style="{StaticResource h2}"/>
 
-            <ListBox Grid.Row="1"
-                     x:Name="forumLocationsListView"
-                     ItemsSource="{Binding Locations}"
-                     SelectedItem="{Binding SelectedLocation}">
-                <ListBox.ItemTemplate>
+            <ListView Grid.Row="1"
+                      x:Name="forumLocationsListView"
+                      ItemsSource="{Binding Locations}"
+                      SelectedItem="{Binding SelectedLocation}"
+                      Style="{DynamicResource ownerListView}">
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding City}" Style="{StaticResource listBoxTextBlock}"/>
@@ -58,8 +59,8 @@
                             <TextBlock Text="{Binding Country}" Style="{StaticResource listBoxTextBlock}"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
         <Grid Grid.Row="2"

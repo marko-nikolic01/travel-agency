@@ -9,29 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Cursor="Hand"
              Focusable="False">
-    
-    <UserControl.Resources>
-        <Style TargetType="{x:Type local:AccommodationsNavigationButton}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Trigger.Setters>
-                        <Setter Property="Background" Value="Black"/>
-                    </Trigger.Setters>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
 
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-    
     <Grid>
         <Button x:Name="button"
                 Command="{Binding Command, ElementName=root}"
@@ -43,6 +21,11 @@
                 Click="Button_Click"
                 Focusable="False"
                 Cursor="Hand">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Button.Template>
             <Button.Content>
                 <Border BorderThickness="2"
                         BorderBrush="Black"
@@ -69,6 +52,12 @@
                                Source="{Binding Icon, ElementName=root}"
                                Height="48" Margin="0 0 15 0"
                                HorizontalAlignment="Left"/>
+
+                        <Path Grid.Column="0"
+                              Data="{Binding IconGeometry,ElementName=root}"
+                              Fill="{Binding IconColor,ElementName=root}"
+                              Margin="0 0 15 0"
+                              HorizontalAlignment="Left"/>
 
                         <TextBlock Grid.Column="1"
                                    Text="{Binding Text, ElementName=root}"

@@ -32,6 +32,7 @@
 
         <ListView Grid.Row="1"
                   x:Name="notificationsListView"
+                  Style="{DynamicResource ownerListView}"
                   ItemsSource="{Binding Notifications}"
                   SelectedItem="{Binding SelectedNotification}"
                   HorizontalContentAlignment="Stretch">
@@ -60,7 +61,7 @@
                                          Text="Mark as read"
                                          KeyboardShortcutText="Ctrl+Enter"
                                          Margin="0 0 10 0"
-                                         Click="MarkAsReadCommand_Click"/>
+                                         Command="{Binding MarkAsRead}"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Mark all as read"

@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:TravelAgency.WPF.Controls">
+
+    <Style TargetType="controls:Tip">
+        <Setter Property="Background" Value="{DynamicResource tipColor}"/>
+        <Setter Property="BorderColor" Value="{DynamicResource textColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+    </Style>
+    
+</ResourceDictionary>

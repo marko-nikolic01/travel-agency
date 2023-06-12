@@ -57,7 +57,7 @@ namespace TravelAgency.WPF.Controls
         }
 
         // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty BackgroundProperty =
+        public new static readonly DependencyProperty BackgroundProperty =
             DependencyProperty.Register("Background", typeof(Brush), typeof(AccommodationsNavigationButton), new PropertyMetadata(Brushes.Transparent));
 
         public new Brush Foreground
@@ -67,8 +67,35 @@ namespace TravelAgency.WPF.Controls
         }
 
         // Using a DependencyProperty as the backing store for Foreground.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ForegroundProperty =
+        public new static readonly DependencyProperty ForegroundProperty =
             DependencyProperty.Register("Foreground", typeof(Brush), typeof(AccommodationsNavigationButton), new PropertyMetadata(Brushes.Black));
+
+
+        public Geometry IconGeometry
+        {
+            get { return (Geometry)GetValue(IconGeometryProperty); }
+            set { SetValue(IconGeometryProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IconGeometry.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconGeometryProperty =
+            DependencyProperty.Register("IconGeometry", typeof(Geometry), typeof(AccommodationsNavigationButton), new PropertyMetadata(null));
+
+
+
+        public Brush IconColor
+        {
+            get { return (Brush)GetValue(IconColorProperty); }
+            set { SetValue(IconColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IconColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconColorProperty =
+            DependencyProperty.Register("IconColor", typeof(Brush), typeof(AccommodationsNavigationButton), new PropertyMetadata(Brushes.Black));
+
+
+
+
 
 
 

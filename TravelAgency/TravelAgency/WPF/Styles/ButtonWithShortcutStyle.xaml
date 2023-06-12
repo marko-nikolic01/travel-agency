@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:TravelAgency.WPF.Controls">
+
+    <Style TargetType="controls:ButtonWithShortcut">
+        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+        <Setter Property="Background" Value="{DynamicResource buttonWithShortcutColor}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource buttonWithShortcutHover}"/>
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

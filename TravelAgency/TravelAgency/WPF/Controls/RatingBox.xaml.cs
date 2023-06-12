@@ -42,6 +42,19 @@ namespace TravelAgency.WPF.Controls
             DependencyProperty.Register("Value", typeof(string), typeof(RatingBox), new PropertyMetadata(string.Empty));
 
 
+        public Brush BorderColor
+        {
+            get { return (Brush)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderColorProperty =
+            DependencyProperty.Register("BorderColor", typeof(Brush), typeof(RatingBox), new PropertyMetadata(Brushes.Black));
+
+
+
+
 
         public RatingBox()
         {

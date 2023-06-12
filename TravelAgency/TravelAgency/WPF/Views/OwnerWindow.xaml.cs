@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
+using TravelAgency.Themes;
 using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.Controls.CustomControls;
 using TravelAgency.WPF.ViewModels;
@@ -27,6 +28,7 @@ namespace TravelAgency.WPF.Views
         public MyICommand<string> NavigateCommand { get; set; }
         public MyICommand NavigateToNotificationsCommand { get; set; }
         public MyICommand LogOutCommand { get; set; }
+        public MyICommand ChangeThemeCommand { get; set; }
         public OwnerMainViewModel ViewModel { get; set; }
 
         public OwnerWindow()
@@ -34,12 +36,21 @@ namespace TravelAgency.WPF.Views
             NavigateCommand = new MyICommand<string>(OnNavigateCommandExecuted);
             NavigateToNotificationsCommand = new MyICommand(Execute_NavigateToNotificationsCommand);
             LogOutCommand = new MyICommand(Execute_LogOutCommand);
+            ChangeThemeCommand = new MyICommand(Execute_ChangeThemeCommand);
             InitializeComponent();
             ViewModel = new OwnerMainViewModel(NavigationFrame.NavigationService);
             DataContext = ViewModel;
 
             NavigationCommands.BrowseBack.InputGestures.Clear();
             NavigationCommands.BrowseForward.InputGestures.Clear();
+        }
+
+        private void Execute_ChangeThemeCommand()
+        {
+            if (ThemesController.CurrentTheme == ThemesController.ThemeTypes.Light)
+                ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
+            else
+                ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
         }
 
         private void Execute_LogOutCommand()
@@ -96,6 +107,11 @@ namespace TravelAgency.WPF.Views
         private void NavigateToNotifications_Click(object sender, RoutedEventArgs e)
         {
             Execute_NavigateToNotificationsCommand();
+        }
+
+        private void themeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_ChangeThemeCommand();
         }
     }
 }

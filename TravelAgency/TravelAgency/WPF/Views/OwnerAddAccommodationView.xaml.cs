@@ -20,6 +20,7 @@ namespace TravelAgency.WPF.Pages
         {
             NextPhotoCommand = new MyICommand(Execute_NextPhotoCommand);
             PreviousPhotoCommand = new MyICommand(Execute_PreviousPhotoCommand);
+
             InitializeComponent();
             ViewModel = viewModel;
             DataContext = ViewModel;

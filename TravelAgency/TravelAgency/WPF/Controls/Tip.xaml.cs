@@ -40,6 +40,37 @@ namespace TravelAgency.WPF.Controls
         public static readonly DependencyProperty TipTextProperty =
             DependencyProperty.Register("TipText", typeof(string), typeof(Tip), new PropertyMetadata(string.Empty));
 
+        public new Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
+        public new static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(Tip), new PropertyMetadata(Brushes.LightGray));
+
+        public new Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Foreground.  This enables animation, styling, binding, etc...
+        public static new readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(Tip), new PropertyMetadata(Brushes.Black));
+
+        public Brush BorderColor
+        {
+            get { return (Brush)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderColorProperty =
+            DependencyProperty.Register("BorderColor", typeof(Brush), typeof(Tip), new PropertyMetadata(Brushes.Black));
+
+
 
         public Tip()
         {

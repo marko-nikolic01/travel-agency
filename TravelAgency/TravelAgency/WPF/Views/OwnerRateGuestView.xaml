@@ -79,7 +79,8 @@
             <controls:RatingOptions Grid.Row="5" Grid.Column="1"
                                     Value="{Binding Responsivenes, Mode=TwoWay}"/>
             <TextBox Grid.Row="6" Grid.Column="1"
-                     Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{DynamicResource formTextBox}"/>
         </Grid>
 
         <Grid Grid.Row="2"
