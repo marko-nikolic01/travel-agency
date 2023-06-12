@@ -55,6 +55,7 @@ namespace TravelAgency.WPF.ViewModels
             GuestsNotUsedVoucher = 1 - GuestsUsedVoucher;
             SeriesCollectionAges = new SeriesCollection() {
                 new ColumnSeries() {
+                    Title = "Guests",
                     Values = new ChartValues<int>() { GuestsUnder18, Guests18to50, GestsAbove50 }
                 } 
             };
