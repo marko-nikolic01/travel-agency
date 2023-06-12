@@ -16,6 +16,11 @@
 
     <UserControl.Resources>
         <converters:SuperOwnerBooleanToStringConverter x:Key="superOwnerConverter"/>
+
+        <Style x:Key="txtBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -41,7 +46,8 @@
                       BorderBrush="Black"
                       BorderThickness="2">
                 <GroupBox.Header>
-                    <Label FontSize="24" Content="Personal info"/>
+                    <Label FontSize="24" Content="Personal info"
+                           Foreground="{DynamicResource textColor}"/>
                 </GroupBox.Header>
                 <GroupBox.Content>
                     <Grid Margin="20">
@@ -57,17 +63,27 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Username:" FontSize="18"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Date of birth:" FontSize="18"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="No. accommodations:" FontSize="18"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Ratings given:" FontSize="18"/>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Superowner:" FontSize="18"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Username:"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Date of birth:"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="No. accommodations:"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Ratings given:"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Superowner:"
+                                   Style="{DynamicResource txtBlock}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LoggedInUser.Username}" FontSize="18"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggedInUser.BirthDay}" FontSize="18"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccommodationsCount}" FontSize="18"/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RatingsGiven}" FontSize="18"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding IsSuperOwner, Converter={StaticResource superOwnerConverter}}" FontSize="18"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LoggedInUser.Username}"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LoggedInUser.BirthDay}"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccommodationsCount}"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RatingsGiven}"
+                                   Style="{DynamicResource txtBlock}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding IsSuperOwner, Converter={StaticResource superOwnerConverter}}"
+                                   Style="{DynamicResource txtBlock}"/>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>
@@ -85,7 +101,9 @@
                       BorderThickness="2"
                       Margin="0 0 30 0">
                 <GroupBox.Header>
-                    <Label FontSize="24" Content="Ratings"/>
+                    <Label FontSize="24"
+                           Content="Ratings"
+                           Foreground="{DynamicResource textColor}"/>
                 </GroupBox.Header>
                 
                 <GroupBox.Content>

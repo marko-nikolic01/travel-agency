@@ -34,8 +34,10 @@
         <ListView Grid.Row="1"
                   x:Name="forumsListView"
                   ItemsSource="{Binding Forums}"
+                  Style="{DynamicResource ownerListView}"
                   SelectedItem="{Binding SelectedForum}"
-                  HorizontalContentAlignment="Stretch">
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1"
@@ -85,11 +87,17 @@
                                 </Grid>
                             </Grid>
 
-                            <Image Grid.Column="1"
+                            <!--<Image Grid.Column="1"
                                    Source="../../Resources/Images/UserfulForum.png"
                                    Visibility="{Binding IsVeryUserful, Converter={StaticResource visibilityConverter}}"
                                    Width="25"
-                                   VerticalAlignment="Top"/>
+                                   VerticalAlignment="Top"/>-->
+
+                            <Path Grid.Column="1"
+                                  Data="{DynamicResource usefulForum}"
+                                  Visibility="{Binding IsVeryUserful, Converter={StaticResource visibilityConverter}}"
+                                  VerticalAlignment="Top"
+                                  Fill="{DynamicResource textColor}"/>
                         </Grid>
                         
                     </Border>

@@ -19,6 +19,8 @@
 
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="imageConverter"/>
         <converters:AccommodationTypeToStringConverter x:Key="typeToString"/>
+        
+        <ResourceDictionary Source="../../Themes/Dark.xaml" x:Key="dark"/>
     </Page.Resources>
 
     <Page.InputBindings>
@@ -45,6 +47,7 @@
                   ScrollViewer.CanContentScroll="False"
                   HorizontalContentAlignment="Stretch"
                   Margin="0 0 0 20"
+                  Style="{DynamicResource ownerListView}"
                   SelectedIndex="0">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -9,58 +9,124 @@
              StartupUri="WPF/Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <Style TargetType="Page" x:Key="pageStyle">
-                <Setter Property="Focusable" Value="True"/>
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Light.xaml"/>
+                
+                <ResourceDictionary Source="WPF/Icons/Icons.xaml"/>
+                
+                <ResourceDictionary Source="WPF/Styles/TipStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/OwnerSidebarNavRadioButtonStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/ButtonWithShortcutStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/PageHeaderStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/AccommodationsNavigationButtonStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/OwnerSidebarUserButtonStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/RatingBoxStyle.xaml"/>
+                <ResourceDictionary Source="WPF/Styles/RatingOptionsStyle.xaml"/>
 
-            <Style TargetType="controls:ButtonWithShortcut" x:Key="backButton">
-                <Setter Property="Background" Value="#222222"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="Text" Value="Back"/>
-                <Setter Property="KeyboardShortcutText" Value="Ctrl+B"/>
-                <Setter Property="MinWidth" Value="90"/>
-            </Style>
+                <ResourceDictionary>
+                    <Style TargetType="Page" x:Key="pageStyle">
+                        <Setter Property="Focusable" Value="True"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    </Style>
 
-            <Style x:Key="h2" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="24"/>
-                <Setter Property="Margin" Value="0 0 0 5"/>
-            </Style>
+                    <Style TargetType="controls:ButtonWithShortcut" x:Key="backButton">
+                        <Setter Property="Background" Value="#111111"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Text" Value="Back"/>
+                        <Setter Property="KeyboardShortcutText" Value="Ctrl+B"/>
+                        <Setter Property="MinWidth" Value="90"/>
+                    </Style>
 
-            <Style x:Key="formTextBlock" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0 0 30 5"/>
-            </Style>
+                    <Style x:Key="h2" TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                    </Style>
 
-            <Style x:Key="formTextBox" TargetType="TextBox">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0 0 0 5"/>
-                <Setter Property="TextWrapping" Value="NoWrap"/>
-            </Style>
+                    <Style x:Key="formTextBlock" TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 0 30 5"/>
+                        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                    </Style>
 
-            <Style x:Key="formComboBox" TargetType="ComboBox">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0 0 0 5"/>
-            </Style>
+                    <Style x:Key="formTextBox" TargetType="TextBox">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource sidebarHoverNavColor}"/>
+                    </Style>
 
-            <Style x:Key="formIntegerUpDown" TargetType="xctk:IntegerUpDown">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0 0 0 5"/>
-            </Style>
+                    <Style x:Key="formComboBox" TargetType="ComboBox">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource sidebarNavColor}"/>
+                    </Style>
 
-            <Style x:Key="formDatePicker" TargetType="DatePicker">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0 0 0 5"/>
-                <Setter Property="SelectedDateFormat" Value="Short"/>
-            </Style>
+                    <Style x:Key="formIntegerUpDown" TargetType="xctk:IntegerUpDown">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                    </Style>
 
-            <Style x:Key="ownerDataGrid" TargetType="DataGrid">
-                <Setter Property="IsReadOnly" Value="True"/>
-                <Setter Property="AutoGenerateColumns" Value="False"/>
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="CanUserAddRows" Value="False"/>
-                <Setter Property="CanUserDeleteRows" Value="False"/>
-            </Style>
+                    <Style x:Key="formDatePicker" TargetType="DatePicker">
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0 0 0 5"/>
+                        <Setter Property="SelectedDateFormat" Value="Short"/>
+                    </Style>
+
+                    <Style x:Key="ownerDataGrid" TargetType="DataGrid">
+                        <Style.Resources>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="BorderBrush" Value="{DynamicResource sidebarHoverNavColor}"/>
+                            </Style>
+
+                            <Style TargetType="DataGridRowHeader">
+                                <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                            </Style>
+
+                            <Style TargetType="DataGridColumnHeadersPresenter">
+                                <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                            </Style>
+
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="{DynamicResource sidebarHoverNavColor}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                            </Style>
+
+                            <Style TargetType="DataGridCellsPanel">
+                                <Setter Property="Background" Value="Black"/>
+                            </Style>
+                        </Style.Resources>
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="AutoGenerateColumns" Value="False"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="CanUserAddRows" Value="False"/>
+                        <Setter Property="CanUserDeleteRows" Value="False"/>
+                        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+                    </Style>
+
+                    <Style x:Key="ownerListView" TargetType="ListView">
+                        <Style.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Background" Value="{DynamicResource buttonWithShortcutColor}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                            </Style>
+                        </Style.Resources>
+                        <Setter Property="Background" Value="{DynamicResource sidebarSelectedNavColor}"/>
+                    </Style>
+
+                    <Style x:Key="formRadioButton" TargetType="RadioButton">
+                        <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0 0 10 0"/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
