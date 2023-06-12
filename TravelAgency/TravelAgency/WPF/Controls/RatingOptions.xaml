@@ -22,14 +22,19 @@
     
     <StackPanel Orientation="Horizontal">
         <RadioButton Content="1"
-                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=1}"/>
+                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=1}"
+                     Foreground="{Binding Foreground, ElementName=root}"/>
         <RadioButton Content="2"
-                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=2}"/>
+                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=2}"
+                     Foreground="{Binding Foreground, ElementName=root}"/>
         <RadioButton Content="3"
-                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=3}"/>
+                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=3}"
+                     Foreground="{Binding Foreground, ElementName=root}"/>
         <RadioButton Content="4"
-                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=4}"/>
+                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=4}"
+                     Foreground="{Binding Foreground, ElementName=root}"/>
         <RadioButton Content="5"
-                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=5}"/>
+                     IsChecked="{Binding Value, ElementName=root, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource radioButtonConverter}, ConverterParameter=5}"
+                     Foreground="{Binding Foreground, ElementName=root}"/>
     </StackPanel>
 </UserControl>

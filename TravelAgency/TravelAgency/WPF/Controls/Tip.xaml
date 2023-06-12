@@ -9,8 +9,8 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Focusable="False">
     <Grid>
-        <Rectangle Fill="LightGray"
-                   Stroke="Black"
+        <Rectangle Fill="{Binding Background,ElementName=root}"
+                   Stroke="{Binding BorderColor, ElementName=root}"
                    StrokeThickness="2"
                    StrokeDashArray="5 5"
                    SnapsToDevicePixels="True"
@@ -24,12 +24,15 @@
 
             <TextBlock Grid.Row="0"
                        Text="{Binding Header, ElementName=root}"
+                       Foreground="{Binding Foreground, ElementName=root}"
                        TextWrapping="Wrap"
                        Margin="0 0 0 10"
                        FontSize="14"
                        FontWeight="Bold"/>
+            
             <TextBlock Grid.Row="1"
                        Text="{Binding TipText, ElementName=root}"
+                       Foreground="{Binding Foreground, ElementName=root}"
                        TextWrapping="Wrap"
                        FontSize="14"/>
         </Grid>

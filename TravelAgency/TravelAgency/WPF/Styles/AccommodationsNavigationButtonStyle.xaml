@@ -5,13 +5,13 @@
     
     <Style TargetType="controls:AccommodationsNavigationButton">
         <Setter Property="IconColor" Value="{DynamicResource textColor}"/>
-        <Setter Property="Background" Value="{DynamicResource sidebarUserButton}"/>
+        <Setter Property="Background" Value="{DynamicResource buttonWithShortcutColor}"/>
         <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Trigger.Setters>
-                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Background" Value="{DynamicResource buttonWithShortcutHover}"/>
                 </Trigger.Setters>
             </Trigger>
         </Style.Triggers>

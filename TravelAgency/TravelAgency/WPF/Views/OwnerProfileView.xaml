@@ -18,7 +18,7 @@
         <converters:SuperOwnerBooleanToStringConverter x:Key="superOwnerConverter"/>
 
         <Style x:Key="txtBlock" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
             <Setter Property="FontSize" Value="18"/>
         </Style>
     </UserControl.Resources>

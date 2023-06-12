@@ -78,20 +78,34 @@
                                                FontWeight="Bold"
                                                Margin="0 0 10 0"/>
 
-                                    <Image Grid.Column="1"
+                                    <!--<Image Grid.Column="1"
                                            Source="../../Resources/Images/commentOwner.png"
                                            Visibility="{Binding IsOwner, Converter={StaticResource booleanToVisibility}}"
                                            Height="22"
-                                           HorizontalAlignment="Left"/>
+                                           HorizontalAlignment="Left"/>-->
+
+                                    <Path Grid.Column="1"
+                                          Data="{DynamicResource owner}"
+                                          Visibility="{Binding IsOwner, Converter={StaticResource booleanToVisibility}}"
+                                          HorizontalAlignment="Left"
+                                          Fill="{DynamicResource textColor}"/>
 
 
-                                    <Image Grid.Column="2"
+                                    <Path Grid.Column="1"
+                                          Data="{DynamicResource userVisitedLocation}"
+                                          Visibility="{Binding GuestVisited, Converter={StaticResource invertedBooleanToVisibility}}"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"
+                                          Fill="{DynamicResource textColor}"
+                                          Margin="0 0 10 0"/>
+
+                                    <!--<Image Grid.Column="2"
                                            Source="../../Resources/Images/GuestDidntVisit.png"
                                            Visibility="{Binding GuestVisited, Converter={StaticResource invertedBooleanToVisibility}}"
                                            Height="22"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
-                                           Margin="0 0 10 0"/>
+                                           Margin="0 0 10 0"/>-->
 
                                     <Grid Grid.Column="3"
                                           Visibility="{Binding IsOwner, Converter={StaticResource invertedBooleanToVisibility}}">
@@ -100,20 +114,38 @@
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         
-                                        <Image Grid.Column="0"
+                                        <!--<Image Grid.Column="0"
                                            Source="../../Resources/Images/NotDisliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
                                            Height="22"
                                            HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center"/>-->
 
 
-                                        <Image Grid.Column="0"
+                                        <Path Grid.Column="0"
+                                              Data="{DynamicResource notDisliked}"
+                                              Visibility="{Binding Disliked, Converter={StaticResource invertedBooleanToVisibility}}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Fill="{DynamicResource textColor}"
+                                              Margin="0 0 10 0"/>
+
+
+                                        <!--<Image Grid.Column="0"
                                            Source="../../Resources/Images/Disliked.png"
                                            Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
                                            Height="23"
                                            HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center"/>-->
+
+
+                                        <Path Grid.Column="0"
+                                              Data="{DynamicResource disliked}"
+                                              Visibility="{Binding Disliked, Converter={StaticResource booleanToVisibility}}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Fill="{DynamicResource textColor}"
+                                              Margin="0 0 10 0"/>
 
                                         <TextBlock Grid.Column="4"
                                                Text="{Binding DislikesCount}"

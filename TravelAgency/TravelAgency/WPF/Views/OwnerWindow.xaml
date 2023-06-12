@@ -15,10 +15,6 @@
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource sidebarUserButton}">
 
-    <Window.Resources>
-        <ResourceDictionary Source="../../Themes/Dark.xaml"/>
-    </Window.Resources>
-
     <Window.InputBindings>
         <KeyBinding Key="D1" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="profile"/>
         <KeyBinding Key="D2" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="accommodations"/>
@@ -28,6 +24,7 @@
         <KeyBinding Key="D6" Modifiers="Ctrl" Command="{Binding NavigateCommand,ElementName=root}" CommandParameter="help"/>
         <KeyBinding Key="L" Modifiers="Ctrl+Alt" Command="{Binding LogOutCommand,ElementName=root}"/>
         <KeyBinding Key="N" Modifiers="Ctrl+Alt" Command="{Binding NavigateToNotificationsCommand,ElementName=root}"/>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding ChangeThemeCommand,ElementName=root}"/>
     </Window.InputBindings>
 
     <Grid>
@@ -48,6 +45,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <controls:OwnerSidebarUserButton Grid.Row="0"
@@ -63,6 +61,59 @@
                                                  Width="200"
                                                  Margin="0 3"
                                                  Click="LogOutButton_Click"/>
+
+                <Button Grid.Row="2"
+                        x:Name="themeButton"
+                        HorizontalAlignment="Center"
+                        BorderThickness="0"
+                        Margin="0 5 0 0"
+                        Cursor="Hand"
+                        Click="themeButton_Click"
+                        Focusable="False">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Content>
+                        <Border BorderThickness="1"
+                                BorderBrush="Black"
+                                Padding="15 7"
+                                CornerRadius="20"
+                                Background="{DynamicResource sidebarHoverNavColor}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource textColor}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Path Grid.Column="0"
+                                      Data="{DynamicResource themeIcon}"
+                                      Fill="White"
+                                      HorizontalAlignment="Left">
+                                </Path>
+
+                                <TextBlock Grid.Column="1"
+                                           Text="Ctrl+T"
+                                           Foreground="LightGray"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           FontSize="14"
+                                           Margin="50 0 0 0"/>
+                            </Grid>
+                        </Border>
+                        
+                    </Button.Content>
+                </Button>
             </Grid>
 
             <Separator Grid.Row="1" Margin="10 15"/>
@@ -72,6 +123,7 @@
                 <customcontrols:OwnerSidebarNavRadioButton x:Name="myProfileRadioButton"
                                                            Text="My Profile"
                                                            KeyboardShortcutText="Ctrl+1"
+                                                           IsChecked="True"
                                                            IconGeometry="{DynamicResource profile}"
                                                            Style="{DynamicResource OwnerSidebarNavRadioButtonStyle}"
                                                            Command="{Binding NavigateToMyProfilePageCommand}"/>
