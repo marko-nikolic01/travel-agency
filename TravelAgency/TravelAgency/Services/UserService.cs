@@ -44,7 +44,7 @@ namespace TravelAgency.Services
                         }
                         else
                         {
-                            if (!((GetFinishedToursByLanguageForGuide(user.Id, user.Language) >= 20) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, user.Language) > 4)))
+                            if (!((GetFinishedToursByLanguageForGuide(user.Id, user.Language) >= 10) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, user.Language) > 4)))
                             {
                                 InvalidateSuperGuideStatus(user);
                             }
@@ -57,7 +57,7 @@ namespace TravelAgency.Services
                     }
                     foreach(var language in GetUniqueLanguagesForGuide(user.Id))
                     {
-                        if((GetFinishedToursByLanguageForGuide(user.Id, language) >= 20) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, language) > 4))
+                        if((GetFinishedToursByLanguageForGuide(user.Id, language) >= 10) && (GetGuidesAverageGradeByLanguageForLastYear(user.Id, language) > 4))
                         {
                             SetSuperGuideStatus(user, language);
                             SuperGuide superGuide = new SuperGuide();
