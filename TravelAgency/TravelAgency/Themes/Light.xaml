@@ -14,6 +14,7 @@
     <SolidColorBrush Color="#cbe8f6" x:Key="dataGridSelection"/>
     <SolidColorBrush Color="Black" x:Key="dataGridTextSelection"/>
     <SolidColorBrush Color="#bbbbbb" x:Key="tipColor"/>
+    <SolidColorBrush Color="#efefef" x:Key="textboxColor"/>
     <PathGeometry x:Key="themeIcon" Figures="M 13.598897,26.455648 H 13.466353 A 13.665253,13.665253 0 0 1 3.7376482,22.280521 13.864069,13.864069 0 0 1 3.3930346,3.7244066 13.426673,13.426673 0 0 1 8.6947823,0.09270991 a 1.3254368,1.3254368 0 0 1 1.4049627,0.29159615 1.3254368,1.3254368 0 0 1 0.318104,1.32543674 11.133669,11.133669 0 0 0 2.571348,11.6770982 11.226449,11.226449 0 0 0 11.703607,2.571347 1.3254368,1.3254368 0 0 1 1.683304,1.709814 13.466437,13.466437 0 0 1 -3.101523,4.811334 13.625489,13.625489 0 0 1 -9.675688,3.976312 z"/>
 
 </ResourceDictionary>

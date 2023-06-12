@@ -32,7 +32,7 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Margin" Value="0 0 0 5"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
-        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+        <Setter Property="Background" Value="{DynamicResource textboxColor}"/>
         <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource sidebarHoverNavColor}"/>
     </Style>
@@ -40,14 +40,12 @@
     <Style x:Key="formComboBox" TargetType="ComboBox">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Margin" Value="0 0 0 5"/>
-        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
-        <Setter Property="Foreground" Value="{DynamicResource sidebarNavColor}"/>
     </Style>
 
     <Style x:Key="formIntegerUpDown" TargetType="xctk:IntegerUpDown">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Margin" Value="0 0 0 5"/>
-        <Setter Property="Background" Value="{DynamicResource sidebarNavColor}"/>
+        <Setter Property="Background" Value="{DynamicResource textboxColor}"/>
         <Setter Property="Foreground" Value="{DynamicResource textColor}"/>
     </Style>
 
