@@ -61,7 +61,7 @@
                                          Text="Mark as read"
                                          KeyboardShortcutText="Ctrl+Enter"
                                          Margin="0 0 10 0"
-                                         Command="{Binding MarkAsRead}"/>
+                                         Command="{Binding MarkAsReadCommand}"/>
 
             <controls:ButtonWithShortcut Grid.Column="1"
                                          Text="Mark all as read"

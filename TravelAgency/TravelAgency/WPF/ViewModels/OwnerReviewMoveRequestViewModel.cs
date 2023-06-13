@@ -47,7 +47,7 @@ namespace TravelAgency.WPF.ViewModels
 
             SelectedMoveRequest = selectedMoveRequest;
 
-            NavigateBackCommand = new MyICommand(Execute_RejectRequestCommand);
+            NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
             RejectRequestCommand = new MyICommand(Execute_RejectRequestCommand);
 
             ExplanationText = string.Empty;

@@ -95,7 +95,9 @@
                                          Click="GenerateReport_Click"
                                          Margin="0 0 10 0"/>
 
-            <controls:Tip Grid.Column="2"/>
+            <controls:Tip Grid.Column="2"
+                          Header="What informations does this report give me?"
+                          TipText="This report gives you information about number of renovations and days that your accommodations have been renovated."/>
         </Grid>
     </Grid>
 </Page>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelAgency.WPF.Commands;
 
 namespace TravelAgency.WPF.Controls
 {
@@ -42,15 +43,15 @@ namespace TravelAgency.WPF.Controls
             DependencyProperty.Register("KeyboardShortcutText", typeof(string), typeof(ButtonWithShortcut), new PropertyMetadata(string.Empty));
 
 
-        public RoutedUICommand Command
+        public ICommand Command
         {
-            get { return (RoutedUICommand)GetValue(CommandProperty); }
+            get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ButtonCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(RoutedUICommand), typeof(ButtonWithShortcut), new PropertyMetadata(null));
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(ButtonWithShortcut), new PropertyMetadata(null));
 
 
         public new Brush Background
