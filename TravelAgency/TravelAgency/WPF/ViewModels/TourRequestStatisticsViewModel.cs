@@ -202,7 +202,7 @@ namespace TravelAgency.WPF.ViewModels
             LocationService = new LocationService();
             TourRequestService = new TourRequestService();
             Countries.AddRange(TourRequestService.GetUniqueCountries());
-            Years = new List<string>() { "YEARS", "2023", "2022", "2021", "2020", "2019" };
+            Years = new List<string>() { "YEARS", "2024", "2023", "2022", "2021", "2020", "2019" };
             SelectedYear = Years[0];
             Languages = new List<string>(TourRequestService.GetUniqueLanguages());
             if (Languages.Count > 0)
