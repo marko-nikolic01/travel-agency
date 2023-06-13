@@ -1,10 +1,13 @@
-# SIMS-2022-23-Group5-TeamA
+# Travel Agency 23
 ---
-Team members:
-* Veljko Nikolic RA121-2020
-* Bosko Kulusic RA122-2020
-* Ivan Partalo RA126-2020
-* Marko Nikolic RA69-2020
+Travel agency application for booking accommodations and tours written in C# using WPF.
 
-Teaching assistant:
-* Bojana Ivanovic
+Team members:
+* Veljko Nikolić RA121-2020
+* Boško Kulušić RA122-2020
+* Ivan Partalo RA126-2020
+* Marko Nikolić RA69-2020
+
+Teaching assistants:
+* Bojana Ivanović
+* Vasilije Bursać
