@@ -60,6 +60,8 @@ namespace TravelAgency
             DataContext = this;
             _repository = Injector.Injector.CreateInstance<IUserRepository>();
             _userService = new UserService();
+
+            usernameTextBox.Focus();
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -79,7 +81,7 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Owner)
                     {
-                        OwnerMain ownerMain = new OwnerMain(user);
+                        OwnerWindow ownerMain = new OwnerWindow();
                         ownerMain.Show();
                     }
                     else if (user.Role == Roles.Guest1)
@@ -89,17 +91,8 @@ namespace TravelAgency
                     }
                     else if (user.Role == Roles.Guest2)
                     {
-                        ProgramStatusRepository repository = new ProgramStatusRepository();
-                        if (repository.GetProgramStatus().IsFirstTimeOpening)
-                        {
-                            IntroductionWizardWindow introduction = new IntroductionWizardWindow(user.Id);
-                            introduction.Show();
-                        }
-                        else
-                        {
-                            Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
-                            guest2Main.Show();
-                        }
+                        Guest2MainWindow guest2Main = new Guest2MainWindow(user.Id);
+                        guest2Main.Show();
                     }
                     _userService.LogInUser(user);
                     Close();

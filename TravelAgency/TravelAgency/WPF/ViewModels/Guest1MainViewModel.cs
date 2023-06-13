@@ -1,25 +1,36 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using TravelAgency.Domain.Models;
 using TravelAgency.Services;
 using TravelAgency.WPF.Commands;
+using TravelAgency.WPF.ViewModels.Guest1Demo;
+using TravelAgency.WPF.Views;
 
 namespace TravelAgency.WPF.ViewModels
 {
     public class Guest1MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private SuperGuestService _superGuestService;
+        private NotificationService _notificationService;
+        private DemoController _demoController;
 
         public User Guest { get; set; }
         public MyICommand<string> NavigationCommand { get; private set; }
+        public MyICommand StartDemoCommand { get; private set; }
+        private bool _isDemoExecuting;
+
         private Guest1HomeMenuViewModel _guest1HomeMenuViewModel;
         private Guest1AccommodationsReservationsMenuViewModel _guest1AccommodationsReservationsMenuViewModel;
         private Guest1ReviewsMenuViewModel _guest1ReviewsMenuViewModel;
@@ -28,11 +39,31 @@ namespace TravelAgency.WPF.ViewModels
         private Guest1AccommodationReservationsViewModel _guest1AccommodationReservationsViewModel;
         private Guest1AccommodationReservationMoveRequestsViewModel _guest1AccommodationReservationMoveRequestsViewModel;
         private Guest1RateableStaysViewModel _guest1RateableStaysViewModel;
+        private Guest1WhereverWheneverSearchViewModel _guest1WhereverWheneverSearchViewModel;
+        private Guest1ForumLocationSearchViewModel _guest1ForumLocationSearchViewModel;
+        private Guest1MyForumsViewModel _guest1MyForumsViewModel;
+        private Guest1ForumSearchViewModel _guest1ForumSearchViewModel;
+
         private ViewModelBase _currentViewModel;
         private ViewModelBase _previousViewModel;
         private string _selectedTab;
+        private string _returnSelectedTab;
         private string _currentDateTime;
         private DateTime _date;
+        private bool _hasNotifications;
+
+        public bool IsDemoExecuting
+        {
+            get => _isDemoExecuting;
+            set
+            {
+                if (value != _isDemoExecuting)
+                {
+                    _isDemoExecuting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ViewModelBase CurrentViewModel
         {
@@ -46,6 +77,8 @@ namespace TravelAgency.WPF.ViewModels
                 }
             }
         }
+
+
 
         public ViewModelBase PreviousViewModel
         {
@@ -67,7 +100,25 @@ namespace TravelAgency.WPF.ViewModels
             {
                 if (value != _selectedTab)
                 {
+                    if (_selectedTab == "Notifications")
+                    {
+                        HasNotifications = false;
+                        _notificationService.MarkAllAsSeen(_notificationService.GetNotificationsByUser(Guest));
+                    }
                     _selectedTab = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ReturnSelectedTab
+        {
+            get => _returnSelectedTab;
+            set
+            {
+                if (value != _returnSelectedTab)
+                {
+                    _returnSelectedTab = value;
                     OnPropertyChanged();
                 }
             }
@@ -86,15 +137,41 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
 
+
+
+        public bool HasNotifications
+        {
+            get => _hasNotifications;
+            set
+            {
+                if (value != _hasNotifications)
+                {
+                    _hasNotifications = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Guest1MainViewModel(User guest)
         {
             _superGuestService = new SuperGuestService();
+            _notificationService = new NotificationService();
+            _demoController = new DemoController(this);
+            IsDemoExecuting = false;
 
             Guest = guest;
             _superGuestService.CheckSuperGuest(Guest);
+            foreach (Notification notification in _notificationService.GetNotificationsByUser(Guest))
+            {
+                if (!notification.Seen) 
+                {
+                    HasNotifications = true;
+                }
+            }
 
             NavigationCommand = new MyICommand<string>(OnNavigation);
-            _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand);
+            StartDemoCommand = new MyICommand(OnStartDemo);
+            _guest1HomeMenuViewModel = new Guest1HomeMenuViewModel(NavigationCommand, StartDemoCommand);
             _guest1AccommodationsReservationsMenuViewModel = new Guest1AccommodationsReservationsMenuViewModel(NavigationCommand);
             _guest1ReviewsMenuViewModel = new Guest1ReviewsMenuViewModel(NavigationCommand);
             _guest1ForumsMenuViewModel = new Guest1ForumsMenuViewModel(NavigationCommand);
@@ -104,8 +181,19 @@ namespace TravelAgency.WPF.ViewModels
             StartTimer();
         }
 
+        private async void OnStartDemo()
+        {
+            if (!IsDemoExecuting)
+            {
+                IsDemoExecuting = true;
+                ReturnSelectedTab = SelectedTab;
+                _demoController.ExecuteDemo(CurrentViewModel);
+            }
+        }
+
         public void OnNavigation(string destination)
         {
+            if (IsDemoExecuting) return;
             switch (destination)
             {
                 case "guest1HomeMenuViewModel":
@@ -123,6 +211,14 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1ForumsMenuViewModel":
                     CurrentViewModel = _guest1ForumsMenuViewModel;
                     SelectedTab = "Forums";
+                    break;
+                case "guest1NotificationsViewModel":
+                    CurrentViewModel = new Guest1NotificationsViewModel(NavigationCommand, Guest);
+                    SelectedTab = "Notifications";
+                    break;
+                case "guest1UserProfileViewModel":
+                    CurrentViewModel = new Guest1UserProfileViewModel(NavigationCommand, Guest);
+                    SelectedTab = "UserProfile";
                     break;
                 case "guest1AccommodationSearchViewModel":
                     _guest1AccommodationSearchViewModel = new Guest1AccommodationSearchViewModel(NavigationCommand);
@@ -154,6 +250,49 @@ namespace TravelAgency.WPF.ViewModels
                 case "guest1ReviewsViewModel":
                     CurrentViewModel = new Guest1ReviewsViewModel(NavigationCommand, Guest);
                     break;
+                case "guest1WhereverWheneverSearchViewModel":
+                    _guest1WhereverWheneverSearchViewModel = new Guest1WhereverWheneverSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1WhereverWheneverSearchViewModel;
+                    break;
+                case "guest1WhereverWheneverReservationViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1WhereverWheneverReservationViewModel(NavigationCommand, Guest, _guest1WhereverWheneverSearchViewModel.SelectedAccommodation, _guest1WhereverWheneverSearchViewModel.LastUsedSearchFilter);
+                    break;
+                case "guest1ForumLocationSearchViewModel":
+                    _guest1ForumLocationSearchViewModel = new Guest1ForumLocationSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1ForumLocationSearchViewModel;
+                    break;
+                case "guest1OpenForumViewModel":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1OpenForumViewModel(NavigationCommand, Guest, _guest1ForumLocationSearchViewModel.SelectedLocation);
+                    break;
+                case "guest1MyForumsViewModel":
+                    _guest1MyForumsViewModel = new Guest1MyForumsViewModel(NavigationCommand, Guest);
+                    CurrentViewModel = _guest1MyForumsViewModel;
+                    break;
+                case "guest1ForumSearchViewModel":
+                    _guest1ForumSearchViewModel = new Guest1ForumSearchViewModel(NavigationCommand);
+                    CurrentViewModel = _guest1ForumSearchViewModel;
+                    break;
+                case "guest1ReadForumViewModel1":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadForumViewModel1(NavigationCommand, _guest1ForumSearchViewModel.SelectedForum);
+                    break;
+                case "guest1ReadForumViewModel2":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadForumViewModel2(NavigationCommand, _guest1MyForumsViewModel.SelectedForum);
+                    break;
+                case "guest1ReadWriteForumViewModel1":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadWriteForumViewModel1(NavigationCommand, Guest, _guest1ForumSearchViewModel.SelectedForum);
+                    break;
+                case "guest1ReadWriteForumViewModel2":
+                    PreviousViewModel = CurrentViewModel;
+                    CurrentViewModel = new Guest1ReadWriteForumViewModel2(NavigationCommand, Guest, _guest1MyForumsViewModel.SelectedForum);
+                    break;
+                case "guest1ReportViewModel":
+                    CurrentViewModel = new Guest1ReportViewModel(NavigationCommand, Guest);
+                    break;
                 case "previousViewModel":
                     CurrentViewModel = PreviousViewModel;
                     break;
@@ -162,7 +301,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private void StartTimer()
         {
-            Timer timer = new Timer();
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += LoadCurrentDateTime;
             timer.Start();

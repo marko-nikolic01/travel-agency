@@ -15,7 +15,7 @@ namespace TravelAgency.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string selectedTab = (string)value;
-            if (selectedTab == "Home")
+            if (selectedTab == "Home" || selectedTab == "HomeDemo")
             {
                 return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
             }
@@ -33,7 +33,7 @@ namespace TravelAgency.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string selectedTab = (string)value;
-            if (selectedTab == "AccommodationsReservations")
+            if (selectedTab == "AccommodationsReservations" || selectedTab == "AccommodationsReservationsDemo")
             {
                 return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
             }
@@ -51,7 +51,7 @@ namespace TravelAgency.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string selectedTab = (string)value;
-            if (selectedTab == "Reviews")
+            if (selectedTab == "Reviews" || selectedTab == "ReviewsDemo")
             {
                 return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
             }
@@ -69,7 +69,43 @@ namespace TravelAgency.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string selectedTab = (string)value;
-            if (selectedTab == "Forums")
+            if (selectedTab == "Forums" || selectedTab == "ForumsDemo")
+            {
+                return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
+            }
+            return (SolidColorBrush)new BrushConverter().ConvertFrom("#cccccc");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SelectedTabToSolidColorBrushConverter5 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string selectedTab = (string)value;
+            if (selectedTab == "Notifications" || selectedTab == "NotificationsDemo")
+            {
+                return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
+            }
+            return (SolidColorBrush)new BrushConverter().ConvertFrom("#cccccc");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SelectedTabToSolidColorBrushConverter6 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string selectedTab = (string)value;
+            if (selectedTab == "UserProfile" || selectedTab == "UserProfileDemo")
             {
                 return (SolidColorBrush)new BrushConverter().ConvertFrom("#999999");
             }

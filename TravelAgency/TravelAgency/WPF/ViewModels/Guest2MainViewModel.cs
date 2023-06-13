@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using System.Windows.Navigation;
 using TravelAgency.Commands;
 using TravelAgency.Domain.Models;
 using TravelAgency.Observer;
+using TravelAgency.Repositories;
 using TravelAgency.Services;
 using TravelAgency.WPF.Views;
 
@@ -15,8 +17,21 @@ namespace TravelAgency.WPF.ViewModels
     public class Guest2MainViewModel: IObserver, INotifyPropertyChanged
     {
         private string imageSource;
+        private static string menuVisible;
         private static string helpText;
         private bool comboBoxOpen;
+        public static string MenuVisible
+        {
+            get => menuVisible;
+            set
+            {
+                if (menuVisible == value)
+                    return;
+
+                menuVisible = value;
+                StaticPropertyChanged?.Invoke(null, MenuPropertyEventArgs);
+            }
+        }
         public bool ComboBoxOpen
         {
             get => comboBoxOpen;
@@ -41,6 +56,7 @@ namespace TravelAgency.WPF.ViewModels
             }
         }
         private static readonly PropertyChangedEventArgs HelpTextPropertyEventArgs = new PropertyChangedEventArgs(nameof(HelpText));
+        private static readonly PropertyChangedEventArgs MenuPropertyEventArgs = new PropertyChangedEventArgs(nameof(MenuVisible));
         public static event PropertyChangedEventHandler StaticPropertyChanged;
 
         public NavigationService NavService { get; set; }
@@ -59,6 +75,7 @@ namespace TravelAgency.WPF.ViewModels
         }
         public Guest2MainViewModel(NavigationService navService, int guestId)
         {
+            MenuVisible = "Visible";
             currentGuestId = guestId;
             voucherService = new VoucherService();
             // ili samo za jednog umesto za sve
@@ -72,13 +89,13 @@ namespace TravelAgency.WPF.ViewModels
             NavigateToProfileCommand = new RelayCommand(Execute_NavigateToProfileCommand, CanExecute_NavigateCommand);
             NavigateToNotificationsCommand = new RelayCommand(Execute_NavigateToNotificationsCommand, CanExecute_NavigateCommand);
             NavigateToSpecialRequestsCommand = new RelayCommand(Execute_NavigateToSpecialRequestsCommand, CanExecute_NavigateCommand);
+            UpdateHelpText("ProfileHelp");
             Update();
         }
-
         private void Execute_NavigateToSpecialRequestsCommand(object obj)
         {
             ComboBoxOpen = false;
-            Page specialRequests = new SpecialTourRequestsView(currentGuestId);
+            Page specialRequests = new SpecialTourRequestsView(currentGuestId, NavService);
             NavService.Navigate(specialRequests);
             UpdateHelpText("SpecialRequestsHelp");
         }
@@ -97,14 +114,14 @@ namespace TravelAgency.WPF.ViewModels
         private void Execute_NavigateToRequestsCommand(object obj)
         {
             ComboBoxOpen = false;
-            Page requests = new TourRequestView(currentGuestId);
+            Page requests = new TourRequestView(currentGuestId, NavService);
             NavService.Navigate(requests);
             UpdateHelpText("RequestsHelp");
         }
         private void Execute_NavigateToProfileCommand(object obj)
         {
             ComboBoxOpen = false;
-            Page requests = new Guest2ProfileView(currentGuestId);
+            Page requests = new Guest2ProfileView(currentGuestId, NavService);
             NavService.Navigate(requests);
             UpdateHelpText("ProfileHelp");
         }

@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush Color="#F4EEE0" x:Key="sidebarIconColor"/>
+    <SolidColorBrush Color="#404258" x:Key="sidebarNavColor"/>
+    <SolidColorBrush Color="#474E68" x:Key="sidebarHoverNavColor"/>
+    <SolidColorBrush Color="#50577A" x:Key="sidebarSelectedNavColor"/>
+    <SolidColorBrush Color="#6B728E" x:Key="color4"/>
+    <SolidColorBrush Color="White" x:Key="textColor"/>
+    
+</ResourceDictionary>

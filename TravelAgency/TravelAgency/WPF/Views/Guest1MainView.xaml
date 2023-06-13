@@ -5,13 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:TravelAgency.WPF.Views"
         xmlns:viewModels="clr-namespace:TravelAgency.WPF.ViewModels"
+        xmlns:demo="clr-namespace:TravelAgency.WPF.ViewModels.Guest1Demo"
         xmlns:converters="clr-namespace:TravelAgency.Converters"
         mc:Ignorable="d"
         Title="Turisticka agencija" Height="600" Width="1200"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-        Icon="../../Resources/Images/International-Travel_43678.ico">
+        Icon="../../Resources/Images/International-Travel_43678.ico"
+        x:Name="root">
     <Window.Resources>
         <Style TargetType="Button" x:Key="RoundButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonSmall">
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -22,8 +38,21 @@
         <converters:SelectedTabToSolidColorBrushConverter2 x:Key="SelectedTabToSolidColorBrushConverter2"/>
         <converters:SelectedTabToSolidColorBrushConverter3 x:Key="SelectedTabToSolidColorBrushConverter3"/>
         <converters:SelectedTabToSolidColorBrushConverter4 x:Key="SelectedTabToSolidColorBrushConverter4"/>
+        <converters:SelectedTabToSolidColorBrushConverter5 x:Key="SelectedTabToSolidColorBrushConverter5"/>
+        <converters:SelectedTabToSolidColorBrushConverter6 x:Key="SelectedTabToSolidColorBrushConverter6"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel"/>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1ReviewsMenuViewModel"/>
+        <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1NotificationsViewModel"/>
+        <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StartDemoCommand}"/>
+        <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding LogOutCommand, ElementName=root}"/>
+    </Window.InputBindings>
     <Border BorderThickness="0, 1, 0, 0" BorderBrush="Black">
         <DockPanel>
             <StatusBar Height="20" VerticalAlignment="Bottom" x:Name="statusBar" DockPanel.Dock="Bottom" Background="White" BorderBrush="Black" BorderThickness="0 1 0 0">
@@ -53,14 +82,39 @@
                     <RowDefinition Height="10"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border VerticalAlignment="Top" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
-                    <Image Stretch="Fill" Source="../../Resources/Images/ProfilePicture.jpg"></Image>
+                    <Image Stretch="Fill" Source="../../Resources/Images/ProfilePicture.jpg" Cursor="Hand">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
                 </Border>
                 <WrapPanel Grid.Row="1" Grid.Column="2">
-                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Text="{Binding Guest.Username}"></TextBlock>
-                    <Image Grid.Column="2" Height="20" Source="../../Resources/Images/verify.png" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Text="{Binding Guest.Username}" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
                 </WrapPanel>
-                <TextBlock Grid.Row="2" Grid.Column="2" FontSize="13" Margin="5, 0, 0, 0">Gost</TextBlock>
-                <Button x:Name="buttonHome" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                <TextBlock Grid.Row="2" Grid.Column="2" FontSize="13" Margin="5, 0, 0, 0" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    Gost
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
+                <WrapPanel Grid.Row="2" Grid.Column="2" Visibility="{Binding Path=Guest.IsSuperGuest, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock FontSize="13" Margin="5, 0, 0, 0" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    Super-gost
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                    <Image  Source="../../Resources/Images/medal-ribbon.png" Cursor="Hand">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
+                </WrapPanel>
+                <Button ToolTip="Ctrl+P" x:Name="buttonHome" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter1}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1HomeMenuViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -75,7 +129,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonAccommodationsReservations" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter2}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter2}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                <Button ToolTip="Ctrl+S" x:Name="buttonAccommodationsReservations" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter2}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter2}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -90,7 +144,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonReviews" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter3}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter3}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                <Button ToolTip="Ctrl+R" x:Name="buttonReviews" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter3}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter3}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1ReviewsMenuViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -105,7 +159,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonForums" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter4}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter4}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                <Button ToolTip="Ctrl+F" x:Name="buttonForums" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter4}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter4}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
@@ -120,7 +174,8 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonNotifications" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand">
+                <Button ToolTip="Ctrl+O" x:Name="buttonNotifications" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter5}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter5}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                        Command="{Binding NavigationCommand}" CommandParameter="guest1NotificationsViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -129,12 +184,14 @@
                                 <ColumnDefinition Width="20"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Height="20" Source="../../Resources/Images/bell.png"></Image>
+                            <Image Grid.Column="0" Height="13" Source="../../Resources/Images/exclamationMark.png" Visibility="{Binding Path=HasNotifications, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
                             <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Notifikacije</TextBlock>
                             <Image Grid.Column="2" Height="20" Source="../../Resources/Images/next.png"></Image>
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonUserAccount" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand">
+                <Button ToolTip="Ctrl+K" x:Name="buttonUserAccount" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter6}}" BorderBrush="{Binding SelectedTab, Converter={StaticResource SelectedTabToSolidColorBrushConverter6}}" Style="{DynamicResource RoundButton}" Cursor="Hand"
+                        Command="{Binding NavigationCommand}" CommandParameter="guest1UserProfileViewModel">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -148,7 +205,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button x:Name="buttonLogOut" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand" Click="ButtonLogOut_Click">
+                <Button ToolTip="Ctrl+I" x:Name="buttonLogOut" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 5, 0, 0" Background="#cccccc" BorderBrush="#cccccc" Style="{DynamicResource RoundButton}" Cursor="Hand" Click="ButtonLogOut_Click">
                     <Button.Content>
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -162,46 +219,176 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <ContentControl Content="{Binding CurrentViewModel}">
-                <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1HomeMenuViewModel}">
-                        <views:Guest1HomeMenuView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationsReservationsMenuViewModel}">
-                        <views:Guest1AccommodationsReservationsMenuView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1ReviewsMenuViewModel}">
-                        <views:Guest1ReviewsMenuView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1ForumsMenuViewModel}">
-                        <views:Guest1ForumsMenuView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationSearchViewModel}">
-                        <views:Guest1AccommodationSearchView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationViewModel}">
-                        <views:Guest1AccommodationReservationView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationsViewModel}">
-                        <views:Guest1AccommodationReservationsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationMoveViewModel}">
-                        <views:Guest1AccommodationReservationMoveView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationMoveRequestsViewModel}">
-                        <views:Guest1AccommodationReservationMoveRequestsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1RateableStaysViewModel}">
-                        <views:Guest1RateableStaysView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1WriteReviewViewModel}">
-                        <views:Guest1WriteReviewView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:Guest1ReviewsViewModel}">
-                        <views:Guest1ReviewsView/>
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="5"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="0"  Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentViewModel}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1HomeMenuViewModel}">
+                            <views:Guest1HomeMenuView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationsReservationsMenuViewModel}">
+                            <views:Guest1AccommodationsReservationsMenuView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReviewsMenuViewModel}">
+                            <views:Guest1ReviewsMenuView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ForumsMenuViewModel}">
+                            <views:Guest1ForumsMenuView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationSearchViewModel}">
+                            <views:Guest1AccommodationSearchView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationViewModel}">
+                            <views:Guest1AccommodationReservationView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationsViewModel}">
+                            <views:Guest1AccommodationReservationsView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationMoveViewModel}">
+                            <views:Guest1AccommodationReservationMoveView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1AccommodationReservationMoveRequestsViewModel}">
+                            <views:Guest1AccommodationReservationMoveRequestsView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1RateableStaysViewModel}">
+                            <views:Guest1RateableStaysView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1WriteReviewViewModel}">
+                            <views:Guest1WriteReviewView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReviewsViewModel}">
+                            <views:Guest1ReviewsView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1WhereverWheneverSearchViewModel}">
+                            <views:Guest1WhereverWheneverSearchView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1WhereverWheneverReservationViewModel}">
+                            <views:Guest1WhereverWheneverReservationView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ForumLocationSearchViewModel}">
+                            <views:Guest1ForumLocationSearchView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1OpenForumViewModel}">
+                            <views:Guest1OpenForumView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1MyForumsViewModel}">
+                            <views:Guest1MyForumsView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ForumSearchViewModel}">
+                            <views:Guest1ForumSearchView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReadForumViewModel1}">
+                            <views:Guest1ReadForumView1/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReadForumViewModel2}">
+                            <views:Guest1ReadForumView2/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReadWriteForumViewModel1}">
+                            <views:Guest1ReadWriteForumView1/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReadWriteForumViewModel2}">
+                            <views:Guest1ReadWriteForumView2/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1NotificationsViewModel}">
+                            <views:Guest1NotificationsView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1UserProfileViewModel}">
+                            <views:Guest1UserProfileView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Guest1ReportViewModel}">
+                            <views:Guest1ReportView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1HomeMenuDemoViewModel}">
+                            <views:Guest1HomeMenuDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationsReservationsMenuDemoViewModel}">
+                            <views:Guest1AccommodationsReservationsMenuDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ReviewsMenuDemoViewModel}">
+                            <views:Guest1ReviewsMenuDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ForumsMenuDemoViewModel}">
+                            <views:Guest1ForumsMenuDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1NotificationsDemoViewModel}">
+                            <views:Guest1NotificationsDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1UserProfileDemoViewModel}">
+                            <views:Guest1UserProfileDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationSearchDemoViewModel}">
+                            <views:Guest1AccommodationSearchDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationDemoViewModel}">
+                            <views:Guest1AccommodationReservationDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1WhereverWheneverSearchDemoViewModel}">
+                            <views:Guest1WhereverWheneverSearchDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1WhereverWheneverReservationDemoViewModel}">
+                            <views:Guest1WhereverWheneverReservationDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationsDemoViewModel}">
+                            <views:Guest1AccommodationReservationsDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationMoveDemoViewModel}">
+                            <views:Guest1AccommodationReservationMoveDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1AccommodationReservationMoveRequestsDemoViewModel}">
+                            <views:Guest1AccommodationReservationMoveRequestsDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ReportDemoViewModel}">
+                            <views:Guest1ReportDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1RateableStaysDemoViewModel}">
+                            <views:Guest1RateableStaysDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1WriteReviewDemoViewModel}">
+                            <views:Guest1WriteReviewDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ReviewsDemoViewModel}">
+                            <views:Guest1ReviewsDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ForumLocationSearchDemoViewModel}">
+                            <views:Guest1ForumLocationSearchDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1OpenForumDemoViewModel}">
+                            <views:Guest1OpenForumDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1MyForumsDemoViewModel}">
+                            <views:Guest1MyForumsDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ForumSearchDemoViewModel}">
+                            <views:Guest1ForumSearchDemoView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type demo:Guest1ReadWriteForumDemoViewModel}">
+                            <views:Guest1ReadWriteForumDemoView/>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+                <Button ToolTip="Ctrl+D" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding StartDemoCommand}" Visibility="{Binding IsDemoExecuting, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
+                    <Button.Content>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Height="15" Source="../../Resources/Images/play.png"></Image>
+                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Demo</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            
         </DockPanel>
     </Border>
 </Window>

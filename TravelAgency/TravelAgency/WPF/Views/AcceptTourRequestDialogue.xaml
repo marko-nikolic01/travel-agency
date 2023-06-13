@@ -6,16 +6,24 @@
         xmlns:local="clr-namespace:TravelAgency.WPF.ViewModels" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:conv="clr-namespace:TravelAgency.Converters"
         mc:Ignorable="d" d:DesignHeight="750" d:DesignWidth="430">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="25 0 0 0"></Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.Resources>
-            <Style TargetType="Label">
-                <Setter Property="FontSize" Value="18"></Setter>
-                <Setter Property="FontWeight" Value="DemiBold"></Setter>
-                <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            </Style>
-            <Style TargetType="TextBlock">
-                <Setter Property="FontSize" Value="18"></Setter>
-            </Style>
             <conv:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -36,10 +44,11 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Content="Number of guests:"></Label>
-        <TextBlock Text="{Binding TourRequest.GuestNumber}" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0"></TextBlock>
-        <Label Grid.Row="1" Content="Location:"></Label>
-        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0">
+        <Border Background="#0e1d32" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="5 10 5 5" CornerRadius="5"></Border>
+        <Label Foreground="#FFFFFF" Content="Number of guests:"></Label>
+        <TextBlock Foreground="#FFFFFF" Text="{Binding TourRequest.GuestNumber}" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0"></TextBlock>
+        <Label Foreground="#FFFFFF" Grid.Row="1" Content="Location:"></Label>
+        <TextBlock Foreground="#FFFFFF" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 5 0">
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0}, {1}">
                     <Binding Path="TourRequest.Location.City"/>
@@ -47,26 +56,50 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <Label Grid.Row="2" Content="Language:"></Label>
-        <TextBlock Margin="0 0 5 0" Text="{Binding TourRequest.Language}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
-        <Label Grid.Row="3" Content="Description:"></Label>
-        <TextBlock Margin="0 0 5 0" Grid.RowSpan="2" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
-        <Separator Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Top"></Separator>
+        <Label Foreground="#FFFFFF" Grid.Row="2" Content="Language:"></Label>
+        <TextBlock Foreground="#FFFFFF" Margin="0 0 5 0" Text="{Binding TourRequest.Language}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
+        <Label Foreground="#FFFFFF" Grid.Row="3" Content="Description:"></Label>
+        <TextBlock Foreground="#FFFFFF" Margin="0 0 5 0" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
         <Label Content="Enter keypoint: " Grid.Row="4"></Label>
         <TextBox Grid.Row="4" Margin="5"  Grid.Column="1" Text="{Binding Path=KeyPoint}" FontSize="18"></TextBox>
         <Button Grid.Column="2" Grid.Row="4" Margin="4" Command="{Binding Path=AddCommand}" Width="30" Height="30">
-            <Image Source="../../Resources/Images/add.png"></Image>
+            <Image Source="../../Resources/Images/plus.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <ListBox Grid.Row="5" Grid.Column="1" Margin="5" Grid.RowSpan="2" ItemsSource="{Binding KeyPoints}" FontSize="18"></ListBox>
+        <Button Grid.Column="2" Grid.Row="5" Margin="4" Command="{Binding Path=RemoveCommand}" IsEnabled="{Binding CanRemove}" Width="30" Height="30">
+            <Image Source="../../Resources/Images/cross-button.png"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <ListBox Grid.Row="5" Grid.Column="1" Margin="5" Grid.RowSpan="2" ItemsSource="{Binding KeyPoints}" SelectedItem="{Binding SelectedKeyPoint}" FontSize="18"></ListBox>
         <Label Content="Keypoints: " Grid.Row="5"></Label>
         <Label Content="Enter duration: " Grid.Row="7"></Label>
-        <xctk:IntegerUpDown Grid.Row="7" Margin="5"  Grid.Column="1" Value="{Binding Path=Duration}" Minimum="0" DefaultValue="0" Text="{Binding Path=Duration, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}}" FontSize="18"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Grid.Row="7" Margin="5"  Grid.Column="1" Value="{Binding Path=Duration}" Minimum="1" DefaultValue="1" Text="{Binding Path=Duration, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}}" AllowTextInput="False" FontSize="18"></xctk:IntegerUpDown>
         <Label Content="Choose date: " Grid.Row="8"></Label>
         <Label Content="Choose time: " Grid.Row="9"></Label>
-        <DatePicker  FontSize="18" Grid.Row="8" Grid.Column="1" Name="DateCalendar" Margin="10" DisplayDateEnd="{Binding TourRequest.MaxDate}" DisplayDateStart="{Binding Path=TourRequest.MinDate}" SelectedDate="{Binding Path=SelectedDate}" ></DatePicker>
-        <xctk:TimePicker FontSize="18" Format="Custom" FormatString="HH:mm" Grid.Row="9" Grid.Column="1" Margin="10" Name="Time" StartTime="{Binding Path=StartTime}" EndTime="{Binding Path=EndTime}" Value="{Binding Path=SelectedTime}">
+        <DatePicker  FontSize="18" Grid.Row="8" Grid.Column="1" Name="DateCalendar" Margin="10" DisplayDateEnd="{Binding Path=EndDate}" DisplayDateStart="{Binding Path=StartDate}" SelectedDate="{Binding Path=SelectedDate}" ></DatePicker>
+        <xctk:TimePicker FontSize="18" Format="Custom" FormatString="HH:mm" Grid.Row="9" Grid.Column="1" Margin="10" Name="Time" Value="{Binding Path=SelectedTime}">
         </xctk:TimePicker>
-        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}"></Button>
-        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="10" FontSize="18" Content="Cancel"></Button>
+        <Button Grid.Row="10" Grid.Column="0" Width="100" Margin="70 10 10 10" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="10" Grid.Column="1" Width="100" Margin="40 10 10 10" FontSize="18" Content="Cancel" Command="{Binding Path=CancelCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

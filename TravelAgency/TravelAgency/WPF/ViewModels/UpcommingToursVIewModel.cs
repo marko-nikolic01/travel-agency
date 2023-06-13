@@ -34,18 +34,31 @@ namespace TravelAgency.WPF.ViewModels
         public int CanceledTour
         {
             get { return canceledTour; }
-            set {
+            set
+            {
                 canceledTour = value;
                 OnPropertyChanged();
             }
         }
 
-        public TourOccurrence? SelectedTourOccurrence { get; set; }
+        private TourOccurrence selectedTourOccurrence;
+
+        public TourOccurrence SelectedTourOccurrence
+        {
+            get { return selectedTourOccurrence; }
+            set
+            {
+                selectedTourOccurrence = value;
+                OnPropertyChanged();
+            }
+        }
+
         public TourOccurrenceService TourOccurrenceService { get; set; }
         public NavigationService NavService { get; set; }
         public ButtonCommandNoParameter CancelCommand { get; set; }
         public ButtonCommandNoParameter CreateCommand { get; set; }
         public ButtonCommandNoParameter UndoCancelCommand { get; set; }
+        public ButtonCommandNoParameter ShowCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public UpcommingToursVIewModel(int id, NavigationService navService)
@@ -58,6 +71,7 @@ namespace TravelAgency.WPF.ViewModels
             CancelCommand = new ButtonCommandNoParameter(CancelTour);
             CreateCommand = new ButtonCommandNoParameter(CreateNewTour);
             UndoCancelCommand = new ButtonCommandNoParameter(UndoCancelTour);
+            ShowCommand = new ButtonCommandNoParameter(Show);
             CanceledTour = -1;
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -76,15 +90,28 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (SelectedTourOccurrence.DateTime < DateTime.Now.AddDays(2))
             {
-                MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours");
+                MessageBox.Show("This tour can not be canceled because it occurres in less than 48 hours", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 CanceledTour = TourOccurrenceService.CancelTour(SelectedTourOccurrence, ActiveGuide.Id);
+                MessageBox.Show("Tour has been successfuly canceled", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        private void Show()
+        {
+            if (SelectedTourOccurrence != null)
+            {
+                Window s = new ShowTourDets(SelectedTourOccurrence, ActiveGuide.Id);
+                s.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select a tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
+        }
         private void CreateNewTour()
         {
             Page create = new CreateTourForm(ActiveGuide.Id, NavService);

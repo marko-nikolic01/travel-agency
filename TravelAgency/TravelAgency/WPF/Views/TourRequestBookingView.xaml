@@ -12,60 +12,94 @@
     <Page.Resources>
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="DemiBold"></Setter>
-            <Setter Property="FontSize" Value="13"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Margin" Value="5 0 0 0"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#0e1d32"></Setter>
+            <Setter Property="CornerRadius" Value="5"></Setter>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#0e1d32"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
     </Page.Resources>
     <Grid>
         <Grid.Resources>
-            <conv:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="350"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Label Content="Country:"></Label>
-        <ComboBox Grid.Column="1" ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}" Margin="0 10 0 10"></ComboBox>
-        <Label Grid.Column="2" Content="City:"></Label>
-        <ComboBox Grid.Column="3" ItemsSource="{Binding Path=Cities}"  SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Margin="0 10 0 10" ></ComboBox>
-        <Label Grid.Row="1" Content="Language:"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="0 10 0 10" Text="{Binding Path=Language, Mode=TwoWay}"></TextBox>
-        <Label Grid.Row="1" Grid.Column="2" Content="Guests number:"></Label>
-        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Margin="0 10 0 10" Value="{Binding Path=NumberOfGuests, Mode=TwoWay}" Text="{Binding Path=NumberOfGuests, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}" DefaultValue="0" Minimum="0" ></xctk:IntegerUpDown>
-        <Label Grid.Row="2" Content="Start date:"></Label>
-        <DatePicker Grid.Row="2" Grid.Column="1" Margin="0 10 0 10" SelectedDate="{Binding StartDate}"></DatePicker>
-        <Label Grid.Row="2" Grid.Column="2" Content="End date:"></Label>
-        <DatePicker SelectedDate="{Binding EndDate}" Grid.Row="2" Grid.Column="3" Margin="0 10 0 10"></DatePicker>
-        <Button Grid.Column="3" Grid.Row="3" Margin="10 10 10 10" Command="{Binding Path= FilterCommand}">
-            <Button.Content>
-                <DockPanel>
-                    <Image Source="/Resources/Images/search.png" DockPanel.Dock="Left" Height="15" Width="15"></Image>
-                    <TextBlock Text="Apply filters" VerticalAlignment="Center" DockPanel.Dock="Right"></TextBlock>
-                </DockPanel>
-            </Button.Content>
+                <conv:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="290"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="110"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="110"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Margin="5 10 5 10" Grid.RowSpan="6" Grid.ColumnSpan="4"></Border>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" Content="Filter tour requests" FontStyle="Italic" FontWeight="Light" Margin="5 -5 0 0"></Label>
+            <Label Grid.Row="1" Content="Country:"></Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=Countries}" SelectedItem="{Binding Path=SelectedCountry}" Margin="5 10 -20 10" HorizontalContentAlignment="Center"></ComboBox>
+            <Label Grid.Row="1" Grid.Column="2" Content="City:" Margin="25 0 0 0"></Label>
+            <ComboBox Grid.Row="1" Grid.Column="3" ItemsSource="{Binding Path=Cities}" HorizontalContentAlignment="Center" SelectedItem="{Binding Path=SelectedCity}" IsEnabled="{Binding Path=IsCountrySelected}" Margin="-35 10 10 10" ></ComboBox>
+            <Label Grid.Row="2" Content="Language:" Grid.ColumnSpan="2"></Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="5 10 -20 10" Text="{Binding Path=Language, Mode=TwoWay}"></TextBox>
+            <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Guests number:" Margin="25 0 0 0"></Label>
+            <xctk:IntegerUpDown AllowTextInput="False" Grid.Row="2" Grid.Column="3" Margin="25 10 10 10" Value="{Binding Path=NumberOfGuests, Mode=TwoWay}" Text="{Binding Path=NumberOfGuests, Converter={StaticResource IntegerGreaterThanZeroToStringConverter}, Mode=TwoWay}" DefaultValue="0" Minimum="0" ></xctk:IntegerUpDown>
+            <Label Grid.Row="3" Content="Start date:" Grid.ColumnSpan="2"></Label>
+        <DatePicker Name="calendar1" DisplayDateStart="{Binding TodaysDate}" DisplayDateEnd="{Binding End}" Grid.Row="3" Grid.Column="1" Margin="5 10 -20 10" SelectedDate="{Binding Start}" ></DatePicker>
+            <Label Grid.Row="3" Grid.Column="2" Margin="25 0 0 0"  Content="End date:"></Label>
+        <DatePicker DisplayDateStart="{Binding Start}" SelectedDate="{Binding End}" Grid.Row="3" Grid.Column="3" Margin="-20 10 10 10"></DatePicker>
+            <Button Grid.RowSpan="2" Grid.Column="3" Grid.Row="4" Margin="5 25 10 25" Command="{Binding Path= FilterCommand}">
+                <Button.Content>
+                    <DockPanel>
+                        <Image Source="/Resources/Images/search.png" DockPanel.Dock="Left" Height="15" Width="15"></Image>
+                        <TextBlock Text="Apply filters" VerticalAlignment="Center" DockPanel.Dock="Right"></TextBlock>
+                    </DockPanel>
+                </Button.Content>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <Button Grid.Column="2" Grid.Row="3" Margin="10 10 10 10"  Command="{Binding Path= RemoveFilterCommand}">
+        <Button Grid.RowSpan="2" Grid.Column="2" Grid.Row="4" Margin="5 25 10 25" Command="{Binding Path= RemoveFilterCommand}">
             <Button.Content>
                 <DockPanel>
-                    <Image Source="/Resources/Images/false.png" DockPanel.Dock="Left" Height="15" Width="15"></Image>
+                    <Image Source="/Resources/Images/cancel.png" DockPanel.Dock="Left" Height="15" Width="15"></Image>
                     <TextBlock Text="Reset filters" VerticalAlignment="Center" DockPanel.Dock="Right"></TextBlock>
                 </DockPanel>
             </Button.Content>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
         </Button>
-        <Separator Grid.Row="5" Grid.ColumnSpan="4"></Separator>
-        <DataGrid Grid.Row="6" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}"  FontSize="13" AlternatingRowBackground="SeaShell">
+        <Label Content="Tour requests" Foreground="#0e1d32" FontSize="20" FontWeight="DemiBold"  Grid.Row="6" Grid.ColumnSpan="3"></Label>
+        <DataGrid Grid.Row="8" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding TourRequests}" SelectedItem="{Binding SelectedRequest}"  FontSize="13" AlternatingRowBackground="WhiteSmoke">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Location" Width="*">
                     <DataGridTextColumn.Binding>
@@ -75,7 +109,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Language" Binding="{Binding Path=Language}" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Date">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0:dd/MM/yy}-{1:dd/MM/yy}">
@@ -87,11 +121,18 @@
                 <DataGridTemplateColumn Header="Accept" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="Book" Margin="5" Content="Book" Command="{Binding Path= DataContext.BookCommand, RelativeSource={RelativeSource AncestorType=Page}}" ></Button>
+                            <Button Name="Book" Margin="5" Content="Book" Command="{Binding Path= DataContext.BookCommand, RelativeSource={RelativeSource AncestorType=Page}}" >
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label VerticalAlignment="Top" Foreground="#0e1d32" HorizontalAlignment="Left" Content="Hint: Click on 'Book' button to book the tour" Grid.Row="9" FontWeight="ExtraLight" FontSize="16" Grid.ColumnSpan="5"></Label>
     </Grid>
 </Page>

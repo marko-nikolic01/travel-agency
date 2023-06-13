@@ -37,7 +37,12 @@ namespace TravelAgency.Injector
             { typeof(IRenovationRecommendationRepository), new RenovationRecommendationRepository() },
             { typeof(ISuperGuestTitleRepository), new SuperGuestTitleRepository() },
             { typeof(IAccommodationRenovationRepository), new AccommodationRenovationRepository() },
-            { typeof(IWonVoucherNotificationRepository), new WonVoucherNotificationRepository() }
+            { typeof(IWonVoucherNotificationRepository), new WonVoucherNotificationRepository() },
+            { typeof(IForumRepository), new ForumRepository() },
+            { typeof(ICommentRepository), new CommentRepository() },
+            { typeof(ICommentDislikeRepository), new CommentDislikeRepository() },
+            { typeof(INotificationRepository), new NotificationRepository() },
+            { typeof(ISuperGuideRepository), new SuperGuideRepository() }
         // Add more implementations here
         };
 

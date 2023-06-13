@@ -1,0 +1,80 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerAddCommentView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      mc:Ignorable="d" 
+      Name="root"
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerAddCommentView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace" Command="{Binding Path=NavigateBackCommand}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding AddCommentCommand}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="{Binding PageHeader}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Forum:"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Comment:"
+                       Style="{StaticResource formTextBlock}"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="{Binding SelectedForum.Title}"
+                       Style="{StaticResource formTextBlock}"/>
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     x:Name="commentTextBox"
+                     Text="{Binding CommentText, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource formTextBox}"
+                     TextWrapping="WrapWithOverflow"/>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Style="{StaticResource backButton}"
+                                         Margin="0 0 10 0"
+                                         Click="NavigateBack_Click"/>
+
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Submit a comment"
+                                         KeyboardShortcutText="Ctrl+S"
+                                         Margin="0 0 10 0"
+                                         Click="AddComment_Click"/>
+
+            <controls:Tip Grid.Column="2"
+                          Header="Who can see my comment?"
+                          TipText="Everybody who visits this forum can see your comment. Your comments will be highlighted so others can see that you are an owner that has an accommodation in this location."/>
+        </Grid>
+    </Grid>
+</Page>

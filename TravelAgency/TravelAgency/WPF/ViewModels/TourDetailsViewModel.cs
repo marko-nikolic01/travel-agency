@@ -29,6 +29,16 @@ namespace TravelAgency.WPF.ViewModels
                 }
             }
         }
+        private bool canUndo;
+        public bool CanUndo
+        {
+            get { return canUndo; }
+            set 
+            { 
+                canUndo = value;
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -42,6 +52,7 @@ namespace TravelAgency.WPF.ViewModels
             {
                 CurrentPhoto = tourRating.PhotoUrls[0];
             }
+            CanUndo = false;
         }
     }
 }

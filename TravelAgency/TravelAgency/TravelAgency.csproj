@@ -11,10 +11,17 @@
   <ItemGroup>
     <None Remove="Resources\Images\accept-circular-button-outline.png" />
     <None Remove="Resources\Images\belled.png" />
+    <None Remove="Resources\Images\commentOwner.png" />
     <None Remove="Resources\Images\cross-button.png" />
+    <None Remove="Resources\Images\danger.png" />
+    <None Remove="Resources\Images\Disliked.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\exclamation-mark.png" />
+    <None Remove="Resources\Images\exclamationMark.png" />
+    <None Remove="Resources\Images\GuestDidntVisit.png" />
+    <None Remove="Resources\Images\file.png" />
     <None Remove="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+    <None Remove="Resources\Images\location.png" />
     <None Remove="Resources\Images\maintenance.png" />
     <None Remove="Resources\Images\ManageAccommodations.png" />
     <None Remove="Resources\Images\NavAccommodations.png" />
@@ -22,12 +29,18 @@
     <None Remove="Resources\Images\NavProfile.png" />
     <None Remove="Resources\Images\NavRatings.png" />
     <None Remove="Resources\Images\NavReservations.png" />
+    <None Remove="Resources\Images\NotDisliked.png" />
+    <None Remove="Resources\Images\OwnerHelp.png" />
     <None Remove="Resources\Images\OwnerProfilePicture.png" />
     <None Remove="Resources\Images\OwnerRatingStar.png" />
     <None Remove="Resources\Images\OwnerStatistics.png" />
+    <None Remove="Resources\Images\padlock.png" />
     <None Remove="Resources\Images\paintwork.png" />
+    <None Remove="Resources\Images\play.png" />
     <None Remove="Resources\Images\ProfilePicture.jpg" />
+    <None Remove="Resources\Images\question.png" />
     <None Remove="Resources\Images\Renovations.png" />
+    <None Remove="Resources\Images\stop.png" />
     <None Remove="Resources\Images\SuperOwnerMedal.png" />
     <None Remove="Resources\Images\bell.png" />
     <None Remove="Resources\Images\book.png" />
@@ -56,7 +69,9 @@
     <None Remove="Resources\Images\star.png" />
     <None Remove="Resources\Images\timer.png" />
     <None Remove="Resources\Images\trash.png" />
+    <None Remove="Resources\Images\unlock.png" />
     <None Remove="Resources\Images\user.png" />
+    <None Remove="Resources\Images\UserfulForum.png" />
     <None Remove="Resources\Images\verify.png" />
   </ItemGroup>
 
@@ -66,23 +81,55 @@
 
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+
+    <PackageReference Include="PdfSharp" Version="1.50.5147" />
+
     <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.5" />
 
     <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="21.2.5" />
+
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
 	  <Resource Include="Resources\Images\accept-circular-button-outline.png" />
 	  <Resource Include="Resources\Images\belled.png" />
+	  <Resource Include="Resources\Images\commentOwner.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\cross-button.png" />
+	  <Resource Include="Resources\Images\danger.png" />
+	  <Resource Include="Resources\Images\Disliked.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Resources\Images\email.png" />
 	  <Resource Include="Resources\Images\exclamation-mark.png" />
+	  <Resource Include="Resources\Images\exclamationMark.png" />
+	  <Resource Include="Resources\Images\GuestDidntVisit.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\file.png" />
 	  <Resource Include="Resources\Images\istockphoto-1147544807-612x612.jpg" />
+	  <Resource Include="Resources\Images\location.png" />
 	  <Resource Include="Resources\Images\maintenance.png" />
+	  <Resource Include="Resources\Images\NotDisliked.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\OwnerHelp.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\Images\padlock.png" />
 	  <Resource Include="Resources\Images\paintwork.png" />
 	  <Resource Include="Resources\Images\pdf.png" />
+	  <Resource Include="Resources\Images\play.png" />
+	  <Resource Include="Resources\Images\question.png" />
+	  <Resource Include="Resources\Images\stop.png" />
+	  <Resource Include="Resources\Images\SuperGuideMedal.png" />
 	  <Resource Include="Resources\Images\envelope.png" />
 	  <Resource Include="Resources\Images\envelopes.png" />
+	  <Resource Include="Resources\Images\logotip.ico" />
+	  <Resource Include="Resources\Images\ProfilePictureButton.jpeg" />
 	  <Resource Include="Resources\Images\graph.png" />
 	  <Resource Include="Resources\Images\ok.png" />
 	  <Resource Include="Resources\Images\false.png" />
@@ -145,10 +192,12 @@
 	  <Resource Include="Resources\Images\home.png"></Resource>
 	  <Resource Include="Resources\Images\back.png"></Resource>
 	  <Resource Include="Resources\Images\noTours.png"></Resource>
+	  <Resource Include="Resources\Images\successIcon.png"></Resource>
       <Resource Include="Resources\Images\ProfilePicture.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
       <Resource Include="Resources\Images\timer.png" />
+      <Resource Include="Resources\Images\unlock.png" />
       <Resource Include="Resources\Images\user.png" />
       <Resource Include="Resources\Images\Picture1.PNG" />
       <Resource Include="Resources\Images\Picture2.PNG" />
@@ -160,6 +209,9 @@
       <Resource Include="Resources\Images\Picture8.PNG" />
       <Resource Include="Resources\Images\leftpointing.png" />
       <Resource Include="Resources\Images\rightpointing.png" />
+      <Resource Include="Resources\Images\UserfulForum.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
       <Resource Include="Resources\Images\verify.png" />
   </ItemGroup>
 

@@ -31,6 +31,20 @@ namespace TravelAgency.WPF.Controls
             DependencyProperty.Register("Text", typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty));
 
 
+
+        public new Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Foreground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(PageHeader), new PropertyMetadata(Brushes.Black));
+
+
+
+
         public PageHeader()
         {
             InitializeComponent();

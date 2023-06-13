@@ -13,6 +13,7 @@
                    FontWeight="Bold"
                    Margin="0 0 0 20"
                    TextWrapping="Wrap"
-                   Focusable="False"/>
+                   Focusable="False"
+                   Foreground="{Binding Foreground,ElementName=root}"/>
     </Grid>
 </UserControl>

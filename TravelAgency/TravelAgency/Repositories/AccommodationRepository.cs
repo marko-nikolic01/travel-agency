@@ -38,7 +38,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (User user in owners)
                 {
-                    if (accommodation.OwnerId == user.Id)
+                    if (accommodation.Owner.Id == user.Id)
                     {
                         accommodation.Owner = user;
                         break;
@@ -53,7 +53,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (Location location in locations)
                 {
-                    if (accommodation.LocationId == location.Id)
+                    if (accommodation.Location.Id == location.Id)
                     {
                         accommodation.Location = location;
                         break;
@@ -85,9 +85,14 @@ namespace TravelAgency.Repositories
             return accommodations.Max(c => c.Id) + 1;
         }
 
-        public List<Accommodation> GetByOwner(User owner)
+        public List<Accommodation> GetActiveByOwner(User owner)
         {
-            return accommodations.FindAll(c => c.OwnerId == owner.Id);
+            return GetActive().FindAll(c => c.Owner.Id == owner.Id);
+        }
+
+        public List<Accommodation> GetActive()
+        {
+            return accommodations.FindAll(a => a.IsOpen == true);
         }
 
         public List<Accommodation> GetAll()
@@ -101,6 +106,22 @@ namespace TravelAgency.Repositories
             accommodations.Add(accommodation);
             serializer.ToCSV(FilePath, accommodations);
             return accommodation;
+        }
+
+        public List<Accommodation> GetActiveByLocationAndOwner(Location location, User owner)
+        {
+            return GetActiveByOwner(owner).FindAll(c => c.Location == location);
+        }
+
+        public List<Accommodation> GetActiveByLocation(Location location)
+        {
+            return GetActive().FindAll(a => a.Location == location);
+        }
+
+        public void Delete(Accommodation accommodation)
+        {
+            accommodation.IsOpen = false;
+            serializer.ToCSV(FilePath, accommodations);
         }
     }
 }

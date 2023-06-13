@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Navigation;
 using TravelAgency.Domain.Models;
@@ -23,6 +23,7 @@ namespace TravelAgency.WPF.ViewModels
 
         private User loggedInUser;
 
+        public string NavigateBackLocation { get; set; }
         public MyICommand NavigateBack { get; set; }
         public MyICommand AddPhotoCommand { get; set; }
         public MyICommand RemovePhotoCommand { get; set; }
@@ -94,6 +95,7 @@ namespace TravelAgency.WPF.ViewModels
                 OnPropertyChanged(nameof(Photos));
             }
         }
+
         private string photoLink;
 
         public string PhotoLink
@@ -119,6 +121,7 @@ namespace TravelAgency.WPF.ViewModels
         }
 
 
+
         public OwnerAddAccommodationViewModel(NavigationService navigationService)
         {
             NavigationService = navigationService;
@@ -134,11 +137,13 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            NewAccommodation = new Accommodation() { Owner = loggedInUser, OwnerId = loggedInUser.Id };
+            NewAccommodation = new Accommodation() { Owner = loggedInUser, IsOpen = true };
+            NewAccommodation.Owner.Id = loggedInUser.Id;
+
+            Photos = new ObservableCollection<AccommodationPhoto>();
 
             IsEnabled = false;
 
-            Photos = new ObservableCollection<AccommodationPhoto>();
             PhotoLink = string.Empty;
 
             Countries = locationService.GetCountries();
@@ -150,6 +155,15 @@ namespace TravelAgency.WPF.ViewModels
                 "<Select city>"
             };
             SelectedCity = Cities[0];
+
+            NavigateBackLocation = "WPF/Views/OwnerManageAccommodationsView.xaml";
+        }
+
+        public OwnerAddAccommodationViewModel(NavigationService navigationService, string preselectedCountry, string preselectedCity, string navigateBackLocation) : this(navigationService)
+        {
+            SelectedCountry = preselectedCountry;
+            SelectedCity = preselectedCity;
+            NavigateBackLocation = navigateBackLocation;
         }
 
         private void Execute_AddAccommodationCommand()
@@ -158,22 +172,22 @@ namespace TravelAgency.WPF.ViewModels
 
             if (!locationService.CountryExists(SelectedCountry))
             {
-                MessageBox.Show("Select a valid country.");
+                MessageBox.Show("Select a valid country.", "Selected country not valid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (!locationService.CityExists(SelectedCity))
             {
-                MessageBox.Show("Select a valid city.");
+                MessageBox.Show("Select a valid city.", "Selected city not valid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             NewAccommodation.Location = locationService.GetLocationForCountryAndCity(SelectedCountry, SelectedCity);
-            NewAccommodation.LocationId = NewAccommodation.Location.Id;
+            NewAccommodation.Location.Id = NewAccommodation.Location.Id;
 
             if (Photos.Count < 1)
             {
-                MessageBox.Show("Add at least 1 photo.");
+                MessageBox.Show("Add at least 1 photo.", "No photos added", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -184,12 +198,12 @@ namespace TravelAgency.WPF.ViewModels
                 return;
             }
 
-            MessageBox.Show("Fields not valid!");
+            MessageBox.Show("Fields not valid!", "Invalid fields", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Execute_NavigateBack()
         {
-            NavigationService.Navigate(new Uri("WPF/Views/OwnerManageAccommodationsView.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri(NavigateBackLocation, UriKind.Relative));
         }
 
         private void Execute_RemovePhotoCommand()
@@ -197,10 +211,11 @@ namespace TravelAgency.WPF.ViewModels
             if (SelectedPhoto != null)
             {
                 Photos.Remove(SelectedPhoto);
+                OnPropertyChanged(nameof(Photos));
             }
             else
             {
-                MessageBox.Show("None photo selected!");
+                MessageBox.Show("Select a photo.", "No photo selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -209,11 +224,12 @@ namespace TravelAgency.WPF.ViewModels
             if (PhotoLink != string.Empty)
             {
                 Photos.Add(new AccommodationPhoto() { Path = PhotoLink });
+                OnPropertyChanged(nameof(Photos));
                 PhotoLink = string.Empty;
             }
             else
             {
-                MessageBox.Show("Photo empty!");
+                MessageBox.Show("Enter a photo link.", "No photo link given", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

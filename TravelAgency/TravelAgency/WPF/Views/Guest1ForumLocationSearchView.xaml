@@ -1,0 +1,276 @@
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1ForumLocationSearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:TravelAgency.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="580" d:DesignWidth="1000"
+             Background="White" Focusable="True">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonSmall">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonBig">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
+        <converters:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
+    </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel"/>
+    </UserControl.InputBindings>
+    <DockPanel>
+        <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="27"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da otvorim forum?</Bold><LineBreak/><LineBreak/>
+                Klikom na dugme "Otvori<LineBreak/>
+                forum" nastavljate na otvaranje<LineBreak/>
+                foruma za diskusiju o lokaciji.
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da pretražim lokacije?</Bold><LineBreak/><LineBreak/>
+                Iznad podnaslova "Pretraga"<LineBreak/>
+                možete podesiti kriterijume<LineBreak/>
+                pretrage. Neke od kriterijuma<LineBreak/>
+                možete ostaviti prazne što<LineBreak/>
+                znači da se pretraga neće<LineBreak/>
+                izvršiti po njima. Kada podesite<LineBreak/>
+                kriterijume pretrage, klikom na<LineBreak/>
+                dugme "Pretraži" obavljate<LineBreak/>
+                pretragu. Pretragu možete<LineBreak/>
+                otkazati klikom na dugme<LineBreak/>
+                "Otkaži pretragu".
+            </TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
+                <Bold>Kako da se vratim nazad?</Bold><LineBreak/><LineBreak/>
+                Klikom na dugme "Nazad"<LineBreak/>
+                se vraćate na prethodni<LineBreak/>
+                prozor.
+
+            </TextBlock>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="33"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    <Bold>Forumi</Bold>
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
+                <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Otvorite forum</Bold></TextBlock>
+            </WrapPanel>
+            <Button ToolTip="Ctrl+N" x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding NavigationCommand}" CommandParameter="guest1ForumsMenuViewModel">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="20" Source="../../Resources/Images/left-arrow.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Nazad</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Border Grid.Row="3" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="Black"></Border>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="27"></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                    <RowDefinition Height="27"></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Pretraga</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Država:</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Grad:</TextBlock>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                    <ComboBox x:Name="comboBoxCountry" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Countries}" SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay}"
+                    IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Height="24" Width="150" HorizontalAlignment="Right" Margin="0, 8, 0, 0">
+                    <ComboBox x:Name="comboBoxCity" Height="24" Width="150" HorizontalAlignment="Right" FontSize="13" Background="White" BorderBrush="Black" ItemsSource="{Binding Cities}" SelectedItem="{Binding Path=SelectedCity, Mode=TwoWay}" Text="{Binding Path=SelectedCity, Mode=TwoWay}"
+                    IsEditable="True" IsTextSearchEnabled="True" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </Border>
+                <Button x:Name="buttonSearch" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                        Command="{Binding SearchCommand}">
+                    <Button.Content>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/search.png"></Image>
+                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Pretraži</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="buttonCancelSearch" Grid.Row="10" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                        Command="{Binding CancelSearchCommand}">
+                    <Button.Content>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/cancel.png"></Image>
+                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Otkaži pretragu</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Lokacije</TextBlock>
+                <ListView x:Name="listViewLocations" Grid.Row="1" Grid.Column="1" BorderBrush="White" Background="White" SelectionMode="Single" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.IsDeferredScrollingEnabled="True">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Grid.Row="1" Grid.Column="1" Width="470" Height="90">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                    <ColumnDefinition Width="70"></ColumnDefinition>
+                                    <ColumnDefinition Width="5"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="125"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="10"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Border Grid.RowSpan="4" Grid.ColumnSpan="8" BorderThickness="1" BorderBrush="Black"></Border>
+                                <Image Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Source="../../Resources/Images/location.png"></Image>
+                                <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=Country, StringFormat='Država: {0}'}"></TextBlock>
+                                <TextBlock Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=City, StringFormat='Grad: {0}'}"></TextBlock>
+                                <Button x:Name="buttonMakeReservation" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False"
+                                        Command="{Binding DataContext.NavigationCommand, RelativeSource={RelativeSource AncestorType=local:Guest1ForumLocationSearchView}}" CommandParameter="guest1OpenForumViewModel">
+                                    <Button.Content>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Height="20" Source="../../Resources/Images/book.png"></Image>
+                                            <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Otvori forum</TextBlock>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

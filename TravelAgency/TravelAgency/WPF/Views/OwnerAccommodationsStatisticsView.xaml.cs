@@ -24,6 +24,7 @@ namespace TravelAgency.WPF.Views
     {
         public MyICommand NavigateBackCommand { get; set; }
         public MyICommand NavigateToMonthStatsCommand { get; set; }
+        public MyICommand FocusDataGrid { get; set; }
 
         public OwnerAccommodationsStatisticsViewModel ViewModel { get; set; }
 
@@ -31,12 +32,29 @@ namespace TravelAgency.WPF.Views
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBackCommand);
             NavigateToMonthStatsCommand = new MyICommand(Execute_NavigateToMonthStatsCommand);
+            FocusDataGrid = new MyICommand(Execute_FocusDataGrid);
 
             InitializeComponent();
             ViewModel = new OwnerAccommodationsStatisticsViewModel(this.NavigationService);
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            yearStatsDataGrid.Loaded += FocusDataGridEvent;
+        }
+
+        private void Execute_FocusDataGrid()
+        {
+            if (yearStatsDataGrid.Items.Count > 0)
+            {
+                yearStatsDataGrid.SelectedItem = yearStatsDataGrid.Items[0];
+                yearStatsDataGrid.ScrollIntoView(yearStatsDataGrid.Items[0]);
+                yearStatsDataGrid.Focus();
+            }
+        }
+
+        private void FocusDataGridEvent(object sender, RoutedEventArgs e)
+        {
+            Execute_FocusDataGrid();
         }
 
         private void Execute_NavigateToMonthStatsCommand()
@@ -49,7 +67,7 @@ namespace TravelAgency.WPF.Views
             }
             else
             {
-                MessageBox.Show("Select a year.");
+                MessageBox.Show("Select a year.", "Year not selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

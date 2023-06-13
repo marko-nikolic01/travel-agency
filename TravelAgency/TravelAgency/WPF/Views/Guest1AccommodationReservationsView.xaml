@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White" Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -33,9 +33,12 @@
         </Style>
         <converters:AccommodationReservationStartDateToVisibilityConverter x:Key="AccommodationReservationStartDateToVisibilityConverter"/>
         <converters:AccommodationReservationCancelabilityToVisibilityConverter x:Key="AccommodationReservationCancelabilityToVisibilityConverter"/>
-        <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel"/>
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -53,7 +56,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
                 <Bold>Kako da izmenim rezervaciju?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Izmeni"<LineBreak/>
@@ -102,7 +105,7 @@
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Moje rezervacije</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+N" x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">

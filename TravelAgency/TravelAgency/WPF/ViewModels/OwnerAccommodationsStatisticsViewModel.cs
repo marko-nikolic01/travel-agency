@@ -74,7 +74,7 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            Accommodations = accommodationService.GetByOwner(loggedInUser);
+            Accommodations = accommodationService.GetActiveByOwner(loggedInUser);
             
             if (Accommodations.Count > 0 )
             {
@@ -92,7 +92,7 @@ namespace TravelAgency.WPF.ViewModels
             }
             else
             {
-                MessageBox.Show("Select a year.");
+                MessageBox.Show("Select a year.", "No year selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

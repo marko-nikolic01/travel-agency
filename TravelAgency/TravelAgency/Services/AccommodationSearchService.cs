@@ -28,7 +28,7 @@ namespace TravelAgency.Services
 
         public List<Accommodation> Search(AccommodationSearchFilter filter)
         {
-            List<Accommodation> searchedAccommodations = AccommodationRepository.GetAll();
+            List<Accommodation> searchedAccommodations = AccommodationRepository.GetActive();
             searchedAccommodations = FilterByName(filter.NameFilter, searchedAccommodations);
             searchedAccommodations = FilterByCountry(filter.CountryFilter, searchedAccommodations);
             searchedAccommodations = FilterByCity(filter.CityFilter, searchedAccommodations);
@@ -50,7 +50,7 @@ namespace TravelAgency.Services
 
         private List<Accommodation> FilterByCountry(string countryFilter, List<Accommodation> accommodations)
         {
-            if (countryFilter != "Not specified")
+            if (countryFilter != "Not specified" && countryFilter != "-")
             {
                 return accommodations.Where(accommodation => accommodation.Location.Country.ToLower().Contains(countryFilter.ToLower())).ToList();
             }
@@ -59,7 +59,7 @@ namespace TravelAgency.Services
 
         private List<Accommodation> FilterByCity(string cityFilter, List<Accommodation> accommodations)
         {
-            if (cityFilter != "Not specified")
+            if (cityFilter != "Not specified" && cityFilter != "-")
             {
                 return accommodations.Where(accommodation => accommodation.Location.City.ToLower().Contains(cityFilter.ToLower())).ToList();
             }
@@ -71,16 +71,19 @@ namespace TravelAgency.Services
             switch (typeFilter)
             {
                 case "Appartment":
+                case "Apartman":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.APARTMENT).ToList();
                 case "House":
+                case "Kuća":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HOUSE).ToList();
                 case "Hut":
+                case "Koliba":
                     return accommodations.Where(accommodation => accommodation.Type == AccommodationType.HUT).ToList();
             }
             return accommodations;
         }
 
-        private List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByGuestNumber(int guestNumberFilter, List<Accommodation> accommodations)
         {
             if (guestNumberFilter > 0)
             {
@@ -89,7 +92,7 @@ namespace TravelAgency.Services
             return accommodations;
         }
 
-        private List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
+        public List<Accommodation> FilterByDayNumber(int DayFilter, List<Accommodation> accommodations)
         {
             if (DayFilter > 0)
             {
@@ -100,7 +103,7 @@ namespace TravelAgency.Services
 
         public List<Accommodation> CancelSearch()
         {
-            return AccommodationRepository.GetAll();
+            return AccommodationRepository.GetActive();
         }
     }
 }

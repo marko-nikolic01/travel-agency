@@ -4,23 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelAgency.WPF.Views"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" Icon="../../Resources/Images/logotip.ico" Title="iBMW tours and travels"
         mc:Ignorable="d" Height="750" Width="430">
     <Window.Resources>
         <ImageBrush x:Key="BackImage" ImageSource="/Resources/Images/back.png" />
         <ImageBrush x:Key="HomeImage" ImageSource="/Resources/Images/home.png"/>
-        <ImageBrush x:Key="ProfileImage" ImageSource="/Resources/Images/ProfilePicture.jpg"/>
+        <ImageBrush x:Key="ProfileImage" ImageSource="/Resources/Images/ProfilePictureButton.jpeg"/>
+        <Style TargetType="MenuItem">
+            <Setter Property="Foreground" Value="#0e1d31"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Height="35" Background="LightSlateGray">
+        <Menu DockPanel.Dock="Top" Height="35" Background="#0e1d31">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem FontSize="22">
+            <MenuItem FontSize="22" Background="#0e1d31" Margin="5 0 0 0">
                 <MenuItem.Icon>
-                    <Image Height="20" Stretch="UniformToFill" Width="20" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
+                    <Image Height="30" Margin="-5" Width="30" Source="/Resources/Images/ThreeLineMenu.jpg"></Image>
                 </MenuItem.Icon>
                 <MenuItem Header="New tour" Command="{Binding NavigateToCreateTourPageCommand}">
                     <MenuItem.Icon>
@@ -44,7 +51,7 @@
                         <Image Source="/Resources/Images/envelope.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Special tour requests">
+                <MenuItem Header="Special tour requests" Command="{Binding NavigateToSpecialRequestsPageCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Images/envelopes.png"></Image>
                     </MenuItem.Icon>
@@ -66,15 +73,10 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20">
+            <MenuItem Foreground="#FFFFFF" Background="#0e1d31" Header="{Binding ElementName=frame, Path=Content.Title}" FontSize="20">
             </MenuItem>
-            <MenuItem Header="⋮" FontSize="22" HorizontalAlignment="Right">
-                <MenuItem  Header="Undo">
-                    <MenuItem.Icon>
-                        <Image Source="/Resources/Images/undo.png"></Image>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem  Header="My Profile">
+            <MenuItem Margin="0 0 5 0" Background="#0e1d31" Foreground="#ef4865" Header="⋮" FontSize="22" HorizontalAlignment="Right">
+                <MenuItem  Header="My Profile" Command="{Binding NavigateToProfilePageCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Images/ProfilePicture.jpg"></Image>
                     </MenuItem.Icon>
@@ -86,7 +88,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <StackPanel DockPanel.Dock="Bottom" Height="50" Orientation="Vertical" Background="LightSlateGray">
+        <StackPanel DockPanel.Dock="Bottom" Height="50" Orientation="Vertical" Background="#0e1d31">
             <Separator VerticalAlignment="Top"></Separator>
             <DockPanel Margin="0 1 0 0">
                 <Button Width="40" Height="40" HorizontalAlignment="Left" Click="Back_Click"  Margin="20 0 0 0">
@@ -95,7 +97,7 @@
                 <Button Width="40" Height="40" Command="{Binding NavigateToTodaysToursPageCommand}" Margin="130 0 0 0">
                     <Label Height="38" Width="38" Background="{StaticResource HomeImage}"></Label>
                 </Button>
-                <Button Width="40" Height="40" Command="{Binding NavigateToTodaysToursPageCommand}" Margin="0 0 20 0" HorizontalAlignment="Right">
+                <Button Width="40" Height="40" Command="{Binding NavigateToProfilePageCommand}" Margin="0 0 20 0" HorizontalAlignment="Right">
                     <Label Height="38" Width="38" Background="{StaticResource ProfileImage}"></Label>
                 </Button>
             </DockPanel>

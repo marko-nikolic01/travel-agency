@@ -30,7 +30,7 @@ namespace TravelAgency.Services
 
         public List<Accommodation> GetAccommodations()
         {
-            return AccommodationRepository.GetAll();
+            return AccommodationRepository.GetActive();
         }
 
         public void CreateNew(Accommodation newAccommodation)
@@ -43,14 +43,19 @@ namespace TravelAgency.Services
             AccommodationPhotoRepository.SaveAll(newAccommodation.Photos);
         }
 
-        public List<Accommodation> GetByOwner(User owner)
+        public List<Accommodation> GetActiveByOwner(User owner)
         {
-            return AccommodationRepository.GetByOwner(owner);
+            return AccommodationRepository.GetActiveByOwner(owner);
         }
 
         public int GetAccommodationsCountForOwner(User owner)
         {
-            return GetByOwner(owner).Count();
+            return GetActiveByOwner(owner).Count();
+        }
+
+        public void Delete(Accommodation accommodation)
+        {
+            AccommodationRepository.Delete(accommodation);
         }
     }
 }

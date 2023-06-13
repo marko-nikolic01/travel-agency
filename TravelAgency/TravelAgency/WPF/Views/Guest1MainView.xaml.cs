@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using TravelAgency.Domain.Models;
+using TravelAgency.WPF.Commands;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -22,14 +23,23 @@ namespace TravelAgency.WPF.Views
     /// </summary>
     public partial class Guest1MainView : Window
     {
+        public MyICommand LogOutCommand { get; private set; }
         public Guest1MainView(User guest)
         {
+            LogOutCommand = new MyICommand(OnLogOut);
             InitializeComponent();
             this.DataContext = new Guest1MainViewModel(guest);
         }
 
         private void ButtonLogOut_Click(object sender, RoutedEventArgs e)
         {
+            OnLogOut();
+        }
+
+        private void OnLogOut()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             Close();
         }
     }

@@ -121,25 +121,28 @@ namespace TravelAgency.WPF.ViewModels
 
             loggedInUser = userService.GetLoggedInUser();
 
-            Accommodations = accommodationService.GetByOwner(loggedInUser);
+            Accommodations = accommodationService.GetActiveByOwner(loggedInUser);
             AvailableDateSpans = new ObservableCollection<DateSpan>();
 
             numberOfDays = 1;
 
             if (Accommodations.Count == 0)
             {
-                MessageBox.Show("You have no accommodations.");
+                MessageBox.Show("You have no accommodations.", "No accommodations", MessageBoxButton.OK, MessageBoxImage.Warning);
                 Execute_NavigateBackCommand();
             }
+            else
+            {
+                Tommorrow = DateTime.Now.AddDays(1);
+                selectedStartDate = DateTime.Now.AddDays(1);
+                selectedEndDate = DateTime.Now.AddDays(1);
+                minimumEndDate = DateTime.Now.AddDays(1);
 
-            Tommorrow = DateTime.Now.AddDays(1);
-            selectedStartDate = DateTime.Now.AddDays(1);
-            selectedEndDate = DateTime.Now.AddDays(1);
-            minimumEndDate = DateTime.Now.AddDays(1);
+                SelectedAccommodation = Accommodations[0];
 
-            SelectedAccommodation = Accommodations[0];
-
-            NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, AccommodationId = SelectedAccommodation.Id, Description = "" };
+                NewAccommodationRenovation = new AccommodationRenovation() { Accommodation = SelectedAccommodation, Description = "" };
+                NewAccommodationRenovation.Accommodation.Id = SelectedAccommodation.Id;
+            }
         }
 
         private void Execute_NavigateBackCommand()
@@ -173,28 +176,28 @@ namespace TravelAgency.WPF.ViewModels
         {
             if (NewAccommodationRenovation.DateSpan == null)
             {
-                MessageBox.Show("Select a datespan.");
+                MessageBox.Show("Select a datespan.", "No datespan selected", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (NewAccommodationRenovation.Description == string.Empty)
             {
-                MessageBox.Show("Enter a description.");
+                MessageBox.Show("Enter a description.", "No description given", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            NewAccommodationRenovation.AccommodationId = SelectedAccommodation.Id;
+            NewAccommodationRenovation.Accommodation.Id = SelectedAccommodation.Id;
             NewAccommodationRenovation.Accommodation = SelectedAccommodation;
             NewAccommodationRenovation.DateSpan = SelectedDateSpan;
 
             if (renovationService.CanRenovationBeScheduled(NewAccommodationRenovation))
             {
                 renovationService.ScheduleRenovation(NewAccommodationRenovation);
-                MessageBox.Show("Successfully scheduled renovation!");
+                MessageBox.Show("Successfully scheduled renovation.", "Successful scheduling", MessageBoxButton.OK, MessageBoxImage.Information);
                 Execute_NavigateBackCommand();
             }
             else
             {
-                MessageBox.Show("Invalid request!");
+                MessageBox.Show("Invalid request.", "Request error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

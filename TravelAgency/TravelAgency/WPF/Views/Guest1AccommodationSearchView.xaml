@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:TravelAgency.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="580" d:DesignWidth="1000"
-             Background="White">
+             Background="White" Focusable="True">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -35,7 +35,15 @@
         <converters:AccommodationTypeToStringConverter x:Key="AccommodationTypeToStringConverter"/>
         <converters:AccommodationPhotoToBitmapImageConverter x:Key="AccommodationPhotoToBitmapImageConverter"/>
         <converters:IntegerGreaterThanZeroToStringConverter x:Key="IntegerGreaterThanZeroToStringConverter"/>
+        <converters:AccommodationTypeStringToStringConverter x:Key="AccommodationTypeStringToStringConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter1"/>
+        
+        
+        
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel"/>
+    </UserControl.InputBindings>
     <DockPanel>
         <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
             <Grid.ColumnDefinitions>
@@ -53,7 +61,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/info.png"></Image>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc">
                 <Bold>Kako da rezervišem smeštaj?</Bold><LineBreak/><LineBreak/>
                 Klikom na dugme "Rezerviši"<LineBreak/>
@@ -107,7 +115,7 @@
                 <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
                 <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Istražite i rezervišite</Bold></TextBlock>
             </WrapPanel>
-            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+            <Button ToolTip="Ctrl+N" x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
                     Command="{Binding NavigationCommand}" CommandParameter="guest1AccommodationsReservationsMenuViewModel">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
@@ -231,6 +239,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
+                
             </Grid>
             <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -282,7 +291,7 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter}}"></TextBlock>
+                                <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" FontSize="13" Text="{Binding Path=Type, StringFormat='Tip: {0}', Converter={StaticResource AccommodationTypeToStringConverter1}}"></TextBlock>
                                 <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13"  Text="{Binding Path=MaxGuests, StringFormat='Maksimalan broj gostiju: {0}'}"></TextBlock>
                                 <TextBlock Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="8" FontSize="13" Text="{Binding Path=MinDays, StringFormat='Minimalan broj dana: {0}'}"></TextBlock>
                                 <Button x:Name="buttonMakeReservation" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand" Click="ButtonMakeReservation_Click" Focusable="False"

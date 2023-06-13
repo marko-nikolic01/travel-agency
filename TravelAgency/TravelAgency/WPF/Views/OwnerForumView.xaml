@@ -1,0 +1,86 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerForumView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      mc:Ignorable="d" 
+      x:Name="root"
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerForumView"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <Style x:Key="h2" TargetType="TextBlock" BasedOn="{StaticResource formTextBlock}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0 0 0 20"/>
+        </Style>
+
+        <Style x:Key="listBoxTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding NavigateToForumForLocationCommand, ElementName=root}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="Forum"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Forums for my locations"
+                       Style="{StaticResource h2}"/>
+
+            <ListView Grid.Row="1"
+                      x:Name="forumLocationsListView"
+                      ItemsSource="{Binding Locations}"
+                      SelectedItem="{Binding SelectedLocation}"
+                      Style="{DynamicResource ownerListView}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding City}" Style="{StaticResource listBoxTextBlock}"/>
+                            <TextBlock Text=", " Style="{StaticResource listBoxTextBlock}"/>
+                            <TextBlock Text="{Binding Country}" Style="{StaticResource listBoxTextBlock}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              Margin="0 20 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Text="Go to a forum of the selected location"
+                                         KeyboardShortcutText="Enter"
+                                         Click="NavigateToForumsForLocation_Click"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+
+            <controls:Tip Grid.Column="1"
+                          Header="Which forums can I see?"
+                          TipText="You can only see forums for locations in which you have at least 1 accommodation. When a new forum opens for any of your locations you will get a notification."
+                          Margin="15 0 0 0"/>
+        </Grid>
+    </Grid>
+</Page>

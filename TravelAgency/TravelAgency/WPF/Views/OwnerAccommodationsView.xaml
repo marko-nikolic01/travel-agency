@@ -35,24 +35,23 @@
             <controls:AccommodationsNavigationButton Grid.Row="0"
                                                      Text="Manage Accommodations"
                                                      KeyboardShortcutText="Ctrl+M"
-                                                     Icon="../../Resources/Images/ManageAccommodations.png"
-                                                     Foreground="Black"
-                                                     Background="White"
-                                                     Click="AccommodationsNavigationButton_Click"/>
+                                                     IconGeometry="{DynamicResource manageAccommodations}"
+                                                     Click="AccommodationsNavigationButton_Click"
+                                                     Margin="0 0 0 1"/>
             
             <controls:AccommodationsNavigationButton Grid.Row="1"
                                                      Text="Statistics"
-                                                     Icon="../../Resources/Images/OwnerStatistics.png"
+                                                     IconGeometry="{DynamicResource statistics}"
                                                      KeyboardShortcutText="Ctrl+S"
-                                                     Background="White"
-                                                     Click="Statistics_Click"/>
+                                                     Click="Statistics_Click"
+                                                     Margin="0 0 0 1"/>
             
             <controls:AccommodationsNavigationButton Grid.Row="2"
                                                      Text="Renovations"
-                                                     Icon="../../Resources/Images/Renovations.png"
+                                                     IconGeometry="{DynamicResource renovations}"
                                                      KeyboardShortcutText="Ctrl+R"
-                                                     Background="White"
-                                                     Click="RenovationsNavigationButton_Click"/>
+                                                     Click="RenovationsNavigationButton_Click"
+                                                     Margin="0 0 0 1"/>
         </Grid>
     </Grid>
 </Page>

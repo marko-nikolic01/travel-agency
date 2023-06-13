@@ -34,7 +34,7 @@ namespace TravelAgency.Services
         }
         private void CheckIfRequestsAreInvalid()
         {
-            foreach (var request in ITourRequestRepository.GetAll())
+            foreach (var request in ITourRequestRepository.GetAllIncludingSpecial())
                 request.CheckIfExpired();
         }
 
@@ -51,15 +51,7 @@ namespace TravelAgency.Services
         }
         public List<TourRequest> GetPendings()
         {
-            List<TourRequest> pendings = new List<TourRequest>();
-            foreach (var request in ITourRequestRepository.GetAll())
-            {
-                if (request.Status == RequestStatus.Pending)
-                {
-                    pendings.Add(request);
-                }
-            }
-            return pendings;
+            return ITourRequestRepository.GetPendings();
         }
         public List<string> getCountries()
         {
@@ -89,9 +81,9 @@ namespace TravelAgency.Services
         {
             ITourRequestRepository.Subscribe(observer);
         }
-        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime)
+        public void UpdateRequestStatus(TourRequest request, DateTime givenDateTime, int id)
         {
-            ITourRequestRepository.UpdateRequestStatus(request, givenDateTime);
+            ITourRequestRepository.UpdateRequestStatus(request, givenDateTime, id);
         }
         public void SaveNotification(RequestAcceptedNotification requestAcceptedNotification)
         {
@@ -359,6 +351,18 @@ namespace TravelAgency.Services
                 result.Add(new KeyValuePair<string, int>(months[i], ITourRequestRepository.GetCountForYearByCountryAndYear(selectedYear, selectedCountry, i + 1)));
             }
             return result;
+        }
+
+        public void BookRequest(int requestId, int guideId, DateOnly selectedDate)
+        {
+            ITourRequestRepository.BookTourRequest(requestId, guideId, selectedDate);
+        }
+
+        public void UndoBookRequest(int bookedRequest)
+        {
+            ITourRequestRepository.UndoBookTourRequest(bookedRequest);
+            int specialRequest = ITourRequestRepository.GetSpecialByRequestId(bookedRequest);
+            ISpecialTourRequestRepository.UndoIfAccepted(specialRequest);
         }
     }
 }

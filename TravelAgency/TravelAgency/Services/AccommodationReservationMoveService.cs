@@ -20,6 +20,7 @@ namespace TravelAgency.Services
         public IAccommodationRepository AccommodationRepository { get; set; }
         public ILocationRepository LocationRepository { get; set; }
         public IAccommodationPhotoRepository AccommodationPhotoRepository { get; set; }
+        private NotificationService _notificationService;
 
         public AccommodationReservationMoveService()
         {
@@ -29,12 +30,13 @@ namespace TravelAgency.Services
             AccommodationRepository = Injector.Injector.CreateInstance<IAccommodationRepository>();
             LocationRepository = Injector.Injector.CreateInstance<ILocationRepository>();
             AccommodationPhotoRepository = Injector.Injector.CreateInstance<IAccommodationPhotoRepository>();
+            _notificationService = new NotificationService();
 
             AccommodationRepository.LinkLocations(LocationRepository.GetAll());
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             MoveRequestRepository.LinkReservations(ReservationRepository.GetAll());
         }
 
@@ -54,32 +56,20 @@ namespace TravelAgency.Services
             return false;
         }
 
-        public bool NotifyGuestOnStatusChange(User guest)
-        {
-            bool notify = false;
-            foreach (AccommodationReservationMoveRequest moveRequest in GetRequestsByGuest(guest))
-            {
-                if (moveRequest.StatusChanged)
-                {
-                    MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, false);
-                    notify = true;
-                }
-            }
-            return notify;
-        }
-
         public void AcceptMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             ReservationRepository.UpdateDateSpan(moveRequest.Reservation, moveRequest.DateSpan);
             DeleteOverlappingReservations(moveRequest.Reservation);
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.ACCEPTED);
             MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, true);
+            _notificationService.NotifyReservationMoveRequestAccepted(moveRequest.Reservation.Guest);
         }
 
         public void RejectMoveRequest(AccommodationReservationMoveRequest moveRequest)
         {
             MoveRequestRepository.UpdateStatus(moveRequest, AccommodationReservationMoveRequestStatus.REJECTED);
             MoveRequestRepository.UpdateStatusChangedFlag(moveRequest, true);
+            _notificationService.NotifyReservationMoveRequestRejected(moveRequest.Reservation.Guest);
         }
 
         private void DeleteOverlappingReservations(AccommodationReservation reservation)
@@ -107,9 +97,9 @@ namespace TravelAgency.Services
         {
             foreach (var reservation in ReservationRepository.GetAll())
             {
-                if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId)
+                if (reservation.Accommodation.Id == moveRequest.Reservation.Accommodation.Id)
                 {
-                    if (reservation.AccommodationId == moveRequest.Reservation.AccommodationId &&
+                    if (reservation.Accommodation.Id == moveRequest.Reservation.Accommodation.Id &&
                         AreDateSpansOverlapping(moveRequest.DateSpan, reservation.DateSpan) &&
                         reservation != moveRequest.Reservation)
                     {

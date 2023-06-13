@@ -91,7 +91,7 @@ namespace TravelAgency.WPF.Views
 
             Guest = guest;
             Accommodation = accommodation;
-            Reservation = new AccommodationReservation(Accommodation.Id, Accommodation, Guest.Id, Guest);
+            Reservation = new AccommodationReservation(Accommodation, Guest);
 
             DayNumber = Accommodation.MinDays;
             FirstDate = DateTime.Now.Date;
@@ -316,7 +316,7 @@ namespace TravelAgency.WPF.Views
             if (Reservation.IsValid)
             {
                 ReservationService.CreateReservation(Reservation);
-                Guest1Main.Reservations.Add(Reservation);
+                //Guest1Main.Reservations.Add(Reservation);
                 Close();
             }
             else

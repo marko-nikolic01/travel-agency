@@ -1,0 +1,330 @@
+﻿<UserControl x:Class="TravelAgency.WPF.Views.Guest1WriteReviewDemoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+             xmlns:converters="clr-namespace:TravelAgency.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:model="clr-namespace:TravelAgency.Domain.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="580" d:DesignWidth="1000"
+             Background="White" Focusable="True">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonSmall">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="Button" x:Key="RoundButtonBig">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock FontSize="8" Text="{Binding [0].ErrorContent}" Foreground="Red" VerticalAlignment="Top" />
+            </StackPanel>
+        </ControlTemplate>
+        <converters:RadioButtonToIntegerConverter x:Key="RadioButtonToIntegerConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:AccommodationTypeToStringConverter1 x:Key="AccommodationTypeToStringConverter"/>
+        <converters:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+    </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding StopDemoCommand}" />
+    </UserControl.InputBindings>
+    <DockPanel>
+        <Grid DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Background="#dddddd">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="27"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" Grid.Column="1" Source="../../Resources/Images/question.png"></Image>
+            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="0, 5, 0, 0" Padding="5" FontSize="13" Background="#cccccc" TextWrapping="Wrap" Text="{Binding Instruction.Text}">
+            </TextBlock>
+            <Button ToolTip="Ctrl+D" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand"
+                    Command="{Binding StopDemoCommand}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="15" Source="../../Resources/Images/stop.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Zaustavi Demo</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="33"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    <Bold>Recenzije</Bold>
+                </TextBlock>
+                <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}">
+                    <Bold>Napišite recenziju</Bold>
+                </TextBlock>
+                <Image  Width="30" Height="30" Source="../../Resources/Images/next.png" Margin="5, 3, 5, 0"></Image>
+                <TextBlock FontSize="24" Cursor="Hand" Style="{StaticResource HoverUnderlineStyle}"><Bold>Napiši recenziju</Bold></TextBlock>
+            </WrapPanel>
+            <Button x:Name="buttonBack" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="140"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="20" Source="../../Resources/Images/left-arrow.png"></Image>
+                        <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Nazad</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Border Grid.Row="3" Grid.Column="1" BorderThickness="0, 0, 1, 0" BorderBrush="Black"></Border>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="47"></RowDefinition>
+                    <RowDefinition Height="180"></RowDefinition>
+                    <RowDefinition Height="27"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Rezervacija</TextBlock>
+                <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="Black" Background="#cccccc">
+                    <Image Source="../../Resources/Images/istockphoto-1147544807-612x612.jpg"></Image>
+                </Border>
+                <Button x:Name="buttonPreviousPhoto" Grid.Row="2" Grid.Column="1" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Prethodna</Button>
+                <Button x:Name="buttonNextPhoto" Grid.Row="2" Grid.Column="2" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Sledeća</Button>
+                <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">Naziv: Smeštaj</TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">
+                    Lokacija: Novi Sad, Serbia
+                </TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">Tip: Apartman</TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">Broj gostiju: 1</TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="27" Margin="0, 10, 0, 0" FontSize="13">
+                    Termin: 11/11/3000 - 11/12/3000
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="5"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">Izmena rezervacije</TextBlock>
+                <ScrollViewer  HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible">
+                    <Grid Width="510">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"></ColumnDefinition>
+                            <ColumnDefinition Width="155"></ColumnDefinition>
+                            <ColumnDefinition Width="5"></ColumnDefinition>
+                            <ColumnDefinition Width="110"></ColumnDefinition>
+                            <ColumnDefinition Width="230"></ColumnDefinition>
+                            <ColumnDefinition Width="5"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="145"></RowDefinition>
+                            <RowDefinition Height="5"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="145"></RowDefinition>
+                            <RowDefinition Height="27"></RowDefinition>
+                            <RowDefinition Height="10"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="5"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="10"></RowDefinition>
+                            <RowDefinition Height="27"></RowDefinition>
+                            <RowDefinition Height="5"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Čistoća smeštaja:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Komfor smeštaja:</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Lokacija:</TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Korektnost vlasnika:</TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Odzivnost vlasnika:</TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Komentar:</TextBlock>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Height="27" Margin="0, 10, 0, 0" FontSize="13">Fotografije (opciono, uneti URL slike):</TextBlock>
+                        <WrapPanel VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3">
+                            <RadioButton Cursor="Arrow" Width="79" GroupName="a" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationCleanliness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='1'}">1</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" GroupName="a" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationCleanliness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='2'}">2</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" GroupName="a" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationCleanliness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='3'}">3</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" GroupName="a" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationCleanliness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='4'}">4</RadioButton>
+                            <RadioButton Cursor="Arrow" GroupName="a" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationCleanliness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='5'}">5</RadioButton>
+                        </WrapPanel>
+                        <WrapPanel VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3">
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationComfort, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='1'}">1</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationComfort, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='2'}">2</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationComfort, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='3'}">3</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationComfort, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='4'}">4</RadioButton>
+                            <RadioButton Cursor="Arrow" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationComfort, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='5'}">5</RadioButton>
+                        </WrapPanel>
+                        <WrapPanel VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3">
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationLocation, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='1'}">1</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationLocation, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='2'}">2</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationLocation, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='3'}">3</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationLocation, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='4'}">4</RadioButton>
+                            <RadioButton Cursor="Arrow" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.AccommodationLocation, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='5'}">5</RadioButton>
+                        </WrapPanel>
+                        <WrapPanel VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3">
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerCorrectness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='1'}">1</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerCorrectness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='2'}">2</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerCorrectness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='3'}">3</RadioButton>
+                            <RadioButton Cursor="Arrow" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerCorrectness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='4'}">4</RadioButton>
+                            <RadioButton Cursor="Arrow" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerCorrectness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='5'}">5</RadioButton>
+                        </WrapPanel>
+                        <WrapPanel VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3">
+                            <RadioButton Cursor="Arrow" GroupName="e" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerResponsiveness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='1'}">1</RadioButton>
+                            <RadioButton Cursor="Arrow" GroupName="e" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerResponsiveness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='2'}">2</RadioButton>
+                            <RadioButton Cursor="Arrow" GroupName="e" Width="79" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerResponsiveness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='3'}">3</RadioButton>
+                            <RadioButton Cursor="Arrow" GroupName="e" Width="79" Margin="0, 5, 0, 0" FontSize="13"  IsChecked="{Binding Rating.OwnerResponsiveness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='4'}">4</RadioButton>
+                            <RadioButton Cursor="Arrow" GroupName="e" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding Rating.OwnerResponsiveness, Converter={StaticResource RadioButtonToIntegerConverter}, ConverterParameter='5'}">5</RadioButton>
+                        </WrapPanel>
+                        <Border Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="6" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="Black">
+                            <TextBox IsReadOnly="True" Cursor="Arrow" FontSize="13" Width="498" TextWrapping="Wrap" Text="{Binding Rating.Comment, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+                        </Border>
+                        <Border Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="3" Width="230" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="Black" Background="#cccccc">
+                            <Image Source="../../Resources/Images/istockphoto-1147544807-612x612.jpg"></Image>
+                        </Border>
+                        <WrapPanel Grid.Row="10" Grid.Column="4">
+                            <Button Width="100" Height="27" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Prethodna</Button>
+                            <Button Width="100" Height="27" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">Sledeća</Button>
+                            <Button Width="30" Height="27" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">
+                                <Image Grid.Column="0" Height="20" Source="../../Resources/Images/trash.png"></Image>
+                            </Button>
+                        </WrapPanel>
+                        <Border Margin="0, 0, 10, 0"  Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="Black">
+                            <TextBox IsReadOnly="True" Cursor="Arrow" FontSize="13" Width="250" TextWrapping="Wrap"></TextBox>
+                        </Border>
+                        <Button HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Width="252" Height="27" FontSize="13" Background="#cccccc" BorderBrush="Black" Cursor="Hand">
+                            <Button.Content>
+                                <WrapPanel>
+                                    <Image Grid.Column="0" Height="15" Source="../../Resources/Images/plus.png"></Image>
+                                    <TextBlock Margin="5, 0, 0, 0" FontSize="13">Dodaj fotografiju</TextBlock>
+                                </WrapPanel>
+                            </Button.Content>
+                        </Button>
+                        <Border Grid.Row="11" Grid.ColumnSpan="5" BorderThickness="0, 0, 0, 1" BorderBrush="Black"></Border>
+                        <TextBlock Grid.Row="12" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Preporuka za renoviranje:</TextBlock>
+                        <CheckBox Cursor="Arrow" Grid.Row="12" Grid.Column="3" VerticalAlignment="Center" Margin="0, 5, 0, 0" IsChecked="{Binding Path=WriteRenovationRecommendation}"></CheckBox>
+                        <Grid Grid.Row="14" Grid.ColumnSpan="6" Visibility="{Binding Path=WriteRenovationRecommendation, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"></ColumnDefinition>
+                                <ColumnDefinition Width="155"></ColumnDefinition>
+                                <ColumnDefinition Width="5"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="230"></ColumnDefinition>
+                                <ColumnDefinition Width="5"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"></RowDefinition>
+                                <RowDefinition Height="145"></RowDefinition>
+                                <RowDefinition Height="5"></RowDefinition>
+                                <RowDefinition Height="35"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="5"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Opis stanja smeštaja:</TextBlock>
+                            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="Black">
+                                <TextBox IsReadOnly="True" Cursor="Arrow" FontSize="13" Width="498" TextWrapping="Wrap" Text="{Binding Path=RenovationRecommendation.Description, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"></TextBox>
+                            </Border>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Height="27" Margin="0, 10, 0, 0" FontSize="13">Hitnost renoviranja:</TextBlock>
+                            <StackPanel VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6">
+                                <RadioButton Cursor="Arrow"  Width="500" HorizontalAlignment="Left" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding RenovationRecommendation.UrgencyLevel, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static model:UrgencyLevel.LEVEL1}}">
+                                    1 - bilo bi lepo renovirati neke sitnice, ali sve funkcioniše kako treba i bez toga
+                                </RadioButton>
+                                <RadioButton Cursor="Arrow" Width="500" HorizontalAlignment="Left" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding RenovationRecommendation.UrgencyLevel, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static model:UrgencyLevel.LEVEL2}}">
+                                    2 - male zamerke na smeštaj koje kada bi se uklonile bi ga učinile savršenim
+                                </RadioButton>
+                                <RadioButton Cursor="Arrow" Width="500" HorizontalAlignment="Left" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding RenovationRecommendation.UrgencyLevel, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static model:UrgencyLevel.LEVEL3}}">
+                                    3 - nekoliko stvari koje su baš zasmetale bi trebalo renovirati
+                                </RadioButton>
+                                <RadioButton Cursor="Arrow" Width="500" HorizontalAlignment="Left" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding RenovationRecommendation.UrgencyLevel, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static model:UrgencyLevel.LEVEL4}}">
+                                    4 - ima dosta loših stvari i renoviranje je stvarno neophodno
+                                </RadioButton>
+                                <RadioButton Cursor="Arrow" Width="500" HorizontalAlignment="Left" Margin="0, 5, 0, 0" FontSize="13" IsChecked="{Binding RenovationRecommendation.UrgencyLevel, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static model:UrgencyLevel.LEVEL5}}">
+                                    5 - smeštaj je u lošem stanju, ne vredi ga uopšte iznajmljivati dok se ne renovira
+                                </RadioButton>
+                            </StackPanel>
+                        </Grid>
+                        <Button Grid.Row="16" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="27" Background="#cccccc" BorderThickness="2" Style="{DynamicResource RoundButtonSmall}" Cursor="Hand">
+                            <Button.Content>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"></ColumnDefinition>
+                                        <ColumnDefinition Width="140"></ColumnDefinition>
+                                        <ColumnDefinition Width="20"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Height="20" Source="../../Resources/Images/email.png"></Image>
+                                    <TextBlock Grid.Column="1" FontSize="13" Margin="5, 0, 0, 0">Pošalji recenziju</TextBlock>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </ScrollViewer>
+                <Border BorderBrush="Green" BorderThickness="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="19" Visibility="{Binding Visibility, Converter={StaticResource BooleanToVisibilityConverter}}"></Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

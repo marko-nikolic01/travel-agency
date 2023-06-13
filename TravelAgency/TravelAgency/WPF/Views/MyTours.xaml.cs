@@ -11,7 +11,7 @@ namespace TravelAgency.WPF.Views
         public MyTours(int guestId, bool tourRated = false)
         {
             if(tourRated)
-                MessageBox.Show("Tour successfully rated.");
+                MessageBox.Show("Tour successfully rated.", "My tours", MessageBoxButton.OK, MessageBoxImage.Information);
             InitializeComponent();
             myToursViewModel = new MyToursViewModel(guestId);
             DataContext = myToursViewModel;
@@ -25,14 +25,14 @@ namespace TravelAgency.WPF.Views
         private void RateTour_Click(object sender, RoutedEventArgs e)
         {
            if (myToursViewModel.SelectedTourOccurrence == null)
-                MessageBox.Show("You must select tour occurrence to rate.");
+                MessageBox.Show("You must select tour occurrence to rate." , "Finished tours", MessageBoxButton.OK, MessageBoxImage.Error);
             else if (myToursViewModel.CanTourBeRated())
            {
                 TourRatingFormView ratingFormView = new TourRatingFormView(myToursViewModel.SelectedTourOccurrence, myToursViewModel.currentGuestId);
                 this.NavigationService.Navigate(ratingFormView);
            }
            else
-                MessageBox.Show("This tour occurrence is already rated.");
+                MessageBox.Show("This tour occurrence is already rated.", "Finished tours", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         private void ShowDetails_Click(object sender, RoutedEventArgs e)
         {

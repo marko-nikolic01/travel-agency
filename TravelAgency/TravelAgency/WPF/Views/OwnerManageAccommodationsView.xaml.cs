@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,17 +28,26 @@ namespace TravelAgency.WPF.Pages
     {
         public MyICommand NavigateBackCommand { get; set; }
         public MyICommand AddAccommodationCommand { get; set; }
+        public MyICommand NavigateToManagingSuggestions { get; set; }
         public OwnerManageAccommodationsViewModel ViewModel { get; set; }
 
         public OwnerManageAccommodationsView()
         {
             NavigateBackCommand = new MyICommand(Execute_NavigateBack);
             AddAccommodationCommand = new MyICommand(Execute_AddAccommodation);
+            NavigateToManagingSuggestions = new MyICommand(Execute_NavigateToManagingSuggestions);
+
             InitializeComponent();
             ViewModel = new OwnerManageAccommodationsViewModel();
             DataContext = ViewModel;
 
             Loaded += (s, e) => Keyboard.Focus(this);
+            accommodationsListView.Loaded += PreselectFirstItem;
+        }
+
+        private void Execute_NavigateToManagingSuggestions()
+        {
+            NavigationService.Navigate(new Uri("WPF/Views/OwnerAccommodationSuggestionsView.xaml", UriKind.Relative));
         }
 
         private void Execute_AddAccommodation()
@@ -60,6 +70,26 @@ namespace TravelAgency.WPF.Pages
         private void AddAccommodation_Click(object sender, RoutedEventArgs e)
         {
             Execute_AddAccommodation();
+        }
+
+        private void NavigateToManagingSuggestions_Click(object sender, RoutedEventArgs e)
+        {
+            Execute_NavigateToManagingSuggestions();
+        }
+
+        private void DeleteSelectedAccommodationCommand_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Execute_DeleteSelectedAccommodationCommand();
+        }
+
+        private void PreselectFirstItem(object sender, RoutedEventArgs e)
+        {
+            if (accommodationsListView.Items.Count > 0)
+            {
+                accommodationsListView.SelectedItem = accommodationsListView.Items[0];
+                ListBoxItem selectedItem = (ListBoxItem)accommodationsListView.ItemContainerGenerator.ContainerFromItem(accommodationsListView.SelectedItem);
+                selectedItem.Focus();
+            }
         }
     }
 }

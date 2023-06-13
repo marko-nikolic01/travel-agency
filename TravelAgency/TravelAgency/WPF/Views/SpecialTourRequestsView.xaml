@@ -160,7 +160,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Click="NewRequest_Click" Content="Create new request"/>
+            <Button Grid.Column="0" Background="#4681f4" Foreground="White" Width="374" Height="43" Command="{Binding CreateRequestCommand}" Content="Create new request"/>
         </Grid>
     </Grid>
 </Page>

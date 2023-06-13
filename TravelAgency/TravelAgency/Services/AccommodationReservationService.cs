@@ -33,7 +33,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
             
         }
@@ -41,6 +41,11 @@ namespace TravelAgency.Services
         public List<AccommodationReservation> GetByGuest(User guest)
         {
             return ReservationRepository.GetAllNotCanceledByGuest(guest);
+        }
+
+        public List<AccommodationReservation> GetCanceledByGuest(User guest)
+        {
+            return ReservationRepository.GetAllCanceledByGuest(guest);
         }
 
         public bool CreateReservation(AccommodationReservation reservation)

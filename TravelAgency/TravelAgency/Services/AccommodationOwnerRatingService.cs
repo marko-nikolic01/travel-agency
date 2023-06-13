@@ -34,7 +34,7 @@ namespace TravelAgency.Services
             AccommodationRepository.LinkOwners(UserRepository.GetOwners());
             AccommodationRepository.LinkPhotos(AccommodationPhotoRepository.GetAll());
             ReservationRepository.LinkGuests(UserRepository.GetUsers());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
             OwnerRatingRepository.LinkReservations(ReservationRepository.GetAll());
             GuestRatingRepository.LinkReservations(ReservationRepository.GetAll());
         }
@@ -96,7 +96,7 @@ namespace TravelAgency.Services
         {
             foreach (AccommodationOwnerRating rating in ratings)
             {
-                if (reservation.Id == rating.AccommodationReservationId)
+                if (reservation.Id == rating.AccommodationReservation.Id)
                 {
                     return true;
                 }
@@ -112,7 +112,7 @@ namespace TravelAgency.Services
             {
                 foreach (var ownerRating in OwnerRatingRepository.GetAll())
                 {
-                    if (ownerRating.AccommodationReservationId == guestRating.AccommodationReservationId && owner.Id == ownerRating.AccommodationReservation.Accommodation.OwnerId)
+                    if (ownerRating.AccommodationReservation.Id == guestRating.AccommodationReservation.Id && owner.Id == ownerRating.AccommodationReservation.Accommodation.Owner.Id)
                     {
                         ownerRatings.Add(ownerRating);
                         break;

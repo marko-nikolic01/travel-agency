@@ -17,7 +17,7 @@ namespace TravelAgency.Converters
             switch ((AccommodationType)value)
             {
                 case AccommodationType.APARTMENT:
-                    return "Apartment";
+                    return "Appartment";
                 case AccommodationType.HOUSE:
                     return "House";
                 case AccommodationType.HUT:
@@ -29,6 +29,59 @@ namespace TravelAgency.Converters
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class AccommodationTypeToStringConverter1 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch ((AccommodationType)value)
+            {
+                case AccommodationType.APARTMENT:
+                    return "Apartman";
+                case AccommodationType.HOUSE:
+                    return "Kuća";
+                case AccommodationType.HUT:
+                    return "Koliba";
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class AccommodationTypeStringToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch ((string)value)
+            {
+                case "Apartman":
+                    return "Appartment";
+                case "Kuća":
+                    return "House";
+                case "Koliba":
+                    return "Hut";
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch ((string)value)
+            {
+                case "Appartment":
+                    return "Apartman";
+                case "House":
+                    return "Kuća";
+                case "Hut":
+                    return "Koliba";
+            }
+            return null;
         }
     }
 

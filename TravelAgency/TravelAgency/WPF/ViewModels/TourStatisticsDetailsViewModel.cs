@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 using TravelAgency.Services;
 using LiveCharts.Defaults;
 using TravelAgency.Domain.Models;
+using TravelAgency.Commands;
+using System.Windows;
+using TravelAgency.WPF.Views;
+using System.Windows.Navigation;
+using System.Windows.Controls;
+using System.Windows.Ink;
+using Syncfusion.XPS;
+using System.Drawing;
+using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace TravelAgency.WPF.ViewModels
 {
@@ -21,22 +31,45 @@ namespace TravelAgency.WPF.ViewModels
         public double GuestsNotUsedVoucher { get; set; }
         public SeriesCollection SeriesCollectionVouchers { get; set; }
         public SeriesCollection SeriesCollectionAges { get; set; }
-        public TourStatisticsDetailsViewModel(TourOccurrence tourOccurrence)
+        public ButtonCommandNoParameter GenerateReportCommand { get; set; }
+        public TourOccurrenceAttendanceService TourOccurrenceAttendanceService { get; set; }
+        public PDFReportService PDFReportService { get; set; }
+        public UserService UserService { get; set; }
+        public NavigationService NavigationService { get; set; }
+        public User ActiveGuide { get; set; }
+        public TourStatisticsDetailsViewModel(TourOccurrence tourOccurrence, System.Windows.Navigation.NavigationService navService)
         {
+            NavigationService = navService;
             SelectedTourOccurrence = tourOccurrence;
-            var attendanceService = new TourOccurrenceAttendanceService();
-            GuestsUnder18 = attendanceService.GetGuestsUnder18(SelectedTourOccurrence.Id);
-            Guests18to50 = attendanceService.GetGuest18to50(SelectedTourOccurrence.Id);
-            GestsAbove50 = attendanceService.GetGuestsAbove50(SelectedTourOccurrence.Id);
+            TourOccurrenceAttendanceService = new TourOccurrenceAttendanceService();
+            GuestsUnder18 = TourOccurrenceAttendanceService.GetGuestsUnder18(SelectedTourOccurrence.Id);
+            Guests18to50 = TourOccurrenceAttendanceService.GetGuest18to50(SelectedTourOccurrence.Id);
+            GestsAbove50 = TourOccurrenceAttendanceService.GetGuestsAbove50(SelectedTourOccurrence.Id);
             var voucherService = new VoucherService();
             SeriesCollectionVouchers = new SeriesCollection();
             int used = voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
-            SeriesCollectionVouchers.Add(new PieSeries { Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) } });
-            int notUsed = attendanceService.GetGuestsNumberByTour(tourOccurrence.Id) - voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
-            SeriesCollectionVouchers.Add(new PieSeries { Title = "Not used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) } });
-            GuestsUsedVoucher = (double)used / attendanceService.GetGuestsNumberByTour(SelectedTourOccurrence.Id);
+            SeriesCollectionVouchers.Add(new PieSeries { Title = "Used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(used) }, Fill=Brushes.PeachPuff });
+            int notUsed = TourOccurrenceAttendanceService.GetGuestsNumberByTour(tourOccurrence.Id) - voucherService.GetUsedVoucherByTour(tourOccurrence.Id);
+            SeriesCollectionVouchers.Add(new PieSeries { Title = "Not used voucher", Values = new ChartValues<ObservableValue> { new ObservableValue(notUsed) }, Fill=Brushes.YellowGreen });
+            GuestsUsedVoucher = (double)used / TourOccurrenceAttendanceService.GetGuestsNumberByTour(SelectedTourOccurrence.Id);
             GuestsNotUsedVoucher = 1 - GuestsUsedVoucher;
-            SeriesCollectionAges = new SeriesCollection { new ColumnSeries { Values = new ChartValues<int> { GuestsUnder18, Guests18to50, GestsAbove50 } } };
+            SeriesCollectionAges = new SeriesCollection() {
+                new ColumnSeries() {
+                    Title = "Guests",
+                    Values = new ChartValues<int>() { GuestsUnder18, Guests18to50, GestsAbove50 }
+                } 
+            };
+            PDFReportService = new PDFReportService();
+            UserService = new UserService();
+            ActiveGuide = UserService.GetLoggedInUser();
+            GenerateReportCommand = new ButtonCommandNoParameter(GenerateReport);
+        }
+        public void GenerateReport()
+        {
+            string link = PDFReportService.WriteTourStatisticsReport(ActiveGuide, SelectedTourOccurrence, GuestsUnder18, Guests18to50, GestsAbove50, GuestsUsedVoucher, GuestsNotUsedVoucher);
+            MessageBox.Show("Report has been successfuly generated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            Page w = new GuideReportView(link);
+            NavigationService.Navigate(w);
         }
     }
 }

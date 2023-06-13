@@ -8,22 +8,18 @@
       xmlns:converters="clr-namespace:TravelAgency.Converters"
       mc:Ignorable="d" 
       Name="root"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="620" d:DesignWidth="840"
       Title="OwnerReservationsPage"
       Style="{StaticResource pageStyle}">
 
     <Page.Resources>
-        <Style x:Key="h2" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-            <Setter Property="Focusable" Value="False"/>
-        </Style>
-
         <converters:BooleanToAvailability x:Key="booleanToAvailability"/>
     </Page.Resources>
 
     <Page.InputBindings>
         <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding AcceptRequestCommand}"/>
+        <KeyBinding Key="Delete" Modifiers="Ctrl" Command="{Binding NavigateToReviewRequestCommand,ElementName=root}"/>
     </Page.InputBindings>
 
     <Grid>
@@ -59,7 +55,9 @@
                 <DataGrid Grid.Row="1"
                           x:Name="activeReservationsDataGrid"
                           ItemsSource="{Binding AccommodationReservations}"
-                          Style="{StaticResource ownerDataGrid}">
+                          SelectionMode="Single"
+                          Style="{StaticResource ownerDataGrid}"
+                          SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
                                             Binding="{Binding Accommodation.Name}"
@@ -94,6 +92,7 @@
                 <DataGrid Grid.Row="1"
                           x:Name="requestsDataGrid"
                           ItemsSource="{Binding MoveRequests}"
+                          SelectedItem="{Binding SelectedMoveRequest}"
                           Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Accommodation"
@@ -126,15 +125,23 @@
               Margin="0 20 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
-                                         Text="Review request"
-                                         KeyboardShortcutText="Enter"
-                                         Margin="0 16 16 16"/>
+                                         Text="Accept request"
+                                         KeyboardShortcutText="Ctrl+Enter"
+                                         Margin="0 0 10 0"
+                                         Click="AcceptMoveRequest_Click"/>
 
-            <controls:Tip Grid.Column="1"
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Reject request"
+                                         KeyboardShortcutText="Ctrl+Delete"
+                                         Margin="0 0 10 0"
+                                         Click="NavigateToReviewRequestCommand_Click"/>
+
+            <controls:Tip Grid.Column="2"
                           Header="Managing move requests"
                           TipText="Every reservation can be moved, regardless of availability of the requested date span. However, all reservations that are overlapping in that period will be cancelled."/>
         </Grid>

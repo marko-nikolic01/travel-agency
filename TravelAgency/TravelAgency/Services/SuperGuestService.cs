@@ -24,7 +24,7 @@ namespace TravelAgency.Services
             ReservationRepository = Injector.Injector.CreateInstance<IAccommodationReservationRepository>();
             ReservationRepository.LinkGuests(UserRepository.GetAll());
             UserRepository.LinkSuperGuestTitles(TitleRepository.GetAll());
-            ReservationRepository.LinkAccommodations(AccommodationRepository.GetAll());
+            ReservationRepository.LinkAccommodations(AccommodationRepository.GetActive());
         }
 
         public void CheckSuperGuest(User guest)

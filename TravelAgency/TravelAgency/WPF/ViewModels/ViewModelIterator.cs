@@ -15,6 +15,7 @@ namespace TravelAgency.WPF.ViewModels
     {
         private string backButtonVisibility;
         private string nextButtonVisibility;
+        private string currentRequest;
         private bool discardButtonEnabled;
         public string BackButtonVisibility
         {
@@ -25,6 +26,11 @@ namespace TravelAgency.WPF.ViewModels
         {
             get => nextButtonVisibility;
             set { if (value != nextButtonVisibility) { nextButtonVisibility = value; OnPropertyChanged(); } }
+        }
+        public string CurrentRequest
+        {
+            get => currentRequest;
+            set { if (value != currentRequest) { currentRequest = value; OnPropertyChanged(); } }
         }
         public bool DiscardButtonEnabled
         {
@@ -49,6 +55,7 @@ namespace TravelAgency.WPF.ViewModels
             BackButtonVisibility = "Hidden";
             NextButtonVisibility = "Hidden";
             UpdateHelpText();
+            UpdateCurrentRequestString();
         }
         public TourRequestFormViewModel GetViewModelInstance()
         {
@@ -64,7 +71,12 @@ namespace TravelAgency.WPF.ViewModels
             BackButtonVisibility = "Visible";
             NextButtonVisibility = "Hidden";
             DiscardButtonEnabled = true;
+            UpdateCurrentRequestString();
             return viewModels[i];
+        }
+        private void UpdateCurrentRequestString()
+        {
+            CurrentRequest = "Request " + (i + 1) + "/" +viewModels.Count;
         }
         public TourRequestFormViewModel GetPreviousViewModel()
         {
@@ -74,6 +86,7 @@ namespace TravelAgency.WPF.ViewModels
                 BackButtonVisibility = "Hidden";
             }
             NextButtonVisibility = "Visible";
+            UpdateCurrentRequestString();
             return viewModels[i];
         }
         public TourRequestFormViewModel GetNextViewModel()
@@ -84,6 +97,7 @@ namespace TravelAgency.WPF.ViewModels
                 NextButtonVisibility = "Hidden";
             }
             BackButtonVisibility = "Visible";
+            UpdateCurrentRequestString();
             return viewModels[i];
         }
         public void SaveSpecialTourRequest()
@@ -106,6 +120,7 @@ namespace TravelAgency.WPF.ViewModels
             i = viewModels.Count - 1;
             BackButtonVisibility = "Visible";
             NextButtonVisibility = "Hidden";
+            UpdateCurrentRequestString();
             CanDeleteViewModel();
         }
         private void CanDeleteViewModel()

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using TravelAgency.Repositories;
 using TravelAgency.WPF.ViewModels;
 
 namespace TravelAgency.WPF.Views
@@ -25,10 +15,21 @@ namespace TravelAgency.WPF.Views
         public Guest2MainWindow(int guestId)
         {
             InitializeComponent();
-            Guest2ProfileView guest2 = new Guest2ProfileView(guestId);
-            this.frame.NavigationService.Navigate(guest2);
             ViewModel = new Guest2MainViewModel(this.frame.NavigationService, guestId);
             this.DataContext = ViewModel;
+            ProgramStatusRepository repository = new ProgramStatusRepository();
+            if (repository.GetProgramStatus().IsFirstTimeOpening)
+            {
+                Guest2MainViewModel.MenuVisible = "Hidden";
+                IntroductionWizardWindow introduction = new IntroductionWizardWindow(this.frame.NavigationService, guestId);
+                this.frame.NavigationService.Navigate(introduction);
+            }
+            else
+            {
+                Guest2ProfileView guest2 = new Guest2ProfileView(guestId, this.frame.NavigationService);
+                this.frame.NavigationService.Navigate(guest2);
+            }
+            
             HelpGrid.Height = 0;
         }
         private void SignOut_Click(object sender, RoutedEventArgs e)
@@ -41,12 +42,12 @@ namespace TravelAgency.WPF.Views
         {
             if (HelpGrid.Height == 0)
             {
-                DoubleAnimation heightAnimation = new DoubleAnimation(550, new Duration(TimeSpan.FromSeconds(0.5)));
+                DoubleAnimation heightAnimation = new DoubleAnimation(600, new Duration(TimeSpan.FromSeconds(0.6)));
                 HelpGrid.BeginAnimation(HeightProperty, heightAnimation);
             }
             else
             {
-                DoubleAnimation heightAnimation = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(0.2)));
+                DoubleAnimation heightAnimation = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(0.3)));
                 HelpGrid.BeginAnimation(HeightProperty, heightAnimation);
             }
         }

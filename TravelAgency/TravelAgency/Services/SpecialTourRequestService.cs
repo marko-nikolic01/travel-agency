@@ -8,7 +8,7 @@ using TravelAgency.Domain.RepositoryInterfaces;
 
 namespace TravelAgency.Services
 {
-    class SpecialTourRequestService
+    public class SpecialTourRequestService
     {
 
         public ITourRequestRepository ITourRequestRepository { get; set; }
@@ -22,6 +22,7 @@ namespace TravelAgency.Services
             LinkSpecialTourRequests();
             LinkRequestLocation();
             UpdateSpecialRequestStatus();
+            CheckIfRequestAccepted();
         }
         private void LinkSpecialTourRequests()
         {
@@ -29,7 +30,7 @@ namespace TravelAgency.Services
             {
                 if(specialRequest.TourRequests.Count == 0)
                 {
-                    specialRequest.TourRequests = ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id);
+                    specialRequest.TourRequests = new System.Collections.ObjectModel.ObservableCollection<TourRequest>(ITourRequestRepository.GetBySpecialRequestId(specialRequest.Id));
                 }
             }
         }
@@ -58,6 +59,29 @@ namespace TravelAgency.Services
                 }
             }
         }
+        private void CheckIfRequestAccepted()
+        {
+            foreach (SpecialTourRequest specialRequest in ISpecialTourRequestRepository.GetAll())
+            {
+                if (specialRequest.Status != SpecialRequestStatus.Accepted)
+                {
+                    bool save = true;
+                    foreach (TourRequest request in specialRequest.TourRequests)
+                    {
+                        if (request.Status != RequestStatus.Accepted)
+                        {
+                            save = false;
+                            break;
+                        }
+                    }
+                    if (save)
+                    {
+                        specialRequest.Status = SpecialRequestStatus.Accepted;
+                        ISpecialTourRequestRepository.Update(specialRequest);
+                    }
+                }
+            }
+        }
         public int SaveSpecialTourRequest(int guestId)
         {
             SpecialTourRequest specialRequest = new SpecialTourRequest();
@@ -70,6 +94,10 @@ namespace TravelAgency.Services
         public List<SpecialTourRequest>? GetSpecialRequestForGuest(int guestId)
         {
             return ISpecialTourRequestRepository.GetByGuestId(guestId);
+        }
+        public List<SpecialTourRequest>? GetOpenSpecialRequest()
+        {
+            return ISpecialTourRequestRepository.GetPendings();
         }
         public int GetNumberOfAllRequests(int guestId)
         {

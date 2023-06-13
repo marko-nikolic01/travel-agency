@@ -1,0 +1,132 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.OwnerForumsForLocation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      xmlns:controls="clr-namespace:TravelAgency.WPF.Controls"
+      xmlns:converters="clr-namespace:TravelAgency.Converters"
+      mc:Ignorable="d" 
+      x:Name="root"
+      d:DesignHeight="625" d:DesignWidth="840"
+      Title="OwnerForumsForLocation"
+      Style="{StaticResource pageStyle}">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="visibilityConverter"/>
+    </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding NavigateBackCommand, ElementName=root}"/>
+        <KeyBinding Key="Return" Command="{Binding NavigateToForumCommand, ElementName=root}"/>
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:PageHeader Grid.Row="0"
+                             Text="{Binding PageHeader}"/>
+
+        <ListView Grid.Row="1"
+                  x:Name="forumsListView"
+                  ItemsSource="{Binding Forums}"
+                  Style="{DynamicResource ownerListView}"
+                  SelectedItem="{Binding SelectedForum}"
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.CanContentScroll="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding Forum.Title}"
+                                           Style="{StaticResource h2}"
+                                           FontWeight="Bold"/>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text="No. comments by owners:"
+                                           Style="{StaticResource formTextBlock}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                           Text="No. comments by guests:"
+                                           Style="{StaticResource formTextBlock}"/>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding NumberOfOwnerComments}"
+                                           Style="{StaticResource formTextBlock}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding NumberOfGuestComments}"
+                                           Style="{StaticResource formTextBlock}"/>
+                                </Grid>
+                            </Grid>
+
+                            <!--<Image Grid.Column="1"
+                                   Source="../../Resources/Images/UserfulForum.png"
+                                   Visibility="{Binding IsVeryUserful, Converter={StaticResource visibilityConverter}}"
+                                   Width="25"
+                                   VerticalAlignment="Top"/>-->
+
+                            <Path Grid.Column="1"
+                                  Data="{DynamicResource usefulForum}"
+                                  Visibility="{Binding IsVeryUserful, Converter={StaticResource visibilityConverter}}"
+                                  VerticalAlignment="Top"
+                                  Fill="{DynamicResource textColor}"/>
+                        </Grid>
+                        
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="2"
+              Margin="0 20 0 0 ">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ButtonWithShortcut Grid.Column="0"
+                                         Style="{StaticResource backButton}"
+                                         Click="NavigateBack_Click"
+                                         Margin="0 0 10 0"/>
+
+            <controls:ButtonWithShortcut Grid.Column="1"
+                                         Text="Open the selected forum"
+                                         KeyboardShortcutText="Enter"
+                                         Click="NavigateToForumCommand_Click"
+                                         Margin="0 0 10 0"/>
+
+            <controls:Tip Grid.Column="2"
+                          Header="What does the star symbol represent?"
+                          TipText="The icon emphasizes that the forum is very useful. That means that it has 20 or more comments from guests or 10 or more comments from owners."/>
+        </Grid>
+    </Grid>
+</Page>

@@ -78,6 +78,44 @@ namespace TravelAgency.WPF.Controls.CustomControls
             DependencyProperty.Register("Icon", typeof(ImageSource), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(null));
 
 
+
+        public Geometry IconGeometry
+        {
+            get { return (Geometry)GetValue(IconGeometryProperty); }
+            set { SetValue(IconGeometryProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IconGeometry.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconGeometryProperty =
+            DependencyProperty.Register("IconGeometry", typeof(Geometry), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(null));
+
+
+
+        public Brush IconColor
+        {
+            get { return (Brush)GetValue(IconColorProperty); }
+            set { SetValue(IconColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IconColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IconColorProperty =
+            DependencyProperty.Register("IconColor", typeof(Brush), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(Brushes.Black));
+
+
+
+
+
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(OwnerSidebarNavRadioButton), new PropertyMetadata(Brushes.Transparent));
+
+
         static OwnerSidebarNavRadioButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(OwnerSidebarNavRadioButton), new FrameworkPropertyMetadata(typeof(OwnerSidebarNavRadioButton)));

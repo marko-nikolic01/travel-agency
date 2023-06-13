@@ -28,7 +28,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (var accommodationReservation in reservations)
                 {
-                    if (accommodationOwnerRating.AccommodationReservationId == accommodationReservation.Id)
+                    if (accommodationOwnerRating.AccommodationReservation.Id == accommodationReservation.Id)
                     {
                         accommodationOwnerRating.AccommodationReservation = accommodationReservation;
                     }
@@ -42,7 +42,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (var recommendation in recommendations)
                 {
-                    if (accommodationOwnerRating.RenovationReccommendationId == recommendation.Id)
+                    if (accommodationOwnerRating.RenovationRecommendation.Id == recommendation.Id)
                     {
                         accommodationOwnerRating.RenovationRecommendation = recommendation;
                     }
@@ -57,7 +57,7 @@ namespace TravelAgency.Repositories
 
         public List<AccommodationOwnerRating> GetByOwner(User owner)
         {
-            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.OwnerId == owner.Id);
+            return accommodationOwnerRatings.FindAll(c => c.AccommodationReservation.Accommodation.Owner.Id == owner.Id);
         }
 
         public List<AccommodationOwnerRating> GetRatingsVisibleToOwner(User user, IEnumerable<AccommodationGuestRating> guestRatings)
@@ -68,7 +68,7 @@ namespace TravelAgency.Repositories
             {
                 foreach (var accommodationOwnerRating in accommodationOwnerRatings)
                 {
-                    if (accommodationOwnerRating.AccommodationReservationId == guestRating.AccommodationReservationId && user.Id == accommodationOwnerRating.AccommodationReservation.Accommodation.OwnerId)
+                    if (accommodationOwnerRating.AccommodationReservation.Id == guestRating.AccommodationReservation.Id && user.Id == accommodationOwnerRating.AccommodationReservation.Accommodation.Owner.Id)
                     {
                         ownerRatings.Add(accommodationOwnerRating);
                         break;

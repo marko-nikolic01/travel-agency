@@ -1,0 +1,87 @@
+﻿<Page x:Class="TravelAgency.WPF.Views.SpecialRequestBookingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TravelAgency.WPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="430"
+      Title="Special tour requests booking">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ef4865"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"></Setter>
+            <Setter Property="Margin" Value="10 0 0 0"></Setter>
+            <Setter Property="Foreground" Value="#0e1d32"></Setter>
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"></Setter>
+            <Setter Property="Margin" Value="0 0 10 0"></Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="#0e1d32" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="10 5 10 10" CornerRadius="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Foreground="#FFFFFF" Content="Number of guests:"></Label>
+                <TextBlock Foreground="#FFFFFF" Text="{Binding TourRequest.GuestNumber}" Grid.Column="1" HorizontalAlignment="Right"></TextBlock>
+                <Label Foreground="#FFFFFF" Grid.Row="1" Content="Location:"></Label>
+                <TextBlock Foreground="#FFFFFF" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="TourRequest.Location.City"/>
+                            <Binding Path="TourRequest.Location.Country"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Label Foreground="#FFFFFF" Grid.Row="2" Content="Language:"></Label>
+                <TextBlock Foreground="#FFFFFF" Text="{Binding TourRequest.Language}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"></TextBlock>
+                <Label Foreground="#FFFFFF" Grid.Row="3" Content="Description:"></Label>
+                <TextBlock Foreground="#FFFFFF" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Text="{Binding TourRequest.Description}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
+            </Grid>
+        </Border>
+        <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="20" Grid.Row="5" Content="Following dates are free and available"></Label>
+        <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="20" Grid.Row="6" Content="You can choose one of them:"></Label>
+        <ComboBox SelectedValue="{Binding Path=SelectedDate}" FontSize="20" ItemsSource="{Binding Path=FreeDates}" Height="50" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="7" Margin="70 0 70 0" Width="150"></ComboBox>
+        <Button Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Width="100" Margin="80 20 0 15" FontSize="18" Content="Confirm" Command="{Binding Path=ConfirmCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Width="100" Margin="0 20 80 15" FontSize="18" Content="Cancel" Command="{Binding Path=CancelCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Page>

@@ -9,14 +9,13 @@
       d:DesignHeight="685" d:DesignWidth="900"
       Title="OwnerRatingsPage"
       Focusable="True"
+      x:Name="root"
       FocusVisualStyle="{x:Null}">
 
-    <Page.Resources>
-        <Style x:Key="h2" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="0 0 0 5"/>
-        </Style>
-    </Page.Resources>
+    <Page.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding RateGuestCommand, ElementName=root}"/>
+        <KeyBinding Key="Space" Command="{Binding FocusOtherDataGrid,ElementName=root}"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,10 +44,11 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="My ratings"
+                           Text="My ratings of guests"
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
+                          Name="ratingsDataGrid"
                           ItemsSource="{Binding OwnerRatings}"
                           Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
@@ -86,7 +86,9 @@
                            Style="{StaticResource h2}"/>
 
                 <DataGrid Grid.Row="1"
+                          x:Name="reservationsDataGrid"
                           ItemsSource="{Binding Reservations}"
+                          SelectedItem="{Binding SelectedReservation}"
                           Style="{StaticResource ownerDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Guest username"
@@ -111,21 +113,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <controls:ButtonWithShortcut Grid.Column="0"
-                                         Text="Review request"
-                                         KeyboardShortcutText="Enter"
-                                         Margin="0 30 30 30"/>
+                                         Text="Rate guest"
+                                         KeyboardShortcutText="Ctrl+N"
+                                         Margin="0 0 20 0"
+                                         Click="RateGuest_Click"/>
 
             <controls:Tip Grid.Column="1"
                           Header="What are pending reservations?"
                           TipText="Pending reservations are reservations that have ended in the past 5 days and that can be rated. Be sure to rate your guests as you can only se their ratings for you if you rate them first!"/>
-            <controls:Tip Grid.Column="2"
-                          Header="How to switch between lists and select ratings?"
-                          TipText="To switch between lists use SPACE key and to select a certain row use UP and DOWN arrow keys."
-                          Margin="10 0 0 0"/>
         </Grid>
     </Grid>
 </Page>
